@@ -20,9 +20,26 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
+    "erasableSyntaxOnly": false,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    /* Router */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@app/*": ["src/app/*"],
+      "@shared/*": ["src/shared/*"],
+      "@entities/*": ["src/entities/*"],
+      "@features/*": ["src/features/*"],
+      "@widgets/*": ["src/widgets/*"],
+      "@pages/*": ["src/pages/*"],
+      "@processes/*": ["src/processes/*"],
+      "@assets/*": ["src/shared/assets/*"],
+      "@ui/*": ["src/shared/ui/*"],
+      "@lib/*": ["src/shared/lib/*"],
+      "@types/*": ["src/shared/types/*"]
+    }
   },
   "include": ["src"]
 }

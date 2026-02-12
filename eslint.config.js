@@ -29,10 +29,6 @@ export default defineConfig([
       'no-debugger': 'error',
       'no-alert': 'warn',
       'no-undef': 'error',
-      'no-unused-vars': [
-        'error',
-        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
-      ],
       'no-use-before-define': 'error',
       'no-implicit-globals': 'error',
       'no-global-assign': 'error',
@@ -94,11 +90,6 @@ export default defineConfig([
       '@stylistic/jsx-max-props-per-line': [
         'error',
         { maximum: 3, when: 'multiline' },
-      ],
-      '@stylistic/jsx-newline': ['error', { prevent: false }],
-      '@stylistic/jsx-one-expression-per-line': [
-        'error',
-        { allow: 'single-child' },
       ],
       '@stylistic/jsx-pascal-case': ['error'],
       '@stylistic/jsx-props-no-multi-spaces': ['error'],
