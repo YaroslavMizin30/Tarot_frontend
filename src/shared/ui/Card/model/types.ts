@@ -1,5 +1,4 @@
-import { CardName } from './enums';
-
+import { CardName } from "@/shared/types/arcana";
 export interface TarotCardProps {
   /**
    * Card name
@@ -13,4 +12,8 @@ export interface TarotCardProps {
    * Callback on card click
    */
   onClick?: () => void;
+  /**
+   * Localized card name
+   */
+  localizedName: string;
 }

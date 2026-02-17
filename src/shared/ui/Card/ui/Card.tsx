@@ -1,12 +1,11 @@
 import React, { useState, type FC } from 'react';
 
 import type { TarotCardProps } from '../model/types';
-import { Russian } from '../model/enums';
 
 import styles from './Card.module.css';
 
 export const TarotCard: FC<TarotCardProps> = (props) => {
-  const { name, canTurnOver = true, onClick = () => undefined } = props;
+  const { name, canTurnOver = true, onClick = () => undefined, localizedName } = props;
 
   const [isReversed, setIsReversed] = useState(false);
 
@@ -29,11 +28,11 @@ export const TarotCard: FC<TarotCardProps> = (props) => {
         <div className={styles.front}>
           <img
             className={styles.image}
-            src={new URL(`../assets/${name}.png`, import.meta.url).href}
+            src={new URL(`/src/shared/assets/images/${name}.png`, import.meta.url).href}
           />
 
           <div className={styles.footer}>
-            <h2 className={styles.name}>{Russian[name]}</h2>
+            <h2 className={styles.name}>{localizedName}</h2>
           </div>
         </div>
       </div>
