@@ -32,7 +32,7 @@
   flex-direction: column;
   justify-content: center;
 
-  background-image: url('src/shared/assets/images/background.png');
+  background-image: url('src/shared/assets/images/card/background.png');
   border-radius: 10px;
   background-size: contain;
 }
@@ -40,13 +40,20 @@
 .back {
   transform: rotateY(180deg);
 
-  background-image: url('src/shared/assets/images/back.jpeg');
+  background-image: url('src/shared/assets/images/card/back.jpeg');
   background-size: contain;
   border-radius: 10px;
 }
 
-.image {
+.image-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 90%;
+}
+
+.image {
+  height: 100%;
   width: auto;
 
   border-radius: 10px;

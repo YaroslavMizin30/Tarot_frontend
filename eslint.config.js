@@ -62,7 +62,7 @@ export default defineConfig([
         'error',
         {
           arrays: 'never',
-          objects: 'only-multiline',
+          objects: 'always',
           imports: 'never',
           exports: 'never',
           functions: 'never',
