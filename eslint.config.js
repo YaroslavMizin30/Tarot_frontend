@@ -62,10 +62,10 @@ export default defineConfig([
         'error',
         {
           arrays: 'never',
-          objects: 'always',
+          objects: 'only-multiline',
           imports: 'never',
           exports: 'never',
-          functions: 'never',
+          functions: 'only-multiline',
           importAttributes: 'never',
           dynamicImports: 'never',
           enums: 'never',
