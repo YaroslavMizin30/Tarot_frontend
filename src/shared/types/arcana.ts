@@ -1,4 +1,4 @@
-export enum CardName {
+export const enum CardName {
   // Старший Аркан
   THE_FOOL = 'fool',
   THE_MAGICIAN = 'magician',
