@@ -10,6 +10,7 @@ export const TarotCard: FC<TarotCardProps> = (props) => {
     canTurnOver = true,
     onClick = () => undefined,
     localizedName,
+    className = '',
   } = props;
 
   const [isReversed, setIsReversed] = useState(false);
@@ -24,7 +25,7 @@ export const TarotCard: FC<TarotCardProps> = (props) => {
 
   return (
     <div
-      className={`${styles.container} ${canTurnOver ? styles.clickable : ''}`}
+      className={`${styles.container} ${canTurnOver ? styles.clickable : ''} ${className}`}
       onClick={handleCardClick}
     >
       <div className={`${styles.inner} ${isReversed ? styles.reversed : ''}`}>
@@ -37,7 +38,7 @@ export const TarotCard: FC<TarotCardProps> = (props) => {
               src={
                 new URL(
                   `/src/shared/assets/images/card/${name}.png`,
-                  import.meta.url
+                  import.meta.url,
                 ).href
               }
             />

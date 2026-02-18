@@ -1,0 +1,110 @@
+.deck {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 40px;
+  margin-left: 40px;
+
+  border-radius: 10px;
+}
+
+.spinner {
+  z-index: 40;
+}
+
+@media (max-width: 767px) {
+  .deck {
+    height: 8rem;
+    width: 4.8rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .deck {
+    height: 14rem;
+    width: 8.4rem;
+  }
+
+  .spinner {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .deck {
+    height: 18rem;
+    width: 10.8rem;
+  }
+
+  .spinner {
+    width: 6rem;
+    height: 6rem;
+  }
+}
+
+.deck-reading {
+  animation: reading 4s;
+  transition: transform 0.5s ease-in-out;
+  box-shadow: 0 4px 20px rgba(128, 0, 128);
+}
+
+@keyframes reading {
+  5% {
+    transform: rotate(-5deg);
+  }
+
+  10% {
+    transform: rotate(5deg);
+  }
+
+  20% {
+    transform: rotate(-5deg);
+  }
+
+  30% {
+    transform: rotate(5deg);
+  }
+
+  40% {
+    transform: rotate(-5deg);
+  }
+
+  45% {
+    transform: rotate(5deg);
+  }
+
+  50% {
+    transform: rotate(-5deg);
+  }
+
+  55% {
+    transform: rotate(5deg);
+  }
+
+  60% {
+    transform: rotate(-5deg);
+  }
+
+  65% {
+    transform: rotate(5deg);
+  }
+
+  70% {
+    transform: rotate(-5deg);
+  }
+
+  80% {
+    transform: rotate(5deg);
+  }
+
+  90% {
+    transform: rotate(-5deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}

@@ -16,4 +16,8 @@ export interface TarotCardProps {
    * Localized card name
    */
   localizedName: string;
+  /**
+   * Additional class name
+   */
+  className?: string;
 }
