@@ -1,0 +1,17 @@
+.spinner {
+  width: 20px;
+  height: 20px;
+  background-image: url('src/shared/assets/images/common/spinner.png');
+  background-size: cover;
+
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
