@@ -6,6 +6,8 @@
 .item {
   display: flex;
   align-items: center;
+
+  cursor: pointer;
 }
 
 .item + .item {
@@ -53,5 +55,8 @@
 }
 
 .description {
+  display: inline-flex;
+
   font-family: 'Monomakh';
+  color: #3e3e3e;
 }

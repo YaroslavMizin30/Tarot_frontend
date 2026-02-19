@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 
 import { type ButtonProps } from '../model/Button.props';
 

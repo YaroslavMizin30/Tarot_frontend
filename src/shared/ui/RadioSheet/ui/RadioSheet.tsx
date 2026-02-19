@@ -1,4 +1,6 @@
-import { type ChangeEvent, type FC } from 'react';
+import { useState, type ChangeEvent, type FC, type MouseEvent } from 'react';
+
+import { Tooltip } from '../../Tooltip/ui/Tooltip';
 
 import { type RadioSheetProps } from './RadioSheet.props';
 
@@ -11,13 +13,29 @@ export const RadioSheet: FC<RadioSheetProps> = (props) => {
     onChange(e.target.value);
   };
 
+  const [visibleElement, setVisibleElement] = useState('');
+
+  const handleMouseEnter = (event: MouseEvent<HTMLDivElement>) => {
+    setVisibleElement(event.currentTarget.id);
+  };
+
+  const handleMouseLeave = () => {
+    setVisibleElement('');
+  };
+
   return (
     <div className={`${styles.container} ${className}`}>
       <h3 className={styles.title}>{title}</h3>
 
       <div className={styles.list}>
         {items.map((item) => (
-          <div className={styles.item}>
+          <div
+            className={styles.item}
+            id={item.id}
+            key={item.id}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
             <label
               htmlFor={item.id}
               className={`${styles.label} ${item.id === value && styles['label-selected']}`}
@@ -34,11 +52,12 @@ export const RadioSheet: FC<RadioSheetProps> = (props) => {
             />
 
             <div className={styles.description}>
-              <span className={styles['label-text']}>
-                <b>{item.label}</b>
-              </span>
-
-              {item.description && <span>{item.description}</span>}
+              <Tooltip
+                content={item.description}
+                isVisible={visibleElement === item.id}
+              >
+                {item.label}
+              </Tooltip>
             </div>
           </div>
         ))}
