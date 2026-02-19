@@ -17,7 +17,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       isLoading = false,
       fullWidth = false,
       disabled,
-      className,
+      className = '',
+      ...rest
     } = props;
 
     return (
@@ -32,18 +33,19 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             'btn--full-width': fullWidth,
             'btn--disabled': disabled || isLoading,
           },
-          className
+          className,
         )}
         disabled={disabled || isLoading}
-        {...props}
+        {...rest}
       >
         {isLoading ? <span className={'btn__spinner'}>⏳</span> : null}
-        <span className={cx({ 'btn__content--hidden': isLoading, })}>
+
+        <span className={cx({ 'btn__content--hidden': isLoading })}>
           {children}
         </span>
       </button>
     );
-  }
+  },
 );
 
 Button.displayName = 'Button';
