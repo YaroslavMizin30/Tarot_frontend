@@ -16,7 +16,7 @@ export const RadioSheet: FC<RadioSheetProps> = (props) => {
   const [visibleElement, setVisibleElement] = useState('');
 
   const handleMouseEnter = (event: MouseEvent<HTMLDivElement>) => {
-    setVisibleElement(event.currentTarget.id);
+    setVisibleElement(event.currentTarget.title);
   };
 
   const handleMouseLeave = () => {
@@ -31,7 +31,7 @@ export const RadioSheet: FC<RadioSheetProps> = (props) => {
         {items.map((item) => (
           <div
             className={styles.item}
-            id={item.id}
+            title={item.id}
             key={item.id}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}

@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 
 import { forwardRef } from 'react';
 
-import { type ButtonProps } from '../model/Button.props';
+import { type ButtonProps } from './Button.props';
 
 import styles from './Button.module.css';
 
@@ -12,12 +12,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (props, ref) => {
     const {
       children,
-      variant = 'primary',
-      size = 'md',
       isLoading = false,
       fullWidth = false,
       disabled,
       className = '',
+      isActive = false,
       ...rest
     } = props;
 
@@ -26,20 +25,17 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         className={cx(
           'btn',
-          `btn--${variant}`,
-          `btn--${size}`,
           {
             'btn--loading': isLoading,
             'btn--full-width': fullWidth,
             'btn--disabled': disabled || isLoading,
+            'btn--active': isActive,
           },
           className,
         )}
         disabled={disabled || isLoading}
         {...rest}
       >
-        {isLoading ? <span className={'btn__spinner'}>⏳</span> : null}
-
         <span className={cx({ 'btn__content--hidden': isLoading })}>
           {children}
         </span>
