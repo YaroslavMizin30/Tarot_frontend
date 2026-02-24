@@ -78,47 +78,15 @@
   text-transform: uppercase;
 }
 
-@media (max-width: 767px) {
-  .container {
-    height: 8rem;
-    width: 4.8rem;
-  }
-
-  .front {
-    padding: 6px 6px 0px 6px;
-  }
-
-  .name {
-    font-size: 11px;
-  }
+.container {
+  height: 8rem;
+  width: 4.8rem;
 }
 
-@media (min-width: 768px) and (max-width: 1199px) {
-  .container {
-    height: 14rem;
-    width: 8.4rem;
-  }
-
-  .front {
-    padding: 8px 8px 0px 8px;
-  }
-
-  .name {
-    font-size: 18px;
-  }
+.front {
+  padding: 6px 6px 0px 6px;
 }
 
-@media (min-width: 1200px) {
-  .container {
-    height: 18rem;
-    width: 10.8rem;
-  }
-
-  .front {
-    padding: 14px 14px 0px 14px;
-  }
-
-  .name {
-    font-size: 24px;
-  }
+.name {
+  font-size: 11px;
 }

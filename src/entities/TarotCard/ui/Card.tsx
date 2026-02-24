@@ -9,11 +9,11 @@ export const TarotCard: FC<TarotCardProps> = (props) => {
     name,
     canTurnOver = true,
     onClick = () => undefined,
-    localizedName,
+    localizedName = '',
     className = '',
   } = props;
 
-  const [isReversed, setIsReversed] = useState(false);
+  const [isReversed, setIsReversed] = useState(true);
 
   const handleCardClick = () => {
     if (canTurnOver) {
