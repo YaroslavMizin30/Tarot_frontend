@@ -28,7 +28,7 @@
 }
 
 .label-selected {
-  box-shadow: 0 1px 25px rgba(128, 0, 128);
+  box-shadow: 0 1px 25px #e55bfb;
 }
 
 .label-selected::after {
