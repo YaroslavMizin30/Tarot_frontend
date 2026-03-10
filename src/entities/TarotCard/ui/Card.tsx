@@ -1,32 +1,34 @@
 import React, { useState, type FC } from 'react';
 
-import type { TarotCardProps } from '../model/types';
+import type { TarotCardProps } from './Card.props';
 
 import styles from './Card.module.css';
 
 export const TarotCard: FC<TarotCardProps> = (props) => {
   const {
     name,
-    canTurnOver = true,
+    canTurnOver = false,
     onClick = () => undefined,
     localizedName = '',
     className = '',
+    style = {},
   } = props;
 
   const [isReversed, setIsReversed] = useState(true);
 
   const handleCardClick = () => {
-    if (canTurnOver) {
+    if (canTurnOver && isReversed) {
       setIsReversed(!isReversed);
-    }
 
-    onClick();
+      onClick();
+    }
   };
 
   return (
     <div
       className={`${styles.container} ${canTurnOver ? styles.clickable : ''} ${className}`}
       onClick={handleCardClick}
+      style={style}
     >
       <div className={`${styles.inner} ${isReversed ? styles.reversed : ''}`}>
         <div className={styles.back}></div>

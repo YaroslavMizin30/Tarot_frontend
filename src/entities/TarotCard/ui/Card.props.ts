@@ -1,4 +1,7 @@
-import { CardName } from "@/shared/types/arcana";
+import { type CSSProperties } from 'react';
+
+import { CardName } from '@/shared/types/arcana';
+
 export interface TarotCardProps {
   /**
    * Card name
@@ -20,4 +23,8 @@ export interface TarotCardProps {
    * Additional class name
    */
   className?: string;
+  /**
+   * Styles
+   */
+  style?: CSSProperties;
 }
