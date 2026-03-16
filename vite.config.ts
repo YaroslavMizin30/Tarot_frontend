@@ -20,4 +20,7 @@ export default defineConfig({
       '@/processes': path.resolve(__dirname, './src/processes'),
     },
   },
+  server: {
+    allowedHosts: ['polysyllabic-browny-elly.ngrok-free.dev']
+  }
 });
