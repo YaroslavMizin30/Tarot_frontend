@@ -1,0 +1,14 @@
+.input {
+  padding: 4px;
+
+  font-family: 'Monomakh';
+
+  border-radius: 6px;
+  border: 1px solid #703f00;
+  border: none;
+  outline: none;
+}
+
+.input:focus {
+  box-shadow: 0 0px 30px 5px #e55bfb;
+}
