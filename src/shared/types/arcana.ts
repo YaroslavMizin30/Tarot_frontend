@@ -72,18 +72,18 @@ export const enum CardName {
   KING_OF_SWORDS = 'king_of_swords',
 
   // Пентакли
-  ACE_OF_PENTACLES = 'ace_of_pentacles',
-  TWO_OF_PENTACLES = 'two_of_pentacles',
-  THREE_OF_PENTACLES = 'three_of_pentacles',
-  FOUR_OF_PENTACLES = 'four_of_pentacles',
-  FIVE_OF_PENTACLES = 'five_of_pentacles',
-  SIX_OF_PENTACLES = 'six_of_pentacles',
-  SEVEN_OF_PENTACLES = 'seven_of_pentacles',
-  EIGHT_OF_PENTACLES = 'eight_of_pentacles',
-  NINE_OF_PENTACLES = 'nine_of_pentacles',
-  TEN_OF_PENTACLES = 'ten_of_pentacles',
-  PAGE_OF_PENTACLES = 'page_of_pentacles',
-  KNIGHT_OF_PENTACLES = 'knight_of_pentacles',
-  QUEEN_OF_PENTACLES = 'queen_of_pentacles',
-  KING_OF_PENTACLES = 'king_of_pentacles'
+  ACE_OF_COINS = 'ace_of_coins',
+  TWO_OF_COINS = 'two_of_coins',
+  THREE_OF_COINS = 'three_of_coins',
+  FOUR_OF_COINS = 'four_of_coins',
+  FIVE_OF_COINS = 'five_of_coins',
+  SIX_OF_COINS = 'six_of_coins',
+  SEVEN_OF_COINS = 'seven_of_coins',
+  EIGHT_OF_COINS = 'eight_of_coins',
+  NINE_OF_COINS = 'nine_of_coins',
+  TEN_OF_COINS = 'ten_of_coins',
+  PAGE_OF_COINS = 'page_of_coins',
+  KNIGHT_OF_COINS = 'knight_of_coins',
+  QUEEN_OF_COINS = 'queen_of_coins',
+  KING_OF_COINS = 'king_of_coins'
 };
