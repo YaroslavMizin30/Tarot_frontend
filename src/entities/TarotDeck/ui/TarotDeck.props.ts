@@ -4,7 +4,7 @@ export interface TarotDeckProps {
   /**
    * Cards
    */
-  children: ReactNode | ReactNode[];
+  children?: ReactNode | ReactNode[];
   /**
    * Additional class name
    */

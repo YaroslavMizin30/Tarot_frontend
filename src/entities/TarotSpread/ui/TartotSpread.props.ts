@@ -1,7 +1,11 @@
-import { type CSSProperties } from 'react';
+import { type ReactNode } from 'react';
+
+import { type SpreadType } from '@/shared/types/spread';
 
 export interface TarotSpreadProps {
-  onSpreadTypeChange: (
-    data: Array<CSSProperties & { index?: number; description?: string }>,
-  ) => void;
+  onSpreadTypeChange: (cardCound: number, type: SpreadType) => void;
+  /**
+   * Cards
+   */
+  children?: ReactNode | ReactNode[];
 }

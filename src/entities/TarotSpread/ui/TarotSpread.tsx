@@ -1,4 +1,4 @@
-import { useState, type MouseEvent } from 'react';
+import React, { useState, type MouseEvent } from 'react';
 
 import Button from '@/shared/ui/Button';
 import type { SpreadType } from '@/shared/types/spread';
@@ -13,7 +13,7 @@ import styles from './TarotSpread.module.css';
 import type { FC } from 'react';
 
 export const TarotSpread: FC<TarotSpreadProps> = (props) => {
-  const { onSpreadTypeChange = () => undefined } = props;
+  const { onSpreadTypeChange = () => undefined, children } = props;
 
   const [spreadType, setSpreadType] = useState<`${SpreadType}`>(SPREADS[0].id);
 
@@ -22,8 +22,13 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
 
     setSpreadType(currentSpreadType);
 
-    onSpreadTypeChange(SpreadConfig[currentSpreadType]);
+    onSpreadTypeChange(
+      SpreadConfig[currentSpreadType].length,
+      currentSpreadType,
+    );
   };
+
+  const childrenArray = React.Children.toArray(children);
 
   return (
     <div className={styles.tarotSpread}>
@@ -44,7 +49,7 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
       </div>
 
       <div className={styles.cards}>
-        {SpreadConfig[spreadType].map((card) => {
+        {SpreadConfig[spreadType].map((card, idx) => {
           const {
             index,
             title,
@@ -65,7 +70,9 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
                 tooltipPosition as 'left' | 'right' | 'bottom' | 'top'
               }
               tooltipStyle={tooltipStyle}
-            />
+            >
+              {childrenArray[idx]}
+            </Placeholder>
           );
         })}
       </div>

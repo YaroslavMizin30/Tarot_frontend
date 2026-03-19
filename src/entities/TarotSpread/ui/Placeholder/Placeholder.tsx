@@ -15,6 +15,7 @@ const Placeholder: FC<PlaceholderProps> = (props) => {
     description,
     tooltipPosition = 'bottom',
     tooltipStyle,
+    children,
   } = props;
 
   const [isVisible, setIsVisible] = useState(false);
@@ -50,6 +51,8 @@ const Placeholder: FC<PlaceholderProps> = (props) => {
           {isVisible && <div className={styles.active}></div>}
         </Tooltip>
       )}
+
+      {children}
 
       {title && <span>{title}</span>}
     </div>

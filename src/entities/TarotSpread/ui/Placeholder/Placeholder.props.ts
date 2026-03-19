@@ -1,4 +1,4 @@
-import { type CSSProperties } from 'react';
+import { type CSSProperties, type ReactNode } from 'react';
 
 export interface PlaceholderProps {
   style?: CSSProperties;
@@ -7,4 +7,5 @@ export interface PlaceholderProps {
   description?: string;
   tooltipPosition?: 'bottom' | 'top' | 'left' | 'right';
   tooltipStyle?: CSSProperties;
+  children?: ReactNode;
 }

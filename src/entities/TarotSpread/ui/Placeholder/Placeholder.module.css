@@ -15,9 +15,9 @@
   font-weight: 700;
   font-family: 'Monomakh', sans-serif;
   text-align: center;
-  color: #ffdb88;
+  color: var(--border-inversed);
 
-  border: 1px solid #ffdb88;
+  border: 1px solid var(--border-inversed);
   border-radius: 10px;
 }
 
@@ -48,6 +48,7 @@
   justify-content: center;
 
   overflow: visible;
+  z-index: 10;
 }
 
 .tooltip {
@@ -68,5 +69,5 @@
   bottom: 3px;
   right: 8px;
 
-  box-shadow: 0 0px 40px 15px #e55bfb;
+  box-shadow: 0 0px 40px 15px var(--shadow-primary);
 }
