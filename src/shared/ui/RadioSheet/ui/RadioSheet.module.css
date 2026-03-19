@@ -28,7 +28,7 @@
 }
 
 .label-selected {
-  box-shadow: 0 1px 25px #e55bfb;
+  box-shadow: 0 1px 25px var(--shadow-primary);
 }
 
 .label-selected::after {

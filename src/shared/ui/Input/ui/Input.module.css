@@ -2,14 +2,14 @@
   padding: 4px;
 
   font-family: 'Monomakh';
-  color: #703f00;
+  color: var(--border-primary);
 
   border-radius: 6px;
-  border: 1px solid #703f00;
+  border: 1px solid var(--border-primary);
   border: none;
   outline: none;
 }
 
 .input:focus {
-  box-shadow: 0 0px 30px 5px #e55bfb;
+  box-shadow: 0 0px 30px 5px var(--shadow-primary);
 }
