@@ -13,4 +13,8 @@ export interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
    * Input error message
    */
   errorMessage?: string;
+  /**
+   * Wrapper className
+   */
+  wrapperClassName?: string;
 }
