@@ -1,0 +1,259 @@
+import { CardName } from '../../types/arcana';
+
+const TRANSLATIONS: Record<string, string> = {
+  // Темы
+  'Anxiety and uncertainty': 'Тревога и неопределённость',
+  'Decision Making': 'Принятие решений',
+  'Relationships and love': 'Отношения и любовь',
+  'Work, career, self-realization': 'Работа, карьера, самореализация',
+  'Money and business': 'Деньги и проекты/бизнес',
+  'Self-knowledge and crises': 'Самопознание и кризисы',
+  'Emotional relief': 'Эмоциональная разгрузка',
+  'Spirituality and the Path': 'Духовность и путь',
+  'Rituals of transformation': 'Ритуалы перехода',
+  'Intuition vs. rationality': 'Интуиция vs рациональность',
+  'My own question': 'Свой вопрос',
+
+  // Вопросы
+  'General anxiety about the future': 'Общая тревога о будущем',
+  'Fear of the unknown': 'Страх перед неизвестностью',
+  'Uncertainty in life': 'Неопределённость в жизни',
+  'Choosing between options': 'Выбор между вариантами',
+  'Fear of making a mistake in decision': 'Страх ошибки в решении',
+  'Passing the buck': 'Перекладывание ответственности',
+  'Love and relationships now': 'Любовь и отношения сейчас',
+  "The couple's future": "Будущее пары",
+  'Returning to an ex': 'Возвращение к бывшему',
+  'Dating a new person': 'Новый человек / свидания',
+  'Scenarios in love': 'Сценарии в любви',
+  'Compatibility': 'Совместимость',
+  'Breakup': 'Разрыв / расставание',
+  'Loneliness and "the one"': 'Одиночество и "тот самый""',
+  'Cheating and betrayal"': 'Измены и предательство"',
+  'Crisis in a couple': 'Кризис в паре',
+  'Self-esteem in love': 'Самооценка в любви',
+  'Change of profession': 'Смена работы/профессии',
+  'Finding your "thing"': 'Поиск "своего дела"',
+  'Doubts about offers': 'Сомнения по офферам',
+  'Launching a project/business': 'Запуск проекта/бизнеса',
+  'Blind spots in the project': 'Слепые зоны в проекте',
+  'Risk assessment': 'Оценка рисков',
+  'Stuck on autopilot': 'Застрял на автопилоте',
+  'Search for wishes': 'Поиск желаний',
+  'Crises of meaning/age': 'Кризисы смысла/возраста',
+  'Speak out through cards': 'Выговориться через карты',
+  'Name feelings': 'Назвать чувства',
+  'Connection to the Greater': 'Связь с "большим"',
+  'Meanings of events': 'Смыслы в событиях',
+  'New stage of life': 'Новый этап жизни',
+  'Completing the cycle': 'Завершение цикла',
+  'Intuitive advice': 'Интуитивный совет',
+  'Figurative language': 'Образный язык',
+
+  // Тексты
+  'What awaits me in the coming months? Possible scenarios.':
+    'Что ждёт меня в ближайшие месяцы? Возможные сценарии.',
+  'What risks and opportunities lie ahead? How to prepare.':
+    'Какие риски и возможности впереди? Как подготовиться.',
+  'Why is everything unstable? What stabilizes the situation?':
+    'Почему всё нестабильно? Что стабилизирует ситуацию.',
+  'Which path to choose? Pros and cons of each.':
+    'Какой путь выбрать? Плюсы/минусы каждого.',
+  'Is this the right move? Support from the Universe.':
+    'Правильный ли это шаг? Поддержка Вселенной.',
+  'What do the cards advise to do in this situation?':
+    'Что карты советуют сделать в этой ситуации?',
+  "What's going on between me and my partner? Feelings, motives.":
+    "Что происходит между мной и партнёром? Чувства, мотивы.",
+  'Is there a chance for our relationship? What lies ahead.':
+    'Есть ли шанс у наших отношений? Что впереди.',
+  "Should I return it? Partner's thoughts, conclusion.":
+    "Стоит ли возвращать? Мысли партнёра, итог.",
+  'How does he(she) feel? Prospects.': 'Что он/она чувствует? Перспективы.',
+  'Why do mistakes repeat themselves? How to break the cycle.':
+    'Почему повторяются ошибки? Как сломать круг.',
+  'Are we a good fit? Strengths/Weaknesses.':
+    'Подходим ли мы? Сильные/слабые стороны.',
+  'Am I leaving correctly? How to let go.':
+    'Правильно ли ухожу? Как отпустить.',
+  "When will I meet my partner? What's blocking me?":
+    "Когда встречу партнёра? Что блокирует.",
+  'Is there a third party? What to do.': 'Есть ли кто-то третий? Что делать.',
+  'What destroys? How to restore.': 'Что разрушает? Как восстановить.',
+  'Why do I choose the "wrong ones"? How to love yourself.':
+    'Почему выбираю "не тех"? Как полюбить себя.',
+  'Where to go? Is this "my" job?': 'Куда двигаться? Это "моё" дело?',
+  'What are my talents? Where can I find fulfillment?':
+    'В чём мои таланты? Где реализация.',
+  'Which offer to choose? The risks of each.':
+    'Какой офер выбрать? Риски каждого.',
+  "What's hindering growth? Strategy adjustments.":
+    "Что мешает росту? Корректировка стратегии.",
+  'Obstacles, resources, growth points.':
+    'Препятствия, ресурсы, точки роста.',
+  'Investment/Partnership Risks? Summary.':
+    'Риски инвестиций/партнёрств? Итог.',
+  'What are my true desires? What needs to be changed?':
+    'Мои истинные желания? Что менять.',
+  'What do I really want?': 'Чего я хочу на самом деле?',
+  'The logic of my story? New meaning.': 'Логика моей истории? Новый смысл.',
+  'What hurts inside? A gentle analysis.':
+    'Что болит внутри? Бережный разбор.',
+  'What do I feel? How to experience': 'Что я чувствую? Как прожить.',
+  'My path, signs of the Universe.': 'Мой путь, знаки Вселенной.',
+  'Why did this happen to me?': 'Зачем это произошло со мной?',
+  'Support at the start: moving, year, relationships.':
+    'Поддержка на старте: переезд, год, отношения.',
+  'What to let go of? What to take into the new.':
+    'Что отпустить? Что взять в новое.',
+  'What does your gut tell you? Symbols.':
+    'Что подсказывает чутьё? Символы.',
+  'Metaphors for my questions.': 'Метафоры для моих вопросов.',
+
+  // Названия раскладов
+  'Life horizon': 'Горизонт жизни',
+  'The fog is clearing': 'Туман рассеивается',
+  'Support in chaos': 'Опора в хаосе',
+  'Three roads': 'Три дороги',
+  'Sign of fate': 'Знак судьбы',
+  'Advice of the sage': 'Совет мудреца',
+  'Relationship triangle': 'Треугольник отношений',
+  'The path of love': 'Путь любви',
+  'Bridge back': 'Мост назад',
+  'Chemistry at the start': 'Химия на старте',
+  'Karmic love': 'Кармическая любовь',
+  'Two decks': 'Две колоды',
+  'The door is closed': 'Дверь закрыта',
+  'Star of love': 'Звезда любви',
+  'Mystery revealed': 'Тайна раскрыта',
+  'Storm in a relationship': 'Шторм в отношениях',
+  'Mirror of the Soul': 'Зеркало души',
+  'Career turnaround': 'Карьерный поворот',
+  'Call of Destiny': 'Зов предназначения',
+  'Two jobs': 'Две работы',
+  'Business Impulse': 'Бизнес-импульс',
+  'Business diagnosis': 'Диагностика дела',
+  'Weighing the odds': 'Взвешивание шансов',
+  'Awakening': 'Пробуждение',
+  'The heart speaks': 'Сердце говорит',
+  'Puzzle of life': 'Пазл жизни',
+  'A heart-to-heart talk': 'Разговор по душам',
+  'Emotions in the open': 'Эмоции начистоту',
+  'Spiritual compass': 'Духовный компас',
+  'Lesson of fate': 'Урок судьбы',
+  'New moon': 'Новолуние',
+  'Liberation': 'Освобождение',
+  'The voice of intuition': 'Голос интуиции',
+  'Tale of cards': 'Сказка карт',
+
+  // Детали вопросов
+  'What are your options?': 'Между чем выбираете?',
+  'Your options': 'Ваши варианты',
+  'What is the decision about?': 'Какое решение Вы хотите предпринять?',
+  'The decision': 'Ваше решение',
+  'What is the situation?': 'Какая ситуация беспокоит Вас?',
+  'The situation': 'Моя ситуация',
+  'What are the mistakes you want to fix?':
+    'Какие ошибки Вы бы хотели исправить?',
+  'Mistakes I want to fix': 'Ошибки, которые я хочу исправить',
+  'Why do you think you choose the "wrong ones"?':
+    'Почему Вы полагаете, что выбираете не тех?',
+  'I choose the "wrong ones because': 'Я выбираю не тех, по причинам',
+  'What is your current profession?': 'Какая Ваша профессия в данный момент?',
+  'My current profession': 'Моя текущая профессия',
+  'What are the offers you are considering?':
+    'Между какими оффрерами Вы рассматриваете?',
+  'The offers I am considering are': 'Офферы, которые я рассматриваю',
+  'What is your current business?': 'Каким бизнесом Вы сейчас занимаетесь?',
+  'My current business': 'Мой бизнес на данный момент',
+
+  // Старший Аркан
+  [CardName.THE_FOOL]: 'Шут',
+  [CardName.THE_MAGICIAN]: 'Маг',
+  [CardName.THE_HIGH_PRIESTESS]: 'Верховная Жрица',
+  [CardName.THE_EMPRESS]: 'Императрица',
+  [CardName.THE_EMPEROR]: 'Император',
+  [CardName.THE_HIEROPHANT]: 'Иерофант',
+  [CardName.THE_LOVERS]: 'Влюбленные',
+  [CardName.THE_CHARIOT]: 'Колесница',
+  [CardName.STRENGTH]: 'Сила',
+  [CardName.THE_HERMIT]: 'Отшельник',
+  [CardName.WHEEL_OF_FORTUNE]: 'Колесо Фортуны',
+  [CardName.JUSTICE]: 'Справедливость',
+  [CardName.THE_HANGED_MAN]: 'Повешенный',
+  [CardName.DEATH]: 'Смерть',
+  [CardName.TEMPERANCE]: 'Умеренность',
+  [CardName.THE_DEVIL]: 'Дьявол',
+  [CardName.THE_TOWER]: 'Башня',
+  [CardName.THE_STAR]: 'Звезда',
+  [CardName.THE_MOON]: 'Луна',
+  [CardName.THE_SUN]: 'Солнце',
+  [CardName.JUDGEMENT]: 'Суд',
+  [CardName.THE_WORLD]: 'Мир',
+
+  // Жезлы
+  [CardName.ACE_OF_WANDS]: 'Туз Жезлов',
+  [CardName.TWO_OF_WANDS]: 'Двойка Жезлов',
+  [CardName.THREE_OF_WANDS]: 'Тройка Жезлов',
+  [CardName.FOUR_OF_WANDS]: 'Четверка Жезлов',
+  [CardName.FIVE_OF_WANDS]: 'Пятерка Жезлов',
+  [CardName.SIX_OF_WANDS]: 'Шестерка Жезлов',
+  [CardName.SEVEN_OF_WANDS]: 'Семерка Жезлов',
+  [CardName.EIGHT_OF_WANDS]: 'Восьмерка Жезлов',
+  [CardName.NINE_OF_WANDS]: 'Девятка Жезлов',
+  [CardName.TEN_OF_WANDS]: 'Десятка Жезлов',
+  [CardName.PAGE_OF_WANDS]: 'Паж Жезлов',
+  [CardName.KNIGHT_OF_WANDS]: 'Рыцарь Жезлов',
+  [CardName.QUEEN_OF_WANDS]: 'Королева Жезлов',
+  [CardName.KING_OF_WANDS]: 'Король Жезлов',
+
+  // Кубки
+  [CardName.ACE_OF_CUPS]: 'Туз Кубков',
+  [CardName.TWO_OF_CUPS]: 'Двойка Кубков',
+  [CardName.THREE_OF_CUPS]: 'Тройка Кубков',
+  [CardName.FOUR_OF_CUPS]: 'Четверка Кубков',
+  [CardName.FIVE_OF_CUPS]: 'Пятерка Кубков',
+  [CardName.SIX_OF_CUPS]: 'Шестерка Кубков',
+  [CardName.SEVEN_OF_CUPS]: 'Семерка Кубков',
+  [CardName.EIGHT_OF_CUPS]: 'Восьмерка Кубков',
+  [CardName.NINE_OF_CUPS]: 'Девятка Кубков',
+  [CardName.TEN_OF_CUPS]: 'Десятка Кубков',
+  [CardName.PAGE_OF_CUPS]: 'Паж Кубков',
+  [CardName.KNIGHT_OF_CUPS]: 'Рыцарь Кубков',
+  [CardName.QUEEN_OF_CUPS]: 'Королева Кубков',
+  [CardName.KING_OF_CUPS]: 'Король Кубков',
+
+  // Мечи
+  [CardName.ACE_OF_SWORDS]: 'Туз Мечей',
+  [CardName.TWO_OF_SWORDS]: 'Двойка Мечей',
+  [CardName.THREE_OF_SWORDS]: 'Тройка Мечей',
+  [CardName.FOUR_OF_SWORDS]: 'Четверка Мечей',
+  [CardName.FIVE_OF_SWORDS]: 'Пятерка Мечей',
+  [CardName.SIX_OF_SWORDS]: 'Шестерка Мечей',
+  [CardName.SEVEN_OF_SWORDS]: 'Семерка Мечей',
+  [CardName.EIGHT_OF_SWORDS]: 'Восьмерка Мечей',
+  [CardName.NINE_OF_SWORDS]: 'Девятка Мечей',
+  [CardName.TEN_OF_SWORDS]: 'Десятка Мечей',
+  [CardName.PAGE_OF_SWORDS]: 'Паж Мечей',
+  [CardName.KNIGHT_OF_SWORDS]: 'Рыцарь Мечей',
+  [CardName.QUEEN_OF_SWORDS]: 'Королева Мечей',
+  [CardName.KING_OF_SWORDS]: 'Король Мечей',
+
+  // Пентакли
+  [CardName.ACE_OF_COINS]: 'Туз Пентаклей',
+  [CardName.TWO_OF_COINS]: 'Двойка Пентаклей',
+  [CardName.THREE_OF_COINS]: 'Тройка Пентаклей',
+  [CardName.FOUR_OF_COINS]: 'Четверка Пентаклей',
+  [CardName.FIVE_OF_COINS]: 'Пятерка Пентаклей',
+  [CardName.SIX_OF_COINS]: 'Шестерка Пентаклей',
+  [CardName.SEVEN_OF_COINS]: 'Семерка Пентаклей',
+  [CardName.EIGHT_OF_COINS]: 'Восьмерка Пентаклей',
+  [CardName.NINE_OF_COINS]: 'Девятка Пентаклей',
+  [CardName.TEN_OF_COINS]: 'Десятка Пентаклей',
+  [CardName.PAGE_OF_COINS]: 'Паж Пентаклей',
+  [CardName.KNIGHT_OF_COINS]: 'Рыцарь Пентаклей',
+  [CardName.QUEEN_OF_COINS]: 'Королева Пентаклей',
+  [CardName.KING_OF_COINS]: 'Король Пентаклей',
+};
+
+export default TRANSLATIONS;
