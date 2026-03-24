@@ -8,11 +8,11 @@ import useLocales from '@/shared/hooks/useLocales';
 import styles from './Reading.module.css';
 
 export const ReadingPage = () => {
-  const { loadTranslations, isLoading } = useLocales();
+  const { loadTranslations, isLoading, locale } = useLocales();
 
   useEffect(() => {
     loadTranslations('reading');
-  }, []);
+  }, [locale]);
 
   return (
     <div className={styles.page}>{isLoading ? <Spinner /> : <Reading />}</div>
