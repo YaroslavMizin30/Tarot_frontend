@@ -59,6 +59,7 @@ export const useLocales = (): UseLocalesResult => {
   return {
     isLoading,
     translations,
+    locale,
     changeLanguage,
     loadTranslations,
     i18n,
