@@ -1,6 +1,8 @@
 import { CardName } from '../../types/arcana';
 
 const TRANSLATIONS: Record<string, string> = {
+  'Topics': 'Темы раскладов',
+
   // Темы
   'Anxiety and uncertainty': 'Тревога и неопределённость',
   'Decision Making': 'Принятие решений',
@@ -22,7 +24,7 @@ const TRANSLATIONS: Record<string, string> = {
   'Fear of making a mistake in decision': 'Страх ошибки в решении',
   'Passing the buck': 'Перекладывание ответственности',
   'Love and relationships now': 'Любовь и отношения сейчас',
-  "The couple's future": "Будущее пары",
+  "The couple's future": 'Будущее пары',
   'Returning to an ex': 'Возвращение к бывшему',
   'Dating a new person': 'Новый человек / свидания',
   'Scenarios in love': 'Сценарии в любви',
@@ -64,11 +66,11 @@ const TRANSLATIONS: Record<string, string> = {
   'What do the cards advise to do in this situation?':
     'Что карты советуют сделать в этой ситуации?',
   "What's going on between me and my partner? Feelings, motives.":
-    "Что происходит между мной и партнёром? Чувства, мотивы.",
+    'Что происходит между мной и партнёром? Чувства, мотивы.',
   'Is there a chance for our relationship? What lies ahead.':
     'Есть ли шанс у наших отношений? Что впереди.',
   "Should I return it? Partner's thoughts, conclusion.":
-    "Стоит ли возвращать? Мысли партнёра, итог.",
+    'Стоит ли возвращать? Мысли партнёра, итог.',
   'How does he(she) feel? Prospects.': 'Что он/она чувствует? Перспективы.',
   'Why do mistakes repeat themselves? How to break the cycle.':
     'Почему повторяются ошибки? Как сломать круг.',
@@ -77,7 +79,7 @@ const TRANSLATIONS: Record<string, string> = {
   'Am I leaving correctly? How to let go.':
     'Правильно ли ухожу? Как отпустить.',
   "When will I meet my partner? What's blocking me?":
-    "Когда встречу партнёра? Что блокирует.",
+    'Когда встречу партнёра? Что блокирует.',
   'Is there a third party? What to do.': 'Есть ли кто-то третий? Что делать.',
   'What destroys? How to restore.': 'Что разрушает? Как восстановить.',
   'Why do I choose the "wrong ones"? How to love yourself.':
@@ -88,17 +90,15 @@ const TRANSLATIONS: Record<string, string> = {
   'Which offer to choose? The risks of each.':
     'Какой офер выбрать? Риски каждого.',
   "What's hindering growth? Strategy adjustments.":
-    "Что мешает росту? Корректировка стратегии.",
-  'Obstacles, resources, growth points.':
-    'Препятствия, ресурсы, точки роста.',
+    'Что мешает росту? Корректировка стратегии.',
+  'Obstacles, resources, growth points.': 'Препятствия, ресурсы, точки роста.',
   'Investment/Partnership Risks? Summary.':
     'Риски инвестиций/партнёрств? Итог.',
   'What are my true desires? What needs to be changed?':
     'Мои истинные желания? Что менять.',
   'What do I really want?': 'Чего я хочу на самом деле?',
   'The logic of my story? New meaning.': 'Логика моей истории? Новый смысл.',
-  'What hurts inside? A gentle analysis.':
-    'Что болит внутри? Бережный разбор.',
+  'What hurts inside? A gentle analysis.': 'Что болит внутри? Бережный разбор.',
   'What do I feel? How to experience': 'Что я чувствую? Как прожить.',
   'My path, signs of the Universe.': 'Мой путь, знаки Вселенной.',
   'Why did this happen to me?': 'Зачем это произошло со мной?',
@@ -106,8 +106,7 @@ const TRANSLATIONS: Record<string, string> = {
     'Поддержка на старте: переезд, год, отношения.',
   'What to let go of? What to take into the new.':
     'Что отпустить? Что взять в новое.',
-  'What does your gut tell you? Symbols.':
-    'Что подсказывает чутьё? Символы.',
+  'What does your gut tell you? Symbols.': 'Что подсказывает чутьё? Символы.',
   'Metaphors for my questions.': 'Метафоры для моих вопросов.',
 
   // Названия раскладов
@@ -166,6 +165,19 @@ const TRANSLATIONS: Record<string, string> = {
   'The offers I am considering are': 'Офферы, которые я рассматриваю',
   'What is your current business?': 'Каким бизнесом Вы сейчас занимаетесь?',
   'My current business': 'Мой бизнес на данный момент',
+  'Details are required': 'Для точного анализа нужны детали',
+
+  'Type here...': 'Пишите сюда...',
+
+  'Question': 'Вопрос',
+  'Spread': 'Расклад',
+  'Select spread': 'Выберите расклад',
+  'Ready?': 'Готовы?',
+  'Click': 'Разложить',
+
+  'cards(nominative)': 'карты',
+  'cards(accusative)': 'карт',
+  'card': 'карта',
 
   // Старший Аркан
   [CardName.THE_FOOL]: 'Шут',

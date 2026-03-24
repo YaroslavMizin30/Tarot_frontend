@@ -1,6 +1,8 @@
 import { CardName } from '@/shared/types/arcana';
 
 const TRANSLATIONS: Record<string, string> = {
+  'Topics': 'Topics',
+
   // Темы
   'Anxiety and uncertainty': 'Anxiety and uncertainty',
   'Decision Making': 'Decision Making',
@@ -167,6 +169,19 @@ const TRANSLATIONS: Record<string, string> = {
   'The offers I am considering are': 'The offers I am considering are',
   'What is your current business?': 'What is your current business?',
   'My current business': 'My current business',
+  'Details are required': 'Details are required',
+
+  'Type here...': 'Type here...',
+
+  'Question': 'Question',
+  'Spread': 'Spread',
+  'Select spread': 'Select spread',
+  'Ready?': 'Ready?',
+  'Click': 'Click',
+
+  'cards(nominative)': 'cards',
+  'cards(accusative)': 'cards',
+  'card': 'card',
 
   // Major Arcana
   [CardName.THE_FOOL]: 'The Fool',
