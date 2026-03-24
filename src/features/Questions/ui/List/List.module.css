@@ -1,0 +1,29 @@
+.button {
+  width: 100%;
+  max-width: 300px;
+  white-space: normal;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-color: var(--border-inversed);
+}
+
+.title {
+  color: var(--border-inversed);
+  text-align: center;
+}
+
+.question-item {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.description {
+  padding: 6px 12px;
+
+  color: var(--border-inversed);
+  text-align: center;
+  font-size: 14px;
+  border: 1px solid var(--border-inversed);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+}

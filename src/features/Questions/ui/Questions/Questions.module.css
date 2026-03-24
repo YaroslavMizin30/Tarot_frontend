@@ -1,0 +1,48 @@
+.questions {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 260px;
+  height: 100%;
+  max-height: 100vh;
+
+  padding: 20px;
+
+  transition: opacity 1s ease;
+}
+
+.container {
+  position: relative;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  width: 260px;
+  padding: 0 10px;
+
+  overflow-y: auto;
+  overflow-x: visible;
+}
+
+.back {
+  position: absolute;
+  left: -30px;
+
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.forward {
+  position: absolute;
+  right: -30px;
+
+  transform: scaleX(-1);
+
+  border-radius: 50%;
+  cursor: pointer;
+}
