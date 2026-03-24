@@ -1,19 +1,14 @@
 import './App.css';
-
+import { RouterProvider } from 'react-router';
 import { Provider } from 'react-redux';
 
-import ReadingPage from '@/pages/Reading';
-
-import Layout from './Layout/Layout';
-
+import router from '../router';
 import store from '../store';
 
 export function App() {
   return (
-    <Layout>
-      <Provider store={store}>
-        <ReadingPage />
-      </Provider>
-    </Layout>
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   );
 }
