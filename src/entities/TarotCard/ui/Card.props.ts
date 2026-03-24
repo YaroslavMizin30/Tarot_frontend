@@ -27,4 +27,8 @@ export interface TarotCardProps {
    * Styles
    */
   style?: CSSProperties;
+  /**
+   * Flag if card is inverted
+   */
+  isInverted?: boolean;
 }

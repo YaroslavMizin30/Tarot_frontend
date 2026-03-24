@@ -12,6 +12,10 @@
   transform: rotateY(180deg);
 }
 
+.inverted {
+  transform: scaleY(-1);
+}
+
 .clickable {
   cursor: pointer;
 }
@@ -30,18 +34,17 @@
 .front {
   display: flex;
   flex-direction: column;
-  justify-content: center;
 
   background-image: url('src/shared/assets/images/card/background.png');
   border-radius: 10px;
-  background-size: contain;
+  background-size: cover;
 }
 
 .back {
   transform: rotateY(180deg);
 
   background-image: url('src/shared/assets/images/card/back.jpeg');
-  background-size: contain;
+  background-size: cover;
   border-radius: 10px;
 }
 
@@ -49,7 +52,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 90%;
+  height: 80%;
 }
 
 .image {
@@ -63,7 +66,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 15%;
+  height: 100%;
 
   font-family: 'Monomakh';
   font-weight: 700;
@@ -79,8 +82,10 @@
 }
 
 .container {
-  height: 8rem;
-  width: 4.8rem;
+  height: 148px;
+  width: 85px;
+
+  border-radius: 10px;
 }
 
 .front {
