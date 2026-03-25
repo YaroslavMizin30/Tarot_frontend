@@ -40,5 +40,5 @@
       "@/types/*": ["src/shared/types/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "src/vite-env.d.ts"]
 }
