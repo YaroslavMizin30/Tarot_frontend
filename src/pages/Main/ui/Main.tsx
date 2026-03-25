@@ -27,6 +27,10 @@ export const MainPage = () => {
     <Layout>
       <div className={styles.page}>
         <div className={styles.container}>
+          <Button value={'/daily'} onClick={handleNavigationButtonClick}>
+            {i18n('Card of the day')}
+          </Button>
+
           <Button value={'/reading'} onClick={handleNavigationButtonClick}>
             {i18n('Make spread')}
           </Button>

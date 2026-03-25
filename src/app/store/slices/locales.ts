@@ -15,7 +15,7 @@ const initialState: SpreadState = {
     locale: 'ru',
     translations: {},
     locations: {
-      common: true,
+      common: false,
       reading: false,
       settings: false,
       result: false,
