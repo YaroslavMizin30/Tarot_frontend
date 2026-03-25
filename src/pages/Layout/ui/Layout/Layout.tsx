@@ -6,7 +6,7 @@ import type { LayoutProps } from './Layout.props';
 
 import styles from './Layout.module.css';
 
-const Layout: FC<LayoutProps> = (props) => {
+export const Layout: FC<LayoutProps> = (props) => {
   const { children } = props;
 
   return (
@@ -17,5 +17,3 @@ const Layout: FC<LayoutProps> = (props) => {
     </div>
   );
 };
-
-export default Layout;

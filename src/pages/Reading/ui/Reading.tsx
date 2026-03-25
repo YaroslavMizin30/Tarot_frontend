@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import Reading from '@/widgets/Reading';
 import Spinner from '@/shared/ui/Spinner';
 import useLocales from '@/shared/hooks/useLocales';
-import Layout from '@/pages/Layout/Layout';
+import Layout from '@/pages/Layout';
 
 import styles from './Reading.module.css';
 
