@@ -49,6 +49,10 @@ export const useLocales = (): UseLocalesResult => {
   };
 
   const changeLanguage = (id: Locale) => {
+    if (id === locale) {
+      return;
+    }
+
     dispatch(changeLocale(id));
   };
 
