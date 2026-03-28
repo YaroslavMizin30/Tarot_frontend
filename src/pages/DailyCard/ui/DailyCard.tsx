@@ -1,25 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import Layout from '@/pages/Layout';
 import TarotSpread from '@/features/TarotSpread';
 import useLocales from '@/shared/hooks/useLocales';
-
-import styles from './DailyCard.module.css';
+import TRANSLATIONS_EN from '@/shared/locales/en/daily';
+import TRANSLATIONS_RU from '@/shared/locales/ru/daily';
 
 export const DailyCard = () => {
-  const { i18n } = useLocales();
+  const { i18n, addTranslations, locale } = useLocales();
+
+  useEffect(() => {
+    addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
+  }, [locale]);
 
   return (
-    <Layout>
-      <div className={styles.page}>
-        <TarotSpread
-          spread={{
-            id: 'single',
-            cardsCount: 1,
-            question: i18n('Card of the day'),
-          }}
-        />
-      </div>
-    </Layout>
+    <TarotSpread
+      spread={{
+        id: 'single',
+        cardsCount: 1,
+        question: i18n('Card of the day'),
+      }}
+    />
   );
 };

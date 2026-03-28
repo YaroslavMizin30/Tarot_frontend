@@ -48,6 +48,12 @@ export const useLocales = (): UseLocalesResult => {
     }
   };
 
+  const addTranslations = (
+    translations: Record<`${Locale}`, Record<string, string>>,
+  ) => {
+    dispatch(preloadTranslations(translations[locale]));
+  };
+
   const changeLanguage = (id: Locale) => {
     if (id === locale) {
       return;
@@ -66,6 +72,7 @@ export const useLocales = (): UseLocalesResult => {
     locale,
     changeLanguage,
     loadTranslations,
+    addTranslations,
     i18n,
   };
 };

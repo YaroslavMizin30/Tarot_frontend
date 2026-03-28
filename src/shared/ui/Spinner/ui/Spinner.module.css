@@ -1,10 +1,20 @@
 .spinner {
+  animation: spin 2s linear infinite;
+}
+
+.s {
   width: 20px;
   height: 20px;
-  background-image: url('src/shared/assets/images/common/spinner.png');
-  background-size: cover;
+}
 
-  animation: spin 2s linear infinite;
+.m {
+  width: 40px;
+  height: 40px;
+}
+
+.l {
+  width: 100px;
+  height: 100px;
 }
 
 @keyframes spin {

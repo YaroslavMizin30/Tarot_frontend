@@ -1,22 +1,16 @@
 import React, { useEffect } from 'react';
 
 import Reading from '@/widgets/Reading';
-import Spinner from '@/shared/ui/Spinner';
 import useLocales from '@/shared/hooks/useLocales';
-import Layout from '@/pages/Layout';
-
-import styles from './Reading.module.css';
+import TRANSLATIONS_EN from '@/shared/locales/en/reading';
+import TRANSLATIONS_RU from '@/shared/locales/ru/reading';
 
 export const ReadingPage = () => {
-  const { loadTranslations, isLoading, locale } = useLocales();
+  const { addTranslations, locale } = useLocales();
 
   useEffect(() => {
-    loadTranslations('reading');
+    addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
   }, [locale]);
 
-  return (
-    <Layout>
-      <div className={styles.page}>{isLoading ? <Spinner /> : <Reading />}</div>
-    </Layout>
-  );
+  return <Reading />;
 };

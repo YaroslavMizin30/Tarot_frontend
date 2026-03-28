@@ -1,6 +1,6 @@
-import { CardName } from '../../types/arcana';
+import CARDS from './cards';
 
-const TRANSLATIONS: Record<string, string> = {
+const TRANSLATIONS_RU: Record<string, string> = {
   'Topics': 'Темы раскладов',
 
   // Темы
@@ -179,93 +179,7 @@ const TRANSLATIONS: Record<string, string> = {
   'cards(accusative)': 'карт',
   'card': 'карта',
 
-  // Старший Аркан
-  [CardName.THE_FOOL]: 'Шут',
-  [CardName.THE_MAGICIAN]: 'Маг',
-  [CardName.THE_HIGH_PRIESTESS]: 'Верховная Жрица',
-  [CardName.THE_EMPRESS]: 'Императрица',
-  [CardName.THE_EMPEROR]: 'Император',
-  [CardName.THE_HIEROPHANT]: 'Иерофант',
-  [CardName.THE_LOVERS]: 'Влюбленные',
-  [CardName.THE_CHARIOT]: 'Колесница',
-  [CardName.STRENGTH]: 'Сила',
-  [CardName.THE_HERMIT]: 'Отшельник',
-  [CardName.WHEEL_OF_FORTUNE]: 'Колесо Фортуны',
-  [CardName.JUSTICE]: 'Справедливость',
-  [CardName.THE_HANGED_MAN]: 'Повешенный',
-  [CardName.DEATH]: 'Смерть',
-  [CardName.TEMPERANCE]: 'Умеренность',
-  [CardName.THE_DEVIL]: 'Дьявол',
-  [CardName.THE_TOWER]: 'Башня',
-  [CardName.THE_STAR]: 'Звезда',
-  [CardName.THE_MOON]: 'Луна',
-  [CardName.THE_SUN]: 'Солнце',
-  [CardName.JUDGEMENT]: 'Суд',
-  [CardName.THE_WORLD]: 'Мир',
-
-  // Жезлы
-  [CardName.ACE_OF_WANDS]: 'Туз Жезлов',
-  [CardName.TWO_OF_WANDS]: 'Двойка Жезлов',
-  [CardName.THREE_OF_WANDS]: 'Тройка Жезлов',
-  [CardName.FOUR_OF_WANDS]: 'Четверка Жезлов',
-  [CardName.FIVE_OF_WANDS]: 'Пятерка Жезлов',
-  [CardName.SIX_OF_WANDS]: 'Шестерка Жезлов',
-  [CardName.SEVEN_OF_WANDS]: 'Семерка Жезлов',
-  [CardName.EIGHT_OF_WANDS]: 'Восьмерка Жезлов',
-  [CardName.NINE_OF_WANDS]: 'Девятка Жезлов',
-  [CardName.TEN_OF_WANDS]: 'Десятка Жезлов',
-  [CardName.PAGE_OF_WANDS]: 'Паж Жезлов',
-  [CardName.KNIGHT_OF_WANDS]: 'Рыцарь Жезлов',
-  [CardName.QUEEN_OF_WANDS]: 'Королева Жезлов',
-  [CardName.KING_OF_WANDS]: 'Король Жезлов',
-
-  // Кубки
-  [CardName.ACE_OF_CUPS]: 'Туз Кубков',
-  [CardName.TWO_OF_CUPS]: 'Двойка Кубков',
-  [CardName.THREE_OF_CUPS]: 'Тройка Кубков',
-  [CardName.FOUR_OF_CUPS]: 'Четверка Кубков',
-  [CardName.FIVE_OF_CUPS]: 'Пятерка Кубков',
-  [CardName.SIX_OF_CUPS]: 'Шестерка Кубков',
-  [CardName.SEVEN_OF_CUPS]: 'Семерка Кубков',
-  [CardName.EIGHT_OF_CUPS]: 'Восьмерка Кубков',
-  [CardName.NINE_OF_CUPS]: 'Девятка Кубков',
-  [CardName.TEN_OF_CUPS]: 'Десятка Кубков',
-  [CardName.PAGE_OF_CUPS]: 'Паж Кубков',
-  [CardName.KNIGHT_OF_CUPS]: 'Рыцарь Кубков',
-  [CardName.QUEEN_OF_CUPS]: 'Королева Кубков',
-  [CardName.KING_OF_CUPS]: 'Король Кубков',
-
-  // Мечи
-  [CardName.ACE_OF_SWORDS]: 'Туз Мечей',
-  [CardName.TWO_OF_SWORDS]: 'Двойка Мечей',
-  [CardName.THREE_OF_SWORDS]: 'Тройка Мечей',
-  [CardName.FOUR_OF_SWORDS]: 'Четверка Мечей',
-  [CardName.FIVE_OF_SWORDS]: 'Пятерка Мечей',
-  [CardName.SIX_OF_SWORDS]: 'Шестерка Мечей',
-  [CardName.SEVEN_OF_SWORDS]: 'Семерка Мечей',
-  [CardName.EIGHT_OF_SWORDS]: 'Восьмерка Мечей',
-  [CardName.NINE_OF_SWORDS]: 'Девятка Мечей',
-  [CardName.TEN_OF_SWORDS]: 'Десятка Мечей',
-  [CardName.PAGE_OF_SWORDS]: 'Паж Мечей',
-  [CardName.KNIGHT_OF_SWORDS]: 'Рыцарь Мечей',
-  [CardName.QUEEN_OF_SWORDS]: 'Королева Мечей',
-  [CardName.KING_OF_SWORDS]: 'Король Мечей',
-
-  // Пентакли
-  [CardName.ACE_OF_COINS]: 'Туз Пентаклей',
-  [CardName.TWO_OF_COINS]: 'Двойка Пентаклей',
-  [CardName.THREE_OF_COINS]: 'Тройка Пентаклей',
-  [CardName.FOUR_OF_COINS]: 'Четверка Пентаклей',
-  [CardName.FIVE_OF_COINS]: 'Пятерка Пентаклей',
-  [CardName.SIX_OF_COINS]: 'Шестерка Пентаклей',
-  [CardName.SEVEN_OF_COINS]: 'Семерка Пентаклей',
-  [CardName.EIGHT_OF_COINS]: 'Восьмерка Пентаклей',
-  [CardName.NINE_OF_COINS]: 'Девятка Пентаклей',
-  [CardName.TEN_OF_COINS]: 'Десятка Пентаклей',
-  [CardName.PAGE_OF_COINS]: 'Паж Пентаклей',
-  [CardName.KNIGHT_OF_COINS]: 'Рыцарь Пентаклей',
-  [CardName.QUEEN_OF_COINS]: 'Королева Пентаклей',
-  [CardName.KING_OF_COINS]: 'Король Пентаклей',
+  ...CARDS,
 };
 
-export default TRANSLATIONS;
+export default TRANSLATIONS_RU;
