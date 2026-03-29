@@ -1,8 +1,8 @@
-export const question = {
-  title: 'Как лучше задавать вопрос?',
+export const ASK_QUESTION = {
+  title: 'How to ask questions better?',
   paragraphs: [
-    'Будьте честны с собой. Первое и главное правило – всегда задавайте вопросы искренне. Не пытайтесь манипулировать картами или получить желаемый ответ. Таро работает на уровне подсознания, и если вы будете лукавить, то результат может оказаться противоположным тому, что вы ожидаете. Будьте открыты к любому исходу, даже если он кажется вам неприятным или неожиданным.',
-    'Если вы не получили желаемый ответ, не стоит повторять вопрос снова и снова. Вместо этого попробуйте переформулировать его или подождать некоторое время.',
-    'Помните, что карты Таро – это инструмент, а не судья вашей судьбы. Ответы, которые вы получите, должны служить руководством, но не обязательным предписанием.',
+    "Be honest with yourself. The first and most important rule is to always ask questions sincerely. Don't try to manipulate the cards or get the desired answer. Tarot works at the subconscious level, and if you are dishonest, the result may be the opposite of what you expect. Be open to any outcome, even if it seems unpleasant or unexpected to you.",
+    "If you don't get the desired answer, don't keep repeating the same question over and over. Instead, try to rephrase it or wait for some time.",
+    'Remember that Tarot cards are a tool, not a judge of your destiny. The answers you receive should serve as guidance, but not as mandatory instructions.',
   ],
 };

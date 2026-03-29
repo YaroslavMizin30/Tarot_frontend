@@ -1,13 +1,46 @@
 import { createBrowserRouter, type RouteObject } from 'react-router';
 
+import Layout from '@/app/ui/Layout';
 import MainPage from '@/pages/Main/';
-import ReadingPage from '@/pages/Reading';
-import DailyCard from '@/pages/DailyCard';
 
 const routes: RouteObject[] = [
-  { path: '/', Component: MainPage },
-  { path: '/reading', Component: ReadingPage },
-  { path: '/daily', Component: DailyCard },
+  {
+    path: '/',
+    Component: Layout,
+    children: [
+      { path: '/', Component: MainPage },
+      {
+        path: '/reading',
+        lazy: {
+          async Component() {
+            const { default: ReadingPage } = await import('@/pages/Reading');
+
+            return ReadingPage;
+          },
+        },
+      },
+      {
+        path: '/daily',
+        lazy: {
+          async Component() {
+            const { default: DailyCard } = await import('@/pages/DailyCard');
+
+            return DailyCard;
+          },
+        },
+      },
+      {
+        path: '/about',
+        lazy: {
+          async Component() {
+            const { default: AboutPage } = await import('@/pages/About');
+
+            return AboutPage;
+          },
+        },
+      },
+    ],
+  },
 ];
 
 export const router = createBrowserRouter(routes);
