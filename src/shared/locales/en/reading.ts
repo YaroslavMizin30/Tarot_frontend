@@ -183,6 +183,16 @@ const TRANSLATIONS_EN: Record<string, string> = {
   'cards(accusative)': 'cards',
   'card': 'card',
 
+  'Interpretation': 'Interpretation',
+  'Single Card': 'Single card',
+  'Three Cards': 'Three cards',
+  'Pentagram': 'Pentagram',
+  'Need tarot spread interpretation': 'Need tarot spread interpretation',
+  'Spread title': 'Spread title',
+  'Cards': 'Cards',
+  'Do not talk about user as a third person':
+    'Do not talk about user as a third person',
+
   ...CARDS,
 };
 

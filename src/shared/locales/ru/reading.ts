@@ -179,6 +179,17 @@ const TRANSLATIONS_RU: Record<string, string> = {
   'cards(accusative)': 'карт',
   'card': 'карта',
 
+  'Interpretation': 'К интерпретации',
+
+  'Single Card': 'Одна карта',
+  'Three Cards': 'Три карты',
+  'Pentagram': 'Петаграмма',
+  'Need tarot spread interpretation': 'Нужна интерпретация для расклада таро',
+  'Spread title': 'Название расклада',
+  'Cards': 'Карты',
+  'Do not talk about user as a third person':
+    'Не указывать в ответе ссылки на самого пользователя в третьем лице',
+
   ...CARDS,
 };
 
