@@ -9,7 +9,7 @@ import List from '../List/List';
 import Input from '../Input/QuestionInput';
 import Spread from '../Spread/Spread';
 
-import arrow from '@/shared/assets/svg/common/deck-arrow.svg';
+import Arrow from '@/shared/assets/svg/common/deck-arrow.svg?react';
 import useLocales from '@/shared/hooks/useLocales';
 
 import { type QuestionProps } from './Questions.props';
@@ -153,8 +153,7 @@ export const Questions: FC<QuestionProps> = (props) => {
       style={{ opacity: isSelected ? 0 : 1 }}
     >
       {step !== 'theme' && (
-        <img
-          src={arrow}
+        <Arrow
           width={30}
           height={30}
           className={styles.back}
@@ -163,8 +162,7 @@ export const Questions: FC<QuestionProps> = (props) => {
       )}
 
       {step === 'input' && (
-        <img
-          src={arrow}
+        <Arrow
           width={30}
           height={30}
           className={styles.forward}

@@ -58,7 +58,7 @@ const Spread: FC<SpreadProps> = (props) => {
   const getSpread = () => {
     if (title && cardsCount) {
       return (
-        <h3>{`${i18n('Spread')}: "${title}" (${cardsCount} ${getCardWithCase(cardsCount)})`}</h3>
+        <h3>{`${i18n('Spread')}: "${i18n(title)}" (${cardsCount} ${getCardWithCase(cardsCount)})`}</h3>
       );
     }
 
@@ -73,14 +73,14 @@ const Spread: FC<SpreadProps> = (props) => {
             onSpreadChange({
               ...spread,
               cardsCount: cardCount,
-              title: label,
+              title: i18n(label),
               id,
             });
           };
 
           return (
             <Button onClick={handleSpreadButtonClick}>
-              {`${label} (${cardCount} ${getCardWithCase(cardCount)})`}
+              {`${i18n(label)} (${cardCount} ${getCardWithCase(cardCount)})`}
             </Button>
           );
         })}
