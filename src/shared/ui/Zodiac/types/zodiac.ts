@@ -1,0 +1,28 @@
+const enum SIGNS_ENUM {
+  Aries = 'Aries',
+  Taurus = 'Taurus',
+  Gemini = 'Gemini',
+  Cancer = 'Cancer',
+  Leo = 'Leo',
+  Virgo = 'Virgo',
+  Libra = 'Libra',
+  Scorpio = 'Scorpio',
+  Capricorn = 'Capricorn',
+  Sagittarius = 'Sagittarius',
+  Aquarius = 'Aquarius',
+  Pisces = 'Pisces',
+  Овен = 'Овен',
+  Телец = 'Телец',
+  Близнецы = 'Близнецы',
+  Рак = 'Рак',
+  Лев = 'Лев',
+  Дева = 'Дева',
+  Весы = 'Весы',
+  Скорпион = 'Скорпион',
+  Стрелец = 'Стрелец',
+  Козерог = 'Козерог',
+  Водолей = 'Водолей',
+  Рыбы = 'Рыбы',
+}
+
+export type Sign = `${SIGNS_ENUM}`;

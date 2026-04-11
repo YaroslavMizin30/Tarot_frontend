@@ -1,0 +1,22 @@
+import React, { type FC } from 'react';
+
+import { SIGNS } from '../config/signs';
+
+import type { ZodiacProps } from './Zodiac.props';
+
+import styles from './Zodiac.module.css';
+
+export const Zodiac: FC<ZodiacProps> = (props) => {
+  const { sign } = props;
+
+  return (
+    <div className={styles.container}>
+      {sign ? (
+        <img
+          src={`/src/shared/assets/images/zodiac/${SIGNS[sign]}.png`}
+          className={styles.image}
+        />
+      ) : null}
+    </div>
+  );
+};
