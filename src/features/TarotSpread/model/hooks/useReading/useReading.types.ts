@@ -28,4 +28,8 @@ export interface UseReadingResult {
    * Array of cards to display
    */
   cards: Card[];
+  /**
+   * Flag if the reading is finished
+   */
+  isFinished: boolean;
 }

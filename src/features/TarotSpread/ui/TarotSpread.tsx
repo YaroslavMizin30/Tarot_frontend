@@ -1,24 +1,26 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, type FC } from 'react';
 
+import Button from '@/shared/ui/Button';
 import useLocales from '@/shared/hooks/useLocales';
-
 import TarotCard from '@/entities/TarotCard';
 
-import { SpreadConfig } from '../config/spreads/spreads';
+import { SpreadConfig } from '../config/spreads';
 import { useReading } from '../model/hooks/useReading/useReading';
+import { useInterpretation } from '../model/hooks/useInterpretation/useInterpretation';
 
 import Placeholder from './Placeholder/Placeholder';
 import { type TarotSpreadProps } from './TartotSpread.props';
-
 import styles from './TarotSpread.module.css';
-import type { FC } from 'react';
+import TextContainer from '@/shared/ui/TextContainer';
 
 export const TarotSpread: FC<TarotSpreadProps> = (props) => {
   const { spread } = props;
 
   const { title, id, cardsCount } = spread;
 
-  const { cards, activeCard, prepareCards, changeActiveCard } = useReading();
+  const { cards, activeCard, isFinished, prepareCards, changeActiveCard } =
+    useReading();
+  const { getInterpretation, interpretation, isLoading } = useInterpretation();
 
   const { i18n } = useLocales();
 
@@ -26,16 +28,53 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
     changeActiveCard();
   };
 
+  const handleFinishButtonClick = () => {
+    getInterpretation(cards, spread);
+  };
+
   useEffect(() => {
     prepareCards(cardsCount);
   }, []);
+
+  if (interpretation) {
+    return (
+      <div className={styles.tarotSpread}>
+        <h3 className={styles.title}>{title}</h3>
+
+        <div className={styles['cards-small']}>
+          {cards.map((card) => {
+            const { name, isInverted } = card;
+
+            return (
+              <TarotCard
+                name={name}
+                key={name}
+                localizedName={i18n(name)}
+                isInverted={isInverted}
+                className={styles['card-small']}
+              />
+            );
+          })}
+        </div>
+
+        <TextContainer
+          paragraphs={interpretation}
+          maxHeight={400}
+          maxHeightMeasure={'px'}
+          className={styles.interpretation}
+        >
+          ''
+        </TextContainer>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.tarotSpread}>
       <h3 className={styles.title}>{title}</h3>
 
       <div className={styles.cards}>
-        {SpreadConfig[id].map((item, idx) => {
+        {SpreadConfig[id].cards.map((item, idx) => {
           const {
             index,
             title,
@@ -73,10 +112,22 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
                 isInverted={isInverted}
                 onClick={handleCardClick}
                 canTurnOver={count === activeCard}
+                isReversed={true}
               />
             </Placeholder>
           );
         })}
+
+        {isFinished && (
+          <Button
+            className={styles.button}
+            onClick={handleFinishButtonClick}
+            style={SpreadConfig[id].button}
+            isLoading={isLoading}
+          >
+            {i18n('Interpretation')}
+          </Button>
+        )}
       </div>
     </div>
   );

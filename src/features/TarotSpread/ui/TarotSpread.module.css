@@ -12,8 +12,7 @@
 }
 
 .button {
-  margin-left: 20px;
-  height: fit-content;
+  width: 200px;
 }
 
 .cards {
@@ -40,8 +39,30 @@
   animation: fadeIn 1s ease-in-out;
 }
 
+.cards-small {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.card-small {
+  height: 120px;
+  width: 60px;
+}
+
+.card-small * {
+  font-size: 7px;
+}
+
 .active-card {
   box-shadow: 0 0px 30px 5px var(--shadow-primary);
+}
+
+.interpretation {
+  width: 300px !important;
 }
 
 @keyframes fadeIn {

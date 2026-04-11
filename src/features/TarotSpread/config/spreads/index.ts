@@ -51,15 +51,18 @@ export const SPREADS: Spread[] = [
 
 export const SpreadConfig: Record<
   `${SpreadType}`,
-  Array<
-    CSSProperties & {
-      index?: number;
-      title?: string;
-      description?: string;
-      tooltipPosition?: string;
-      tooltipStyle?: CSSProperties;
-    }
-  >
+  {
+    cards: Array<
+      CSSProperties & {
+        index?: number;
+        title?: string;
+        description?: string;
+        tooltipPosition?: string;
+        tooltipStyle?: CSSProperties;
+      }
+    >;
+    button: CSSProperties;
+  }
 > = {
   [SpreadType.SINGLE]: OneCardSpread,
   [SpreadType.THREE]: ThreeCardSpread,

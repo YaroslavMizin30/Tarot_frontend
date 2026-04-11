@@ -7,6 +7,7 @@ import type { UseReadingResult, Card } from './useReading.types';
 export const useReading = (): UseReadingResult => {
   const [cards, setCards] = useState<Card[]>([]);
   const [activeCard, setActiveCard] = useState(1);
+  const [isFinished, setIsFinished] = useState(false);
 
   const prepareCards = (count: number) => {
     const allCards = [...ALL_TAROT_CARDS_ARRAY];
@@ -28,10 +29,15 @@ export const useReading = (): UseReadingResult => {
 
   const changeActiveCard = () => {
     setActiveCard((activeCard) => activeCard + 1);
+
+    if (activeCard === cards.length) {
+      setIsFinished(true);
+    }
   };
 
   return {
     cards,
+    isFinished,
     prepareCards,
     activeCard,
     changeActiveCard,
