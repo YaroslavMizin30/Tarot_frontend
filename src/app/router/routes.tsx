@@ -39,6 +39,16 @@ const routes: RouteObject[] = [
           },
         },
       },
+      {
+        path: '/settings',
+        lazy: {
+          async Component() {
+            const { default: SettingsPage } = await import('@/pages/Settings');
+
+            return SettingsPage;
+          },
+        },
+      },
     ],
   },
 ];
