@@ -31,4 +31,8 @@ export interface TarotCardProps {
    * Flag if card is inverted
    */
   isInverted?: boolean;
+  /**
+   * Flag if card is reversed
+   */
+  isReversed?: boolean;
 }

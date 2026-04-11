@@ -13,13 +13,14 @@ export const TarotCard: FC<TarotCardProps> = (props) => {
     className = '',
     style = {},
     isInverted,
+    isReversed,
   } = props;
 
-  const [isReversed, setIsReversed] = useState(true);
+  const [isCardReversed, setIsReversed] = useState(isReversed);
 
   const handleCardClick = () => {
-    if (canTurnOver && isReversed) {
-      setIsReversed(!isReversed);
+    if (canTurnOver && isCardReversed) {
+      setIsReversed(!isCardReversed);
 
       onClick();
     }
@@ -31,19 +32,19 @@ export const TarotCard: FC<TarotCardProps> = (props) => {
       onClick={handleCardClick}
       style={style}
     >
-      <div className={`${styles.inner} ${isReversed ? styles.reversed : ''}`}>
+      <div className={`${styles.inner} ${isCardReversed ? styles.reversed : ''}`}>
         <div className={styles.back}></div>
 
         <div className={`${styles.front}`}>
           <div className={styles['image-wrapper']}>
             <img
-              className={`${styles.image} ${isInverted && !isReversed ? styles.reversed : ''}`}
+              className={`${styles.image} ${isInverted && !isCardReversed ? styles.reversed : ''}`}
               src={`/src/shared/assets/images/card/${name}.png`}
             />
           </div>
 
           <div
-            className={`${styles.footer} ${isInverted && !isReversed ? styles.reversed : ''}`}
+            className={`${styles.footer} ${isInverted && !isCardReversed ? styles.reversed : ''}`}
           >
             <h2 className={styles.name}>{localizedName}</h2>
           </div>
