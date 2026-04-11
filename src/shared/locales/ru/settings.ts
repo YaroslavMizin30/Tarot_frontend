@@ -1,0 +1,98 @@
+const TRANSLATIONS_RU = {
+  'sign': '🔮 Какой у вас знак зодиака?',
+  'wayOfLife': '🌅 Какой стиль жизни ближе к тому, как живете Вы?',
+  'daySpending': '🕐 Как проходит ваш обычный день?',
+  'energyType': '⚡ Какой у вас тип энергии?',
+  'communicationType': '💬 Как вы общаетесь?',
+  'stressReaction': '😰 Как вы реагируете на стресс?',
+  'relationshipPreference': '💝 Какие отношения вам важны?',
+  'goals': '🎯 Что для вас важно сейчас?',
+  'activityPreference': '🎨 Какая деятельность вам по душе?',
+  'decisionMaking': '🤔 Как вы принимаете решения?',
+  'resortPreference': '🏝️ Как вы любите отдыхать?',
+  'situation': '🎭 В какой ситуации вы чувствуете себя уверенно?',
+
+  // Знаки зодиака
+  'Aries': 'Овен',
+  'Taurus': 'Телец',
+  'Gemini': 'Близнецы',
+  'Cancer': 'Рак',
+  'Leo': 'Лев',
+  'Virgo': 'Дева',
+  'Libra': 'Весы',
+  'Scorpio': 'Скорпион',
+  'Sagittarius': 'Стрелец',
+  'Capricorn': 'Козерог',
+  'Aquarius': 'Водолей',
+  'Pisces': 'Рыбы',
+
+  // Стиль жизни
+  'Active lifestyle (sports, adventures)':
+    'Активный образ жизни (спорт, приключения)',
+  'Balanced (work + rest)': 'Сбалансированный (работа + отдых)',
+  'Creative (creativity, art)': 'Креативный (творчество, искусство)',
+  'Meditative (peace, mindfulness)': 'Медитативой, осознанность)',
+
+  // Проведение дня
+  'I wake up early, do a lot': 'Рано встаю, много делаю',
+  'Plan in advance, everything according to schedule':
+    'Планирую заранее, всё по графику',
+  'Spontaneously, whatever happens': 'Спонтанно, как пойдёт',
+  'A lot of time alone': 'Много времени в одиночестве',
+
+  // Тип энергии
+  'High': 'Высокий',
+  'Medium': 'Средний',
+  'Cyclical': 'Циклический',
+  'Intensive, but in short bursts': 'Интенсивный, но короткими вспышками',
+
+  // Тип коммуникации
+  'Directly and openly': 'Прямолинейно и открыто',
+  'Politely and tactfully': 'Вежливо и тактично',
+  'Interesting and witty': 'Интересно и остроумно',
+  'Deeply and emotionally': 'Глубоко и эмоционально',
+
+  // Реакция на стресс
+  'Quickly solve the problem': 'Быстро решаю проблему',
+  'Calm, looking for a solution': 'Спокоен, ищу решение',
+  'Need time to think': 'Нужно время на обдумывание',
+  'Worry deeply, then recover': 'Переживаю глубоко, затем восстанавливаюсь',
+
+  // Предпочтения в отношениях
+  'Passion and dynamics': 'Страсть и динамика',
+  'Reliability and care': 'Надёжность и забота',
+  'Freedom and equality': 'Свобода и равенство',
+  'Deep connection and trust': 'Глубокая связь и доверие',
+
+  // Цели
+  'Career growth and success': 'Карьерный рост и успех',
+  'Financial stability': 'Финансовая стабильность',
+  'Self-realization and creativity': 'Самореализация и творчество',
+  'Inner peace and harmony': 'Внутренний покой и гармония',
+
+  // Предпочтения в деятельности
+  'Leadership and management': 'Лидерство и управление',
+  'Working with details and systems': 'Работа с деталями и системами',
+  'Communication and teaching': 'Общение и обучение',
+  'Art and emotional expression': 'Искусство и эмоциональное самовыражение',
+
+  // Принятие решений
+  'Intuitively, quickly': 'Интуитивно, быстро',
+  'Logically, thoughtfully': 'Логично, взвешенно',
+  'After discussion with others': 'После обсуждения с другими',
+  'After deep reflection': 'После глубокого размышления',
+
+  // Предпочтения в отдыхе
+  'Active rest': 'Активный отдых',
+  'Cozy rest': 'Уютный отдых',
+  'Social rest': 'Социальный отдых',
+  'Secluded rest': 'Уединённый отдых',
+
+  // Ситуации
+  'In the center of attention': 'В центре внимания',
+  'In a stable environment': 'В стабильной обстановке',
+  'During new acquaintances': 'При новых знакомствах',
+  'In a deep conversation': 'В глубоком разговоре',
+};
+
+export default TRANSLATIONS_RU;

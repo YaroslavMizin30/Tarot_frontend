@@ -4,11 +4,11 @@ import { useNavigate } from 'react-router';
 import Button from '@/shared/ui/Button';
 import TRANSLATIONS_EN from '@/shared/locales/en/common';
 import TRANSLATIONS_RU from '@/shared/locales/ru/common';
-
-import { getUser } from '@/entities/User';
+import useLocales from '@/shared/hooks/useLocales';
+import Zodiac from '@/shared/ui/Zodiac';
+import { useUserData } from '@/entities/User/model/hooks/useUserData/useUserData';
 
 import styles from './Main.module.css';
-import useLocales from '@/shared/hooks/useLocales';
 
 export const MainPage = () => {
   const navigate = useNavigate();
@@ -21,14 +21,16 @@ export const MainPage = () => {
 
   const { i18n, addTranslations, locale } = useLocales();
 
+  const { userData } = useUserData();
+
   useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
-
-    getUser('681641883');
   }, [locale]);
 
   return (
     <div className={styles.container}>
+      <Zodiac sign={userData?.sign} />
+
       <Button value={'/daily'} onClick={handleNavigationButtonClick}>
         {i18n('Card of the day')}
       </Button>

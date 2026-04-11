@@ -1,0 +1,12 @@
+.container {
+  display: grid;
+  flex-direction: column;
+
+  color: var(--border-inversed);
+}
+
+.option {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
