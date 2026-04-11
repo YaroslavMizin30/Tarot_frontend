@@ -38,6 +38,8 @@
 
 .btn--loading {
   pointer-events: none;
+
+  animation: loading 1s infinite;
 }
 
 .btn--full-width {
@@ -46,4 +48,17 @@
 
 .btn--active {
   box-shadow: 0 1px 20px var(--shadow-primary);
+}
+
+@keyframes loading {
+  from {
+    box-shadow:
+      0 0 5px var(--shadow-primary),
+      0 0 10px var(--shadow-primary);
+  }
+  to {
+    box-shadow:
+      0 0 20px var(--shadow-primary),
+      0 0 30px var(--shadow-primary);
+  }
 }

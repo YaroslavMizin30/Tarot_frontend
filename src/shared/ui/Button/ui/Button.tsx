@@ -28,7 +28,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           {
             'btn--loading': isLoading,
             'btn--full-width': fullWidth,
-            'btn--disabled': disabled || isLoading,
+            'btn--disabled': disabled,
             'btn--active': isActive,
           },
           className,
