@@ -1,4 +1,4 @@
-import { SpreadType } from '@/shared/types/spread';
+import { SpreadType } from '@/entities/Spread';
 
 export interface Question {
   /**
@@ -48,14 +48,4 @@ export interface Theme {
    * Flag if it is template or custom question
    */
   isTemplate: boolean;
-}
-
-export interface SpreadParams {
-  title?: string;
-  userAnswer?: string;
-  question: string;
-  cardsCount: number;
-  details?: string;
-  detailsAnswer?: string;
-  id: `${SpreadType}`;
 }

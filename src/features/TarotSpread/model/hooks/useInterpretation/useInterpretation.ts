@@ -7,9 +7,14 @@ import type { SpreadParams } from '@/entities/Spread';
 
 import useLocales from '@/shared/hooks/useLocales';
 
+import { addSpread } from '@/entities/Spread';
+import { useUserData } from '@/entities/User';
+
 export const useInterpretation = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [interpretation, setInterpretation] = useState<string[] | null>(null);
+
+  const { userData } = useUserData();
 
   const { i18n } = useLocales();
 
@@ -35,6 +40,8 @@ export const useInterpretation = () => {
       ]);
 
       setInterpretation(interpretation.replace(/[#|*|-]/g, '').split('\n'));
+
+      addSpread(String(userData?.id), { ...spread, cards, interpretation });
     } finally {
       setIsLoading(false);
     }

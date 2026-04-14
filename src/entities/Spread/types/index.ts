@@ -25,4 +25,5 @@ export const enum SpreadType {
 
 export type Spread = SpreadParams & {
   cards: Card[];
+  interpretation: string;
 };

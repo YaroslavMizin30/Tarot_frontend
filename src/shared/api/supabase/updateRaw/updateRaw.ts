@@ -2,19 +2,19 @@ import { initSupabase } from '../init/init';
 
 import { PostgrestError } from '@supabase/supabase-js';
 
-export const getDataFromDB = async <T>(
+export const updateRaw = async <T>(
   table: string,
-  columns: string[],
+  columns: Record<string, string | number>,
   equal: {
     key: string;
-    value: string;
+    value: string | number;
   },
 ): Promise<{ data: T[] | null; error: PostgrestError | null }> => {
   const supabase = initSupabase();
 
   const { data, error } = await supabase
     .from(table)
-    .select(columns.join(', '))
+    .insert(columns)
     .eq(equal.key, equal.value);
 
   return {
