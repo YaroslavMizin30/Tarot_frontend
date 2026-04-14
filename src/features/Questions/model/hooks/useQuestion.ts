@@ -4,7 +4,9 @@ import type { useQuestionResult, ChangeStepParams } from './useQuestion.types';
 
 import { Steps } from '../../config/steps';
 
-import type { Question, SpreadParams } from '../types/questions';
+import type { Question } from '../types/questions';
+
+import type { SpreadParams } from '@/entities/Spread';
 
 export const useQuestion = (): useQuestionResult => {
   const [steps, setSteps] = useState<`${Steps}`[]>([]);
@@ -12,6 +14,7 @@ export const useQuestion = (): useQuestionResult => {
   const [spread, setSpread] = useState<SpreadParams>({
     cardsCount: 0,
     question: '',
+    id: 'single',
   });
   const [questions, setQuestions] = useState<Question[]>([]);
   const [topic, setTopic] = useState<string>('');
@@ -55,6 +58,11 @@ export const useQuestion = (): useQuestionResult => {
         case 'question':
           newValues.question = '';
           break;
+
+        case 'id':
+          newValues.id = 'single';
+          break;
+
         default:
           newValues[value] = undefined;
       }

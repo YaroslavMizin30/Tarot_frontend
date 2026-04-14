@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 import requestAi from '@/shared/api/AI';
 
-import type { Card } from '../useReading/useReading.types';
-import type { SpreadParams } from '@/features/Questions';
+import type { Card } from '@/entities/TarotCard';
+import type { SpreadParams } from '@/entities/Spread';
 
 import useLocales from '@/shared/hooks/useLocales';
 

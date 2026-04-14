@@ -1,6 +1,6 @@
-import { type SpreadParams } from '@/features/Questions';
+import type { SpreadParams } from '@/entities/Spread';
 
-import type { Card } from '../model/hooks/useReading/useReading.types';
+import type { Card } from '@/entities/TarotCard';
 
 export interface TarotSpreadProps {
   /**

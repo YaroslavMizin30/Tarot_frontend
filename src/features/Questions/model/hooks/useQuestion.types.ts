@@ -1,6 +1,8 @@
 import { Steps } from '../../config/steps';
 
-import type { Question, SpreadParams } from '../types/questions';
+import type { Question } from '../types/questions';
+
+import type { SpreadParams } from '@/entities/Spread';
 
 export interface ChangeStepParams {
   isBack: boolean;

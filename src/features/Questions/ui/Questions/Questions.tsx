@@ -1,13 +1,15 @@
 import React, { useState, type FC } from 'react';
 
 import { useQuestion } from '../../model/hooks/useQuestion';
-import type { Question, SpreadParams } from '../../model/types/questions';
+import type { Question } from '../../model/types/questions';
 import { THEMES } from '../../config/questions';
 
 import Themes from '../Themes/Themes';
 import List from '../List/List';
 import Input from '../Input/QuestionInput';
 import Spread from '../Spread/Spread';
+
+import type { SpreadParams } from '@/entities/Spread';
 
 import Arrow from '@/shared/assets/svg/common/deck-arrow.svg?react';
 import useLocales from '@/shared/hooks/useLocales';

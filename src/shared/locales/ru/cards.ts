@@ -1,4 +1,4 @@
-import { CardName } from '@/shared/types/arcana';
+import { CardName } from '@/entities/TarotCard';
 
 const TRANSLATIONS_RU = {
   // Старший Аркан

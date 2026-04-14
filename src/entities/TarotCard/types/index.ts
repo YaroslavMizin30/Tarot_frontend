@@ -87,3 +87,14 @@ export const enum CardName {
   QUEEN_OF_COINS = 'queen_of_coins',
   KING_OF_COINS = 'king_of_coins'
 };
+
+export interface Card {
+  /**
+   * Name of card
+   */
+  name: CardName;
+  /**
+   * Flag if the card is reversed
+   */
+  isInverted: boolean;
+}

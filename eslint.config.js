@@ -75,7 +75,7 @@ export default defineConfig([
       ],
       '@stylistic/comma-spacing': ['error', { before: false, after: true }],
       '@stylistic/computed-property-spacing': ['error', 'never'],
-      '@stylistic/dot-location': ['error', 'object'],
+      '@stylistic/dot-location': ['error', 'property'],
       '@stylistic/eol-last': ['error', 'always'],
       '@stylistic/function-call-spacing': ['error', 'never'],
       '@stylistic/indent': ['error', 2],

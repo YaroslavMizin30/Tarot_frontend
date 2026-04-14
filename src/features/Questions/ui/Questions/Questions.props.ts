@@ -1,4 +1,4 @@
-import type { SpreadParams } from '../../model/types/questions';
+import type { SpreadParams } from '@/entities/Spread';
 
 export interface QuestionProps {
   /**

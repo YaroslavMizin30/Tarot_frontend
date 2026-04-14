@@ -1,4 +1,4 @@
-import { CardName } from '@/shared/types/arcana';
+import { CardName } from '@/entities/TarotCard';
 
 export const ALL_TAROT_CARDS_ARRAY = [
   // Старший Аркан (22 карты)

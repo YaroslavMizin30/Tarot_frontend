@@ -1,15 +1,4 @@
-import { CardName } from '@/shared/types/arcana';
-
-export interface Card {
-  /**
-   * Name of card
-   */
-  name: CardName;
-  /**
-   * Flag if the card is reversed
-   */
-  isInverted: boolean;
-}
+import type { Card } from "@/entities/TarotCard";
 
 export interface UseReadingResult {
   /**

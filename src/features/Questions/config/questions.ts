@@ -1,6 +1,6 @@
 import type { Theme } from '../model/types/questions';
 
-import { SpreadType } from '@/shared/types/spread';
+import { SpreadType } from '@/entities/Spread';
 
 export const THEMES: Theme[] = [
   {

@@ -1,4 +1,4 @@
-import { type SpreadParams } from '@/features/Questions';
+import { type SpreadParams } from '@/entities/Spread';
 
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 

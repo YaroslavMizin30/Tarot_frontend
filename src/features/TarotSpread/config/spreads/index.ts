@@ -1,6 +1,6 @@
 import { type CSSProperties } from 'react';
 
-import { SpreadType } from '@/shared/types/spread';
+import { SpreadType } from '@/entities/Spread';
 
 import { OneCardSpread } from './single';
 import { ThreeCardSpread } from './three';

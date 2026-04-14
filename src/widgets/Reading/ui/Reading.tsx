@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 
-import Questions, { type SpreadParams } from '@/features/Questions';
+import Questions from '@/features/Questions';
 import TarotSpread from '@/features/TarotSpread';
+
+import type { SpreadParams } from '@/entities/Spread';
 
 import { Step } from '../config/steps';
 
@@ -30,6 +32,6 @@ export const Reading = () => {
       return <Questions onSpreadSelect={handleSpreadSelect} />;
 
     case 'reading':
-      return <TarotSpread spread={spread}/>;
+      return <TarotSpread spread={spread} />;
   }
 };
