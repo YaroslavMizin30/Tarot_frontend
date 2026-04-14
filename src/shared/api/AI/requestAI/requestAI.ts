@@ -1,23 +1,22 @@
-export const requestAi = async (prompt: string, role: string = 'user') => {
-  const response = await fetch(
-    'https://openrouter.ai/api/v1/chat/completions',
-    {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${'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'}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'google/gemma-3-4b-it:free',
-        messages: [
-          {
-            role,
-            content: prompt,
-          },
-        ],
-      }),
-    },
-  );
+interface Prompt {
+  role: 'user' | 'developer' | 'system';
+  content: string;
+}
 
-  return response.json();
+export const requestAi = async (prompts: Prompt[]) => {
+  const response = await fetch('https://routerai.ru/api/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer sk-VJYm9TLvOSZY--3UOkAr0JI9AbNRXj8S',
+    },
+    body: JSON.stringify({
+      model: 'arcee-ai/trinity-large-thinking',
+      messages: prompts,
+    }),
+  });
+
+  const body = await response.json();
+
+  return body.choices[0].message.content;
 };
