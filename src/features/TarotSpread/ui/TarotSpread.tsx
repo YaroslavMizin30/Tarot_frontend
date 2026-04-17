@@ -7,11 +7,13 @@ import TarotCard from '@/entities/TarotCard';
 import { SpreadConfig } from '../config/spreads';
 import { useReading } from '../model/hooks/useReading/useReading';
 import { useInterpretation } from '../model/hooks/useInterpretation/useInterpretation';
+import Spinner from '@/shared/ui/Spinner';
 
 import Placeholder from './Placeholder/Placeholder';
 import { type TarotSpreadProps } from './TartotSpread.props';
 import styles from './TarotSpread.module.css';
 import TextContainer from '@/shared/ui/TextContainer';
+import { Link } from 'react-router';
 
 export const TarotSpread: FC<TarotSpreadProps> = (props) => {
   const { spread } = props;
@@ -62,9 +64,20 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
           maxHeight={400}
           maxHeightMeasure={'px'}
           className={styles.interpretation}
-        >
-          ''
-        </TextContainer>
+        />
+
+        <Link to={'/history'}>
+          <Button>{i18n('To spreads history')}</Button>
+        </Link>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className={styles.loading}>
+        {i18n('Interpreting')}...
+        <Spinner size={'l'} />
       </div>
     );
   }

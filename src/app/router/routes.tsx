@@ -49,6 +49,26 @@ const routes: RouteObject[] = [
           },
         },
       },
+      {
+        path: '/history',
+        lazy: {
+          async Component() {
+            const { default: HistoryPage } = await import('@/pages/History');
+
+            return HistoryPage;
+          },
+        },
+      },
+      {
+        path: '/history/:id',
+        lazy: {
+          async Component() {
+            const { default: SpreadPage } = await import('@/pages/Spread');
+
+            return SpreadPage;
+          },
+        },
+      },
     ],
   },
 ];

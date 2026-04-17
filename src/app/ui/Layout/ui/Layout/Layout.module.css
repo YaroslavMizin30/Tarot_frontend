@@ -22,4 +22,6 @@
     var(--gradient-primary),
     var(--gradient-secondary) 70%
   );
+
+  overflow-y: auto;
 }

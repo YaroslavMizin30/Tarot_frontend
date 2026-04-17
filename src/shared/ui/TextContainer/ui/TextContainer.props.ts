@@ -24,5 +24,5 @@ export interface TextContainerProps {
   /**
    * Children
    */
-  children: ReactNode;
+  children?: ReactNode;
 }

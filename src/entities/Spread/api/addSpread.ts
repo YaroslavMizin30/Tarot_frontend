@@ -6,13 +6,13 @@ import { insertRaw } from '@/shared/api/supabase';
 import { updateRaw } from '@/shared/api/supabase';
 
 export const addSpread = async (id: string, spread: Spread) => {
-  const spreads = await getSpreads(id);
+  const response = await getSpreads(id);
 
-  if (spreads) {
+  if (response?.spreads) {
     await updateRaw(
       'spreads',
       {
-        spreads: JSON.stringify([...spreads, spread]),
+        spreads: JSON.stringify([...response.spreads, spread]),
       },
       { key: 'user_id', value: id },
     );

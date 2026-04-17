@@ -10,7 +10,7 @@
 :root {
   --background-primary: #ffdb88;
 
-  --gradient-primary: #cf59bf;
+  --gradient-primary: #ff91f0;
   --gradient-secondary: #001d73;
 
   --border-primary: #703f00;
@@ -19,6 +19,7 @@
   --shadow-primary: #e55bfb;
 
   --text-primary: #3e3e3e;
+  --text-secondary: #ffdb88;
 }
 
 .custom-scrollbar::-webkit-scrollbar {

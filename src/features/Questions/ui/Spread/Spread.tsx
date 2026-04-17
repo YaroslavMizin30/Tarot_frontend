@@ -104,7 +104,11 @@ const Spread: FC<SpreadProps> = (props) => {
       <div className={styles.finish}>
         <h3>{i18n('Ready?')}</h3>
 
-        <Button disabled={!title} onClick={handleSpreadButtonClick}>
+        <Button
+          disabled={!title}
+          onClick={handleSpreadButtonClick}
+          isLoading={isReading}
+        >
           {i18n('Click')}
         </Button>
       </div>

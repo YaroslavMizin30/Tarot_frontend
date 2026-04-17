@@ -19,13 +19,15 @@ export const useUserData = () => {
   const getUserData = async () => {
     setIsLoading(true);
     try {
-      const user = getTelegramUser();
+      const telegramUser = getTelegramUser() ?? { id: '681641883' };
 
-      if (user) {
-        const { id } = user;
+      if (telegramUser) {
+        const { id } = telegramUser;
 
-        const data = await getUser(String(id));
-        dispatch(setUser(data));
+        if (!user) {
+          const data = await getUser(String(id));
+          dispatch(setUser(data));
+        }
       }
     } catch (error) {
       console.log(error);

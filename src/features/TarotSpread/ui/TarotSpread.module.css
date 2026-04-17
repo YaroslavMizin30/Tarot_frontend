@@ -44,8 +44,15 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  margin-top: 20px;
-  gap: 10px;
+  margin-top: 10px;
+}
+
+.cards-small > div + div {
+  margin-left: 10px;
+}
+
+.cards-small > div {
+  margin-top: 10px;
 }
 
 .card-small {
@@ -63,6 +70,13 @@
 
 .interpretation {
   width: 300px !important;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  color: var(--text-secondary);
 }
 
 @keyframes fadeIn {

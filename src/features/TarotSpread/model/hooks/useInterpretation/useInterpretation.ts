@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useId } from 'react';
 
 import requestAi from '@/shared/api/AI';
 
@@ -15,6 +15,8 @@ export const useInterpretation = () => {
   const [interpretation, setInterpretation] = useState<string[] | null>(null);
 
   const { userData } = useUserData();
+
+  const id = useId();
 
   const { i18n } = useLocales();
 
@@ -41,7 +43,13 @@ export const useInterpretation = () => {
 
       setInterpretation(interpretation.replace(/[#|*|-]/g, '').split('\n'));
 
-      addSpread(String(userData?.id), { ...spread, cards, interpretation });
+      addSpread(String(userData?.id), {
+        ...spread,
+        cards,
+        interpretation,
+        date: new Date().toLocaleDateString(),
+        spreadId: id,
+      });
     } finally {
       setIsLoading(false);
     }

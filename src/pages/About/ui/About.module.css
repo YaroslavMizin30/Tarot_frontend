@@ -10,8 +10,11 @@
 .buttons {
   display: flex;
   flex-direction: column;
-  gap: 10px;
   width: 260px;
+}
+
+.buttons > button + button {
+  margin-top: 10px;
 }
 
 .arrow {

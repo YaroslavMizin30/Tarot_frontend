@@ -7,10 +7,10 @@ import type { ZodiacProps } from './Zodiac.props';
 import styles from './Zodiac.module.css';
 
 export const Zodiac: FC<ZodiacProps> = (props) => {
-  const { sign } = props;
+  const { sign, className = '' } = props;
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${className}`}>
       {sign ? (
         <img
           src={`/src/shared/assets/images/zodiac/${SIGNS[sign]}.png`}

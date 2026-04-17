@@ -14,7 +14,7 @@ export const updateRaw = async <T>(
 
   const { data, error } = await supabase
     .from(table)
-    .insert(columns)
+    .update(columns)
     .eq(equal.key, equal.value);
 
   return {
