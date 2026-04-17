@@ -27,7 +27,7 @@ export const TextContainer: FC<TextContainerProps> = (props) => {
 
       <div className={`${styles.text} custom-scrollbar ${className}`}>
         {paragraphs.map((paragraph) => {
-          return <span>{i18n(paragraph)}</span>;
+          return <span key={paragraph}>{i18n(paragraph)}</span>;
         })}
       </div>
 
