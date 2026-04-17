@@ -9,7 +9,7 @@ import type { Question } from '../types/questions';
 import type { SpreadParams } from '@/entities/Spread';
 
 export const useQuestion = (): useQuestionResult => {
-  const [steps, setSteps] = useState<`${Steps}`[]>([]);
+  const [steps, setSteps] = useState<`${Steps}`[]>(['theme']);
   const [step, setStep] = useState<`${Steps}`>('theme');
   const [spread, setSpread] = useState<SpreadParams>({
     cardsCount: 0,
