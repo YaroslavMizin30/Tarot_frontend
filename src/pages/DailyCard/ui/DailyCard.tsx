@@ -9,6 +9,7 @@ import useLocales from '@/shared/hooks/useLocales';
 import TRANSLATIONS_EN from '@/shared/locales/en/daily';
 import TRANSLATIONS_RU from '@/shared/locales/ru/daily';
 import Spinner from '@/shared/ui/Spinner';
+import Zodiac from '@/shared/ui/Zodiac';
 
 import { useUserData } from '@/entities/User';
 import { useSpreads } from '@/entities/Spread';
@@ -45,6 +46,8 @@ export const DailyCard = () => {
   if (daily > date) {
     return (
       <div className={styles.empty}>
+        <Zodiac sign={userData?.sign} />
+
         <span>{i18n("You've already had your card today")}</span>
 
         <Link className={styles.link} to={'/history'}>
