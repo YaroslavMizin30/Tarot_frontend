@@ -1,0 +1,12 @@
+.empty {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  align-items: center;
+
+  color: var(--text-secondary);
+}
+
+.link {
+  margin-top: 20px;
+}

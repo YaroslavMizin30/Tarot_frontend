@@ -192,6 +192,7 @@ const TRANSLATIONS_EN: Record<string, string> = {
   'Cards': 'Cards',
   'Do not talk about user as a third person':
     'Do not talk about user as a third person',
+  'To spreads history': 'To spreads history',
 
   ...CARDS,
 };

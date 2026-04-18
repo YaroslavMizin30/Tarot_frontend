@@ -189,6 +189,7 @@ const TRANSLATIONS_RU: Record<string, string> = {
   'Cards': 'Карты',
   'Do not talk about user as a third person':
     'Не указывать в ответе ссылки на самого пользователя в третьем лице',
+  'To spreads history': 'К истории раскладов',
 
   ...CARDS,
 };

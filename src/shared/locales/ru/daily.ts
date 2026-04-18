@@ -10,6 +10,8 @@ const TRANSLATIONS_RU = {
     'Не указывать в ответе ссылки на самого пользователя в третьем лице',
   'Card of the day': 'Карта дня',
   'Interpretation': 'К интерпретации',
+  "You've already had your card today": 'Карта дня уже была сегодня',
+  'To spreads history': 'К истории раскладов',
 };
 
 export default TRANSLATIONS_RU;

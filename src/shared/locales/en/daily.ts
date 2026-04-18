@@ -10,6 +10,8 @@ const TRANSLATIONS_EN = {
     'Do not talk about user as a third person',
   'Card of the day': 'Card of the day',
   'Interpretation': 'Interpretation',
+  "You've already had your card today": "You've already had your card today",
+  'To spreads history': 'To spreads history',
 };
 
 export default TRANSLATIONS_EN;

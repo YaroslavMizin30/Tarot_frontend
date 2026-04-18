@@ -16,7 +16,7 @@ import TextContainer from '@/shared/ui/TextContainer';
 import { Link } from 'react-router';
 
 export const TarotSpread: FC<TarotSpreadProps> = (props) => {
-  const { spread } = props;
+  const { spread, onSpreadFinish } = props;
 
   const { title, id, cardsCount } = spread;
 
@@ -30,8 +30,10 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
     changeActiveCard();
   };
 
-  const handleFinishButtonClick = () => {
-    getInterpretation(cards, spread);
+  const handleFinishButtonClick = async () => {
+    await getInterpretation(cards, spread);
+
+    onSpreadFinish?.(spread, cards);
   };
 
   useEffect(() => {
