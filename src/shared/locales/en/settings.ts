@@ -93,6 +93,9 @@ const TRANSLATIONS_EN = {
   'In a stable environment': 'In a stable environment',
   'During new acquaintances': 'During new acquaintances',
   'In a deep conversation': 'In a deep conversation',
+
+  'About you': 'About you',
+  'Subscription': 'Subscription',
 };
 
 export default TRANSLATIONS_EN;

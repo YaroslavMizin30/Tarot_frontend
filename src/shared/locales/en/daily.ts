@@ -9,6 +9,7 @@ const TRANSLATIONS_EN = {
   'Do not talk about user as a third person':
     'Do not talk about user as a third person',
   'Card of the day': 'Card of the day',
+  'Interpretation': 'Interpretation',
 };
 
 export default TRANSLATIONS_EN;

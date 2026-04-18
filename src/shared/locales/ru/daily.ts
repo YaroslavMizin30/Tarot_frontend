@@ -9,6 +9,7 @@ const TRANSLATIONS_RU = {
   'Do not talk about user as a third person':
     'Не указывать в ответе ссылки на самого пользователя в третьем лице',
   'Card of the day': 'Карта дня',
+  'Interpretation': 'К интерпретации',
 };
 
 export default TRANSLATIONS_RU;

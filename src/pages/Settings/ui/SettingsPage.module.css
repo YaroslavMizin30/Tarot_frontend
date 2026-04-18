@@ -1,12 +1,42 @@
 .container {
-  display: grid;
+  display: flex;
   flex-direction: column;
+  justify-content: center;
+  width: 80%;
+  height: 100%;
 
-  color: var(--border-inversed);
+  color: var(--text-secondary);
+}
+
+.container > button + button {
+  margin-top: 20px;
 }
 
 .option {
   display: flex;
   flex-direction: column;
   margin-top: 10px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  max-height: 80%;
+  padding-right: 5px;
+}
+
+.title {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.arrow {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+}
+
+.button + .button {
+  margin-top: 20px;
 }

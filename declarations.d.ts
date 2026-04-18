@@ -151,3 +151,5 @@ declare global {
 }
 
 export type { WebApp, WebAppUser, WebAppInitData };
+
+declare module 'snakeize';

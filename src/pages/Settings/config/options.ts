@@ -89,3 +89,21 @@ export const SITUATION = [
   'During new acquaintances',
   'In a deep conversation',
 ];
+
+export const OPTIONS = {
+  sign: SIGN,
+  wayOfLife: WAY_OF_LIFE,
+  daySpending: DAY_SPENDING,
+  energyType: ENERGY_TYPE,
+  communicationType: COMMUNICATION_TYPE,
+  stressReaction: STRESS_REACTION,
+  relationshipPreference: RELATIONSHIP_PREFERENCE,
+  goals: GOALS,
+  activityPreference: ACTIVITY_PREFERENCE,
+  decisionMaking: DECISION_MAKING,
+  resortPreference: RESORT_PREFERENCE,
+  situation: SITUATION,
+  id: [],
+  userName: [],
+  lastHoroscope: [],
+};

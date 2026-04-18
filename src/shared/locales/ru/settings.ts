@@ -93,6 +93,9 @@ const TRANSLATIONS_RU = {
   'In a stable environment': 'В стабильной обстановке',
   'During new acquaintances': 'При новых знакомствах',
   'In a deep conversation': 'В глубоком разговоре',
+
+  'About you': 'О Вас',
+  'Subscription': 'Подписка',
 };
 
 export default TRANSLATIONS_RU;

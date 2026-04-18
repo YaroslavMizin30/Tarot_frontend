@@ -4,7 +4,7 @@ import { PostgrestError } from '@supabase/supabase-js';
 
 export const updateRaw = async <T>(
   table: string,
-  columns: Record<string, string | number>,
+  columns: Record<string, string | number | null>,
   equal: {
     key: string;
     value: string | number;
