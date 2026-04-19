@@ -28,7 +28,7 @@
 .content {
   display: flex;
   flex-direction: column;
-  padding: 15px;
+  padding: 20px;
 }
 
 .icon-wrapper {
