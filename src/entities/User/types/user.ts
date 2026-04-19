@@ -1,3 +1,5 @@
+import { type Sign } from '@/shared/ui/Zodiac';
+
 export interface GetUserResponse {
   activity_preference: string;
   communication_type: string | null;
@@ -27,7 +29,7 @@ export interface User {
   lastHoroscope: number | null;
   relationshipPreference: string;
   resortPreference: string;
-  sign: string;
+  sign: Sign;
   situation: string;
   stressReaction: string;
   userName: string;
