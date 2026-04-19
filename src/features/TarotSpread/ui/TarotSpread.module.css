@@ -79,6 +79,24 @@
   color: var(--text-secondary);
 }
 
+.spinner {
+  margin-top: 20px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.buttons > button + button {
+  margin-left: 10px;
+}
+
+.modal {
+  text-align: center;
+}
+
 @keyframes fadeIn {
   0% {
     opacity: 0;

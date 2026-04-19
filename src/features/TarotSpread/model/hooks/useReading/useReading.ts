@@ -2,7 +2,9 @@ import { useState } from 'react';
 
 import { ALL_TAROT_CARDS_ARRAY } from '../../../config/cards/cards';
 
-import type { UseReadingResult, Card } from './useReading.types';
+import type { UseReadingResult } from './useReading.types';
+
+import type { Card } from '@/entities/TarotCard';
 
 export const useReading = (): UseReadingResult => {
   const [cards, setCards] = useState<Card[]>([]);

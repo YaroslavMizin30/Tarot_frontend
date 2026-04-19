@@ -12,6 +12,11 @@ const TRANSLATIONS_EN = {
   'Interpretation': 'Interpretation',
   "You've already had your card today": "You've already had your card today",
   'To spreads history': 'To spreads history',
+  'Your spread is not ready yet. Are you sure?':
+    'Your spread is not ready yet. Are you sure?',
+  'Yes': 'Yes',
+  'No': 'No',
+  'Interpreting': 'Interpreting',
 };
 
 export default TRANSLATIONS_EN;

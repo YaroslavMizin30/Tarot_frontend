@@ -12,6 +12,11 @@ const TRANSLATIONS_RU = {
   'Interpretation': 'К интерпретации',
   "You've already had your card today": 'Карта дня уже была сегодня',
   'To spreads history': 'К истории раскладов',
+  'Your spread is not ready yet. Are you sure?':
+    'Расклад еще не готов. Вы уверены?',
+  'Yes': 'Да',
+  'No': 'Нет',
+  'Interpreting': 'Интерпретация',
 };
 
 export default TRANSLATIONS_RU;

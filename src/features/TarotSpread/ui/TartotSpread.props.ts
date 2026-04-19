@@ -8,7 +8,7 @@ export interface TarotSpreadProps {
    */
   spread: SpreadParams;
   /**
-   *
+   * Callback on spread finish
    */
   onSpreadFinish?: (spread: SpreadParams, cards: Card[]) => void;
 }

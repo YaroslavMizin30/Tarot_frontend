@@ -190,6 +190,11 @@ const TRANSLATIONS_RU: Record<string, string> = {
   'Do not talk about user as a third person':
     'Не указывать в ответе ссылки на самого пользователя в третьем лице',
   'To spreads history': 'К истории раскладов',
+  'Your spread is not ready yet. Are you sure?':
+    'Расклад еще не готов. Вы уверены?',
+  'Yes': 'Да',
+  'No': 'Нет',
+  'Interpreting': 'Interpreting',
 
   ...CARDS,
 };

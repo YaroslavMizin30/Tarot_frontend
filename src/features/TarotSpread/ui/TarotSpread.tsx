@@ -1,6 +1,9 @@
 import React, { useEffect, type FC } from 'react';
 
+import { useBlocker } from 'react-router';
+
 import Button from '@/shared/ui/Button';
+import Modal from '@/shared/ui/Modal';
 import useLocales from '@/shared/hooks/useLocales';
 import TarotCard from '@/entities/TarotCard';
 
@@ -30,14 +33,30 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
     changeActiveCard();
   };
 
+  const { state, reset, proceed } = useBlocker(!interpretation);
+
   const handleFinishButtonClick = async () => {
     await getInterpretation(cards, spread);
+
+    reset?.();
 
     onSpreadFinish?.(spread, cards);
   };
 
+  const handleModalClose = () => {
+    reset?.();
+  };
+
+  const handleModalConfirm = () => {
+    proceed?.();
+  };
+
   useEffect(() => {
     prepareCards(cardsCount);
+
+    return () => {
+      reset?.();
+    };
   }, []);
 
   if (interpretation) {
@@ -79,7 +98,7 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
     return (
       <div className={styles.loading}>
         {i18n('Interpreting')}...
-        <Spinner size={'l'} />
+        <Spinner size={'l'} className={styles.spinner} />
       </div>
     );
   }
@@ -144,6 +163,17 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
           </Button>
         )}
       </div>
+
+      {state === 'blocked' && (
+        <Modal onClose={handleModalClose} isOpen={true} className={styles.modal}>
+          {i18n('Your spread is not ready yet. Are you sure?')}
+
+          <div className={styles.buttons}>
+            <Button onClick={handleModalConfirm}>{i18n('Yes')}</Button>
+            <Button onClick={handleModalClose}>{i18n('No')}</Button>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 };
