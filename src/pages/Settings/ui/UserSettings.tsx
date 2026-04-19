@@ -56,6 +56,9 @@ const UserSettings = (props: { onBackButtonClick: () => void }) => {
 
         return (
           <Button
+            isActive={
+              i18n(option) === userData?.[title as keyof typeof userData]
+            }
             isLoading={currentUpdate === option && isLoading}
             onClick={handleOptionClick}
             className={styles.button}

@@ -1,8 +1,8 @@
 import { updateRaw } from '@/shared/api/supabase';
 
-import { type User } from '../../types/user';
+import { type User, type GetUserResponse } from '../../types/user';
 
-export const updateUser = async (userId: string, userData: User) => {
+export const updateUser = async (userId: string, userData: GetUserResponse) => {
   const { data, error } = await updateRaw<User>(
     'users',
     { ...userData },

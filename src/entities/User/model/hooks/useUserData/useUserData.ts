@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import camelize from 'camelize';
 
 import {
   useAppSelector,
@@ -10,7 +11,7 @@ import {
 import getTelegramUser from '@/entities/TelegramUser';
 import { getUser } from '../../../api/getUser/getUser';
 import { updateUser } from '@/entities/User/api/updateUser/updateUser';
-import type { User } from '../../../types/user';
+import type { GetUserResponse } from '../../../types/user';
 
 export const useUserData = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -39,15 +40,13 @@ export const useUserData = () => {
     }
   };
 
-  const updateUserData = async (id: string, data: User) => {
+  const updateUserData = async (id: string, data: GetUserResponse) => {
     try {
       setIsLoading(true);
 
-      const updatedUser = await updateUser(id, data);
+      await updateUser(id, data);
 
-      if (updatedUser) {
-        dispatch(setUser(updatedUser));
-      }
+      dispatch(setUser(camelize(data)));
     } catch {
       setError('Error updating user data');
     } finally {
