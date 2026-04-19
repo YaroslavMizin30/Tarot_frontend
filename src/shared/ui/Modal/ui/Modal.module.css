@@ -1,0 +1,62 @@
+.overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal {
+  position: relative;
+  width: 70%;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: var(--text-primary);
+  background-color: var(--background-primary);
+  border-radius: 10px;
+
+  z-index: 1000;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+}
+
+.icon-wrapper {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.close-icon {
+  position: relative;
+  width: 15px;
+  height: 15px;
+}
+
+.close-icon::before,
+.close-icon::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 2px;
+  height: 16px;
+  background-color: var(--border-primary);
+}
+
+.close-icon::before {
+  transform: rotate(45deg);
+}
+
+.close-icon::after {
+  transform: rotate(-45deg);
+}
