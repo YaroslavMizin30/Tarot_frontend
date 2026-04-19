@@ -31,7 +31,7 @@ const List: FC<ListProps> = (props) => {
         };
 
         return (
-          <div className={styles['question-item']}>
+          <div className={styles['question-item']} key={text}>
             <Button onClick={handleQuestionChoose} className={styles.button}>
               {i18n(label)}
             </Button>

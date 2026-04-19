@@ -62,6 +62,7 @@ const UserSettings = (props: { onBackButtonClick: () => void }) => {
             isLoading={currentUpdate === option && isLoading}
             onClick={handleOptionClick}
             className={styles.button}
+            key={option}
           >
             {i18n(option)}
           </Button>

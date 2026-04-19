@@ -23,7 +23,11 @@ const Themes: FC<ThemeProps> = (props) => {
           onThemeChoose({ questions, name: i18n(name) });
         };
 
-        return <Button onClick={handleThemeChoose}>{i18n(name)}</Button>;
+        return (
+          <Button key={name} onClick={handleThemeChoose}>
+            {i18n(name)}
+          </Button>
+        );
       })}
     </>
   );

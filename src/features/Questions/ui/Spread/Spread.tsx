@@ -79,7 +79,7 @@ const Spread: FC<SpreadProps> = (props) => {
           };
 
           return (
-            <Button onClick={handleSpreadButtonClick}>
+            <Button key={id} onClick={handleSpreadButtonClick}>
               {`${i18n(label)} (${cardCount} ${getCardWithCase(cardCount)})`}
             </Button>
           );
