@@ -1,3 +1,5 @@
+import { type SupabaseClient } from '@supabase/supabase-js';
+
 interface WebAppUser {
   id: number;
   is_bot?: boolean;
@@ -147,6 +149,7 @@ declare global {
     Telegram?: {
       WebApp: WebApp;
     };
+    supabase: SupabaseClient;
   }
 }
 
