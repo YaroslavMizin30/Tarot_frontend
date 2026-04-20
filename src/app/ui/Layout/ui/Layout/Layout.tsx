@@ -8,6 +8,8 @@ import { useUserData } from '@/entities/User';
 
 import Header from '../Header/Header';
 
+import { useAuth } from '@/app/auth/auth';
+
 import styles from './Layout.module.css';
 
 export const Layout = () => {
@@ -15,13 +17,18 @@ export const Layout = () => {
 
   const isLoading = state === 'loading';
   const { isLoading: isUserDataLoading } = useUserData();
+  const { isLoading: isAuthenticating } = useAuth();
 
   return (
     <div className={styles.layout}>
       <Header></Header>
 
       <main className={styles.main}>
-        {isLoading || isUserDataLoading ? <Spinner size={'l'} /> : <Outlet />}
+        {isLoading || isUserDataLoading || isAuthenticating ? (
+          <Spinner size={'l'} />
+        ) : (
+          <Outlet />
+        )}
       </main>
     </div>
   );

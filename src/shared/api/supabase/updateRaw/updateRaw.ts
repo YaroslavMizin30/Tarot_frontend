@@ -1,5 +1,3 @@
-import { initSupabase } from '../init/init';
-
 import { PostgrestError } from '@supabase/supabase-js';
 
 export const updateRaw = async <T>(
@@ -10,9 +8,7 @@ export const updateRaw = async <T>(
     value: string | number;
   },
 ): Promise<{ data: T[] | null; error: PostgrestError | null }> => {
-  const supabase = initSupabase();
-
-  const { data, error } = await supabase
+  const { data, error } = await window.supabase
     .from(table)
     .update(columns)
     .eq(equal.key, equal.value);
