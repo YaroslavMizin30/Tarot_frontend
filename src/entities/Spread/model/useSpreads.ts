@@ -12,12 +12,12 @@ export const useSpreads = () => {
 
   const fetchSpreads = async () => {
     setIsLoading(true);
+
     try {
       const response = await getSpreads(String(userData?.id));
 
-      if (response?.spreads) {
-        setSpreads(response.spreads);
-        setLastDaily(response.lastDaily);
+      if (response) {
+        setSpreads(response);
 
         return;
       }
