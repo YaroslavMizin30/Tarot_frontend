@@ -23,7 +23,7 @@ export const Layout = () => {
     <div className={styles.layout}>
       <Header></Header>
 
-      <main className={styles.main}>
+      <main className={`${styles.main} custom-scrollbar`}>
         {isLoading || isUserDataLoading || isAuthenticating ? (
           <Spinner size={'l'} />
         ) : (

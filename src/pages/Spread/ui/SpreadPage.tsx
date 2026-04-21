@@ -76,12 +76,12 @@ export const SpreadPage = () => {
 
       <TextContainer
         paragraphs={interpretation.replace(/[-|*]/g, '').split('\n')}
-        maxHeight={400}
+        maxHeight={350}
         maxHeightMeasure={'px'}
         className={styles.interpretation}
       />
 
-      <RatingInput value={rate ?? 1} onChange={handleRatingInputChange} />
+      <RatingInput value={rate ?? 0} onChange={handleRatingInputChange} />
     </div>
   );
 };

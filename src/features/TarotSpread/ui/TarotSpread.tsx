@@ -37,7 +37,7 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
     changeActiveCard();
   };
 
-  const [rating, setRating] = useState(1);
+  const [rating, setRating] = useState(0);
 
   const { state, reset, proceed } = useBlocker(!interpretation);
 
