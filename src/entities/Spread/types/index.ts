@@ -8,6 +8,7 @@ export interface SpreadParams {
   details?: string;
   detailsAnswer?: string;
   id: `${SpreadType}`;
+  userId: number;
 }
 
 export const enum SpreadType {
@@ -28,4 +29,23 @@ export type Spread = SpreadParams & {
   interpretation: string;
   date: string;
   spreadId: string;
+  isSummarized?: boolean;
+  rating?: number;
 };
+
+export interface SpreadResponse {
+  title?: string;
+  user_answer?: string;
+  question: string;
+  cards_count: number;
+  details?: string;
+  details_answer?: string;
+  id: `${SpreadType}`;
+  cards: string;
+  interpretation: string;
+  date: string;
+  spread_id: string;
+  is_summarized?: boolean;
+  rating?: number;
+  user_id: number;
+}

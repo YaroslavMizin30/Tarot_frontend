@@ -1,4 +1,5 @@
-import { useState, useId } from 'react';
+import { useState } from 'react';
+import { v4 } from 'uuid';
 
 import requestAi from '@/shared/api/AI';
 
@@ -13,10 +14,9 @@ import { useUserData } from '@/entities/User';
 export const useInterpretation = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [interpretation, setInterpretation] = useState<string[] | null>(null);
+  const [spreadId, setSpreadId] = useState<string | null>(null);
 
   const { userData } = useUserData();
-
-  const id = useId();
 
   const { i18n } = useLocales();
 
@@ -43,13 +43,20 @@ export const useInterpretation = () => {
 
       setInterpretation(interpretation.replace(/[#|*|-]/g, '').split('\n'));
 
-      addSpread(String(userData?.id), {
-        ...spread,
-        cards,
-        interpretation,
-        date: new Date().toLocaleDateString(),
-        spreadId: id,
-      });
+      if (userData) {
+        const uuid = v4();
+
+        await addSpread({
+          ...spread,
+          cards,
+          interpretation,
+          date: new Date().toLocaleDateString(),
+          spreadId: uuid,
+          userId: userData.id,
+        });
+
+        setSpreadId(uuid);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -59,5 +66,6 @@ export const useInterpretation = () => {
     isLoading,
     getInterpretation,
     interpretation,
+    spreadId,
   };
 };
