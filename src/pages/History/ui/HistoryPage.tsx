@@ -10,17 +10,22 @@ import TRANSLATIONS_EN from '@/shared/locales/en/history';
 import TRANSLATIONS_RU from '@/shared/locales/ru/history';
 import Zodiac from '@/shared/ui/Zodiac';
 import Button from '@/shared/ui/Button';
+import Spinner from '@/shared/ui/Spinner';
 
 import styles from './HistoryPage.module.css';
 
 export const HistoryPage = () => {
-  const { spreads } = useSpreads();
+  const { spreads, isLoading: areSpreadsLoading } = useSpreads();
   const { i18n, addTranslations } = useLocales();
-  const { userData } = useUserData();
+  const { userData, isLoading: isUserLoading } = useUserData();
 
   useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
   }, []);
+
+  if (isUserLoading || areSpreadsLoading) {
+    return <Spinner size={'l'} />;
+  }
 
   return (
     <div className={styles.container}>
@@ -31,7 +36,7 @@ export const HistoryPage = () => {
       <div className={`${styles.list} custom-scrollbar`}>
         {spreads &&
           spreads.map((spread) => (
-            <div className={styles.spread} key={spread.id}>
+            <div className={styles.spread} key={spread.spreadId}>
               <div className={styles.info}>
                 {spread.title ? (
                   <span>{`${i18n('Title')}: ${spread.title}`}</span>
@@ -41,7 +46,10 @@ export const HistoryPage = () => {
 
                 <span>{`${i18n('Date')}: ${spread.date}`}</span>
 
-                <Link state={spread} to={`/history/${spread.spreadId ?? 54643543}`}>
+                <Link
+                  state={spread}
+                  to={`/history/${spread.spreadId}`}
+                >
                   <Button>{i18n('View')}</Button>
                 </Link>
               </div>
