@@ -14,6 +14,10 @@ export const useSpreads = () => {
     setIsLoading(true);
 
     try {
+      if (!userData) {
+        return;
+      }
+
       const response = await getSpreads(String(userData?.id));
 
       if (response) {
