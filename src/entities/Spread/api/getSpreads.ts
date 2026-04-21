@@ -1,13 +1,11 @@
+import camelize from 'camelize';
+
 import { getDataFromDB } from '@/shared/api/supabase';
 
-import type { Spread } from '../types';
+import type { Spread, SpreadResponse } from '../types';
 
-export const getSpreads = async (id: string) => {
-  const { data } = await getDataFromDB<{
-    user_id: string;
-    spreads: string;
-    last_daily: string | null;
-  }>('spreads', ['*'], {
+export const getSpreads = async (id: string): Promise<Spread[] | null> => {
+  const { data } = await getDataFromDB<SpreadResponse>('spreads', ['*'], {
     key: 'user_id',
     value: id,
   });
@@ -16,11 +14,12 @@ export const getSpreads = async (id: string) => {
     return null;
   }
 
-  const { user_id, spreads, last_daily } = data[0];
+  const mappedSpreads = data.map((spread) => {
+    return camelize({
+      ...spread,
+      cards: JSON.parse(spread.cards),
+    });
+  });
 
-  return {
-    id: user_id,
-    spreads: JSON.parse(spreads) as Spread[],
-    lastDaily: last_daily,
-  };
+  return mappedSpreads;
 };

@@ -1,11 +1,14 @@
-import React, { useEffect, type FC } from 'react';
+import React, { useEffect, useState, type FC } from 'react';
 
 import { useBlocker } from 'react-router';
 
 import Button from '@/shared/ui/Button';
 import Modal from '@/shared/ui/Modal';
 import useLocales from '@/shared/hooks/useLocales';
+import RatingInput from '@/shared/ui/RatingInput';
+
 import TarotCard from '@/entities/TarotCard';
+import { updateSpread } from '@/entities/Spread';
 
 import { SpreadConfig } from '../config/spreads';
 import { useReading } from '../model/hooks/useReading/useReading';
@@ -25,7 +28,8 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
 
   const { cards, activeCard, isFinished, prepareCards, changeActiveCard } =
     useReading();
-  const { getInterpretation, interpretation, isLoading } = useInterpretation();
+  const { getInterpretation, interpretation, isLoading, spreadId } =
+    useInterpretation();
 
   const { i18n } = useLocales();
 
@@ -33,7 +37,17 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
     changeActiveCard();
   };
 
+  const [rating, setRating] = useState(1);
+
   const { state, reset, proceed } = useBlocker(!interpretation);
+
+  const handleRatingInputChange = async (rate: number) => {
+    setRating(rate);
+
+    if (spreadId) {
+      await updateSpread(spreadId, { rating: rate });
+    }
+  };
 
   const handleFinishButtonClick = async () => {
     await getInterpretation(cards, spread);
@@ -86,6 +100,8 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
           maxHeightMeasure={'px'}
           className={styles.interpretation}
         />
+
+        <RatingInput value={rating} onChange={handleRatingInputChange} />
 
         <Link to={'/history'}>
           <Button>{i18n('To spreads history')}</Button>
@@ -165,7 +181,11 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
       </div>
 
       {state === 'blocked' && (
-        <Modal onClose={handleModalClose} isOpen={true} className={styles.modal}>
+        <Modal
+          onClose={handleModalClose}
+          isOpen={true}
+          className={styles.modal}
+        >
           {i18n('Your spread is not ready yet. Are you sure?')}
 
           <div className={styles.buttons}>

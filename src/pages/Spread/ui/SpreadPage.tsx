@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useLocation } from 'react-router';
 
@@ -6,8 +6,9 @@ import useLocales from '@/shared/hooks/useLocales';
 import TextContainer from '@/shared/ui/TextContainer';
 import TRANSLATIONS_EN from '@/shared/locales/en/history';
 import TRANSLATIONS_RU from '@/shared/locales/ru/history';
+import RatingInput from '@/shared/ui/RatingInput';
 
-import type { Spread } from '@/entities/Spread';
+import { type Spread, updateSpread } from '@/entities/Spread';
 import TarotCard from '@/entities/TarotCard';
 
 import styles from './SpreadPage.module.css';
@@ -24,7 +25,17 @@ export const SpreadPage = () => {
     detailsAnswer,
     cards,
     question,
+    rating,
+    spreadId,
   } = state as Spread;
+
+  const [rate, setRate] = useState(rating);
+
+  const handleRatingInputChange = async (value: number) => {
+    setRate(value);
+
+    await updateSpread(spreadId, { rating: value });
+  };
 
   useEffect(() => {
     addTranslations({
@@ -69,6 +80,8 @@ export const SpreadPage = () => {
         maxHeightMeasure={'px'}
         className={styles.interpretation}
       />
+
+      <RatingInput value={rate ?? 1} onChange={handleRatingInputChange} />
     </div>
   );
 };
