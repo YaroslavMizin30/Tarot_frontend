@@ -103,7 +103,7 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
 
         <RatingInput value={rating} onChange={handleRatingInputChange} />
 
-        <Link to={'/history'}>
+        <Link to={'/history'} className={styles.link}>
           <Button>{i18n('To spreads history')}</Button>
         </Link>
       </div>

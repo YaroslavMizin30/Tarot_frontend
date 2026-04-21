@@ -4,6 +4,9 @@
   align-items: center;
   color: var(--text-secondary);
   max-width: 80%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  height: 100%;
 }
 
 .info {
