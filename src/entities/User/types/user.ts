@@ -11,7 +11,7 @@ export interface GetUserResponse {
   last_horoscope: number | null;
   relationship_preference: string;
   resort_preference: string;
-  sign: string;
+  sign: Sign;
   situation: string;
   stress_reaction: string;
   user_name: string;
