@@ -39,7 +39,7 @@ export const TarotCard: FC<TarotCardProps> = (props) => {
           <div className={styles['image-wrapper']}>
             <img
               className={`${styles.image} ${isInverted && !isCardReversed ? styles.reversed : ''}`}
-              src={`public/assets/images/card/${name}.png`}
+              src={`assets/images/card/${name}.png`}
             />
           </div>
 
