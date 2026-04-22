@@ -49,3 +49,13 @@ export interface SpreadResponse {
   rating?: number;
   user_id: number;
 }
+
+export interface Activity {
+  lastDaily: string;
+  lastHoroscope: string;
+}
+
+export interface ActivityResponse {
+  last_daily: string;
+  last_horoscope: string;
+}
