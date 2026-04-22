@@ -32,10 +32,21 @@ export const TarotCard: FC<TarotCardProps> = (props) => {
       onClick={handleCardClick}
       style={style}
     >
-      <div className={`${styles.inner} ${isCardReversed ? styles.reversed : ''}`}>
-        <div className={styles.back}></div>
+      <div
+        className={`${styles.inner} ${isCardReversed ? styles.reversed : ''}`}
+      >
+        <div
+          className={styles.back}
+          // style={{ backgroundImage: "url('assets/images/card/back.jpeg')" }}
+        >
+        </div>
 
-        <div className={`${styles.front}`}>
+        <div
+          className={`${styles.front}`}
+          style={{
+            backgroundImage: "url('assets/images/card/background.png')",
+          }}
+        >
           <div className={styles['image-wrapper']}>
             <img
               className={`${styles.image} ${isInverted && !isCardReversed ? styles.reversed : ''}`}
