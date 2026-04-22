@@ -13,7 +13,7 @@ export const Zodiac: FC<ZodiacProps> = (props) => {
     <div className={`${styles.container} ${className}`}>
       {sign ? (
         <img
-          src={`/src/shared/assets/images/zodiac/${SIGNS[sign]}.png`}
+          src={`public/assets/images/zodiac/${SIGNS[sign]}.png`}
           className={styles.image}
         />
       ) : null}
