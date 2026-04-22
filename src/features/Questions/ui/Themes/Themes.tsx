@@ -1,4 +1,4 @@
-import React, { type FC } from 'react';
+import { type FC } from 'react';
 
 import Button from '@/shared/ui/Button';
 import useLocales from '@/shared/hooks/useLocales';

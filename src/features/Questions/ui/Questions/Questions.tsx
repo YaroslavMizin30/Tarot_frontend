@@ -1,4 +1,4 @@
-import React, { useState, type FC } from 'react';
+import { useState, type FC } from 'react';
 
 import { useQuestion } from '../../model/hooks/useQuestion';
 import type { Question } from '../../model/types/questions';
@@ -11,7 +11,7 @@ import Spread from '../Spread/Spread';
 
 import type { SpreadParams } from '@/entities/Spread';
 
-import Arrow from '@/shared/assets/svg/common/deck-arrow.svg?react';
+import Arrow from '@/shared/assets/svg/common/deck-arrow.svg';
 import useLocales from '@/shared/hooks/useLocales';
 
 import { type QuestionProps } from './Questions.props';
@@ -76,6 +76,7 @@ export const Questions: FC<QuestionProps> = (props) => {
       detailsAnswer,
       question: text,
       id: spreadId,
+      userId: 0,
     });
 
     changeStep({ isBack: false, value: areDetailsNeeded ? 'input' : 'spread' });

@@ -11,6 +11,7 @@ const initialState: SpreadState = {
     cardsCount: 0,
     question: '',
     id: 'single',
+    userId: 0,
   },
 };
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import Questions from '@/features/Questions';
 import TarotSpread from '@/features/TarotSpread';

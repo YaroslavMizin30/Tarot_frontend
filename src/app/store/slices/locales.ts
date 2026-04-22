@@ -18,7 +18,7 @@ const initialState: SpreadState = {
       common: false,
       reading: false,
       settings: false,
-      result: false,
+      daily: false,
       history: false,
     },
   },

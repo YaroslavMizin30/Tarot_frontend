@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Button from '@/shared/ui/Button';
-import Arrow from '@/shared/assets/svg/common/deck-arrow.svg?react';
+import Arrow from '@/shared/assets/svg/common/deck-arrow.svg';
 import TextContainer from '@/shared/ui/TextContainer';
 import TRANSLATIONS_EN from '@/shared/locales/en/about';
 import TRANSLATIONS_RU from '@/shared/locales/ru/about';

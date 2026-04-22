@@ -7,6 +7,9 @@ const TRANSLATIONS_EN = {
   'Spreads history': 'Spreads history',
   'View': 'View',
   'Question': 'Question',
+  'Spreads': 'Spreads',
+  'Summaries': 'Summaries',
+  'Summary': 'Summary',
 };
 
 export default TRANSLATIONS_EN;

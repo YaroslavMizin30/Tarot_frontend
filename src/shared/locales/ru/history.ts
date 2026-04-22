@@ -7,6 +7,9 @@ const TRANSLATIONS_RU = {
   'Spreads history': 'История раскладов',
   'View': 'Подробнее',
   'Question': 'Вопрос',
+  'Spreads': 'Расклады',
+  'Summaries': 'Обобщения',
+  'Summary': 'Обобщить',
 };
 
 export default TRANSLATIONS_RU;

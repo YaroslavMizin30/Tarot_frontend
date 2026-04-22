@@ -1,4 +1,11 @@
-import React, { useEffect, useRef, useState, type FC } from 'react';
+import {
+  useEffect,
+  useRef,
+  useState,
+  type FC,
+  type ChangeEvent,
+  type FocusEvent,
+} from 'react';
 
 import TextArea from '@/shared/ui/TextArea/TextArea';
 import useLocales from '@/shared/hooks/useLocales';
@@ -16,7 +23,7 @@ const QuestionInput: FC<QuestionInputProps> = (props) => {
 
   const [error, setError] = useState<string | null>(null);
 
-  const handleQuestionInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleQuestionInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
 
     onQuestionInput(value);
@@ -26,7 +33,7 @@ const QuestionInput: FC<QuestionInputProps> = (props) => {
     setError(null);
   };
 
-  const handleInputBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
+  const handleInputBlur = (e: FocusEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
 
     if (!value) {

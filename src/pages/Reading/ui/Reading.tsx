@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import Reading from '@/widgets/Reading';
 import useLocales from '@/shared/hooks/useLocales';

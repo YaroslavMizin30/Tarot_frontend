@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import snakeize from 'snakeize';
 
 import { useUserData, type User } from '@/entities/User';
 
 import useLocales from '@/shared/hooks/useLocales';
 import Button from '@/shared/ui/Button';
-import Arrow from '@/shared/assets/svg/common/deck-arrow.svg?react';
+import Arrow from '@/shared/assets/svg/common/deck-arrow.svg';
 
 import { HIDDEN_FIELDS } from '../config/fields';
 import { OPTIONS } from '../config/options';

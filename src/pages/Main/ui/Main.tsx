@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect, type SyntheticEvent } from 'react';
 import { useNavigate } from 'react-router';
 
 import Button from '@/shared/ui/Button';
@@ -14,7 +14,7 @@ export const MainPage = () => {
   const navigate = useNavigate();
 
   const handleNavigationButtonClick = (
-    e: React.SyntheticEvent<HTMLButtonElement>,
+    e: SyntheticEvent<HTMLButtonElement>,
   ) => {
     navigate(e.currentTarget.value);
   };

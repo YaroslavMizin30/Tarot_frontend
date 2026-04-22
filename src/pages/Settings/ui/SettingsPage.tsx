@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, type MouseEvent } from 'react';
 
 import { useUserData } from '@/entities/User';
 
@@ -24,7 +24,7 @@ export const SettingsPage = () => {
   }, []);
 
   const handleSettingsButtonClick = (
-    e: React.MouseEvent<HTMLButtonElement>,
+    e: MouseEvent<HTMLButtonElement>,
   ) => {
     setSettings(e.currentTarget.value);
   };

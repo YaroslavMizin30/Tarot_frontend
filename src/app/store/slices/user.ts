@@ -25,7 +25,7 @@ export const setUser = createAsyncThunk(
   },
   {
     condition: (_, { getState }) => {
-      //@ts-ignore
+      //@ts-expect-error 'проблема либы'
       const { user } = getState();
 
       if (user.loading === 'loading') {

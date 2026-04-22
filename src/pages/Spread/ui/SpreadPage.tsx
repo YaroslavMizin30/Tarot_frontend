@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Link, useLocation } from 'react-router';
 
@@ -7,7 +7,7 @@ import TextContainer from '@/shared/ui/TextContainer';
 import TRANSLATIONS_EN from '@/shared/locales/en/history';
 import TRANSLATIONS_RU from '@/shared/locales/ru/history';
 import RatingInput from '@/shared/ui/RatingInput';
-import Arrow from '@/shared/assets/svg/common/deck-arrow.svg?react';
+import Arrow from '@/shared/assets/svg/common/deck-arrow.svg';
 
 import { type Spread, updateSpread } from '@/entities/Spread';
 import TarotCard from '@/entities/TarotCard';

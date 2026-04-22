@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
 
-import SettingsIcon from '@/shared/assets/svg/common/settings.svg?react';
-import HomeIcon from '@/shared/assets/svg/common/home.svg?react';
-import GlobeIcon from '@/shared/assets/svg/common/globe.svg?react';
+import SettingsIcon from '@/shared/assets/svg/common/settings.svg';
+import HomeIcon from '@/shared/assets/svg/common/home.svg';
+import GlobeIcon from '@/shared/assets/svg/common/globe.svg';
 import useOutsideClick from '@/shared/hooks/useOutsideClick';
 import useLocales, { type Locale } from '@/shared/hooks/useLocales';
 
