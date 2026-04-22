@@ -15,6 +15,7 @@ export const useQuestion = (): useQuestionResult => {
     cardsCount: 0,
     question: '',
     id: 'single',
+    userId: 0,
   });
   const [questions, setQuestions] = useState<Question[]>([]);
   const [topic, setTopic] = useState<string>('');
@@ -61,6 +62,10 @@ export const useQuestion = (): useQuestionResult => {
 
         case 'id':
           newValues.id = 'single';
+          break;
+
+        case 'userId':
+          newValues.userId = 0;
           break;
 
         default:

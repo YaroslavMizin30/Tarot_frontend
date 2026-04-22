@@ -2,7 +2,7 @@ import { useState, type FC } from 'react';
 
 import { type PlaceholderProps } from './Placeholder.props';
 
-import question from '@/shared/assets/svg/common/question.svg';
+import Question from '@/shared/assets/svg/common/question.svg';
 import { Tooltip } from '@/shared/ui/Tooltip/ui/Tooltip';
 
 import styles from './Placeholder.module.css';
@@ -41,8 +41,7 @@ const Placeholder: FC<PlaceholderProps> = (props) => {
           tooltipClassName={styles.tooltip}
           style={tooltipStyle}
         >
-          <img
-            src={question}
+          <Question
             className={`${styles.question}`}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}

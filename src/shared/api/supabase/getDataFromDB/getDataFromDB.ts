@@ -14,6 +14,7 @@ export const getDataFromDB = async <T>(
     .eq(equal.key, equal.value);
 
   return {
+    //@ts-expect-error todo
     data,
     error,
   };
