@@ -10,40 +10,31 @@ import TRANSLATIONS_RU from '@/shared/locales/ru/daily';
 import Spinner from '@/shared/ui/Spinner';
 import Zodiac from '@/shared/ui/Zodiac';
 
-import { useUserData } from '@/entities/User';
-import { useSpreads } from '@/entities/Spread';
+import { useDaily } from '../hooks/useDaily';
 
 import styles from './DailyCard.module.css';
 
 export const DailyCard = () => {
   const { i18n, addTranslations, locale } = useLocales();
 
-  const { userData } = useUserData();
-  const { isLoading } = useSpreads();
+  const { isLoading, updateUserActivity, sign, id, isAvailable } = useDaily();
+
+  const handleSpreadFinish = () => {
+    updateUserActivity();
+  };
 
   useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
   }, [locale]);
 
-  // const handleSpreadFinish = async () => {
-  //   const nextDaily = dayjs().add(1, 'day').toISOString();
-
-  //   if (userData) {
-  //     await updateDaily(userData?.id, nextDaily);
-  //   }
-  // };
-
   if (isLoading) {
     return <Spinner size={'l'} />;
   }
 
-  const date = new Date().getTime();
-  const daily = new Date().getTime();
-
-  if (daily > date) {
+  if (!isAvailable) {
     return (
       <div className={styles.empty}>
-        <Zodiac sign={userData?.sign} />
+        <Zodiac sign={sign} />
 
         <span>{i18n("You've already had your card today")}</span>
 
@@ -60,9 +51,9 @@ export const DailyCard = () => {
         id: 'single',
         cardsCount: 1,
         question: i18n('Card of the day'),
-        userId: Number(userData?.id),
+        userId: Number(id),
       }}
-      // onSpreadFinish={handleSpreadFinish}
+      onSpreadFinish={handleSpreadFinish}
     />
   );
 };
