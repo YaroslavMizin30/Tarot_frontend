@@ -6,7 +6,6 @@ import { useUserData } from '@/entities/User';
 export const useSpreads = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [spreads, setSpreads] = useState<Spread[] | null>(null);
-  const [lastDaily, setLastDaily] = useState<string | null>(null);
 
   const { userData } = useUserData();
 
@@ -39,6 +38,5 @@ export const useSpreads = () => {
   return {
     isLoading,
     spreads,
-    lastDaily,
   };
 };

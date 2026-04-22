@@ -1,25 +1,58 @@
 import type { User } from '@/entities/User';
 
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-export interface SpreadState {
+import { getUser } from '@/entities/User';
+
+export interface UserState {
   value: User | null;
+  loading: 'idle' | 'loading' | 'failed';
+  error: null | string;
 }
 
-const initialState: SpreadState = {
+const initialState: UserState = {
   value: null,
+  loading: 'idle',
+  error: null,
 };
+
+export const setUser = createAsyncThunk(
+  'user/fetchUser',
+  async (id: string | number) => {
+    const user = await getUser(id);
+
+    return user;
+  },
+  {
+    condition: (_, { getState }) => {
+      //@ts-ignore
+      const { user } = getState();
+
+      if (user.loading === 'loading') {
+        return false;
+      }
+    },
+  },
+);
 
 export const userSlice = createSlice({
   name: 'spread',
   initialState,
-  reducers: {
-    setUser: (state, action: PayloadAction<User | null>) => {
-      state.value = action.payload;
-    },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(setUser.pending, (state) => {
+        state.loading = 'loading';
+      })
+      .addCase(setUser.fulfilled, (state, action) => {
+        state.loading = 'idle';
+        state.value = action.payload;
+      })
+      .addCase(setUser.rejected, (state) => {
+        state.loading = 'failed';
+        state.error = 'Failed to load user data';
+      });
   },
 });
-
-export const { setUser } = userSlice.actions;
 
 export default userSlice.reducer;

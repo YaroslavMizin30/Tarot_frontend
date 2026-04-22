@@ -4,10 +4,10 @@ import { getDataFromDB } from '@/shared/api/supabase';
 
 import type { GetUserResponse } from '../../types/user';
 
-export const getUser = async (id: string) => {
+export const getUser = async (id: string | number) => {
   const { data: user } = await getDataFromDB<GetUserResponse>('users', ['*'], {
     key: 'id',
-    value: id,
+    value: String(id),
   });
 
   if (!user) {

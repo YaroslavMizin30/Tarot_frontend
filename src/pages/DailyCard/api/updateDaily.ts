@@ -5,7 +5,7 @@ import { getSpreads } from '@/entities/Spread';
 export const updateDaily = async (id: number, date: string) => {
   const response = await getSpreads(String(id));
 
-  if (response?.lastDaily || response?.spreads) {
+  if (response) {
     await updateRaw(
       'spreads',
       {

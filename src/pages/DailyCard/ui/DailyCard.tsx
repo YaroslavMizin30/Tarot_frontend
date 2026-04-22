@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import dayjs from 'dayjs';
 import { Link } from 'react-router';
 import Button from '@/shared/ui/Button';
 
@@ -14,34 +13,32 @@ import Zodiac from '@/shared/ui/Zodiac';
 import { useUserData } from '@/entities/User';
 import { useSpreads } from '@/entities/Spread';
 
-import { updateDaily } from '../api/updateDaily';
-
 import styles from './DailyCard.module.css';
 
 export const DailyCard = () => {
   const { i18n, addTranslations, locale } = useLocales();
 
   const { userData } = useUserData();
-  const { isLoading, lastDaily } = useSpreads();
+  const { isLoading } = useSpreads();
 
   useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
   }, [locale]);
 
-  const handleSpreadFinish = async () => {
-    const nextDaily = dayjs().add(1, 'day').toISOString();
+  // const handleSpreadFinish = async () => {
+  //   const nextDaily = dayjs().add(1, 'day').toISOString();
 
-    if (userData) {
-      await updateDaily(userData?.id, nextDaily);
-    }
-  };
+  //   if (userData) {
+  //     await updateDaily(userData?.id, nextDaily);
+  //   }
+  // };
 
   if (isLoading) {
     return <Spinner size={'l'} />;
   }
 
   const date = new Date().getTime();
-  const daily = new Date(lastDaily ?? '').getTime();
+  const daily = new Date().getTime();
 
   if (daily > date) {
     return (
@@ -63,8 +60,9 @@ export const DailyCard = () => {
         id: 'single',
         cardsCount: 1,
         question: i18n('Card of the day'),
+        userId: Number(userData?.id),
       }}
-      onSpreadFinish={handleSpreadFinish}
+      // onSpreadFinish={handleSpreadFinish}
     />
   );
 };
