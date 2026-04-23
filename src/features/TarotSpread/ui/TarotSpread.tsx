@@ -107,7 +107,7 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
         </div>
 
         <TextContainer
-          paragraphs={interpretation}
+          paragraphs={interpretation ?? []}
           maxHeight={400}
           maxHeightMeasure={'px'}
           className={styles.interpretation}
