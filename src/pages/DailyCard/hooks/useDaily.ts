@@ -25,8 +25,6 @@ export const useDaily = () => {
         const { lastDaily } = activity;
 
         if (isToday(lastDaily)) {
-          console.log(isToday(lastDaily));
-
           setIsAvailable(false);
         }
       }
