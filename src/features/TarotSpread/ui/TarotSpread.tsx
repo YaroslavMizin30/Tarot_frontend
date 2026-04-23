@@ -1,6 +1,6 @@
 import { useEffect, useState, type FC } from 'react';
 
-import { useBlocker } from 'react-router';
+import { useBlocker, Link } from 'react-router';
 
 import Button from '@/shared/ui/Button';
 import Modal from '@/shared/ui/Modal';
@@ -19,12 +19,13 @@ import Placeholder from './Placeholder/Placeholder';
 import { type TarotSpreadProps } from './TartotSpread.props';
 import styles from './TarotSpread.module.css';
 import TextContainer from '@/shared/ui/TextContainer';
-import { Link } from 'react-router';
 
 export const TarotSpread: FC<TarotSpreadProps> = (props) => {
   const { spread, onSpreadFinish } = props;
 
   const { title, id, cardsCount } = spread;
+
+  const [step, setStep] = useState<'spread' | 'interpretation'>('spread');
 
   const { cards, activeCard, isFinished, prepareCards, changeActiveCard } =
     useReading();
@@ -49,10 +50,10 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
     }
   };
 
-  const handleFinishButtonClick = async () => {
-    await getInterpretation(cards, spread);
-
+  const handleFinishButtonClick = () => {
     reset?.();
+
+    setStep('interpretation');
 
     onSpreadFinish?.(spread, cards);
   };
@@ -73,8 +74,19 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
     };
   }, []);
 
-  if (interpretation) {
-    return (
+  useEffect(() => {
+    if (cards.length) {
+      getInterpretation(cards, spread);
+    }
+  }, [cards.length]);
+
+  if (step === 'interpretation') {
+    return isLoading ? (
+      <div className={styles.loading}>
+        {i18n('Interpreting')}...
+        <Spinner size={'l'} className={styles.spinner} />
+      </div>
+    ) : (
       <div className={styles.tarotSpread}>
         <h3 className={styles.title}>{title}</h3>
 
@@ -106,15 +118,6 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
         <Link to={'/history'} className={styles.link}>
           <Button>{i18n('To spreads history')}</Button>
         </Link>
-      </div>
-    );
-  }
-
-  if (isLoading) {
-    return (
-      <div className={styles.loading}>
-        {i18n('Interpreting')}...
-        <Spinner size={'l'} className={styles.spinner} />
       </div>
     );
   }
@@ -173,7 +176,6 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
             className={styles.button}
             onClick={handleFinishButtonClick}
             style={SpreadConfig[id].button}
-            isLoading={isLoading}
           >
             {i18n('Interpretation')}
           </Button>
