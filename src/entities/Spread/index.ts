@@ -6,3 +6,4 @@ export { useSpreads } from './model/useSpreads';
 export { updateSpread } from './api/updateSpread';
 export { getActivity } from './api/getActivity';
 export { updateActivity } from './api/updateActivity';
+export { useSummaries } from './model/useSummaries';

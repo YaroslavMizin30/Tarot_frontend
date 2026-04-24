@@ -59,3 +59,17 @@ export interface ActivityResponse {
   last_daily: string;
   last_horoscope: string;
 }
+
+export interface Summary {
+  userId: string;
+  date: string;
+  summary: string;
+  id: string;
+}
+
+export interface SummaryResponse {
+  user_id: string;
+  date: string;
+  summary: string;
+  id: string;
+}
