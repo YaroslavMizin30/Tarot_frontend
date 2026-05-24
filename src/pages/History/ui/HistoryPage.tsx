@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router';
 
-import { useSpreads } from '@/entities/Spread';
+import { useSpreads, useSummaries } from '@/entities/Spread';
 import TarotCard from '@/entities/TarotCard';
 import { useUserData } from '@/entities/User';
 
@@ -15,7 +15,18 @@ import Spinner from '@/shared/ui/Spinner';
 import styles from './HistoryPage.module.css';
 
 export const HistoryPage = () => {
-  const { spreads, isLoading: areSpreadsLoading } = useSpreads();
+  const {
+    spreads,
+    isLoading: areSpreadsLoading,
+    unsummarizedSpreads,
+  } = useSpreads();
+  const {
+    summaries,
+    addSummary,
+    isLoading: areSummariesLoading,
+    isAnalyzing,
+  } = useSummaries();
+
   const { i18n, addTranslations } = useLocales();
   const { userData, isLoading: isUserLoading } = useUserData();
 
@@ -23,9 +34,26 @@ export const HistoryPage = () => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
   }, []);
 
-  if (isUserLoading || areSpreadsLoading) {
+  if (isUserLoading || areSpreadsLoading || areSummariesLoading) {
     return <Spinner size={'l'} />;
   }
+
+  if (isAnalyzing) {
+    return (
+      <div className={styles.loading}>
+        {i18n('Analyzing spreads')}...
+        <Spinner size={'l'} className={styles.spinner} />
+      </div>
+    );
+  }
+
+  const handleSummaryButtonClick = async () => {
+    if (!spreads) {
+      return;
+    }
+
+    await addSummary(spreads);
+  };
 
   return (
     <div className={styles.container}>
@@ -33,7 +61,7 @@ export const HistoryPage = () => {
 
       <Zodiac sign={userData?.sign} className={styles.zodiac} />
 
-      <div className={`${styles.list} custom-scrollbar`}>
+      <div className={`${styles.spreads} custom-scrollbar`}>
         {spreads &&
           spreads.map((spread) => (
             <div className={styles.spread} key={spread.spreadId}>
@@ -46,10 +74,7 @@ export const HistoryPage = () => {
 
                 <span>{`${i18n('Date')}: ${spread.date}`}</span>
 
-                <Link
-                  state={spread}
-                  to={`/history/${spread.spreadId}`}
-                >
+                <Link state={spread} to={`/history/${spread.spreadId}`}>
                   <Button>{i18n('View')}</Button>
                 </Link>
               </div>
@@ -70,6 +95,41 @@ export const HistoryPage = () => {
             </div>
           ))}
       </div>
+
+      {Boolean(unsummarizedSpreads?.length) && (
+        <Button
+          className={styles['summary-button']}
+          onClick={handleSummaryButtonClick}
+        >
+          {i18n('Make summary')}
+        </Button>
+      )}
+
+      {Boolean(summaries?.length) && (
+        <>
+          <h3 className={styles.title}>{i18n('Summaries')}</h3>
+
+          <div className={`${styles.summaries} custom-scrollbar`}>
+            {summaries?.map((item) => {
+              const { id, summary, date } = item;
+
+              return (
+                <div key={id} className={styles.summary}>
+                  <div className={styles.info}>
+                    {`${i18n('Date')}: ${new Date(date).toLocaleDateString()}`}{' '}
+                    <Link state={item} to={`/history/summary/${id}`}>
+                      <Button>{i18n('View')}</Button>
+                    </Link>
+                  </div>
+                  <div className={`${styles.interpretation} custom-scrollbar`}>
+                    {summary.replace(/[*|#]/g, '')}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </>
+      )}
     </div>
   );
 };

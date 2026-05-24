@@ -10,6 +10,7 @@ const TRANSLATIONS_RU = {
   'Spreads': 'Расклады',
   'Summaries': 'Обобщения',
   'Summary': 'Обобщить',
+  'Analyzing spreads': 'Анализируем расклады',
 };
 
 export default TRANSLATIONS_RU;

@@ -1,12 +1,10 @@
-import type { Spread } from "../types";
+import type { Spread } from '../types';
 /**
  * Готовит промпт для анализа всех раскладов из списка
  * @param spreads Список раскладов для анализа
  * @returns Подготовленный промпт для анализа
  */
-export const prepareSpreadsAnalysisPrompt = (
-  spreads: Spread[],
-): string => {
+export const prepareSpreadsAnalysisPrompt = (spreads: Spread[]): string => {
   const promptSections = [
     'Анализируйте следующие расклады Таро и предоставьте комплексный взгляд на ситуацию:',
     '',

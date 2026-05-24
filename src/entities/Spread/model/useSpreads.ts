@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { getSpreads } from '../api/getSpreads';
 import type { Spread } from '../types';
 import { useUserData } from '@/entities/User';
@@ -31,6 +31,10 @@ export const useSpreads = () => {
     }
   };
 
+  const unsummarizedSpreads = useMemo(() => {
+    return spreads?.filter((spread) => !spread.isSummarized);
+  }, [spreads]);
+
   useEffect(() => {
     fetchSpreads();
   }, []);
@@ -38,5 +42,6 @@ export const useSpreads = () => {
   return {
     isLoading,
     spreads,
+    unsummarizedSpreads,
   };
 };

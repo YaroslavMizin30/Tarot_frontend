@@ -13,7 +13,12 @@
   overflow-y: auto;
 }
 
-.list {
+.container > div + h3 {
+  margin-top: 16px;
+}
+
+.spreads,
+.summaries {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -27,9 +32,17 @@
   margin-top: 16px;
 }
 
-.spread {
+.spread,
+.summary {
   display: flex;
   align-items: center;
+  margin-bottom: 10px;
+}
+
+.summary {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .info {
@@ -45,12 +58,19 @@
   margin-top: 5px;
 }
 
-.cards {
+.cards,
+.interpretation {
   display: flex;
   align-items: center;
   width: 200px;
   overflow-x: auto;
   padding-bottom: 5px;
+}
+
+.interpretation {
+  max-height: 115px;
+  overflow-y: auto;
+  color: var(--text-secondary);
 }
 
 .card {
@@ -72,4 +92,21 @@
   top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-secondary);
+}
+
+.summary-button {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.spinner {
+  margin-top: 10px;
 }

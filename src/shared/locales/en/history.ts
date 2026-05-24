@@ -10,6 +10,7 @@ const TRANSLATIONS_EN = {
   'Spreads': 'Spreads',
   'Summaries': 'Summaries',
   'Summary': 'Summary',
+  'Analyzing spreads': 'Analyzing spreads',
 };
 
 export default TRANSLATIONS_EN;

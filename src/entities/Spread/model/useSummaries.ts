@@ -14,6 +14,7 @@ export const useSummaries = () => {
 
   const [summaries, setSummaries] = useState<Summary[] | null>();
   const [isLoading, setIsLoading] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   const fetchSummaries = async () => {
     try {
@@ -36,17 +37,21 @@ export const useSummaries = () => {
       return;
     }
 
-    const develperPrompt = prepareSpreadsAnalysisPrompt(spreads);
+    try {
+      setIsAnalyzing(true);
 
-    const response = await requestAi([
-      { role: 'developer', content: develperPrompt },
-    ]);
+      const develperPrompt = prepareSpreadsAnalysisPrompt(spreads);
 
-    if (response) {
-      await addNewSummary(userData.id, response);
+      const response = await requestAi([
+        { role: 'developer', content: develperPrompt },
+      ]);
+
+      if (response) {
+        return addNewSummary(userData.id, response);
+      }
+    } finally {
+      setIsAnalyzing(false);
     }
-
-    return response;
   };
 
   useEffect(() => {
@@ -55,6 +60,7 @@ export const useSummaries = () => {
 
   return {
     isLoading,
+    isAnalyzing,
     summaries,
     addSummary,
   };
