@@ -28,6 +28,10 @@
   z-index: 100;
 }
 
+.summaries > div + div {
+  margin-top: 10px;
+}
+
 .list > div + div {
   margin-top: 16px;
 }
