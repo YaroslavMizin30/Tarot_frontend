@@ -96,7 +96,7 @@ export const HistoryPage = () => {
           ))}
       </div>
 
-      {Boolean(unsummarizedSpreads?.length) && (
+      {Number(unsummarizedSpreads?.length) > 1 && (
         <Button
           className={styles['summary-button']}
           onClick={handleSummaryButtonClick}

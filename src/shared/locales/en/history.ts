@@ -11,6 +11,7 @@ const TRANSLATIONS_EN = {
   'Summaries': 'Summaries',
   'Summary': 'Summary',
   'Analyzing spreads': 'Analyzing spreads',
+  'Make summary': 'Make summary',
 };
 
 export default TRANSLATIONS_EN;

@@ -11,6 +11,7 @@ const TRANSLATIONS_RU = {
   'Summaries': 'Обобщения',
   'Summary': 'Обобщить',
   'Analyzing spreads': 'Анализируем расклады',
+  'Make summary': 'Проанализировать расклады',
 };
 
 export default TRANSLATIONS_RU;
