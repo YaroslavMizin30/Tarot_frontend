@@ -15,6 +15,7 @@ export const Select = ({
   placeholder = '',
   disabled = false,
   className = '',
+  hasSearch = false,
   error,
 }: SelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -112,7 +113,7 @@ export const Select = ({
       {isOpen && (
         <div className={styles['custom-select__dropdown']}>
           {/* Поиск */}
-          {options.length > 5 && (
+          {options.length > 5 && hasSearch && (
             <div className={styles['custom-select__search-container']}>
               <input
                 type={'text'}
