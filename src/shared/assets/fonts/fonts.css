@@ -2,4 +2,10 @@
   font-family: 'Monomakh';
   src: url('./Monomakh/Monomakh-Regular.ttf') format('truetype');
   font-display: swap;
-};
+}
+
+@font-face {
+  font-family: 'Pangolin';
+  src: url('./Pangolin/Pangolin-Regular.ttf') format('truetype');
+  font-display: swap;
+}
