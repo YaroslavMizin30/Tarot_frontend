@@ -24,6 +24,12 @@ export const MainPage = () => {
   const { userData } = useUserData();
 
   useEffect(() => {
+    if (!userData) {
+      navigate('/reg');
+    }
+  }, []);
+
+  useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
   }, [locale]);
 

@@ -1,0 +1,65 @@
+.container {
+  width: 65%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+
+  color: var(--border-inversed);
+  text-align: center;
+}
+
+.title {
+  margin-bottom: 10px;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.item + .item {
+  margin-top: 20px;
+}
+
+.subtitle {
+  font-size: 14px;
+}
+
+.terms {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.birth-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.birth {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.terms > input,
+.birth > input {
+  margin-left: 10px;
+}
+
+.link {
+  text-decoration: underline;
+}
+
+.button {
+  margin-top: 10px;
+}
+
+.error {
+  color: #820c0c;
+  margin-top: 10px;
+  max-width: 280px;
+}

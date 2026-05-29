@@ -69,6 +69,16 @@ const routes: RouteObject[] = [
           },
         },
       },
+      {
+        path: '/reg',
+        lazy: {
+          async Component() {
+            const { default: RegisterPage } = await import('@/pages/Card');
+
+            return RegisterPage;
+          }
+        }
+      }
     ],
   },
 ];

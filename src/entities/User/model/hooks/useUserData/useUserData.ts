@@ -21,7 +21,7 @@ export const useUserData = () => {
 
   const getUserData = () => {
     try {
-      const telegramUser = getTelegramUser() ?? { id: '681641883' };
+      const telegramUser = getTelegramUser();
 
       if (telegramUser && loading !== 'loading') {
         const { id } = telegramUser;

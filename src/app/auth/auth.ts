@@ -5,7 +5,7 @@ import getTelegramUser from '@/entities/TelegramUser';
 import { auth } from '@/shared/api/supabase';
 
 export const authenticate = async () => {
-  const user = getTelegramUser() || { id: '681641883' };
+  const user = getTelegramUser();
 
   if (user?.id) {
     await auth({
