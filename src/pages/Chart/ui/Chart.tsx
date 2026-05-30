@@ -59,6 +59,10 @@ export const Chart = () => {
     setFormData((prev) => ({ ...prev, month: value }));
   };
 
+  const handleDayChange = (value: string) => {
+    setFormData((prev) => ({ ...prev, day: value }));
+  };
+
   const handleTermsRead = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsAgreed(e.currentTarget.checked);
   };
@@ -138,8 +142,8 @@ export const Chart = () => {
             <div className={styles.date}>
               <Select
                 options={getDaysInMonth(formData.month)}
-                onChange={handleMonthChange}
-                value={formData.month}
+                onChange={handleDayChange}
+                value={formData.day}
                 placeholder={i18n('day')}
                 emptyPhrase={i18n('choose month')}
               />
