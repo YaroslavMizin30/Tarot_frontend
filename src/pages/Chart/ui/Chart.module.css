@@ -45,6 +45,15 @@
   margin-top: 5px;
 }
 
+.date {
+  display: flex;
+  align-items: center;
+}
+
+.date > div + div {
+  margin-left: 5px;
+}
+
 .terms > input,
 .birth > input {
   margin-left: 10px;
@@ -62,4 +71,23 @@
   color: #820c0c;
   margin-top: 10px;
   max-width: 280px;
+}
+
+.agreement {
+  color: var(--border-primary);
+  border-color: var(--border-primary);
+}
+
+.modal {
+  width: 80%;
+}
+
+.modalContent {
+  width: 95%;
+  height: 500px;
+}
+
+.modalTitle {
+  font-size: 16px;
+  text-align: center;
 }
