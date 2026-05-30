@@ -14,7 +14,10 @@ export const Modal: FC<ModalProps> = (props) => {
   } = props;
 
   return (
-    <div className={styles.overlay}>
+    <div
+      className={styles.overlay}
+      style={{ display: isOpen ? 'flex' : 'none' }}
+    >
       <div
         className={`${styles.modal} ${className}`}
         style={{ display: isOpen ? 'flex' : 'none' }}
