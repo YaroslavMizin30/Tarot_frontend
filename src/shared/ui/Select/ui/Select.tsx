@@ -16,6 +16,7 @@ export const Select = ({
   disabled = false,
   className = '',
   hasSearch = false,
+  emptyPhrase,
   error,
 }: SelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -146,7 +147,7 @@ export const Select = ({
               ))
             ) : (
               <li className={styles['custom-select__no-results']}>
-                {i18n('Nothing was found')}
+                {emptyPhrase ?? i18n('Nothing was found')}
               </li>
             )}
           </ul>

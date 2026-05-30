@@ -12,4 +12,5 @@ export interface SelectProps {
   className?: string;
   error?: string;
   hasSearch?: boolean;
+  emptyPhrase?: string;
 }
