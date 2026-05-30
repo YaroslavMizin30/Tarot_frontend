@@ -6,6 +6,7 @@ import HomeIcon from '@/shared/assets/svg/common/home.svg';
 import GlobeIcon from '@/shared/assets/svg/common/globe.svg';
 import useOutsideClick from '@/shared/hooks/useOutsideClick';
 import useLocales, { type Locale } from '@/shared/hooks/useLocales';
+import { useUserData } from '@/entities/User';
 
 import styles from './Header.module.css';
 
@@ -18,6 +19,7 @@ const Header = () => {
   const navigate = useNavigate();
 
   const [isVisible, setIsVisible] = useState(false);
+  const { userData } = useUserData();
 
   const handleSettingsClick = () => {
     navigate('/settings');
@@ -41,7 +43,9 @@ const Header = () => {
 
   return (
     <header className={styles.header}>
-      <HomeIcon className={styles.home} onClick={handleHomeClick} />
+      {userData && (
+        <HomeIcon className={styles.home} onClick={handleHomeClick} />
+      )}
 
       <span className={styles.title}>Tarotopia</span>
 
@@ -72,10 +76,12 @@ const Header = () => {
           </div>
         )}
 
-        <SettingsIcon
-          className={styles.settings}
-          onClick={handleSettingsClick}
-        />
+        {userData && (
+          <SettingsIcon
+            className={styles.settings}
+            onClick={handleSettingsClick}
+          />
+        )}
       </div>
     </header>
   );
