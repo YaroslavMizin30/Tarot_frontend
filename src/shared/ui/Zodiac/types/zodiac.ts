@@ -1,3 +1,18 @@
+export const enum SIGNS_EN {
+  Aries = 'Aries',
+  Taurus = 'Taurus',
+  Gemini = 'Gemini',
+  Cancer = 'Cancer',
+  Leo = 'Leo',
+  Virgo = 'Virgo',
+  Libra = 'Libra',
+  Scorpio = 'Scorpio',
+  Capricorn = 'Capricorn',
+  Sagittarius = 'Sagittarius',
+  Aquarius = 'Aquarius',
+  Pisces = 'Pisces',
+}
+
 const enum SIGNS_ENUM {
   Aries = 'Aries',
   Taurus = 'Taurus',
