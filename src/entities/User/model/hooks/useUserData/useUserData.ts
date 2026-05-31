@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { v4 } from 'uuid';
 
 import {
   useAppSelector,
@@ -16,6 +17,8 @@ export const useUserData = () => {
   const { value: user, loading } = useAppSelector(
     (state: RootState) => state.user,
   );
+
+  const [refetch, setRefetch] = useState<string>('');
 
   const dispatch = useAppDispatch();
 
@@ -45,14 +48,19 @@ export const useUserData = () => {
     }
   };
 
+  const refetchUserData = () => {
+    setRefetch(v4());
+  };
+
   useEffect(() => {
     getUserData();
-  }, []);
+  }, [refetch]);
 
   return {
     isLoading: loading === 'loading',
     userData: user,
     updateUserData,
+    refetchUserData,
     error,
   };
 };

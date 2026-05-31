@@ -17,7 +17,11 @@ export const useCreateUser = () => {
 
   const { i18n } = useLocales();
   const [isLoading, setIsLoading] = useState(false);
-  const { userData } = useUserData();
+  const {
+    userData,
+    refetchUserData,
+    isLoading: isUserDataLoading,
+  } = useUserData();
 
   const [error, setError] = useState<string | null | unknown>(null);
 
@@ -58,6 +62,8 @@ export const useCreateUser = () => {
         natal_chart: card,
         sign: i18n(zodiac),
       });
+
+      refetchUserData();
     } catch (e) {
       setError(e);
     } finally {
@@ -67,7 +73,7 @@ export const useCreateUser = () => {
 
   return {
     createUser,
-    isLoading,
+    isLoading: isLoading || isUserDataLoading,
     error,
     user: userData,
   };

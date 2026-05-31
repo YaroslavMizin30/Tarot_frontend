@@ -82,20 +82,20 @@ export const Registry = () => {
     setShowUserAgreement(false);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setError('');
 
     const { name, country, city, day, month, year } = formData;
 
-    createUser(formData);
-
     if (!name || !country || !city || !day || !month || !year) {
       setError(i18n('All necessary fields must be filled'));
 
       return;
     }
+
+    await createUser(formData);
   };
 
   const handleTimeCheckboxClick = () => {
