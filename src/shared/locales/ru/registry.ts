@@ -274,6 +274,34 @@ const TRANSLATIONS_RU = {
   'month': 'месяц',
   'year': 'год',
   'choose month': 'выберите месяц',
+
+  // Знаки зодиака
+  'Aries': 'Овен',
+  'Taurus': 'Телец',
+  'Gemini': 'Близнецы',
+  'Cancer': 'Рак',
+  'Leo': 'Лев',
+  'Virgo': 'Дева',
+  'Libra': 'Весы',
+  'Scorpio': 'Скорпион',
+  'Sagittarius': 'Стрелец',
+  'Capricorn': 'Козерог',
+  'Aquarius': 'Водолей',
+  'Pisces': 'Рыбы',
+
+  'Create natal chart for me': 'Создай натальную карту для меня',
+  'Place of birth': 'Место рождения',
+  'Date of birth': 'Дата рождения',
+  'Zodiac sign': 'Знак зодиака',
+  'Creating your natal chart': 'Составляем натальную карту',
+  "The user doesn't know": 'Пользователь не знает',
+  'User name': 'Имя пользователя',
+  'Address no comments to user, only chart description':
+    'Не давай комментариев пользователю, только описание карты',
+  "Don't duplicate user info, don't write about methods of composing":
+    'Не дублируй информацию о пользователе, не пиши о методах составления',
+  'Describe the meaning of the chart to user':
+    'Опиши значение карты для пользователя',
 };
 
 export default TRANSLATIONS_RU;

@@ -274,6 +274,34 @@ const TRANSLATIONS_EN = {
   'month': 'month',
   'year': 'year',
   'choose month': 'choose month',
+
+  // Знаки зодиака
+  'Aries': 'Aries',
+  'Taurus': 'Taurus',
+  'Gemini': 'Gemini',
+  'Cancer': 'Cancer',
+  'Leo': 'Leo',
+  'Virgo': 'Virgo',
+  'Libra': 'Libra',
+  'Scorpio': 'Scorpio',
+  'Sagittarius': 'Sagittarius',
+  'Capricorn': 'Capricorn',
+  'Aquarius': 'Aquarius',
+  'Pisces': 'Pisces',
+
+  'Create natal chart for me': 'Create natal chart for me',
+  'Place of birth': 'Place of birth',
+  'Date of birth': 'Date of birth',
+  'Creating your natal chart': 'Creating your natal chart',
+  'Zodiac sign': 'Zodiac sign',
+  "The user doesn't know": "The user doesn't know",
+  'User name': 'User name',
+  'Address no comments to user, only chart description':
+    'Address no comments to user, only chart description',
+  "Don't duplicate user info, don't write about methods of composing":
+    "Don't duplicate user info, don't write about methods of composing",
+  'Describe the meaning of the chart to user':
+    'Describe the meaning of the chart to user',
 };
 
 export default TRANSLATIONS_EN;
