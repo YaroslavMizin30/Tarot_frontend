@@ -4,3 +4,7 @@ export interface UseUserDataResult {
   isLoading: boolean;
   userData: GetUserResponse | null;
 }
+
+export interface UseUserDataOptions {
+  retryCount?: number;
+}

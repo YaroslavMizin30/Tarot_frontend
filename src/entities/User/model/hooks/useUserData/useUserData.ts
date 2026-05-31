@@ -12,7 +12,11 @@ import getTelegramUser from '@/entities/TelegramUser';
 import { updateUser } from '@/entities/User/api/updateUser/updateUser';
 import type { GetUserResponse } from '../../../types/user';
 
-export const useUserData = () => {
+import type { UseUserDataOptions } from './useUserData.types';
+
+export const useUserData = (options: UseUserDataOptions = {}) => {
+  const { retryCount = 2 } = options;
+
   const [error, setError] = useState<string | null>(null);
   const { value: user, loading } = useAppSelector(
     (state: RootState) => state.user,
@@ -26,7 +30,7 @@ export const useUserData = () => {
     try {
       const telegramUser = getTelegramUser();
 
-      if (telegramUser && loading !== 'loading') {
+      if (telegramUser && loading !== 'loading' && retryCount > 0) {
         const { id } = telegramUser;
 
         if (!user) {

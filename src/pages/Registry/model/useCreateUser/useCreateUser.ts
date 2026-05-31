@@ -17,11 +17,12 @@ export const useCreateUser = () => {
 
   const { i18n } = useLocales();
   const [isLoading, setIsLoading] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
   const {
     userData,
     refetchUserData,
     isLoading: isUserDataLoading,
-  } = useUserData();
+  } = useUserData({ retryCount });
 
   const [error, setError] = useState<string | null | unknown>(null);
 
@@ -63,6 +64,7 @@ export const useCreateUser = () => {
         sign: i18n(zodiac),
       });
 
+      setRetryCount(2);
       refetchUserData();
     } catch (e) {
       setError(e);
