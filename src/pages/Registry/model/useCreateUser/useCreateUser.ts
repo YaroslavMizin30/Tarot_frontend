@@ -13,7 +13,7 @@ import type { CreateUserOptions } from './useCreateUser.types.ts';
 import { useUserData } from '@/entities/User/index.ts';
 
 export const useCreateUser = () => {
-  const tgUser = getTelegramUser() ?? { id: 681641883 };
+  const tgUser = getTelegramUser();
 
   const { i18n } = useLocales();
   const [isLoading, setIsLoading] = useState(false);

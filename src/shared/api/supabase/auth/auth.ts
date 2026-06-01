@@ -5,7 +5,10 @@ export const auth = async (credentials: {
   const { email, password } = credentials;
 
   try {
-    const { error } = await window.supabase.auth.signInWithPassword({
+    const {
+      error,
+      data: { user },
+    } = await window.supabase.auth.signInWithPassword({
       email,
       password,
     });
@@ -15,6 +18,8 @@ export const auth = async (credentials: {
 
       await auth({ email, password });
     }
+
+    return user;
   } catch (e) {
     console.log(e);
   }

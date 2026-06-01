@@ -1,5 +1,5 @@
 import { useEffect, type SyntheticEvent } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, useOutletContext } from 'react-router';
 
 import Button from '@/shared/ui/Button';
 import TRANSLATIONS_EN from '@/shared/locales/en/common';
@@ -21,10 +21,11 @@ export const MainPage = () => {
 
   const { i18n, addTranslations, locale } = useLocales();
 
-  const { userData, isLoading } = useUserData();
+  const { userData } = useUserData();
+  const { user } = useOutletContext<{ user: Record<string, string> | null }>();
 
   useEffect(() => {
-    if (!userData && !isLoading) {
+    if (!user) {
       navigate('/reg');
     }
   }, []);

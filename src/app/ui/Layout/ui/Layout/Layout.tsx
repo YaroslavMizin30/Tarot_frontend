@@ -14,8 +14,9 @@ export const Layout = () => {
   const { state } = useNavigation();
 
   const isLoading = state === 'loading';
+
   const { isLoading: isUserDataLoading } = useUserData();
-  const { isLoading: isAuthenticating } = useAuth();
+  const { isLoading: isAuthenticating, user } = useAuth();
 
   return (
     <div className={styles.layout}>
@@ -25,7 +26,7 @@ export const Layout = () => {
         {isLoading || isUserDataLoading || isAuthenticating ? (
           <Spinner size={'l'} />
         ) : (
-          <Outlet />
+          <Outlet context={{ user, isAuthenticating }} />
         )}
       </main>
     </div>

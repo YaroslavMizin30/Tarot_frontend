@@ -4,11 +4,11 @@ import getTelegramUser from '@/entities/TelegramUser';
 
 import { auth } from '@/shared/api/supabase';
 
-export const authenticate = async () => {
+export const authenticate = () => {
   const user = getTelegramUser();
 
   if (user?.id) {
-    await auth({
+    return auth({
       email: `${user.id}@telegram.com`,
       password: user.id.toString(),
     });
@@ -16,13 +16,16 @@ export const authenticate = async () => {
 };
 
 export const useAuth = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] =
+    useState<Awaited<ReturnType<typeof authenticate>>>(null);
 
   const getAuth = async () => {
     try {
       setIsLoading(true);
 
-      await authenticate();
+      const data = await authenticate();
+      setUser(data);
     } catch (e) {
       console.log(e);
     } finally {
@@ -36,5 +39,6 @@ export const useAuth = () => {
 
   return {
     isLoading,
+    user,
   };
 };
