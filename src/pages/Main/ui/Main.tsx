@@ -21,10 +21,10 @@ export const MainPage = () => {
 
   const { i18n, addTranslations, locale } = useLocales();
 
-  const { userData } = useUserData();
+  const { userData, isLoading } = useUserData();
 
   useEffect(() => {
-    if (!userData) {
+    if (!userData && !isLoading) {
       navigate('/reg');
     }
   }, []);
