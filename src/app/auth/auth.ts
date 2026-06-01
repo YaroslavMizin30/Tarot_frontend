@@ -22,8 +22,6 @@ export const useAuth = () => {
 
   const getAuth = async () => {
     try {
-      setIsLoading(true);
-
       const data = await authenticate();
       setUser(data);
     } catch (e) {
