@@ -69,3 +69,21 @@ export interface SendMessageParams {
   text: string;
   replyMarkup?: ReplyMarkup;
 }
+
+export interface SendMessageResponse {
+  messageId: number;
+  from: {
+    id: number;
+    isBot: boolean;
+    firstName: string;
+    username: string;
+  };
+  chat: {
+    id: number;
+    firstName: string;
+    username: string;
+    type: 'private' | 'public';
+  };
+  date: number;
+  text: string;
+}

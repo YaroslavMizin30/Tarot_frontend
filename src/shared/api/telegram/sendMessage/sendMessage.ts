@@ -1,6 +1,9 @@
 import snakeize from 'snakeize';
 
-import type { SendMessageParams } from './sendMessage.types';
+import type {
+  SendMessageParams,
+  SendMessageResponse,
+} from './sendMessage.types';
 
 import getTelegramUser from '@/entities/TelegramUser';
 
@@ -23,5 +26,5 @@ export const sendMessage = async (params: SendMessageParams) => {
     },
   );
 
-  return response.json();
+  return response.json() as Promise<SendMessageResponse>;
 };
