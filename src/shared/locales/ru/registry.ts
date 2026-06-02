@@ -308,6 +308,7 @@ const TRANSLATIONS_RU = {
   'Tarot reading': 'Расклад таро',
   'Month horoscope': 'Гороскоп на месяц',
   'Last 10 horoscopes summary': 'Анализ последних 10 гороскопов',
+  'Continue': 'Продолжить',
 };
 
 export default TRANSLATIONS_RU;

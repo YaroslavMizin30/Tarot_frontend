@@ -308,6 +308,7 @@ const TRANSLATIONS_EN = {
   'Tarot reading': 'Tarot reading',
   'Month horoscope': 'Month horoscope',
   'Last 10 horoscopes summary': 'Last 10 horoscopes summary',
+  'Continue': 'Continue',
 };
 
 export default TRANSLATIONS_EN;

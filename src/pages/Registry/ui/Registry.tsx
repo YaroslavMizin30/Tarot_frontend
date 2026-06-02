@@ -131,7 +131,9 @@ export const Registry = () => {
           zodiacSign={user.sign}
           chartDescription={user.natalChart}
         />
-        <Button onClick={handleBotButtonClick}>{i18n('Continue')}</Button>
+        <Button className={styles.botButton} onClick={handleBotButtonClick}>
+          {i18n('Continue')}
+        </Button>
       </>
     );
   }
