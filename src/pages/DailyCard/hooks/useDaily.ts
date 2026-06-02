@@ -22,9 +22,9 @@ export const useDaily = () => {
       const activity = await getActivity(userData.id);
 
       if (activity) {
-        const { lastDaily } = activity;
+        const { dailyCardLastDate } = activity;
 
-        if (isToday(lastDaily)) {
+        if (isToday(dailyCardLastDate)) {
           setIsAvailable(false);
         }
       }
@@ -36,7 +36,7 @@ export const useDaily = () => {
   const updateUserActivity = async () => {
     if (userData) {
       await updateActivity(userData.id, {
-        lastDaily: new Date().toISOString(),
+        dailyCardLastDate: new Date().toISOString(),
       });
     }
   };

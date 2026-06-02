@@ -8,7 +8,7 @@ export const addSummary = async (userId: number, summary: string) => {
   const uuid = v4();
   const date = new Date().toISOString();
 
-  await insertRaw('summaries', snakeize({ summary, userId, date, id: uuid }));
+  await insertRaw('spread_summaries', snakeize({ summary, userId, date, id: uuid }));
 
   await updateRaw('spreads', snakeize({ isSummarized: true }), {
     key: 'user_id',

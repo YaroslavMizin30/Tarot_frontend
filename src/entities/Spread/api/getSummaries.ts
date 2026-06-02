@@ -7,7 +7,7 @@ import type { Summary, SummaryResponse } from '../types';
 export const getSummaries = async (
   userId: number,
 ): Promise<Summary[] | null> => {
-  const { data } = await getDataFromDB<SummaryResponse>('summaries', ['*'], {
+  const { data } = await getDataFromDB<SummaryResponse>('spread_summaries', ['*'], {
     key: 'user_id',
     value: String(userId),
   });

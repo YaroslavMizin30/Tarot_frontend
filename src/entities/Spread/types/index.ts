@@ -51,13 +51,19 @@ export interface SpreadResponse {
 }
 
 export interface Activity {
-  lastDaily: string;
-  lastHoroscope: string;
+  dailyCardLastDate: string;
+  dailyHoroscopeLastDate: string;
+  dailyHoroscopeLastId: number;
+  monthlyHoroscopeLastDate: string;
+  monthlyHoroscopeLastId: number;
 }
 
 export interface ActivityResponse {
-  last_daily: string;
-  last_horoscope: string;
+  daily_card_last_date: string;
+  daily_horoscope_last_date: string;
+  daily_horoscope_last_id: number;
+  monthly_horoscope_last_date: string;
+  monthly_horoscope_last_id: number;
 }
 
 export interface Summary {
