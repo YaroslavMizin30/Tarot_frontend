@@ -7,7 +7,7 @@ import type {
 
 import getTelegramUser from '@/entities/TelegramUser';
 
-const BOT_TOKEN = 'bot8259803505:AAHI2FjJzlXSJLtTdBhHXVbUT_xIy9zXnys';
+const BOT_TOKEN = 'bot8773471919:AAETj1EuJOAJuqFdZ5nptAPHcS6EY10lY_s';
 
 export const sendMessage = async (params: SendMessageParams) => {
   const body = {
