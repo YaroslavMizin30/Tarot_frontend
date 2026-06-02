@@ -104,6 +104,10 @@ export const Registry = () => {
     });
   };
 
+  const handleBotButtonClick = () => {
+    window.Telegram?.WebApp?.close();
+  };
+
   useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
   }, [locale]);
@@ -120,12 +124,15 @@ export const Registry = () => {
 
   if (user) {
     return (
-      <NatalChart
-        {...user}
-        name={user.userName}
-        zodiacSign={user.sign}
-        chartDescription={user.natalChart}
-      />
+      <>
+        <NatalChart
+          {...user}
+          name={user.userName}
+          zodiacSign={user.sign}
+          chartDescription={user.natalChart}
+        />
+        <Button onClick={handleBotButtonClick}>{i18n('Continue')}</Button>
+      </>
     );
   }
 

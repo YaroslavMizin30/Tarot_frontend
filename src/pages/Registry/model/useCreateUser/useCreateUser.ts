@@ -2,15 +2,15 @@ import { useState } from 'react';
 
 import requestAi from '@/shared/api/AI';
 import { insertRaw } from '@/shared/api/supabase/index.ts';
+import useLocales from '@/shared/hooks/useLocales';
+import { sendMessage } from '@/shared/api/telegram/index.ts';
 
 import getTelegramUser from '@/entities/TelegramUser/index.ts';
-
-import useLocales from '@/shared/hooks/useLocales';
+import { useUserData } from '@/entities/User/index.ts';
 
 import { getZodiacSign } from '../../lib/getZodiacSign.ts';
 
 import type { CreateUserOptions } from './useCreateUser.types.ts';
-import { useUserData } from '@/entities/User/index.ts';
 
 export const useCreateUser = () => {
   const tgUser = getTelegramUser();
@@ -66,6 +66,22 @@ export const useCreateUser = () => {
 
       setRetryCount(2);
       refetchUserData();
+
+      sendMessage({
+        text: i18n(
+          '"✅ Your natal chart is ready!\n\n🔮 Continue using TAROTOPIA for:\n• Daily predictions\n• Tarot readings for your questions\n• Tracking favorable periods\n\nUse the buttons in the menu to get started! ✨"',
+        ),
+        replyMarkup: {
+          keyboard: [
+            [
+              { text: i18n('Daily prediction') },
+              { text: i18n('Tarot reading') },
+              { text: i18n('Month horoscope') },
+              { text: i18n('Analyze last 10 horoscopes') },
+            ],
+          ],
+        },
+      });
     } catch (e) {
       setError(e);
     } finally {
