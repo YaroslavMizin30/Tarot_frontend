@@ -64,6 +64,8 @@ export const useCreateUser = () => {
         sign: i18n(zodiac),
       });
 
+      insertRaw('activity', {user_id: tgUser.id});
+
       setRetryCount(2);
       refetchUserData();
 
