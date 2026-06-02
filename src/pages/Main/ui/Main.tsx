@@ -38,8 +38,6 @@ export const MainPage = () => {
     <div className={styles.container}>
       <Zodiac sign={userData?.sign} />
 
-      <span>{JSON.stringify(window?.Telegram?.WebApp?.initDataUnsafe)}</span>
-
       <Button value={'/daily'} onClick={handleNavigationButtonClick}>
         {i18n('Card of the day')}
       </Button>
