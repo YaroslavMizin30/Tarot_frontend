@@ -77,7 +77,7 @@ export const useCreateUser = () => {
               { text: i18n('Daily prediction') },
               { text: i18n('Tarot reading') },
               { text: i18n('Month horoscope') },
-              { text: i18n('Analyze last 10 horoscopes') },
+              { text: i18n('Last 10 horoscopes summary') },
             ],
           ],
         },
