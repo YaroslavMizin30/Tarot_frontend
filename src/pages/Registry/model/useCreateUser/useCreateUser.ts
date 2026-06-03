@@ -74,6 +74,7 @@ export const useCreateUser = () => {
           '✅ Your natal chart is ready!\n\n🔮 Continue using TAROTOPIA for:\n• Daily predictions\n• Tarot readings for your questions\n• Tracking favorable periods\n\nUse the buttons in the menu to get started! ✨',
         ),
         replyMarkup: {
+          resizeKeyboard: true,
           keyboard: [
             [
               { text: i18n('Daily prediction') },
