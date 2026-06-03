@@ -71,6 +71,7 @@ export interface Summary {
   date: string;
   summary: string;
   id: string;
+  rating?: number;
 }
 
 export interface SummaryResponse {
