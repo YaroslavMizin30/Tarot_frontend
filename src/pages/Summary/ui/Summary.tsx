@@ -38,7 +38,7 @@ export const SummaryPage = () => {
     <div className={`${styles.container} custom-scrollbar`}>
       <div className={styles.info}>
         <span>
-          {i18n('Date')}: {date}
+          {i18n('Date')}: {new Date(date).toLocaleDateString()}
         </span>
       </div>
 
