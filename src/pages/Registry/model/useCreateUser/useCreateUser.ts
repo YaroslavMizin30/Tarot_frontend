@@ -64,7 +64,7 @@ export const useCreateUser = () => {
         sign: i18n(zodiac),
       });
 
-      insertRaw('activity', {user_id: tgUser.id});
+      insertRaw('activity', { user_id: tgUser.id });
 
       setRetryCount(2);
       refetchUserData();
@@ -78,9 +78,8 @@ export const useCreateUser = () => {
             [
               { text: i18n('Daily prediction') },
               { text: i18n('Tarot reading') },
-              { text: i18n('Month horoscope') },
-              { text: i18n('Last 10 horoscopes summary') },
             ],
+            [{ text: i18n('Month horoscope') }, { text: i18n('Summary') }],
           ],
         },
       });

@@ -307,7 +307,7 @@ const TRANSLATIONS_EN = {
   'Daily prediction': 'Daily prediction',
   'Tarot reading': 'Tarot reading',
   'Month horoscope': 'Month horoscope',
-  'Last 10 horoscopes summary': 'Last 10 horoscopes summary',
+  'Summary': 'Summary',
   'Continue': 'Continue',
 };
 
