@@ -7,7 +7,7 @@
   width: 4.8rem;
 
   border-radius: 10px;
-  background-image: url('assets/images/card/back.jpeg');
+  background-image: url('/assets/images/card/back.jpeg');
   background-size: cover;
 }
 
