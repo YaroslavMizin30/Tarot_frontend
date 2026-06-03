@@ -9,7 +9,7 @@ export const updateSummary = async (
   spreadData: Partial<Summary>,
 ) => {
   await updateRaw('spread_summaries', snakeize({ ...spreadData }), {
-    key: 'spread_id',
+    key: 'id',
     value: spreadId,
   });
 };
