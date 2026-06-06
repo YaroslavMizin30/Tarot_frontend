@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useUserData } from '@/entities/User';
+import { useUser } from '@/entities/User';
 
 import useLocales from '@/shared/hooks/useLocales';
 import { checkSubscriptionStatus } from '@/shared/utils/checkSubscriptionStatus';
@@ -15,7 +15,7 @@ const MAX_FREE_QUESTIONS = 3;
 const SubscriptionSettings = (props: { onBackButtonClick: () => void }) => {
   const { onBackButtonClick } = props;
 
-  const { userData } = useUserData();
+  const { user } = useUser();
 
   const { i18n } = useLocales();
 
@@ -34,11 +34,11 @@ const SubscriptionSettings = (props: { onBackButtonClick: () => void }) => {
     onBackButtonClick();
   };
 
-  if (!userData) {
+  if (!user) {
     return null;
   }
 
-  const { tariff, expirationDate, freeSpreads } = userData;
+  const { tariff, expirationDate, freeSpreads } = user;
 
   const spreads = MAX_FREE_QUESTIONS - freeSpreads;
 

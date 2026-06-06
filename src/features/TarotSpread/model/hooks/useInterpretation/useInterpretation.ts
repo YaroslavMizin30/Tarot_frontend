@@ -9,14 +9,14 @@ import type { SpreadParams } from '@/entities/Spread';
 import useLocales from '@/shared/hooks/useLocales';
 
 import { addSpread } from '@/entities/Spread';
-import { useUserData } from '@/entities/User';
+import { useUser } from '@/entities/User';
 
 export const useInterpretation = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [interpretation, setInterpretation] = useState<string[] | null>(null);
   const [spreadId, setSpreadId] = useState<string | null>(null);
 
-  const { userData } = useUserData();
+  const { user } = useUser();
 
   const { i18n } = useLocales();
 
@@ -43,7 +43,7 @@ export const useInterpretation = () => {
 
       setInterpretation(interpretation.replace(/[#|*|-]/g, '').split('\n'));
 
-      if (userData) {
+      if (user) {
         const uuid = v4();
 
         await addSpread({
@@ -52,7 +52,7 @@ export const useInterpretation = () => {
           interpretation,
           date: new Date().toLocaleDateString(),
           spreadId: uuid,
-          userId: userData.id,
+          userId: user.id,
         });
 
         setSpreadId(uuid);

@@ -6,7 +6,7 @@ import TRANSLATIONS_EN from '@/shared/locales/en/common';
 import TRANSLATIONS_RU from '@/shared/locales/ru/common';
 import useLocales from '@/shared/hooks/useLocales';
 import Zodiac from '@/shared/ui/Zodiac';
-import { useUserData } from '@/entities/User/model/hooks/useUserData/useUserData';
+import { type User } from '@/entities/User';
 
 import styles from './Main.module.css';
 
@@ -21,8 +21,7 @@ export const MainPage = () => {
 
   const { i18n, addTranslations, locale } = useLocales();
 
-  const { userData } = useUserData();
-  const { user } = useOutletContext<{ user: Record<string, string> | null }>();
+  const { user } = useOutletContext<{ user: User }>();
 
   useEffect(() => {
     if (!user) {
@@ -36,7 +35,7 @@ export const MainPage = () => {
 
   return (
     <div className={styles.container}>
-      <Zodiac sign={userData?.sign} />
+      <Zodiac sign={user?.sign} />
 
       <Button value={'/daily'} onClick={handleNavigationButtonClick}>
         {i18n('Card of the day')}

@@ -1,23 +1,23 @@
 import { useEffect, useMemo, useState } from 'react';
 import { getSpreads } from '../api/getSpreads';
 import type { Spread } from '../types';
-import { useUserData } from '@/entities/User';
+import { useUser } from '@/entities/User';
 
 export const useSpreads = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [spreads, setSpreads] = useState<Spread[] | null>(null);
 
-  const { userData } = useUserData();
+  const { user } = useUser();
 
   const fetchSpreads = async () => {
     setIsLoading(true);
 
     try {
-      if (!userData) {
+      if (!user) {
         return;
       }
 
-      const response = await getSpreads(String(userData?.id));
+      const response = await getSpreads(String(user?.id));
 
       if (response) {
         setSpreads(response);

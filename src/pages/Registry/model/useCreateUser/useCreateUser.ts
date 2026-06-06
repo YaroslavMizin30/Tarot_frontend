@@ -6,7 +6,7 @@ import useLocales from '@/shared/hooks/useLocales';
 import { sendMessage } from '@/shared/api/telegram/index.ts';
 
 import getTelegramUser from '@/entities/TelegramUser/index.ts';
-import { useUserData } from '@/entities/User/index.ts';
+import { useUser } from '@/entities/User/index.ts';
 
 import { getZodiacSign } from '../../lib/getZodiacSign.ts';
 
@@ -17,12 +17,7 @@ export const useCreateUser = () => {
 
   const { i18n } = useLocales();
   const [isLoading, setIsLoading] = useState(false);
-  const [retryCount, setRetryCount] = useState(0);
-  const {
-    userData,
-    refetchUserData,
-    isLoading: isUserDataLoading,
-  } = useUserData({ retryCount });
+  const { user, refetchUser, isLoading: isUserLoading } = useUser();
 
   const [error, setError] = useState<string | null | unknown>(null);
 
@@ -66,8 +61,7 @@ export const useCreateUser = () => {
 
       insertRaw('activity', { user_id: tgUser.id });
 
-      setRetryCount(2);
-      refetchUserData();
+      refetchUser();
 
       sendMessage({
         text: i18n(
@@ -93,8 +87,8 @@ export const useCreateUser = () => {
 
   return {
     createUser,
-    isLoading: isLoading || isUserDataLoading,
+    isLoading: isLoading || isUserLoading,
     error,
-    user: userData,
+    user,
   };
 };

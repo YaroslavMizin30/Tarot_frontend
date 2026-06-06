@@ -7,10 +7,10 @@ import { addSummary as addNewSummary } from '../api/addSummary';
 import type { Spread, Summary } from '../types';
 import { prepareSpreadsAnalysisPrompt } from '../lib/prepareSpreadsAnalysis';
 
-import { useUserData } from '@/entities/User';
+import { useUser } from '@/entities/User';
 
 export const useSummaries = () => {
-  const { userData } = useUserData();
+  const { user } = useUser();
 
   const [summaries, setSummaries] = useState<Summary[] | null>();
   const [isLoading, setIsLoading] = useState(false);
@@ -20,11 +20,11 @@ export const useSummaries = () => {
     try {
       setIsLoading(true);
 
-      if (!userData) {
+      if (!user) {
         return;
       }
 
-      const response = await getSummaries(userData.id);
+      const response = await getSummaries(user.id);
 
       setSummaries(response);
     } finally {
@@ -33,7 +33,7 @@ export const useSummaries = () => {
   };
 
   const addSummary = async (spreads: Spread[]) => {
-    if (!userData) {
+    if (!user) {
       return;
     }
 
@@ -47,7 +47,7 @@ export const useSummaries = () => {
       ]);
 
       if (response) {
-        return addNewSummary(userData.id, response);
+        return addNewSummary(user.id, response);
       }
     } finally {
       setIsAnalyzing(false);

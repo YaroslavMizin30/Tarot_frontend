@@ -5,14 +5,14 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getUser } from '@/entities/User';
 
 export interface UserState {
-  value: User | null;
-  loading: 'idle' | 'loading' | 'failed';
+  user: User | null;
+  isLoading: boolean;
   error: null | string;
 }
 
 const initialState: UserState = {
-  value: null,
-  loading: 'idle',
+  user: null,
+  isLoading: true,
   error: null,
 };
 
@@ -23,16 +23,6 @@ export const setUser = createAsyncThunk(
 
     return user;
   },
-  {
-    condition: (_, { getState }) => {
-      //@ts-expect-error 'проблема либы'
-      const { user } = getState();
-
-      if (user.loading === 'loading') {
-        return false;
-      }
-    },
-  },
 );
 
 export const userSlice = createSlice({
@@ -41,15 +31,12 @@ export const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(setUser.pending, (state) => {
-        state.loading = 'loading';
-      })
       .addCase(setUser.fulfilled, (state, action) => {
-        state.loading = 'idle';
-        state.value = action.payload;
+        state.isLoading = false;
+        state.user = action.payload;
       })
       .addCase(setUser.rejected, (state) => {
-        state.loading = 'failed';
+        state.isLoading = false;
         state.error = 'Failed to load user data';
       });
   },

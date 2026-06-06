@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 import { useSpreads, useSummaries } from '@/entities/Spread';
 import TarotCard from '@/entities/TarotCard';
-import { useUserData } from '@/entities/User';
+import { useUser } from '@/entities/User';
 
 import useLocales from '@/shared/hooks/useLocales';
 import TRANSLATIONS_EN from '@/shared/locales/en/history';
@@ -28,7 +28,7 @@ export const HistoryPage = () => {
   } = useSummaries();
 
   const { i18n, addTranslations, locale } = useLocales();
-  const { userData, isLoading: isUserLoading } = useUserData();
+  const { user, isLoading: isUserLoading } = useUser();
 
   useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
@@ -59,7 +59,7 @@ export const HistoryPage = () => {
     <div className={styles.container}>
       <h3 className={styles.title}>{i18n('Spreads history')}</h3>
 
-      <Zodiac sign={userData?.sign} className={styles.zodiac} />
+      <Zodiac sign={user?.sign} className={styles.zodiac} />
 
       <div className={`${styles.spreads} custom-scrollbar`}>
         {spreads &&

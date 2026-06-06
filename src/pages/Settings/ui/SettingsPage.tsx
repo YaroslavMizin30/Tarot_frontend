@@ -1,6 +1,6 @@
 import { useEffect, useState, type MouseEvent } from 'react';
 
-import { useUserData } from '@/entities/User';
+import { useUser } from '@/entities/User';
 
 import useLocales from '@/shared/hooks/useLocales';
 import TRANSLATIONS_EN from '@/shared/locales/en/settings';
@@ -13,7 +13,7 @@ import SubscriptionSettings from './SubscriptionSettings';
 import styles from './SettingsPage.module.css';
 
 export const SettingsPage = () => {
-  const { userData } = useUserData();
+  const { user } = useUser();
 
   const { i18n, addTranslations, locale } = useLocales();
 
@@ -33,7 +33,7 @@ export const SettingsPage = () => {
     setSettings('');
   };
 
-  if (!userData) {
+  if (!user) {
     return null;
   }
 

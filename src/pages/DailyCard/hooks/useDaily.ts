@@ -1,25 +1,25 @@
 import { useEffect, useState } from 'react';
 
 import { updateActivity, getActivity } from '@/entities/Spread';
-import { useUserData } from '@/entities/User';
+import { useUser } from '@/entities/User';
 
 import { isToday } from '@/shared/utils/isToday';
 
 export const useDaily = () => {
-  const { userData } = useUserData();
+  const { user } = useUser();
 
   const [isLoading, setIsLoading] = useState(false);
   const [isAvailable, setIsAvailable] = useState(true);
 
   const checkDaily = async () => {
-    if (!userData) {
+    if (!user) {
       return;
     }
 
     try {
       setIsLoading(true);
 
-      const activity = await getActivity(userData.id);
+      const activity = await getActivity(user.id);
 
       if (activity) {
         const { dailyCardLastDate } = activity;
@@ -34,8 +34,8 @@ export const useDaily = () => {
   };
 
   const updateUserActivity = async () => {
-    if (userData) {
-      await updateActivity(userData.id, {
+    if (user) {
+      await updateActivity(user.id, {
         dailyCardLastDate: new Date().toISOString(),
       });
     }
@@ -47,9 +47,9 @@ export const useDaily = () => {
 
   return {
     isAvailable,
-    sign: userData?.sign,
+    sign: user?.sign,
     isLoading,
     updateUserActivity,
-    id: userData?.id,
+    id: user?.id,
   };
 };

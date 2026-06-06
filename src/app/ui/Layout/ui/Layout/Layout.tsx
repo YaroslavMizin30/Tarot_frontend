@@ -2,8 +2,6 @@ import { Outlet, useNavigation } from 'react-router';
 
 import Spinner from '@/shared/ui/Spinner';
 
-import { useUserData } from '@/entities/User';
-
 import Header from '../Header/Header';
 
 import { useAuth } from '@/app/auth/auth';
@@ -15,7 +13,6 @@ export const Layout = () => {
 
   const isLoading = state === 'loading';
 
-  const { isLoading: isUserDataLoading } = useUserData();
   const { isLoading: isAuthenticating, user } = useAuth();
 
   return (
@@ -23,10 +20,10 @@ export const Layout = () => {
       <Header></Header>
 
       <main className={`${styles.main} custom-scrollbar`}>
-        {isLoading || isUserDataLoading || isAuthenticating ? (
+        {isLoading || isAuthenticating ? (
           <Spinner size={'l'} />
         ) : (
-          <Outlet context={{ user, isAuthenticating }} />
+          <Outlet context={{ user }} />
         )}
       </main>
     </div>
