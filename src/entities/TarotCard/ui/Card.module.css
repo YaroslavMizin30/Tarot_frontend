@@ -86,6 +86,7 @@
   width: 85px;
 
   border-radius: 10px;
+  overflow: hidden;
 }
 
 .front {

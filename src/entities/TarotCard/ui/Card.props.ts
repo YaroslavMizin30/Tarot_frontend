@@ -35,4 +35,8 @@ export interface TarotCardProps {
    * Flag if card is reversed
    */
   isReversed?: boolean;
+  /**
+   * Flag if card has loading state
+   */
+  hasLoadingState?: boolean;
 }

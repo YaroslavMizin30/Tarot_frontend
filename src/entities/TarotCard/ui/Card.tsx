@@ -2,6 +2,8 @@ import { useState, type FC } from 'react';
 
 import type { TarotCardProps } from './Card.props';
 
+import GlassLoader from '@/shared/ui/GlassLoader';
+
 import styles from './Card.module.css';
 
 export const TarotCard: FC<TarotCardProps> = (props) => {
@@ -14,9 +16,17 @@ export const TarotCard: FC<TarotCardProps> = (props) => {
     style = {},
     isInverted,
     isReversed,
+    hasLoadingState = false,
   } = props;
 
   const [isCardReversed, setIsReversed] = useState(isReversed);
+  const [isLoaded, setIsLoaded] = useState(!hasLoadingState);
+
+  const handleImageLoad = () => {
+    if (hasLoadingState) {
+      setIsLoaded(true);
+    }
+  };
 
   const handleCardClick = () => {
     if (canTurnOver && isCardReversed) {
@@ -34,6 +44,10 @@ export const TarotCard: FC<TarotCardProps> = (props) => {
     >
       <div
         className={`${styles.inner} ${isCardReversed ? styles.reversed : ''}`}
+        style={{
+          width: isLoaded ? undefined : '0px',
+          height: isLoaded ? undefined : '0px',
+        }}
       >
         <div className={styles.back}></div>
 
@@ -42,6 +56,7 @@ export const TarotCard: FC<TarotCardProps> = (props) => {
             <img
               className={`${styles.image} ${isInverted && !isCardReversed ? styles.reversed : ''}`}
               src={`/assets/images/card/${name}.png`}
+              onLoad={handleImageLoad}
             />
           </div>
 
@@ -52,6 +67,8 @@ export const TarotCard: FC<TarotCardProps> = (props) => {
           </div>
         </div>
       </div>
+
+      {!isLoaded && <GlassLoader />}
     </div>
   );
 };
