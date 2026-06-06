@@ -22,11 +22,15 @@ const Header = () => {
   const { userData } = useUserData();
 
   const handleSettingsClick = () => {
-    navigate('/settings');
+    if (userData) {
+      navigate('/settings');
+    }
   };
 
   const handleHomeClick = () => {
-    navigate('/');
+    if (userData) {
+      navigate('/');
+    }
   };
 
   const handleLangSwitcherClick = () => {
@@ -43,9 +47,11 @@ const Header = () => {
 
   return (
     <header className={styles.header}>
-      {userData && (
-        <HomeIcon className={styles.home} onClick={handleHomeClick} />
-      )}
+      <HomeIcon
+        className={styles.home}
+        onClick={handleHomeClick}
+        styles={{ opacity: userData ? 1 : 0 }}
+      />
 
       <span className={styles.title}>Tarotopia</span>
 
@@ -76,12 +82,11 @@ const Header = () => {
           </div>
         )}
 
-        {userData && (
-          <SettingsIcon
-            className={styles.settings}
-            onClick={handleSettingsClick}
-          />
-        )}
+        <SettingsIcon
+          className={styles.settings}
+          onClick={handleSettingsClick}
+          styles={{ opacity: userData ? 1 : 0 }}
+        />
       </div>
     </header>
   );
