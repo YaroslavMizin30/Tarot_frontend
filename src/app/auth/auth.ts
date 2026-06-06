@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 
 import getTelegramUser from '@/entities/TelegramUser';
 
+import { initSupabase } from '@/shared/api/supabase';
+
 import { auth } from '@/shared/api/supabase';
 
 export const authenticate = () => {
@@ -22,6 +24,8 @@ export const useAuth = () => {
 
   const getAuth = async () => {
     try {
+      await initSupabase();
+
       const data = await authenticate();
       setUser(data);
     } catch (e) {

@@ -1,7 +1,5 @@
-import { createClient } from '@supabase/supabase-js';
-
-export const initSupabase = () => {
-  
+export const initSupabase = async () => {
+  const { createClient } = await import('@supabase/supabase-js');
 
   window.supabase = createClient(
     'https://hadjujaanfwgepckluqy.supabase.co',
