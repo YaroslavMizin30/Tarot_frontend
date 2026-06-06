@@ -40,8 +40,6 @@ const SubscriptionSettings = (props: { onBackButtonClick: () => void }) => {
 
   const { tariff, expirationDate, freeSpreads } = userData;
 
-  console.log(userData);
-
   const spreads = MAX_FREE_QUESTIONS - freeSpreads;
 
   const getContent = () => {
