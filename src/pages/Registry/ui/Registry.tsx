@@ -178,18 +178,18 @@ export const Registry = () => {
 
             <div className={styles.date}>
               <Select
+                options={MONTHS[locale]}
+                onChange={handleMonthChange}
+                value={formData.month}
+                placeholder={i18n('month')}
+              />
+
+              <Select
                 options={getDaysInMonth(formData.month, Number(formData.year))}
                 onChange={handleDayChange}
                 value={formData.day}
                 placeholder={i18n('day')}
                 emptyPhrase={i18n('choose month')}
-              />
-
-              <Select
-                options={MONTHS[locale]}
-                onChange={handleMonthChange}
-                value={formData.month}
-                placeholder={i18n('month')}
               />
 
               <Select
@@ -231,7 +231,11 @@ export const Registry = () => {
               </a>
             </span>
 
-            <Input onChange={handleTermsRead} type={'checkbox'} />
+            <Input
+              onChange={handleTermsRead}
+              type={'checkbox'}
+              checked={isAgreed}
+            />
           </div>
 
           <Button
