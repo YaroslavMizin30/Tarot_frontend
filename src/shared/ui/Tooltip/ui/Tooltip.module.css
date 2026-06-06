@@ -48,6 +48,21 @@
   transform: translateY(-50%);
 }
 
+.tooltip--top:before {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateY(-50%);
+  transform: rotate(-90deg);
+
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 4px 8px 4px 0;
+  border-color: transparent #374151 transparent transparent;
+}
+
 .tooltip--right:before {
   content: '';
   position: absolute;

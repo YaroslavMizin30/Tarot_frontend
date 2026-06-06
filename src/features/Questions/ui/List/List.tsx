@@ -1,7 +1,11 @@
-import { type FC } from 'react';
+import { useState, type FC } from 'react';
 
 import Button from '@/shared/ui/Button';
 import useLocales from '@/shared/hooks/useLocales';
+import Tooltip from '@/shared/ui/Tooltip';
+import { checkSubscriptionStatus } from '@/shared/utils/checkSubscriptionStatus';
+
+import { useUser } from '@/entities/User';
 
 import type { ListProps } from './List.props';
 
@@ -11,13 +15,27 @@ const List: FC<ListProps> = (props) => {
   const { questions, onQuestionChoose, currentTheme } = props;
 
   const { i18n } = useLocales();
+  const { user } = useUser();
+
+  const { tariff, freeSpreads, expirationDate } = user ?? {};
+
+  const { isExpired } = checkSubscriptionStatus(expirationDate ?? '');
+
+  const [visibleToolTip, setVisibleToolTip] = useState('');
 
   return (
     <>
       <h3 className={styles.title}>{currentTheme}</h3>
 
       {questions.map((q) => {
-        const { label, text, spreadTitle, detailsQuestion, detailsAnswer } = q;
+        const {
+          label,
+          text,
+          spreadTitle,
+          detailsQuestion,
+          detailsAnswer,
+          tariffs,
+        } = q;
 
         const handleQuestionChoose = () => {
           onQuestionChoose({
@@ -30,11 +48,60 @@ const List: FC<ListProps> = (props) => {
           });
         };
 
+        const isAvailable = () => {
+          return (
+            (tariff && tariffs[tariff]) ||
+            (tariff === 'trial' && Number(freeSpreads) < 3)
+          );
+        };
+
+        const showToolTip = () => {
+          if (isAvailable()) {
+            return;
+          }
+
+          setVisibleToolTip(label);
+        };
+
+        const hideToolTip = () => {
+          if (visibleToolTip) {
+            setVisibleToolTip('');
+          }
+        };
+
+        const getTooltipDescription = () => {
+          if (tariff === 'standard') {
+            return i18n('Available for extended tariff');
+          } else if (tariff === 'trial' && Number(freeSpreads) > 2) {
+            return i18n('No free queries left 😔. Available via subscription');
+          } else if (isExpired) {
+            return i18n(
+              'Your subscription has expired 😔. Available via subscription',
+            );
+          }
+        };
+
         return (
-          <div className={styles['question-item']} key={text}>
-            <Button onClick={handleQuestionChoose} className={styles.button}>
-              {i18n(label)}
-            </Button>
+          <div
+            className={styles['question-item']}
+            key={text}
+            onMouseEnter={showToolTip}
+            onMouseLeave={hideToolTip}
+          >
+            <Tooltip
+              content={getTooltipDescription()}
+              isVisible={visibleToolTip === label}
+              position={'top'}
+              style={{ zIndex: 1000 }}
+            >
+              <Button
+                onClick={handleQuestionChoose}
+                className={styles.button}
+                disabled={!isAvailable()}
+              >
+                {i18n(label)}
+              </Button>
+            </Tooltip>
 
             <div className={styles.description}>{i18n(text)}</div>
           </div>

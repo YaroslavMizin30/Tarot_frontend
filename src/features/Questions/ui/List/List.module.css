@@ -10,6 +10,7 @@
 .title {
   color: var(--border-inversed);
   text-align: center;
+  margin-top: 15px;
 }
 
 .question-item {
@@ -26,4 +27,10 @@
   border: 1px solid var(--border-inversed);
   border-top: none;
   border-radius: 0 0 10px 10px;
+}
+
+.tooltip {
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }

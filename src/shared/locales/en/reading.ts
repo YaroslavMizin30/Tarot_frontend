@@ -198,6 +198,11 @@ const TRANSLATIONS_EN: Record<string, string> = {
   'Yes': 'Yes',
   'No': 'No',
   'Interpreting': 'Interpreting',
+  'Available for extended tariff': 'Available for extended tariff',
+  'No free queries left 😔. Available via subscription':
+    'No free queries left 😔. Available via subscription',
+  'Your subscription has expired 😔. Available via subscription':
+    'Your subscription has expired 😔. Available via subscription',
   ...CARDS,
 };
 
