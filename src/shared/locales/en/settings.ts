@@ -96,6 +96,35 @@ const TRANSLATIONS_EN = {
 
   'About you': 'About you',
   'Subscription': 'Subscription',
+  'Your tariff': 'Your tariff',
+  'Trial': 'Trial',
+  "You've got": "You've got",
+  'free (1)': 'free',
+  'free (2)': 'free',
+  'free (3)': 'free',
+  'spreads (1)': 'spread',
+  'spreads (2)': 'spreads',
+  'spreads (3)': 'spreads',
+  'days (1)': 'day',
+  'days (2)': 'days',
+  'days (3)': 'days',
+  'You can buy subscription via telegram bot':
+    'You can buy subscription via telegram bot',
+  'Standard': 'Standard',
+  'Subscription is expired': 'Subscription is expired',
+  'You can extend subscription via telegram bot':
+    'You can extend subscription via telegram bot',
+  'Subscription is valid for another': 'Subscription is valid for another',
+  'Available to you': 'Available to you',
+  'daily predictions': 'daily predictions',
+  'monthly predictions': 'monthly predictions',
+  'daily card': 'daily card',
+  'spreads up to': 'spreads up to',
+  'cards': 'cards',
+  'spreads a day': 'spreads a day',
+  'Extended': 'Extended',
+  'predictions summary': 'predictions summary',
+  'spreads summary': 'spreads summary',
 };
 
 export default TRANSLATIONS_EN;

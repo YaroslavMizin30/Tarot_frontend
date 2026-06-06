@@ -40,7 +40,7 @@ export const SettingsPage = () => {
   const getContent = () => {
     switch (settings) {
       case 'subscription':
-        return <SubscriptionSettings />;
+        return <SubscriptionSettings onBackButtonClick={handleBackButtonClick}/>;
       case 'about you':
         return <UserSettings onBackButtonClick={handleBackButtonClick} />;
       default:

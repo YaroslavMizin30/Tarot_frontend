@@ -8,6 +8,10 @@ export interface GetUserResponse {
   birth_time?: string;
   birth_place: string;
   natal_chart: string;
+  free_horoscopes: number;
+  free_spreads: number;
+  tariff: 'standard' | 'trial' | 'extended';
+  expiration_date: string;
 }
 
 export interface User {
@@ -18,4 +22,8 @@ export interface User {
   birthTime?: string;
   birthPlace: string;
   natalChart: string;
+  freeHoroscopes: number;
+  freeSpreads: number;
+  tariff: 'standard' | 'trial' | 'extended';
+  expirationDate: string;
 }

@@ -4,6 +4,7 @@ import { useUserData } from '@/entities/User';
 import NatalChart from '@/entities/NatalChart';
 
 import Arrow from '@/shared/assets/svg/common/deck-arrow.svg';
+import useLocales from '@/shared/hooks/useLocales';
 
 import styles from './SettingsPage.module.css';
 
@@ -11,15 +12,16 @@ const UserSettings = (props: { onBackButtonClick: () => void }) => {
   const { onBackButtonClick } = props;
 
   const { userData } = useUserData();
+  const { i18n } = useLocales();
 
   const [options, setOptions] = useState<string[]>([]);
-  const [title, setTitle] = useState<string>('About you');
+  const [title, setTitle] = useState<string>(i18n('About you'));
 
   const handleBackButtonClick = () => {
     if (options.length) {
       setOptions([]);
 
-      setTitle('About you');
+      setTitle(i18n('About you'));
 
       return;
     }
@@ -33,7 +35,7 @@ const UserSettings = (props: { onBackButtonClick: () => void }) => {
 
   return (
     <>
-      <h3>{title}</h3>
+      <h3 className={styles.title}>{title}</h3>
 
       <NatalChart
         {...userData}

@@ -96,6 +96,36 @@ const TRANSLATIONS_RU = {
 
   'About you': 'О Вас',
   'Subscription': 'Подписка',
+
+  'Your tariff': 'Ваша подписка',
+  'Trial': 'Пробная',
+  "You've got": 'Вам доступно',
+  'free (1)': 'бесплатный',
+  'free (2)': 'бесплатных',
+  'free (3)': 'бесплатных',
+  'spreads (1)': 'расклад',
+  'spreads (2)': 'расклада',
+  'spreads (3)': 'раскладов',
+  'days (1)': 'день',
+  'days (2)': 'дня',
+  'days (3)': 'дней',
+  'You can buy subscription via telegram bot':
+    'Подписку можно оформить через телеграм бот',
+  'Standard': 'Стандартная',
+  'Subscription is expired': 'Подписка истекла',
+  'You can extend subscription via telegram bot':
+    'Подписку можно продлить через телеграм бот',
+  'Subscription is valid for another': 'Подписка действует еще',
+  'Available to you': 'Вам доступно',
+  'daily predictions': 'ежедневные предсказания',
+  'monthly predictions': 'гороскопы на месяц',
+  'daily card': 'карта дня',
+  'spreads up to': 'вопросы до',
+  'cards': 'карт',
+  'spreads a day': 'раскладов в день',
+  'Extended': 'Расширенная',
+  'predictions summary': 'обобщения предсказаний',
+  'spreads summary': 'обобщения раскладов',
 };
 
 export default TRANSLATIONS_RU;
