@@ -70,6 +70,7 @@ export const SpreadPage = () => {
               localizedName={i18n(name)}
               isInverted={isInverted}
               className={styles['card-small']}
+              hasLoadingState
             />
           );
         })}

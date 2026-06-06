@@ -88,6 +88,7 @@ export const HistoryPage = () => {
                       key={card.name}
                       isInverted={card.isInverted}
                       className={styles.card}
+                      hasLoadingState
                     />
                   );
                 })}
