@@ -11,4 +11,8 @@ export interface TarotSpreadProps {
    * Callback on spread finish
    */
   onSpreadFinish?: (spread: SpreadParams, cards: Card[]) => void;
+  /**
+   * Callback on interpretation finish
+   */
+  onInterpretationFinish?: () => void;
 }

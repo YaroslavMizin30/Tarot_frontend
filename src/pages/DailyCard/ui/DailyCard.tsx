@@ -19,7 +19,7 @@ export const DailyCard = () => {
 
   const { isLoading, updateUserActivity, sign, id, isAvailable } = useDaily();
 
-  const handleSpreadFinish = () => {
+  const handleInterpretationsFinish = () => {
     updateUserActivity();
   };
 
@@ -53,7 +53,7 @@ export const DailyCard = () => {
         question: i18n('Card of the day'),
         userId: Number(id),
       }}
-      onSpreadFinish={handleSpreadFinish}
+      onInterpretationFinish={handleInterpretationsFinish}
     />
   );
 };

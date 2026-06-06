@@ -11,7 +11,9 @@ import useLocales from '@/shared/hooks/useLocales';
 import { addSpread } from '@/entities/Spread';
 import { useUser } from '@/entities/User';
 
-export const useInterpretation = () => {
+export const useInterpretation = (options: {
+  onFinish?: () => void;
+}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [interpretation, setInterpretation] = useState<string[] | null>(null);
   const [spreadId, setSpreadId] = useState<string | null>(null);
@@ -54,6 +56,8 @@ export const useInterpretation = () => {
           spreadId: uuid,
           userId: user.id,
         });
+
+        options.onFinish?.();
 
         setSpreadId(uuid);
       }

@@ -21,7 +21,7 @@ import styles from './TarotSpread.module.css';
 import TextContainer from '@/shared/ui/TextContainer';
 
 export const TarotSpread: FC<TarotSpreadProps> = (props) => {
-  const { spread, onSpreadFinish } = props;
+  const { spread, onSpreadFinish, onInterpretationFinish } = props;
 
   const { title, id, cardsCount } = spread;
 
@@ -30,7 +30,7 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
   const { cards, activeCard, isFinished, prepareCards, changeActiveCard } =
     useReading();
   const { getInterpretation, interpretation, isLoading, spreadId } =
-    useInterpretation();
+    useInterpretation({ onFinish: onInterpretationFinish });
 
   const { i18n } = useLocales();
 
