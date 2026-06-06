@@ -16,7 +16,7 @@ import styles from './SpreadPage.module.css';
 
 export const SpreadPage = () => {
   const { state } = useLocation();
-  const { i18n, addTranslations } = useLocales();
+  const { i18n, addTranslations, locale } = useLocales();
 
   const {
     date,
@@ -43,7 +43,7 @@ export const SpreadPage = () => {
       en: TRANSLATIONS_EN,
       ru: TRANSLATIONS_RU,
     });
-  }, []);
+  }, [locale]);
 
   return (
     <div className={`${styles.container} custom-scrollbar`}>

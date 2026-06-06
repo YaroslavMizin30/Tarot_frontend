@@ -30,7 +30,7 @@ export const Select = ({
     option.label.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
-  const { i18n, addTranslations } = useLocales();
+  const { i18n, addTranslations, locale } = useLocales();
 
   // Закрытие при клике вне
   useEffect(() => {
@@ -50,7 +50,7 @@ export const Select = ({
 
   useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
-  }, []);
+  }, [locale]);
 
   // Обработка клавиатуры
   useEffect(() => {

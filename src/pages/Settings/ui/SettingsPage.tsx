@@ -15,13 +15,13 @@ import styles from './SettingsPage.module.css';
 export const SettingsPage = () => {
   const { userData } = useUserData();
 
-  const { i18n, addTranslations } = useLocales();
+  const { i18n, addTranslations, locale } = useLocales();
 
   const [settings, setSettings] = useState('');
 
   useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
-  }, []);
+  }, [locale]);
 
   const handleSettingsButtonClick = (
     e: MouseEvent<HTMLButtonElement>,

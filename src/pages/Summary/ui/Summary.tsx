@@ -15,7 +15,7 @@ import styles from './Summary.module.css';
 
 export const SummaryPage = () => {
   const { state } = useLocation();
-  const { i18n, addTranslations } = useLocales();
+  const { i18n, addTranslations, locale } = useLocales();
 
   const { date, summary, rating, id } = state as Summary;
 
@@ -32,7 +32,7 @@ export const SummaryPage = () => {
       en: TRANSLATIONS_EN,
       ru: TRANSLATIONS_RU,
     });
-  }, []);
+  }, [locale]);
 
   return (
     <div className={`${styles.container} custom-scrollbar`}>

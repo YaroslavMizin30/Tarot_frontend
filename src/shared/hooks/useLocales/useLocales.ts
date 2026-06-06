@@ -1,18 +1,15 @@
-import { useAppDispatch, useAppSelector, type RootState } from '@/app/store';
-
 import {
+  useAppDispatch,
+  useAppSelector,
+  type RootState,
   changeLocale,
-  addPreloadedLocation,
   preloadTranslations,
 } from '@/app/store';
 
-import type { Locale, Location, UseLocalesResult } from './types';
-import { useState } from 'react';
+import type { Locale, UseLocalesResult } from './types';
 
 export const useLocales = (): UseLocalesResult => {
   const dispatch = useAppDispatch();
-
-  const [isLoading, setIsLoading] = useState(false);
 
   const translations = useAppSelector(
     (state: RootState) => state.locales.value.translations,
@@ -21,32 +18,6 @@ export const useLocales = (): UseLocalesResult => {
   const locale = useAppSelector(
     (state: RootState) => state.locales.value.locale,
   );
-
-  const locations = useAppSelector(
-    (state: RootState) => state.locales.value.locations,
-  );
-
-  const loadTranslations = async (location: Location) => {
-    if (locations[location]) {
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-
-      const { default: translations } = await import(
-        `/src/shared/locales/${locale}/${location}.ts`
-      );
-
-      dispatch(preloadTranslations(translations));
-
-      dispatch(addPreloadedLocation(location));
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const addTranslations = (
     translations: Record<`${Locale}`, Record<string, string>>,
@@ -67,11 +38,9 @@ export const useLocales = (): UseLocalesResult => {
   };
 
   return {
-    isLoading,
     translations,
     locale,
     changeLanguage,
-    loadTranslations,
     addTranslations,
     i18n,
   };

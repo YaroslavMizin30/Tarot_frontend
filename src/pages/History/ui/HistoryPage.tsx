@@ -27,12 +27,12 @@ export const HistoryPage = () => {
     isAnalyzing,
   } = useSummaries();
 
-  const { i18n, addTranslations } = useLocales();
+  const { i18n, addTranslations, locale } = useLocales();
   const { userData, isLoading: isUserLoading } = useUserData();
 
   useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
-  }, []);
+  }, [locale]);
 
   if (isUserLoading || areSpreadsLoading || areSummariesLoading) {
     return <Spinner size={'l'} />;
