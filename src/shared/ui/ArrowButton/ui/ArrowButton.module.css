@@ -1,0 +1,14 @@
+.button {
+  width: fit-content;
+  height: fit-content;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
