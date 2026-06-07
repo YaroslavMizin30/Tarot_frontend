@@ -1,10 +1,12 @@
-import { useState, type FC } from 'react';
+import { useCallback, useState } from 'react';
+
+import useOutsideClick from '@/shared/hooks/useOutsideClick';
 
 import { type TooltipProps } from './Tooltip.props';
 
 import styles from './Tooltip.module.css';
 
-export const Tooltip: FC<TooltipProps> = (props) => {
+export const Tooltip = (props: TooltipProps) => {
   const {
     children,
     content,
@@ -30,13 +32,36 @@ export const Tooltip: FC<TooltipProps> = (props) => {
     }
   };
 
+  const handleClick = () => {
+    if (isEnabled) {
+      setIsVisible((prev) => !prev);
+    }
+  };
+
+  const closeTooltip = useCallback(() => {
+    setIsVisible(false);
+  }, []);
+
+  const outsideClickRef = useOutsideClick<HTMLDivElement>(closeTooltip);
+
+  const setRefs = (node: HTMLDivElement | null) => {
+    outsideClickRef.current = node;
+
+    if (typeof ref === 'function') {
+      ref(node);
+    } else if (ref) {
+      ref.current = node;
+    }
+  };
+
   return (
     <div
       className={`${styles['tooltip-wrapper']} ${className}`}
       style={style}
-      ref={ref}
+      ref={setRefs}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
     >
       {children}
 

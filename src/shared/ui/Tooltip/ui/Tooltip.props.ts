@@ -1,4 +1,4 @@
-import { type ReactNode, type CSSProperties, type RefObject } from 'react';
+import { type ReactNode, type CSSProperties, type Ref } from 'react';
 
 export interface TooltipProps {
   children: ReactNode;
@@ -8,5 +8,5 @@ export interface TooltipProps {
   className?: string;
   tooltipClassName?: string;
   style?: CSSProperties;
-  ref?: RefObject<HTMLDivElement | null>;
+  ref?: Ref<HTMLDivElement>;
 }
