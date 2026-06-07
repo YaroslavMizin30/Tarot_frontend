@@ -171,7 +171,7 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
           );
         })}
 
-        {isFinished && (
+        {isFinished ? (
           <Button
             className={styles.button}
             onClick={handleFinishButtonClick}
@@ -179,6 +179,17 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
           >
             {i18n('Interpretation')}
           </Button>
+        ) : (
+          <span
+            className={styles.instruction}
+            style={{
+              ...SpreadConfig[id].button,
+              right: 'calc(50% - 100px)',
+              position: 'absolute',
+            }}
+          >
+            {i18n('Unfold cards one by one')}
+          </span>
         )}
       </div>
 

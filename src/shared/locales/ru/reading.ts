@@ -196,6 +196,8 @@ const TRANSLATIONS_RU: Record<string, string> = {
   'No': 'Нет',
   'Interpreting': 'Интерпретация',
   'To spread': 'К раскладу',
+  'Unfold cards one by one': 'Переверните карты по очереди',
+  'Shuffling the deck': 'Тасую колоду',
 
   ...CARDS,
 };

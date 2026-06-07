@@ -199,6 +199,8 @@ const TRANSLATIONS_EN: Record<string, string> = {
   'No': 'No',
   'Interpreting': 'Interpreting',
   'To spread': 'To spread',
+  'Unfold cards one by one': 'Unfold cards one by one',
+  'Shuffling the deck': 'Shuffling the deck',
 
   ...CARDS,
 };

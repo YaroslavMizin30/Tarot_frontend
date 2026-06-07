@@ -11,6 +11,12 @@
   width: 200px;
 }
 
+.instruction {
+  color: var(--border-inversed);
+  width: 200px;
+  text-align: center;
+}
+
 .cards {
   position: relative;
   width: 0;

@@ -101,10 +101,20 @@ const Spread: FC<SpreadProps> = (props) => {
         className={styles.deck}
       />
 
+      <span
+        className={styles.loadingMessage}
+        style={{
+          visibility: isReading ? 'visible' : 'hidden',
+        }}
+      >
+        {i18n('Shuffling the deck')}
+      </span>
+
       <div className={styles.finish}>
         <h3>{i18n('Ready?')}</h3>
 
         <Button
+          className={styles.button}
           disabled={!title}
           onClick={handleSpreadButtonClick}
           isLoading={isReading}
