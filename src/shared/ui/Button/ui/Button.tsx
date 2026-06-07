@@ -32,7 +32,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled || isLoading}
         {...rest}
       >
-        <span className={cx({ 'btn__content--hidden': isLoading })}>
+        <span className={cx({ 'btn__content--loading': isLoading })}>
           {children}
         </span>
       </button>

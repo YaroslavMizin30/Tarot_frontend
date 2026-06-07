@@ -23,8 +23,8 @@
   font-family: 'Monomakh' !important;
 }
 
-.btn__content--hidden {
-  visibility: hidden;
+.btn__content--loading {
+  animation: blink 1s infinite;
 }
 
 /* Состояния */
@@ -59,5 +59,15 @@
     box-shadow:
       0 0 20px var(--shadow-primary),
       0 0 30px var(--shadow-primary);
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
   }
 }
