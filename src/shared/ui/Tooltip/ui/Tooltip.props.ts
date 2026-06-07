@@ -1,11 +1,12 @@
-import { type ReactNode, type CSSProperties } from 'react';
+import { type ReactNode, type CSSProperties, type RefObject } from 'react';
 
 export interface TooltipProps {
   children: ReactNode;
   content?: string;
   position?: 'top' | 'bottom' | 'left' | 'right';
-  isVisible: boolean;
+  isEnabled?: boolean;
   className?: string;
   tooltipClassName?: string;
   style?: CSSProperties;
+  ref?: RefObject<HTMLDivElement | null>;
 }
