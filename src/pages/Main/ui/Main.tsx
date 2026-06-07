@@ -6,7 +6,9 @@ import TRANSLATIONS_EN from '@/shared/locales/en/common';
 import TRANSLATIONS_RU from '@/shared/locales/ru/common';
 import useLocales from '@/shared/hooks/useLocales';
 import Zodiac from '@/shared/ui/Zodiac';
-import { type User } from '@/entities/User';
+import Tooltip from '@/shared/ui/Tooltip';
+
+import { type User, useSubscription } from '@/entities/User';
 
 import styles from './Main.module.css';
 
@@ -23,6 +25,8 @@ export const MainPage = () => {
 
   const { user } = useOutletContext<{ user: User }>();
 
+  const { isAvailableForCurrentTariff, getExpiredMessage } = useSubscription();
+
   useEffect(() => {
     if (!user) {
       navigate('/reg');
@@ -37,9 +41,31 @@ export const MainPage = () => {
     <div className={styles.container}>
       <Zodiac sign={user?.sign} />
 
-      <Button value={'/daily'} onClick={handleNavigationButtonClick}>
-        {i18n('Card of the day')}
-      </Button>
+      <Tooltip
+        position={'top'}
+        content={getExpiredMessage()}
+        isEnabled={
+          !isAvailableForCurrentTariff({
+            standard: true,
+            extended: true,
+            trial: false,
+          })
+        }
+      >
+        <Button
+          value={'/daily'}
+          onClick={handleNavigationButtonClick}
+          disabled={
+            !isAvailableForCurrentTariff({
+              standard: true,
+              extended: true,
+              trial: false,
+            })
+          }
+        >
+          {i18n('Card of the day')}
+        </Button>
+      </Tooltip>
 
       <Button value={'/reading'} onClick={handleNavigationButtonClick}>
         {i18n('Make spread')}

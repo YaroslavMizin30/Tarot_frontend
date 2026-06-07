@@ -1,16 +1,12 @@
 import { useState } from 'react';
 
-import { useUser } from '@/entities/User';
+import { useUser, useSubscription } from '@/entities/User';
 
 import useLocales from '@/shared/hooks/useLocales';
-import { checkSubscriptionStatus } from '@/shared/utils/checkSubscriptionStatus';
 import { getPluralForm } from '@/shared/utils/getPluralForm';
-
 import Arrow from '@/shared/assets/svg/common/deck-arrow.svg';
 
 import styles from './SettingsPage.module.css';
-
-const MAX_FREE_QUESTIONS = 3;
 
 const SubscriptionSettings = (props: { onBackButtonClick: () => void }) => {
   const { onBackButtonClick } = props;
@@ -18,6 +14,8 @@ const SubscriptionSettings = (props: { onBackButtonClick: () => void }) => {
   const { user } = useUser();
 
   const { i18n } = useLocales();
+
+  const { isExpired, daysLeft, tariff, leftFreeSpreads } = useSubscription();
 
   const [options, setOptions] = useState<string[]>([]);
   const [title, setTitle] = useState<string>(i18n('Subscription'));
@@ -38,13 +36,7 @@ const SubscriptionSettings = (props: { onBackButtonClick: () => void }) => {
     return null;
   }
 
-  const { tariff, expirationDate, freeSpreads } = user;
-
-  const spreads = MAX_FREE_QUESTIONS - freeSpreads;
-
   const getContent = () => {
-    const { isExpired, daysLeft } = checkSubscriptionStatus(expirationDate);
-
     switch (tariff) {
       case 'trial':
         return (
@@ -54,7 +46,7 @@ const SubscriptionSettings = (props: { onBackButtonClick: () => void }) => {
             </h4>
 
             <ul>
-              <li>{`${i18n("You've got")} ${spreads} ${getPluralForm(spreads, [i18n('free (1)'), i18n('free (2)'), i18n('free (3)')])} ${getPluralForm(spreads, [i18n('spreads (1)'), i18n('spreads (2)'), i18n('spreads (3)')])}`}</li>
+              <li>{`${i18n("You've got")} ${leftFreeSpreads} ${getPluralForm(leftFreeSpreads, [i18n('free (1)'), i18n('free (2)'), i18n('free (3)')])} ${getPluralForm(leftFreeSpreads, [i18n('spreads (1)'), i18n('spreads (2)'), i18n('spreads (3)')])}`}</li>
               <li>{`${i18n('You can buy subscription via telegram bot')}`}</li>
             </ul>
           </div>
