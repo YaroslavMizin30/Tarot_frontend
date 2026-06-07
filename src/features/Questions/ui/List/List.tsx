@@ -4,6 +4,7 @@ import Button from '@/shared/ui/Button';
 import useLocales from '@/shared/hooks/useLocales';
 import Tooltip from '@/shared/ui/Tooltip';
 import { checkSubscriptionStatus } from '@/shared/utils/checkSubscriptionStatus';
+import { isTrialAvailable } from '@/shared/utils/isTrialAvailable';
 
 import { useUser } from '@/entities/User';
 
@@ -51,7 +52,7 @@ const List: FC<ListProps> = (props) => {
         const isAvailable = () => {
           return (
             (tariff && tariffs[tariff]) ||
-            (tariff === 'trial' && Number(freeSpreads) < 3)
+            (tariff === 'trial' && isTrialAvailable(Number(freeSpreads)))
           );
         };
 
@@ -72,7 +73,10 @@ const List: FC<ListProps> = (props) => {
         const getTooltipDescription = () => {
           if (tariff === 'standard') {
             return i18n('Available for extended tariff');
-          } else if (tariff === 'trial' && Number(freeSpreads) > 2) {
+          } else if (
+            tariff === 'trial' &&
+            !isTrialAvailable(Number(freeSpreads))
+          ) {
             return i18n('No free queries left 😔. Available via subscription');
           } else if (isExpired) {
             return i18n(
