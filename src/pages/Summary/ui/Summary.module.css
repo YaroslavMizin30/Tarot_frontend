@@ -18,28 +18,6 @@
   margin-bottom: 10px;
 }
 
-.cards-small {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 10px;
-}
-
-.card-small {
-  height: 120px;
-  width: 60px;
-  margin-top: 10px;
-}
-
-.card-small + .card-small {
-  margin-left: 10px;
-}
-
-.card-small * {
-  font-size: 7px;
-}
-
 .title {
   padding-top: 20px;
   color: var(--border-inversed);

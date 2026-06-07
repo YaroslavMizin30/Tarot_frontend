@@ -2,15 +2,15 @@
 .glass-loader {
   position: relative;
   width: 100%;
-  height: 100%; /* Можно задать фиксированную высоту, например 200px */
-  background: rgba(255, 255, 255, 0.05); /* Полупрозрачный белый */
-  backdrop-filter: blur(12px); /* Размытие фона под элементом */
-  -webkit-backdrop-filter: blur(12px); /* Для Safari */
-  border: 1px solid rgba(255, 255, 255, 0.15); /* Тонкая светлая граница */
-  overflow: hidden; /* Чтобы блик не вылезал за границы */
+  height: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  overflow: hidden;
   box-shadow:
     0 4px 30px rgba(0, 0, 0, 0.1),
-    /* Мягкая тень */ inset 0 0 20px rgba(255, 255, 255, 0.05); /* Внутреннее свечение */
+    inset 0 0 20px rgba(255, 255, 255, 0.05);
 }
 
 /* Анимация блика (shimmer) */
@@ -18,7 +18,7 @@
   content: '';
   position: absolute;
   top: 0;
-  left: -150%; /* Начинаем за пределами элемента слева */
+  left: -150%;
   width: 100%;
   height: 100%;
   background: linear-gradient(
@@ -26,37 +26,18 @@
     transparent 0%,
     rgba(255, 255, 255, 0.1) 20%,
     rgba(255, 255, 255, 0.4) 50%,
-    /* Яркая полоса блика */ rgba(255, 255, 255, 0.1) 80%,
+    rgba(255, 255, 255, 0.1) 80%,
     transparent 100%
   );
-  transform: skewX(-20deg); /* Наклон блика для динамики */
+  transform: skewX(-20deg);
   animation: glass-shimmer 2s infinite ease-in-out;
 }
 
-/* Ключевые кадры анимации */
 @keyframes glass-shimmer {
   0% {
     left: -150%;
   }
   100% {
-    left: 150%; /* Уходит за правый край */
+    left: 150%;
   }
-}
-
-/* Опционально: темная тема стекла (раскомментируйте, если фон приложения темный) */
-.glass-loader.dark {
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-}
-
-.glass-loader.dark::before {
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.05) 20%,
-    rgba(255, 255, 255, 0.15) 50%,
-    rgba(255, 255, 255, 0.05) 80%,
-    transparent 100%
-  );
 }

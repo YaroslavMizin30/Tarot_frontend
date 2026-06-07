@@ -13,10 +13,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const {
       children,
       isLoading = false,
-      fullWidth = false,
       disabled,
       className = '',
-      isActive = false,
       ...rest
     } = props;
 
@@ -27,9 +25,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           'btn',
           {
             'btn--loading': isLoading,
-            'btn--full-width': fullWidth,
             'btn--disabled': disabled,
-            'btn--active': isActive,
           },
           className,
         )}

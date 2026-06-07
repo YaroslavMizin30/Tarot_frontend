@@ -12,12 +12,6 @@
   margin-top: 20px;
 }
 
-.option {
-  display: flex;
-  flex-direction: column;
-  margin-top: 10px;
-}
-
 .section {
   display: flex;
   flex-direction: column;
@@ -44,12 +38,12 @@
   margin-top: 20px;
 }
 
-.button + .button {
-  margin-top: 20px;
-}
-
 .tariff {
   display: flex;
   flex-direction: column;
   max-width: 220px;
+}
+
+.capabilities {
+  margin-top: 10px;
 }

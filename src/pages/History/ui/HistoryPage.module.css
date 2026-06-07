@@ -33,17 +33,7 @@
   margin-top: 10px;
 }
 
-.list > div + div {
-  margin-top: 16px;
-}
-
 .spread,
-.summary {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
 .summary {
   display: flex;
   align-items: center;
