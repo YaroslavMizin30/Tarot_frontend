@@ -12,6 +12,7 @@ const TRANSLATIONS_EN = {
   'Summary': 'Summary',
   'Analyzing spreads': 'Analyzing spreads',
   'Make summary': 'Make summary',
+  'Need at least 2 spreads, that are not summarized': 'Need at least 2 spreads, that are not summarized',
 };
 
 export default TRANSLATIONS_EN;

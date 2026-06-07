@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 
 import { useSpreads, useSummaries } from '@/entities/Spread';
 import TarotCard from '@/entities/TarotCard';
-import { useUser } from '@/entities/User';
+import { useUser, useSubscription } from '@/entities/User';
 
 import ArrowButton from '@/shared/ui/ArrowButton';
 import useLocales from '@/shared/hooks/useLocales';
@@ -12,6 +12,7 @@ import TRANSLATIONS_RU from '@/shared/locales/ru/history';
 import Zodiac from '@/shared/ui/Zodiac';
 import Button from '@/shared/ui/Button';
 import Spinner from '@/shared/ui/Spinner';
+import Tooltip from '@/shared/ui/Tooltip';
 
 import styles from './HistoryPage.module.css';
 
@@ -32,6 +33,7 @@ export const HistoryPage = () => {
 
   const { i18n, addTranslations, locale } = useLocales();
   const { user, isLoading: isUserLoading } = useUser();
+  const { isAvailableForCurrentTariff, getExpiredMessage } = useSubscription();
 
   useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
@@ -56,6 +58,14 @@ export const HistoryPage = () => {
     }
 
     await addSummary(spreads);
+  };
+
+  const getSummaryTooltipContent = () => {
+    if (Number(unsummarizedSpreads?.length) < 1) {
+      return i18n('Need at least 2 spreads, that are not summarized');
+    }
+
+    return getExpiredMessage();
   };
 
   return (
@@ -104,14 +114,28 @@ export const HistoryPage = () => {
           ))}
       </div>
 
-      {Number(unsummarizedSpreads?.length) > 1 && (
+      <Tooltip
+        position={'top'}
+        content={getSummaryTooltipContent()}
+        isEnabled={!isAvailableForCurrentTariff({
+          trial: false,
+          standard: false,
+          extended: true,
+        })}
+        style={{textAlign: 'center'}}
+      >
         <Button
           className={styles['summary-button']}
           onClick={handleSummaryButtonClick}
+          disabled={!isAvailableForCurrentTariff({
+            trial: false,
+            standard: false,
+            extended: true,
+          })}
         >
           {i18n('Make summary')}
         </Button>
-      )}
+      </Tooltip>
 
       {Boolean(summaries?.length) && (
         <>
