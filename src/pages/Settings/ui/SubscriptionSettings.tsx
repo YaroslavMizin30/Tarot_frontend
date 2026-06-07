@@ -4,7 +4,7 @@ import { useUser, useSubscription } from '@/entities/User';
 
 import useLocales from '@/shared/hooks/useLocales';
 import { getPluralForm } from '@/shared/utils/getPluralForm';
-import Arrow from '@/shared/assets/svg/common/deck-arrow.svg';
+import ArrowButton from '@/shared/ui/ArrowButton';
 
 import styles from './SettingsPage.module.css';
 
@@ -121,12 +121,8 @@ const SubscriptionSettings = (props: { onBackButtonClick: () => void }) => {
       <h3 className={styles.title}>{title}</h3>
 
       <div className={styles.section}> {getContent()}</div>
-      <Arrow
-        width={30}
-        height={30}
-        className={styles.arrow}
-        onClick={handleBackButtonClick}
-      />
+
+      <ArrowButton className={styles.arrow} onClick={handleBackButtonClick} />
     </>
   );
 };

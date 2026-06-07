@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useUser } from '@/entities/User';
 import NatalChart from '@/entities/NatalChart';
 
-import Arrow from '@/shared/assets/svg/common/deck-arrow.svg';
+import ArrowButton from '@/shared/ui/ArrowButton';
 import useLocales from '@/shared/hooks/useLocales';
 
 import styles from './SettingsPage.module.css';
@@ -44,12 +44,7 @@ const UserSettings = (props: { onBackButtonClick: () => void }) => {
         chartDescription={user.natalChart}
       />
 
-      <Arrow
-        width={30}
-        height={30}
-        className={styles.arrow}
-        onClick={handleBackButtonClick}
-      />
+      <ArrowButton className={styles.arrow} onClick={handleBackButtonClick} />
     </>
   );
 };

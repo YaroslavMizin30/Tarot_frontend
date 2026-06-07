@@ -195,6 +195,7 @@ const TRANSLATIONS_RU: Record<string, string> = {
   'Yes': 'Да',
   'No': 'Нет',
   'Interpreting': 'Интерпретация',
+  'To spread': 'К раскладу',
 
   ...CARDS,
 };

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 
 import Button from '@/shared/ui/Button';
-import Arrow from '@/shared/assets/svg/common/deck-arrow.svg';
+import ArrowButton from '@/shared/ui/ArrowButton';
 import TextContainer from '@/shared/ui/TextContainer';
 import TRANSLATIONS_EN from '@/shared/locales/en/about';
 import TRANSLATIONS_RU from '@/shared/locales/ru/about';
@@ -21,6 +22,8 @@ export const AboutPage = () => {
   const handleBackButtonClick = () => {
     setStep('questions');
   };
+
+  const navigate = useNavigate();
 
   const { addTranslations, i18n, locale } = useLocales();
 
@@ -50,6 +53,11 @@ export const AboutPage = () => {
               </Button>
             );
           })}
+
+          <ArrowButton
+            onClick={() => navigate('/')}
+            className={styles.arrow}
+          />
         </div>
       )}
 
@@ -61,9 +69,7 @@ export const AboutPage = () => {
             maxHeight={80}
             maxHeightMeasure={'%'}
             children={
-              <Arrow
-                width={30}
-                height={30}
+              <ArrowButton
                 onClick={handleBackButtonClick}
                 className={styles.arrow}
               />

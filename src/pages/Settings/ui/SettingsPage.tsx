@@ -1,4 +1,5 @@
 import { useEffect, useState, type MouseEvent } from 'react';
+import { useNavigate } from 'react-router';
 
 import { useUser } from '@/entities/User';
 
@@ -6,6 +7,7 @@ import useLocales from '@/shared/hooks/useLocales';
 import TRANSLATIONS_EN from '@/shared/locales/en/settings';
 import TRANSLATIONS_RU from '@/shared/locales/ru/settings';
 import Button from '@/shared/ui/Button';
+import ArrowButton from '@/shared/ui/ArrowButton';
 
 import UserSettings from './UserSettings';
 import SubscriptionSettings from './SubscriptionSettings';
@@ -19,13 +21,13 @@ export const SettingsPage = () => {
 
   const [settings, setSettings] = useState('');
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
   }, [locale]);
 
-  const handleSettingsButtonClick = (
-    e: MouseEvent<HTMLButtonElement>,
-  ) => {
+  const handleSettingsButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
     setSettings(e.currentTarget.value);
   };
 
@@ -40,7 +42,9 @@ export const SettingsPage = () => {
   const getContent = () => {
     switch (settings) {
       case 'subscription':
-        return <SubscriptionSettings onBackButtonClick={handleBackButtonClick}/>;
+        return (
+          <SubscriptionSettings onBackButtonClick={handleBackButtonClick} />
+        );
       case 'about you':
         return <UserSettings onBackButtonClick={handleBackButtonClick} />;
       default:
@@ -53,14 +57,14 @@ export const SettingsPage = () => {
             <Button onClick={handleSettingsButtonClick} value={'about you'}>
               {i18n('About you')}
             </Button>
+
+            <ArrowButton onClick={() => navigate('/')} className={styles.arrow} />
           </>
         );
     }
   };
 
   return (
-    <div className={`${styles.container} custom-scrollbar`}>
-      {getContent()}
-    </div>
+    <div className={`${styles.container} custom-scrollbar`}>{getContent()}</div>
   );
 };

@@ -7,7 +7,7 @@ import TextContainer from '@/shared/ui/TextContainer';
 import TRANSLATIONS_EN from '@/shared/locales/en/history';
 import TRANSLATIONS_RU from '@/shared/locales/ru/history';
 import RatingInput from '@/shared/ui/RatingInput';
-import Arrow from '@/shared/assets/svg/common/deck-arrow.svg';
+import ArrowButton from '@/shared/ui/ArrowButton';
 
 import { type Spread, updateSpread } from '@/entities/Spread';
 import TarotCard from '@/entities/TarotCard';
@@ -86,7 +86,7 @@ export const SpreadPage = () => {
       <RatingInput value={rate ?? 0} onChange={handleRatingInputChange} />
 
       <Link className={styles.link} to={'/history'}>
-        <Arrow />
+        <ArrowButton />
       </Link>
     </div>
   );

@@ -33,19 +33,10 @@
 }
 
 .back {
-  position: absolute;
-  left: -30px;
-
-  border-radius: 50%;
+  margin-top: 15px;
   cursor: pointer;
 }
 
 .forward {
-  position: absolute;
-  right: -30px;
-
-  transform: scaleX(-1);
-
-  border-radius: 50%;
   cursor: pointer;
 }

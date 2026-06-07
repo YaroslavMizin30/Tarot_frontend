@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
-import { Link } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import { useSpreads, useSummaries } from '@/entities/Spread';
 import TarotCard from '@/entities/TarotCard';
 import { useUser } from '@/entities/User';
 
+import ArrowButton from '@/shared/ui/ArrowButton';
 import useLocales from '@/shared/hooks/useLocales';
 import TRANSLATIONS_EN from '@/shared/locales/en/history';
 import TRANSLATIONS_RU from '@/shared/locales/ru/history';
@@ -26,6 +27,8 @@ export const HistoryPage = () => {
     isLoading: areSummariesLoading,
     isAnalyzing,
   } = useSummaries();
+
+  const navigate = useNavigate();
 
   const { i18n, addTranslations, locale } = useLocales();
   const { user, isLoading: isUserLoading } = useUser();
@@ -74,9 +77,13 @@ export const HistoryPage = () => {
 
                 <span>{`${i18n('Date')}: ${spread.date}`}</span>
 
-                <Link state={spread} to={`/history/${spread.spreadId}`}>
-                  <Button>{i18n('View')}</Button>
-                </Link>
+                <Button
+                  onClick={() =>
+                    navigate(`/history/${spread.spreadId}`, { state: spread })
+                  }
+                >
+                  {i18n('View')}
+                </Button>
               </div>
 
               <div className={`${styles.cards} custom-scrollbar`}>
@@ -118,9 +125,13 @@ export const HistoryPage = () => {
                 <div key={id} className={styles.summary}>
                   <div className={styles.info}>
                     {`${i18n('Date')}: ${new Date(date).toLocaleDateString()}`}{' '}
-                    <Link state={item} to={`/history/summary/${id}`}>
-                      <Button>{i18n('View')}</Button>
-                    </Link>
+                    <Button
+                      onClick={() =>
+                        navigate(`/history/summary/${id}`, { state: item })
+                      }
+                    >
+                      {i18n('View')}
+                    </Button>
                   </div>
                   <div className={`${styles.interpretation} custom-scrollbar`}>
                     {summary.replace(/[*|#]/g, '')}
@@ -131,6 +142,11 @@ export const HistoryPage = () => {
           </div>
         </>
       )}
+
+      <ArrowButton
+        className={styles['back-button']}
+        onClick={() => navigate('/')}
+      />
     </div>
   );
 };

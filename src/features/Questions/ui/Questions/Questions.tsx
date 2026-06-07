@@ -1,4 +1,5 @@
 import { useState, type FC } from 'react';
+import { useNavigate } from 'react-router';
 
 import { useQuestion } from '../../model/hooks/useQuestion';
 import type { Question } from '../../model/types/questions';
@@ -11,8 +12,9 @@ import Spread from '../Spread/Spread';
 
 import type { SpreadParams } from '@/entities/Spread';
 
-import Arrow from '@/shared/assets/svg/common/deck-arrow.svg';
 import useLocales from '@/shared/hooks/useLocales';
+import Button from '@/shared/ui/Button';
+import ArrowButton from '@/shared/ui/ArrowButton';
 
 import { type QuestionProps } from './Questions.props';
 
@@ -32,6 +34,8 @@ export const Questions: FC<QuestionProps> = (props) => {
     spread,
     step,
   } = useQuestion();
+
+  const navigate = useNavigate();
 
   const { i18n } = useLocales();
 
@@ -84,6 +88,9 @@ export const Questions: FC<QuestionProps> = (props) => {
 
   const handleBackButtonClick = () => {
     const values: Array<keyof SpreadParams> = [];
+    if (step === 'theme') {
+      navigate('/');
+    }
 
     if (step === 'question') {
       values.push('detailsAnswer');
@@ -155,25 +162,15 @@ export const Questions: FC<QuestionProps> = (props) => {
       className={`${styles.questions}`}
       style={{ opacity: isSelected ? 0 : 1 }}
     >
-      {step !== 'theme' && (
-        <Arrow
-          width={30}
-          height={30}
-          className={styles.back}
-          onClick={handleBackButtonClick}
-        />
-      )}
+      <div className={`${styles.container} custom-scrollbar`}>{Content()}</div>
 
       {step === 'input' && (
-        <Arrow
-          width={30}
-          height={30}
-          className={styles.forward}
-          onClick={handleQuestionSet}
-        />
+        <Button className={styles.forward} onClick={handleQuestionSet}>
+          {i18n('To spread')}
+        </Button>
       )}
 
-      <div className={`${styles.container} custom-scrollbar`}>{Content()}</div>
+      <ArrowButton className={styles.back} onClick={handleBackButtonClick} />
     </div>
   );
 };
