@@ -6,7 +6,7 @@ export const checkSubscriptionStatus = (
 
   // Проверка на невалидную дату
   if (isNaN(expDate.getTime())) {
-    throw new Error('Некорректная дата окончания подписки');
+    return { daysLeft: 0, isExpired: false, isExpiringSoon: false };
   }
 
   const diffInMs = expDate.getTime() - now.getTime();
