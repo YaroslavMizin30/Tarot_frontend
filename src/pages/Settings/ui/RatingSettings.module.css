@@ -1,0 +1,86 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 360px;
+  padding: 10px;
+}
+
+.criteria {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 14px;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.criterion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.criterionLabel {
+  flex: 1;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.feedback {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.feedbackLabel {
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.textarea {
+  width: 100%;
+  min-height: 100px;
+  resize: none;
+  font-family: inherit;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.success {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #7bd389;
+  text-align: center;
+}
+
+.error {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #ff4b4b;
+  text-align: center;
+}
+
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 200px;
+}

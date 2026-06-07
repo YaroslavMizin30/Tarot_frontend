@@ -126,6 +126,20 @@ const TRANSLATIONS_RU = {
   'Extended': 'Расширенная',
   'predictions summary': 'обобщения предсказаний',
   'spreads summary': 'обобщения раскладов',
+
+  'Rate the app': 'Оценить приложение',
+  'Rating convenience': 'Удобство',
+  'Rating aesthetics': 'Эстетика',
+  'Rating predictions': 'Предсказания',
+  'Rating tarot spreads': 'Расклады Таро',
+  'Rating details': 'Детали',
+  'Your feedback': 'Ваш отзыв (необязательно)',
+  'Tell us what you think': 'Расскажите, что вы думаете',
+  'Submit rating': 'Отправить оценку',
+  'Update rating': 'Обновить оценку',
+  'Please rate all criteria': 'Пожалуйста, оцените все критерии',
+  'Failed to submit rating': 'Не удалось отправить оценку',
+  'Thanks for your rating!': 'Спасибо за вашу оценку!',
 };
 
 export default TRANSLATIONS_RU;

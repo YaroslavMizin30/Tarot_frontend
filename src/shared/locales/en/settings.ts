@@ -125,6 +125,20 @@ const TRANSLATIONS_EN = {
   'Extended': 'Extended',
   'predictions summary': 'predictions summary',
   'spreads summary': 'spreads summary',
+
+  'Rate the app': 'Rate the app',
+  'Rating convenience': 'Convenience',
+  'Rating aesthetics': 'Aesthetics',
+  'Rating predictions': 'Predictions',
+  'Rating tarot spreads': 'Tarot spreads',
+  'Rating details': 'Details',
+  'Your feedback': 'Your feedback (optional)',
+  'Tell us what you think': 'Tell us what you think',
+  'Submit rating': 'Submit rating',
+  'Update rating': 'Update rating',
+  'Please rate all criteria': 'Please rate all criteria',
+  'Failed to submit rating': 'Failed to submit rating',
+  'Thanks for your rating!': 'Thanks for your rating!',
 };
 
 export default TRANSLATIONS_EN;

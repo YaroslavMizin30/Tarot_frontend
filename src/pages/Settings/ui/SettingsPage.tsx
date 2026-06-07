@@ -11,6 +11,7 @@ import ArrowButton from '@/shared/ui/ArrowButton';
 
 import UserSettings from './UserSettings';
 import SubscriptionSettings from './SubscriptionSettings';
+import RatingSettings from './RatingSettings';
 
 import styles from './SettingsPage.module.css';
 
@@ -47,6 +48,8 @@ export const SettingsPage = () => {
         );
       case 'about you':
         return <UserSettings onBackButtonClick={handleBackButtonClick} />;
+      case 'rate the app':
+        return <RatingSettings onBackButtonClick={handleBackButtonClick} />;
       default:
         return (
           <>
@@ -56,6 +59,10 @@ export const SettingsPage = () => {
 
             <Button onClick={handleSettingsButtonClick} value={'about you'}>
               {i18n('About you')}
+            </Button>
+
+            <Button onClick={handleSettingsButtonClick} value={'rate the app'}>
+              {i18n('Rate the app')}
             </Button>
 
             <ArrowButton onClick={() => navigate('/')} className={styles.arrow} />
