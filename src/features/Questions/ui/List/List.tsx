@@ -1,4 +1,4 @@
-import { useState, type FC } from 'react';
+import { type FC } from 'react';
 
 import Button from '@/shared/ui/Button';
 import useLocales from '@/shared/hooks/useLocales';
@@ -21,8 +21,6 @@ const List: FC<ListProps> = (props) => {
   const { tariff, freeSpreads, expirationDate } = user ?? {};
 
   const { isExpired } = checkSubscriptionStatus(expirationDate ?? '');
-
-  const [visibleToolTip, setVisibleToolTip] = useState('');
 
   return (
     <>
@@ -56,20 +54,6 @@ const List: FC<ListProps> = (props) => {
           );
         };
 
-        const showToolTip = () => {
-          if (isAvailable()) {
-            return;
-          }
-
-          setVisibleToolTip(label);
-        };
-
-        const hideToolTip = () => {
-          if (visibleToolTip) {
-            setVisibleToolTip('');
-          }
-        };
-
         const getTooltipDescription = () => {
           if (tariff === 'standard') {
             return i18n('Available for extended tariff');
@@ -86,17 +70,12 @@ const List: FC<ListProps> = (props) => {
         };
 
         return (
-          <div
-            className={styles['question-item']}
-            key={text}
-            onMouseEnter={showToolTip}
-            onMouseLeave={hideToolTip}
-          >
+          <div className={styles['question-item']} key={text}>
             <Tooltip
               content={getTooltipDescription()}
-              isVisible={visibleToolTip === label}
               position={'top'}
-              style={{ zIndex: 1000 }}
+              isEnabled={!isAvailable()}
+              style={{textAlign: 'center'}}
             >
               <Button
                 onClick={handleQuestionChoose}
