@@ -1,6 +1,6 @@
 import { type ChangeEvent, type FC } from 'react';
 
-import { Tooltip } from '../../Tooltip/ui/Tooltip';
+import Tooltip from '@/shared/ui/Tooltip';
 
 import { type RadioSheetProps } from './RadioSheet.props';
 

@@ -3,7 +3,7 @@ import { type FC } from 'react';
 import { type PlaceholderProps } from './Placeholder.props';
 
 import Question from '@/shared/assets/svg/common/question.svg';
-import { Tooltip } from '@/shared/ui/Tooltip/ui/Tooltip';
+import Tooltip from '@/shared/ui/Tooltip';
 
 import styles from './Placeholder.module.css';
 
