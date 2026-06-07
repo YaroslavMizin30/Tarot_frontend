@@ -1,4 +1,4 @@
-import { useState, type FC } from 'react';
+import { type FC } from 'react';
 
 import { type PlaceholderProps } from './Placeholder.props';
 
@@ -18,16 +18,6 @@ const Placeholder: FC<PlaceholderProps> = (props) => {
     children,
   } = props;
 
-  const [isVisible, setIsVisible] = useState(false);
-
-  const handleMouseEnter = () => {
-    setIsVisible(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsVisible(false);
-  };
-
   return (
     <div className={styles.placeholder} style={style}>
       <div className={styles['placeholder-cover']}>{index}</div>
@@ -36,18 +26,11 @@ const Placeholder: FC<PlaceholderProps> = (props) => {
         <Tooltip
           content={description}
           className={`${styles['tooltip-container']}`}
-          isVisible={isVisible}
           position={tooltipPosition}
           tooltipClassName={styles.tooltip}
           style={tooltipStyle}
         >
-          <Question
-            className={`${styles.question}`}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          />
-
-          {isVisible && <div className={styles.active}></div>}
+          <Question className={`${styles.question}`} />
         </Tooltip>
       )}
 

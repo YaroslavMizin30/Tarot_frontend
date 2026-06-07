@@ -52,12 +52,7 @@ export const RadioSheet: FC<RadioSheetProps> = (props) => {
             />
 
             <div className={styles.description}>
-              <Tooltip
-                content={item.description}
-                isVisible={visibleElement === item.id}
-              >
-                {item.label}
-              </Tooltip>
+              <Tooltip content={item.description}>{item.label}</Tooltip>
             </div>
           </div>
         ))}
