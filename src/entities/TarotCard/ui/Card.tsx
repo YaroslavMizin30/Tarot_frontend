@@ -4,6 +4,8 @@ import type { TarotCardProps } from './Card.props';
 
 import GlassLoader from '@/shared/ui/GlassLoader';
 
+import { isShortSingleWord } from '../lib/isShortSingleWord';
+
 import styles from './Card.module.css';
 
 export const TarotCard: FC<TarotCardProps> = (props) => {
@@ -63,7 +65,11 @@ export const TarotCard: FC<TarotCardProps> = (props) => {
           <div
             className={`${styles.footer} ${isInverted && !isCardReversed ? styles.reversed : ''}`}
           >
-            <h2 className={styles.name}>{localizedName}</h2>
+            <h2
+              className={`${styles.name} ${isShortSingleWord(localizedName) ? styles.short : ''}`}
+            >
+              {localizedName}
+            </h2>
           </div>
         </div>
       </div>
