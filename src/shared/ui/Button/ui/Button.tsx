@@ -29,7 +29,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           },
           className,
         )}
-        disabled={disabled || isLoading}
+        disabled={isLoading}
+        style={{ pointerEvents: disabled ? 'none' : 'all' }}
         {...rest}
       >
         <span className={cx({ 'btn__content--loading': isLoading })}>
