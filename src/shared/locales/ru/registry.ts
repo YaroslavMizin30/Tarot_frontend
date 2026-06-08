@@ -309,7 +309,7 @@ const TRANSLATIONS_RU = {
   'Month horoscope': 'Гороскоп на месяц',
   'Weekly horoscope': 'Гороскоп на неделю',
   'Horoscopes summary': 'Обобщить гороскопы',
-  'Continue': 'Продолжить',
+  'Continue in bot': 'Продолжить в боте',
 };
 
 export default TRANSLATIONS_RU;

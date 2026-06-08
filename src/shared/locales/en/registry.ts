@@ -309,7 +309,7 @@ const TRANSLATIONS_EN = {
   'Month horoscope': 'Month horoscope',
   'Weekly horoscope': 'Weekly horoscope',
   'Horoscopes summary': 'Horoscopes summary',
-  'Continue': 'Continue',
+  'Continue in bot': 'Continue in bot',
 };
 
 export default TRANSLATIONS_EN;

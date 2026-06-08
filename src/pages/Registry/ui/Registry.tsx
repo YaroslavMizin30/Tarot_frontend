@@ -132,7 +132,7 @@ export const Registry = () => {
           chartDescription={user.natalChart}
         />
         <Button className={styles.botButton} onClick={handleBotButtonClick}>
-          {i18n('Continue')}
+          {i18n('Continue in bot')}
         </Button>
       </>
     );
