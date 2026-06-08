@@ -71,15 +71,15 @@ export const useCreateUser = () => {
         replyMarkup: {
           resizeKeyboard: true,
           keyboard: [
+            [{ text: i18n('Tarot reading') }],
             [
               { text: i18n('Daily prediction') },
-              { text: i18n('Tarot reading') },
+              { text: i18n('Weekly horoscope') },
             ],
             [
               { text: i18n('Month horoscope') },
               { text: i18n('Horoscopes summary') },
             ],
-            [{ text: i18n('Weekly horoscope') }],
           ],
         },
       });
