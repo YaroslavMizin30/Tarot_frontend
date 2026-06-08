@@ -1,3 +1,5 @@
+import { TRANSLATIONS_RU as TERMS } from "./terms";
+
 const TRANSLATIONS_RU = {
   'sign': '🔮 Какой у вас знак зодиака?',
   'wayOfLife': '🌅 Какой стиль жизни ближе к тому, как живете Вы?',
@@ -140,6 +142,8 @@ const TRANSLATIONS_RU = {
   'Please rate all criteria': 'Пожалуйста, оцените все критерии',
   'Failed to submit rating': 'Не удалось отправить оценку',
   'Thanks for your rating!': 'Спасибо за вашу оценку!',
+
+  ...TERMS,
 };
 
 export default TRANSLATIONS_RU;

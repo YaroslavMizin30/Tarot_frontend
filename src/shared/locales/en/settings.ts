@@ -1,3 +1,5 @@
+import { TRANSLATIONS_EN as TERMS } from './terms';
+
 const TRANSLATIONS_EN = {
   'sign': '🔮 What is your zodiac sign?',
   'wayOfLife': '🌅 What lifestyle is closer to how you live?',
@@ -139,6 +141,8 @@ const TRANSLATIONS_EN = {
   'Please rate all criteria': 'Please rate all criteria',
   'Failed to submit rating': 'Failed to submit rating',
   'Thanks for your rating!': 'Thanks for your rating!',
+
+  ...TERMS,
 };
 
 export default TRANSLATIONS_EN;
