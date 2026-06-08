@@ -9,16 +9,14 @@ import type { SpreadParams } from '@/entities/Spread';
 import useLocales from '@/shared/hooks/useLocales';
 
 import { addSpread } from '@/entities/Spread';
-import { useUser } from '@/entities/User';
+import { useUser, incrementFreeSpreads } from '@/entities/User';
 
-export const useInterpretation = (options: {
-  onFinish?: () => void;
-}) => {
+export const useInterpretation = (options: { onFinish?: () => void }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [interpretation, setInterpretation] = useState<string[] | null>(null);
   const [spreadId, setSpreadId] = useState<string | null>(null);
 
-  const { user } = useUser();
+  const { user, refetchUser } = useUser();
 
   const { i18n } = useLocales();
 
@@ -56,6 +54,12 @@ export const useInterpretation = (options: {
           spreadId: uuid,
           userId: user.id,
         });
+
+        if (user.tariff === 'trial') {
+          await incrementFreeSpreads(user.id);
+
+          refetchUser();
+        }
 
         options.onFinish?.();
 
