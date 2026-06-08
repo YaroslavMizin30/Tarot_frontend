@@ -1,6 +1,7 @@
 export interface AnalyticsUserState {
   telegram_user_id: number;
   username?: string;
+  registered: boolean;
   first_name?: string;
   first_visit_at: string;
   last_action_at: string;
@@ -16,6 +17,7 @@ export interface AnalyticsUserState {
 export interface AnalyticsPayload {
   telegramUserId: number;
   username?: string;
+  registered: boolean;
   firstName?: string;
   firstVisitAt: string;
   lastActionAt: string;
