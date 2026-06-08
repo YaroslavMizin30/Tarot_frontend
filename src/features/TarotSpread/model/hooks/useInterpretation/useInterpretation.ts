@@ -10,6 +10,7 @@ import useLocales from '@/shared/hooks/useLocales';
 
 import { addSpread } from '@/entities/Spread';
 import { useUser, incrementFreeSpreads } from '@/entities/User';
+import { sendAnalytics, getAnalytics } from '@/entities/Analytics';
 
 export const useInterpretation = (options: { onFinish?: () => void }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -64,6 +65,13 @@ export const useInterpretation = (options: { onFinish?: () => void }) => {
         options.onFinish?.();
 
         setSpreadId(uuid);
+
+        const { tarotSpreadsCount = 0 } = (await getAnalytics(user.id)) ?? {};
+
+        await sendAnalytics(user.id, {
+          lastActionAt: new Date().toISOString(),
+          tarotSpreadsCount: tarotSpreadsCount + 1,
+        });
       }
     } finally {
       setIsLoading(false);

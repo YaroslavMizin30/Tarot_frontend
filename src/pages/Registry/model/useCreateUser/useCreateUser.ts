@@ -7,6 +7,7 @@ import { sendMessage } from '@/shared/api/telegram/index.ts';
 
 import getTelegramUser from '@/entities/TelegramUser/index.ts';
 import { useUser } from '@/entities/User/index.ts';
+import { sendAnalytics } from '@/entities/Analytics';
 
 import { getZodiacSign } from '../../lib/getZodiacSign.ts';
 
@@ -61,6 +62,12 @@ export const useCreateUser = () => {
       });
 
       insertRaw('activity', { user_id: tgUser.id });
+
+      await sendAnalytics(tgUser.id, {
+        registered: true,
+        lastActionAt: new Date().toISOString(),
+        tarotSpreadsCount: 0,
+      });
 
       refetchUser();
 
