@@ -1,4 +1,10 @@
 export const getTelegramUser = () => {
+  const { DEV } = import.meta.env;
+
+  if (DEV) {
+    return { id: import.meta.env.VITE_ADMIN_ID };
+  }
+
   if (!window.Telegram) {
     return null;
   }
@@ -7,5 +13,5 @@ export const getTelegramUser = () => {
 
   const user = initData.user;
 
-  return user || {id: 681641883};
+  return user;
 };
