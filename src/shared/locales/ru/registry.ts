@@ -307,7 +307,8 @@ const TRANSLATIONS_RU = {
   'Daily prediction': 'Ежедневное предсказание',
   'Tarot reading': 'Расклад таро',
   'Month horoscope': 'Гороскоп на месяц',
-  'Summary': 'Обобщение',
+  'Weekly horoscope': 'Гороскоп на неделю',
+  'Horoscopes summary': 'Обобщить гороскопы',
   'Continue': 'Продолжить',
 };
 

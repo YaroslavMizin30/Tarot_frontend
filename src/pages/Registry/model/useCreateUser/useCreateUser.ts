@@ -55,6 +55,7 @@ export const useCreateUser = () => {
         user_name: name,
         birth_date: date,
         birth_place: place,
+        birth_time: time,
         natal_chart: card,
         sign: i18n(zodiac),
       });
@@ -74,7 +75,11 @@ export const useCreateUser = () => {
               { text: i18n('Daily prediction') },
               { text: i18n('Tarot reading') },
             ],
-            [{ text: i18n('Month horoscope') }, { text: i18n('Summary') }],
+            [
+              { text: i18n('Month horoscope') },
+              { text: i18n('Horoscopes summary') },
+            ],
+            [{ text: i18n('Weekly horoscope') }],
           ],
         },
       });
