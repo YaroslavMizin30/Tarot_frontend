@@ -14,6 +14,7 @@
 .agreement {
   color: var(--border-primary);
   border-color: var(--border-primary);
+  background-color: var(--background-primary);
 }
 
 .arrow {

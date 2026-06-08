@@ -13,12 +13,9 @@ const UserAgreement = (props: { onBackButtonClick: () => void }) => {
 
   return (
     <>
-      <h3 className={styles.title}>
-        {i18n('Terms of Service and Privacy Policy for the TAROTOPIA App')}
-      </h3>
-
       <div className={styles.container}>
         <TextContainer
+          title={i18n('Terms of Service and Privacy Policy for the TAROTOPIA App')}
           paragraphs={TERMS_OF_SERVICE_LINES}
           maxHeight={100}
           maxHeightMeasure={'%'}

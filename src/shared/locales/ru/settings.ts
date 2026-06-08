@@ -1,4 +1,4 @@
-import { TRANSLATIONS_RU as TERMS } from "./terms";
+import { TRANSLATIONS_RU as TERMS } from './terms';
 
 const TRANSLATIONS_RU = {
   'sign': '🔮 Какой у вас знак зодиака?',
@@ -143,6 +143,7 @@ const TRANSLATIONS_RU = {
   'Failed to submit rating': 'Не удалось отправить оценку',
   'Thanks for your rating!': 'Спасибо за вашу оценку!',
 
+  'User agreement': 'Пользовательское соглашение',
   ...TERMS,
 };
 
