@@ -16,24 +16,25 @@ export const Tooltip = (props: TooltipProps) => {
     style,
     ref,
     isEnabled = true,
+    showBy = 'click',
   } = props;
 
   const [isVisible, setIsVisible] = useState(false);
 
   const handleMouseEnter = () => {
-    if (isEnabled) {
+    if (isEnabled && showBy === 'mouseEnter') {
       setIsVisible(true);
     }
   };
 
   const handleMouseLeave = () => {
-    if (isEnabled) {
+    if (isEnabled && showBy === 'mouseEnter') {
       setIsVisible(false);
     }
   };
 
   const handleClick = () => {
-    if (isEnabled) {
+    if (isEnabled && showBy === 'click') {
       setIsVisible((prev) => !prev);
     }
   };

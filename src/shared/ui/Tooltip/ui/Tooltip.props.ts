@@ -9,4 +9,5 @@ export interface TooltipProps {
   tooltipClassName?: string;
   style?: CSSProperties;
   ref?: Ref<HTMLDivElement>;
+  showBy?: 'click' | 'mouseEnter'
 }
