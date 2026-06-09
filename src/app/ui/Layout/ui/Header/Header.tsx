@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 
 import SettingsIcon from '@/shared/assets/svg/common/settings.svg';
 import HomeIcon from '@/shared/assets/svg/common/home.svg';
 import GlobeIcon from '@/shared/assets/svg/common/globe.svg';
 import useOutsideClick from '@/shared/hooks/useOutsideClick';
 import useLocales, { type Locale } from '@/shared/hooks/useLocales';
+import Tooltip from '@/shared/ui/Tooltip';
+
 import { useUser } from '@/entities/User';
 
 import styles from './Header.module.css';
@@ -17,6 +19,7 @@ const LANGS: { name: string; locale: Locale }[] = [
 
 const Header = () => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const [isVisible, setIsVisible] = useState(false);
   const { user } = useUser();
@@ -43,7 +46,7 @@ const Header = () => {
 
   const ref = useOutsideClick(handleOutsideClick);
 
-  const { changeLanguage, locale } = useLocales();
+  const { changeLanguage, locale, i18n } = useLocales();
 
   return (
     <header className={styles.header}>
@@ -82,11 +85,19 @@ const Header = () => {
           </div>
         )}
 
-        <SettingsIcon
-          className={styles.settings}
-          onClick={handleSettingsClick}
-          styles={{ opacity: user ? 1 : 0 }}
-        />
+        <Tooltip
+          isEnabled={pathname === '/settings'}
+          position={'left'}
+          style={{ position: 'relative', top: '3px' }}
+          content={i18n('Already here')}
+          tooltipClassName={styles.tooltip}
+        >
+          <SettingsIcon
+            className={styles.settings}
+            onClick={handleSettingsClick}
+            styles={{ opacity: user ? 1 : 0 }}
+          />
+        </Tooltip>
       </div>
     </header>
   );

@@ -89,3 +89,7 @@
   background-color: var(--border-primary);
   color: var(--background-primary);
 }
+
+.tooltip {
+  min-width: 80px;
+}
