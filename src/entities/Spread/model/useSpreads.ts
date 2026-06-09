@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { getSpreads } from '../api/getSpreads';
 import type { Spread } from '../types';
 import { useUser } from '@/entities/User';
+import { getTodayString } from '@/shared/utils/getTodayString';
 
 export const useSpreads = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -35,6 +36,12 @@ export const useSpreads = () => {
     return spreads?.filter((spread) => !spread.isSummarized);
   }, [spreads]);
 
+  const todaysSpreadsCount = useMemo(() => {
+    const today = getTodayString();
+
+    return spreads?.filter((spread) => spread.date === today).length ?? 0;
+  }, [spreads]);
+
   useEffect(() => {
     fetchSpreads();
   }, []);
@@ -43,5 +50,6 @@ export const useSpreads = () => {
     isLoading,
     spreads,
     unsummarizedSpreads,
+    todaysSpreadsCount,
   };
 };

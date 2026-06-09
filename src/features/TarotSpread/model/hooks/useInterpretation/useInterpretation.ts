@@ -2,12 +2,11 @@ import { useState } from 'react';
 import { v4 } from 'uuid';
 
 import requestAi from '@/shared/api/AI';
+import useLocales from '@/shared/hooks/useLocales';
+import { getTodayString } from '@/shared/utils/getTodayString';
 
 import type { Card } from '@/entities/TarotCard';
 import type { SpreadParams } from '@/entities/Spread';
-
-import useLocales from '@/shared/hooks/useLocales';
-
 import { addSpread } from '@/entities/Spread';
 import { useUser, incrementFreeSpreads } from '@/entities/User';
 import { sendAnalytics, getAnalytics } from '@/entities/Analytics';
@@ -51,7 +50,7 @@ export const useInterpretation = (options: { onFinish?: () => void }) => {
           ...spread,
           cards,
           interpretation,
-          date: new Date().toLocaleDateString(),
+          date: getTodayString(),
           spreadId: uuid,
           userId: user.id,
         });
