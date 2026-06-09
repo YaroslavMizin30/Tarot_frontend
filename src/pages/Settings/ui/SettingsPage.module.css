@@ -18,7 +18,10 @@
   align-items: center;
   overflow-y: auto;
   max-height: 80%;
-  padding-right: 5px;
+  padding: 10px;
+
+  border: 1px solid var(--border-inversed);
+  border-radius: 10px;
 }
 
 .title {
