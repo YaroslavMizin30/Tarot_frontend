@@ -25,7 +25,7 @@
   padding: 0 10px;
 
   overflow-y: auto;
-  overflow-x: visible;
+  overflow-x: hidden;
 }
 
 .container > button + button, .container > h3 + button, .container > div + div, .container > h3 + div {
