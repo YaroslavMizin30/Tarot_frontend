@@ -188,7 +188,9 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
               position: 'absolute',
             }}
           >
-            {SpreadConfig[id].cards.length > 1 && i18n('Unfold cards one by one')}
+            {SpreadConfig[id].cards.length > 1
+              ? i18n('Unfold cards one by one')
+              : i18n('Unfold the card')}
           </span>
         )}
       </div>

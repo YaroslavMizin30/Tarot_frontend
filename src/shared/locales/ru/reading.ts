@@ -70,7 +70,7 @@ const TRANSLATIONS_RU: Record<string, string> = {
   'Is there a chance for our relationship? What lies ahead.':
     'Есть ли шанс у наших отношений? Что впереди.',
   "Should I return it? Partner's thoughts, conclusion.":
-    'Стоит ли возвращать? Мысли партнёра, итог.',
+    'Стоит ли возвращаться? Мысли партнёра, итог.',
   'How does he(she) feel? Prospects.': 'Что он/она чувствует? Перспективы.',
   'Why do mistakes repeat themselves? How to break the cycle.':
     'Почему повторяются ошибки? Как сломать круг.',
@@ -197,7 +197,13 @@ const TRANSLATIONS_RU: Record<string, string> = {
   'Interpreting': 'Интерпретация',
   'To spread': 'К раскладу',
   'Unfold cards one by one': 'Переверните карты по очереди',
+  'Unfold the card': 'Переверните карту',
   'Shuffling the deck': 'Тасую колоду',
+
+  "You've reached the daily limit of 5 spreads for the standard tariff. Upgrade to the extended tariff to get more spreads":
+    'Вы достигли дневного лимита в 5 раскладов для стандартного тарифа. Перейдите на расширенный тариф, чтобы получить больше раскладов',
+  "You've reached the daily limit of 10 spreads for the extended tariff 😔":
+    'Вы достигли дневного лимита в 10 раскладов для расширенного тарифа 😔',
 
   ...CARDS,
 };

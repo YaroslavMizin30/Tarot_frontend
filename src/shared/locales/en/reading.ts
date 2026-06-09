@@ -200,7 +200,13 @@ const TRANSLATIONS_EN: Record<string, string> = {
   'Interpreting': 'Interpreting',
   'To spread': 'To spread',
   'Unfold cards one by one': 'Unfold cards one by one',
+  'Unfold the card': 'Unfold the card',
   'Shuffling the deck': 'Shuffling the deck',
+
+  "You've reached the daily limit of 5 spreads for the standard tariff. Upgrade to the extended tariff to get more spreads":
+    "You've reached the daily limit of 5 spreads for the standard tariff. Upgrade to the extended tariff to get more spreads",
+  "You've reached the daily limit of 10 spreads for the extended tariff 😔":
+    "You've reached the daily limit of 10 spreads for the extended tariff 😔",
 
   ...CARDS,
 };
