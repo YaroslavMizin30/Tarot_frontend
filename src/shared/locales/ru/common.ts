@@ -9,6 +9,7 @@ const TRANSLATIONS_RU = {
     'Кончились бесплатные запросы 😔. Доступно по подписке',
   'Your subscription has expired 😔. Available via subscription':
     'Ваша подписка истекла 😔. Доступно по подписке',
+  'Available via subscription': 'Доступно по подписке',
 };
 
 export default TRANSLATIONS_RU;

@@ -67,9 +67,31 @@ export const MainPage = () => {
         </Button>
       </Tooltip>
 
-      <Button value={'/reading'} onClick={handleNavigationButtonClick}>
-        {i18n('Make spread')}
-      </Button>
+      <Tooltip
+        position={'top'}
+        content={getExpiredMessage()}
+        isEnabled={
+          !isAvailableForCurrentTariff({
+            standard: true,
+            extended: true,
+            trial: false,
+          })
+        }
+      >
+        <Button
+          value={'/reading'}
+          onClick={handleNavigationButtonClick}
+          disabled={
+            !isAvailableForCurrentTariff({
+              standard: true,
+              extended: true,
+              trial: false,
+            })
+          }
+        >
+          {i18n('Make spread')}
+        </Button>
+      </Tooltip>
 
       <Button value={'/history'} onClick={handleNavigationButtonClick}>
         {i18n('Spreads history')}

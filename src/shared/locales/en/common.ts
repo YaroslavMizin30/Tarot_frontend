@@ -9,6 +9,7 @@ const TRANSLATIONS_EN = {
     'No free queries left 😔. Available via subscription',
   'Your subscription has expired 😔. Available via subscription':
     'Your subscription has expired 😔. Available via subscription',
+  'Available via subscription': 'Available via subscription',
 };
 
 export default TRANSLATIONS_EN;
