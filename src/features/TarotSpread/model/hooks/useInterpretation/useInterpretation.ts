@@ -41,7 +41,7 @@ export const useInterpretation = (options: { onFinish?: () => void }) => {
         { role: 'developer', content: developerMessage },
       ]);
 
-      setInterpretation(interpretation.replace(/[#|*|-]/g, '').split('\n'));
+      setInterpretation(interpretation.split('\n'));
 
       if (user) {
         const uuid = v4();

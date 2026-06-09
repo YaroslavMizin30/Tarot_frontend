@@ -12,5 +12,7 @@ export const requestAi = async (prompts: Prompt[]) => {
     },
   );
 
-  return response.json();
+  const answer = await response.json();
+
+  return answer.replace(/[*|#]|---/g, '');
 };

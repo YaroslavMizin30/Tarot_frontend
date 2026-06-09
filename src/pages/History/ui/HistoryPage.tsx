@@ -171,7 +171,7 @@ export const HistoryPage = () => {
                     </Button>
                   </div>
                   <div className={`${styles.interpretation} custom-scrollbar`}>
-                    {summary.replace(/[*|#]/g, '')}
+                    {summary}
                   </div>
                 </div>
               );

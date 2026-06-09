@@ -66,7 +66,7 @@ export const NatalChart = (props: NatalChartProps) => {
       <section className={`${styles.section} ${styles.chartContainer}`}>
         <TextContainer
           title={i18n('Chart description')}
-          paragraphs={chartDescription.replace(/[*|#]/g, '').split(/\n/)}
+          paragraphs={chartDescription.split(/\n/)}
           maxHeight={350}
           maxHeightMeasure={'px'}
           className={styles.text}

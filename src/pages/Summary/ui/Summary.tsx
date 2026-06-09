@@ -43,7 +43,7 @@ export const SummaryPage = () => {
       </div>
 
       <TextContainer
-        paragraphs={summary.replace(/[*|#]/g, '').split('\n')}
+        paragraphs={summary.split('\n')}
         maxHeight={350}
         maxHeightMeasure={'px'}
         className={styles.interpretation}
