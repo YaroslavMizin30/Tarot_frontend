@@ -96,7 +96,7 @@ const TRANSLATIONS_RU = {
   'During new acquaintances': 'При новых знакомствах',
   'In a deep conversation': 'В глубоком разговоре',
 
-  'About you': 'О Вас',
+  'Profile': 'Профиль',
   'Subscription': 'Подписка',
 
   'Your tariff': 'Ваша подписка',

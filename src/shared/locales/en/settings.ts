@@ -96,7 +96,7 @@ const TRANSLATIONS_EN = {
   'During new acquaintances': 'During new acquaintances',
   'In a deep conversation': 'In a deep conversation',
 
-  'About you': 'About you',
+  'Profile': 'Profile',
   'Subscription': 'Subscription',
   'Your tariff': 'Your tariff',
   'Trial': 'Trial',

@@ -47,7 +47,7 @@ export const SettingsPage = () => {
         return (
           <SubscriptionSettings onBackButtonClick={handleBackButtonClick} />
         );
-      case 'about you':
+      case 'profile':
         return <UserSettings onBackButtonClick={handleBackButtonClick} />;
       case 'rate the app':
         return <RatingSettings onBackButtonClick={handleBackButtonClick} />;
@@ -65,9 +65,9 @@ export const SettingsPage = () => {
 
             <Button
               onClick={handleSettingsButtonClick}
-              value={'about you'}
+              value={'profile'}
             >
-              {i18n('About you')}
+              {i18n('Profile')}
             </Button>
 
             <Button

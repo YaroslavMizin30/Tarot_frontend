@@ -15,13 +15,13 @@ const UserSettings = (props: { onBackButtonClick: () => void }) => {
   const { i18n } = useLocales();
 
   const [options, setOptions] = useState<string[]>([]);
-  const [title, setTitle] = useState<string>(i18n('About you'));
+  const [title, setTitle] = useState<string>(i18n('Profile'));
 
   const handleBackButtonClick = () => {
     if (options.length) {
       setOptions([]);
 
-      setTitle(i18n('About you'));
+      setTitle(i18n('Profile'));
 
       return;
     }
