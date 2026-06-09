@@ -4,6 +4,8 @@ const TRANSLATIONS_RU = {
   'Card of the day': 'Карта дня',
   'About Tarot': 'О Таро',
 
+  'Already here': 'Уже тут',
+
   'Available for extended tariff': 'Доступно по расширенному тарифу',
   'No free queries left 😔. Available via subscription':
     'Кончились бесплатные запросы 😔. Доступно по подписке',

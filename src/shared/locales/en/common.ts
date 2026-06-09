@@ -4,6 +4,8 @@ const TRANSLATIONS_EN = {
   'Card of the day': 'Card of the day',
   'About Tarot': 'About Tarot',
 
+  'Already here': 'Already here',
+
   'Available for extended tariff': 'Available for extended tariff',
   'No free queries left 😔. Available via subscription':
     'No free queries left 😔. Available via subscription',
