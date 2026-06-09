@@ -56,6 +56,11 @@ export interface Activity {
   dailyHoroscopeLastId: number;
   monthlyHoroscopeLastDate: string;
   monthlyHoroscopeLastId: number;
+  /**
+   * ISO-8601 timestamp of the user's last natal chart update.
+   * Used to enforce the once-per-paid-period update restriction.
+   */
+  natalChartLastUpdate?: string;
 }
 
 export interface ActivityResponse {
@@ -64,6 +69,7 @@ export interface ActivityResponse {
   daily_horoscope_last_id: number;
   monthly_horoscope_last_date: string;
   monthly_horoscope_last_id: number;
+  natal_chart_last_update?: string;
 }
 
 export interface Summary {

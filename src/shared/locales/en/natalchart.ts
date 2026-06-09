@@ -14,6 +14,10 @@ const TRANSLATIONS_EN = {
   'Save': 'Save',
   'Cancel': 'Cancel',
   'Updating your natal chart': 'Updating your natal chart',
+  'You can update your natal chart once per paid period':
+    'You can update your natal chart once per paid period',
+  'Next available update': 'Next available update',
+  'Failed to update natal chart': 'Failed to update natal chart',
 
   // Знаки зодиака
   'Aries': 'Aries',

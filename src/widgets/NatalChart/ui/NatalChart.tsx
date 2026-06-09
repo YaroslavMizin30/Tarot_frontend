@@ -82,6 +82,8 @@ export const NatalChart = (props: NatalChartProps) => {
 
   const [error, setError] = useState('');
 
+  const [nextAvailableAt, setNextAvailableAt] = useState<string | null>(null);
+
   const viewportHeight = useViewportHeight();
 
   /**
@@ -157,8 +159,9 @@ export const NatalChart = (props: NatalChartProps) => {
     }
 
     setError('');
+    setNextAvailableAt(null);
 
-    const success = await updateNatalChart({
+    const result = await updateNatalChart({
       userId: String(user.id),
       name,
       country,
@@ -167,12 +170,22 @@ export const NatalChart = (props: NatalChartProps) => {
       month,
       year,
       time,
+      expirationDate: user.expirationDate,
     });
 
-    if (success) {
+    if (result.success) {
       await refetchUser();
       setIsEditing(false);
       onUpdated?.();
+
+      return;
+    }
+
+    if (result.reason === 'rate-limited') {
+      setNextAvailableAt(result.nextAvailableAt ?? null);
+      setError(i18n('You can update your natal chart once per paid period'));
+    } else {
+      setError(i18n('Failed to update natal chart'));
     }
   };
 
@@ -373,7 +386,22 @@ export const NatalChart = (props: NatalChartProps) => {
           )}
         </div>
 
-        {error && <span className={styles.errorMessage}>{error}</span>}
+        {error && (
+          <span className={styles.errorMessage}>
+            {error}
+            {nextAvailableAt && (
+              <>
+                {' '}
+                {i18n('Next available update')}:{' '}
+                {new Date(nextAvailableAt).toLocaleDateString(locale, {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </>
+            )}
+          </span>
+        )}
       </section>
     </div>
   );

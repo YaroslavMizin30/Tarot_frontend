@@ -14,6 +14,10 @@ const TRANSLATIONS_RU = {
   'Save': 'Сохранить',
   'Cancel': 'Отмена',
   'Updating your natal chart': 'Обновляем натальную карту',
+  'You can update your natal chart once per paid period':
+    'Обновлять натальную карту можно один раз за оплаченный период',
+  'Next available update': 'Следующее доступное обновление',
+  'Failed to update natal chart': 'Не удалось обновить натальную карту',
 
   // Знаки зодиака
   'Aries': 'Овен',
