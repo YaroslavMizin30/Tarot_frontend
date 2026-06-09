@@ -18,6 +18,7 @@
   pointer-events: none;
   background: #374151;
   color: white;
+  text-align: center;
 }
 
 .tooltip--top {
