@@ -74,9 +74,9 @@ export const HistoryPage = () => {
 
       <Zodiac sign={user?.sign} className={styles.zodiac} />
 
-      <div className={`${styles.spreads} custom-scrollbar`}>
-        {spreads &&
-          spreads.map((spread) => (
+      {spreads && spreads.length > 0 ? (
+        <div className={`${styles.spreads} custom-scrollbar`}>
+          {spreads.map((spread) => (
             <div className={styles.spread} key={spread.spreadId}>
               <div className={styles.info}>
                 {spread.title ? (
@@ -112,7 +112,20 @@ export const HistoryPage = () => {
               </div>
             </div>
           ))}
-      </div>
+        </div>
+      ) : (
+        <div className={styles['empty-state']}>
+          <span className={styles['empty-state-title']}>
+            {i18n('No spreads yet')}
+          </span>
+          <span className={styles['empty-state-subtitle']}>
+            {i18n('Make your first spread to see it here')}
+          </span>
+          <Button onClick={() => navigate('/reading')}>
+            {i18n('Make spread')}
+          </Button>
+        </div>
+      )}
 
       <Tooltip
         position={'top'}

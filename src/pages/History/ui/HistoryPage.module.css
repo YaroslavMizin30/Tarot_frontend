@@ -109,3 +109,28 @@
 .back-button {
   margin-top: 10px;
 }
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  width: 100%;
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 40px 20px;
+}
+
+.empty-state-title {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.empty-state-subtitle {
+  font-size: 14px;
+  opacity: 0.8;
+  max-width: 260px;
+  margin-bottom: 20px;
+}
