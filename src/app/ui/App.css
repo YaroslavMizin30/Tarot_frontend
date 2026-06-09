@@ -37,6 +37,7 @@
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background: var(--background-primary);
 
+  border: 0.5px solid var(--border-primary);
   border-radius: 10px;
 }
 
