@@ -42,6 +42,7 @@ const UserSettings = (props: { onBackButtonClick: () => void }) => {
         zodiacSign={user.sign}
         name={user.userName}
         chartDescription={user.natalChart}
+        className={styles.chart}
       />
 
       <ArrowButton className={styles.arrow} onClick={handleBackButtonClick} />

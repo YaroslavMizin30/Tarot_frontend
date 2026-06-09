@@ -4,6 +4,7 @@
   width: 300px;
   height: fit-content;
   padding: 10px;
+  max-height: 80%;
 
   color: var(--text-primary);
 
@@ -24,6 +25,10 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
+}
+
+.chartContainer {
+  height: 60%;
 }
 
 .section > .item + .item {

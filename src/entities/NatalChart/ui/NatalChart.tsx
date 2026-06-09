@@ -18,6 +18,7 @@ export const NatalChart = (props: NatalChartProps) => {
     birthPlace,
     zodiacSign,
     chartDescription,
+    className = '',
   } = props;
 
   const { i18n, addTranslations, locale } = useLocales();
@@ -27,7 +28,7 @@ export const NatalChart = (props: NatalChartProps) => {
   }, [locale]);
 
   return (
-    <div className={styles.chart}>
+    <div className={`${styles.chart} ${className}`}>
       <header className={styles.header}>
         <h2 className={styles.title}>{i18n('Natal chart')}</h2>
 
@@ -62,7 +63,7 @@ export const NatalChart = (props: NatalChartProps) => {
         </div>
       </section>
 
-      <section className={styles.section}>
+      <section className={`${styles.section} ${styles.chartContainer}`}>
         <TextContainer
           title={i18n('Chart description')}
           paragraphs={chartDescription.replace(/[*|#]/g, '').split(/\n/)}
