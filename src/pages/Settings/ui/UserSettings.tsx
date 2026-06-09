@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useUser } from '@/entities/User';
-import NatalChart from '@/entities/NatalChart';
+import NatalChart from '@/widgets/NatalChart';
 
 import ArrowButton from '@/shared/ui/ArrowButton';
 import useLocales from '@/shared/hooks/useLocales';
@@ -37,13 +37,7 @@ const UserSettings = (props: { onBackButtonClick: () => void }) => {
     <>
       <h3 className={styles.title}>{title}</h3>
 
-      <NatalChart
-        {...user}
-        zodiacSign={user.sign}
-        name={user.userName}
-        chartDescription={user.natalChart}
-        className={styles.chart}
-      />
+      <NatalChart user={user} className={styles.chart} />
 
       <ArrowButton className={styles.arrow} onClick={handleBackButtonClick} />
     </>

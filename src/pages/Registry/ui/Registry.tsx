@@ -7,7 +7,7 @@ import Modal from '@/shared/ui/Modal';
 import TextContainer from '@/shared/ui/TextContainer';
 import Spinner from '@/shared/ui/Spinner';
 
-import NatalChart from '@/entities/NatalChart';
+import NatalChart from '@/widgets/NatalChart';
 
 import useLocales from '@/shared/hooks/useLocales';
 import TRANSLATIONS_RU from '../../../shared/locales/ru/registry.ts';
@@ -40,13 +40,13 @@ export const Registry = () => {
 
   const { createUser, isLoading, user } = useCreateUser();
 
+  const [error, setError] = useState('');
+
   const translatedCountries = useMemo(() => {
     return COUNTRIES.map(({ value, label }) => {
       return { value, label: i18n(label) };
     });
   }, [locale, i18n]);
-
-  const [error, setError] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setError('');
@@ -125,12 +125,8 @@ export const Registry = () => {
   if (user) {
     return (
       <>
-        <NatalChart
-          {...user}
-          name={user.userName}
-          zodiacSign={user.sign}
-          chartDescription={user.natalChart}
-        />
+        <NatalChart user={user} />
+
         <Button className={styles.botButton} onClick={handleBotButtonClick}>
           {i18n('Continue in bot')}
         </Button>
