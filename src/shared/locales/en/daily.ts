@@ -17,6 +17,7 @@ const TRANSLATIONS_EN = {
   'Yes': 'Yes',
   'No': 'No',
   'Interpreting': 'Interpreting',
+  'Unfold the card': 'Unfold the card',
 };
 
 export default TRANSLATIONS_EN;

@@ -17,6 +17,7 @@ const TRANSLATIONS_RU = {
   'Yes': 'Да',
   'No': 'Нет',
   'Interpreting': 'Интерпретация',
+  'Unfold the card': 'Переверните карту',
 };
 
 export default TRANSLATIONS_RU;
