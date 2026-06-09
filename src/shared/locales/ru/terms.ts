@@ -10,8 +10,8 @@ export const TRANSLATIONS_RU = {
     '- Расчёт натальной карты на основе имени, даты, времени и места рождения;',
   '- Personalized daily predictions via AI;':
     '- Персонализированные ежедневные предсказания с помощью ИИ;',
-  '- Custom Tarot spreads based on user requests;':
-    '- Индивидуальные расклады Таро по вашему запросу;',
+  '- Custom Tarot spreads based on user requests based on AI;':
+    '- Индивидуальные расклады Таро по вашему запросу с использованием ИИ;',
   '- Premium features by subscription.': '- Премиум-функции по подписке.',
   '2. Age Restrictions': '2. Возрастные ограничения',
   'The App is intended for users over 16 years old. Use by minors is permitted only with parental or legal guardian consent.':
@@ -47,15 +47,15 @@ export const TRANSLATIONS_RU = {
     'Приложение предлагает три уровня доступа:',
   '- Free (trial): basic AI features, limited number of spreads;':
     '- Бесплатный (пробный): базовый функционал ИИ, ограниченное количество раскладов;',
-  '- Standard (100 rubles/month): daily spreads, predictions, access to preset Tarot layouts;':
-    '- Стандартный (100 руб./мес.): ежедневные расклады, предсказания, доступ к готовым раскладам Таро;',
-  '- Premium (200 rubles/month): all features, analysis of series of spreads, extended library of questions and topics.':
-    '- Премиум (200 руб./мес.): все функции, анализ серии раскладов, доступ к расширенной библиотеке вопросов и тем.',
+  '- Standard (120 rubles or 75 telegram stars per 30 days): daily spreads, predictions, access to preset Tarot layouts;':
+    '- Стандартный (120 руб. или 75 телеграм звезд за 30 дней): ежедневные расклады, предсказания, доступ к готовым раскладам Таро;',
+  '- Extended (200 rubles or 120 telegram stars per 30 days): all features, analysis of series of spreads, extended library of questions and topics.':
+    '- Расширенный (200 руб. или 120 телеграм звезд за 30 дней): все функции, анализ серии раскладов, доступ к расширенной библиотеке вопросов и тем.',
   'All payments are final and non-refundable, except as provided by law.':
     'Все платежи являются окончательными и не подлежат возврату, за исключением случаев, установленных законодательством.',
   '8. Currency and Payment': '8. Валюта и оплата',
-  'The App uses Telegram Stars and/or YooKassa for payment processing. The administration does not control the processes of crediting, holding, or refunding stars and is not responsible for them.':
-    'Приложение использует Telegram-звёзды и/или ЮKassa для обработки платежей. Администрация не контролирует процессы начисления, удержания или возврата звёзд и не несёт за них ответственности.',
+  'The App uses rubles and/or telegram stars for payment processing. Paymend in rubles is processed via "ЮKassa" service. The administration does not control the processes of crediting, holding, or refunding stars and is not responsible for them.':
+    'Приложение использует рубли и/или телеграм звезды для обработки платежей. Оплата в рублях осуществляется с помощью сервиса "ЮKassa". Администрация не контролирует процессы начисления, удержания или возврата звёзд и не несёт за них ответственности.',
   '9. Prohibited Actions': '9. Запрещённые действия',
   'Users are forbidden to:': 'Пользователю запрещается:',
   '- Use the App for fraud, manipulation, or discrimination;':
@@ -76,6 +76,6 @@ export const TRANSLATIONS_RU = {
   'This Agreement is governed by the laws of the Russian Federation. Disputes are resolved in the courts of Russia.':
     'Соглашение регулируется законодательством Российской Федерации. Споры рассматриваются в судах РФ.',
   '13. Contact Information': '13. Контакты',
-  'For all inquiries, please contact: https://t.me/my_telegram':
-    'По всем вопросам обращайтесь: https://t.me/my_telegram',
+  'For all inquiries, please contact: https://t.me/YaroslavMizin':
+    'По всем вопросам обращайтесь: https://t.me/YaroslavMizin',
 };
