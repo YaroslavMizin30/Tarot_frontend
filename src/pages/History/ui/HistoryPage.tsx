@@ -16,6 +16,8 @@ import Tooltip from '@/shared/ui/Tooltip';
 
 import styles from './HistoryPage.module.css';
 
+const MIN_SPREADS_FOR_SUMMARY = 2;
+
 export const HistoryPage = () => {
   const {
     spreads,
@@ -61,11 +63,25 @@ export const HistoryPage = () => {
   };
 
   const getSummaryTooltipContent = () => {
-    if (Number(unsummarizedSpreads?.length) < 1) {
-      return i18n('Need at least 2 spreads, that are not summarized');
+    if (Number(unsummarizedSpreads?.length) < MIN_SPREADS_FOR_SUMMARY) {
+      return i18n(
+        'Need at least 2 spreads, that are not summarized',
+      );
     }
 
     return getExpiredMessage();
+  };
+
+  const isSummaryEnabled = () => {
+    if (Number(unsummarizedSpreads?.length) < MIN_SPREADS_FOR_SUMMARY) {
+      return false;
+    }
+
+    return isAvailableForCurrentTariff({
+      trial: false,
+      standard: false,
+      extended: true,
+    });
   };
 
   return (
@@ -130,21 +146,13 @@ export const HistoryPage = () => {
       <Tooltip
         position={'top'}
         content={getSummaryTooltipContent()}
-        isEnabled={!isAvailableForCurrentTariff({
-          trial: false,
-          standard: false,
-          extended: true,
-        })}
-        style={{textAlign: 'center'}}
+        isEnabled={!isSummaryEnabled()}
+        style={{ textAlign: 'center' }}
       >
         <Button
           className={styles['summary-button']}
           onClick={handleSummaryButtonClick}
-          disabled={!isAvailableForCurrentTariff({
-            trial: false,
-            standard: false,
-            extended: true,
-          })}
+          disabled={!isSummaryEnabled()}
         >
           {i18n('Make summary')}
         </Button>
