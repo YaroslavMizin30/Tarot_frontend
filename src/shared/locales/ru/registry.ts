@@ -310,6 +310,9 @@ const TRANSLATIONS_RU = {
   'Weekly horoscope': 'Гороскоп на неделю',
   'Horoscopes summary': 'Обобщить гороскопы',
   'Continue in bot': 'Продолжить в боте',
+  'Try again': 'Попробовать снова',
+  'Error during request, please try again':
+    'Ошибка при запросе. Пожалуйста, попробуйте снова',
 };
 
 export default TRANSLATIONS_RU;

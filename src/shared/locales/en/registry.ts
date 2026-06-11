@@ -310,6 +310,9 @@ const TRANSLATIONS_EN = {
   'Weekly horoscope': 'Weekly horoscope',
   'Horoscopes summary': 'Horoscopes summary',
   'Continue in bot': 'Continue in bot',
+  'Try again': 'Try again',
+  'Error during request, please try again':
+    'Error during request, please try again',
 };
 
 export default TRANSLATIONS_EN;

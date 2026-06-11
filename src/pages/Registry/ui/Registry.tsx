@@ -6,6 +6,7 @@ import Select from '@/shared/ui/Select';
 import Modal from '@/shared/ui/Modal';
 import TextContainer from '@/shared/ui/TextContainer';
 import Spinner from '@/shared/ui/Spinner';
+import Error from '@/shared/ui/Error/index.ts';
 
 import NatalChart from '@/widgets/NatalChart';
 
@@ -38,7 +39,7 @@ export const Registry = () => {
 
   const [showUserAgreement, setShowUserAgreement] = useState(false);
 
-  const { createUser, isLoading, user } = useCreateUser();
+  const { createUser, isLoading, user, error: creationError } = useCreateUser();
 
   const [error, setError] = useState('');
 
@@ -131,6 +132,15 @@ export const Registry = () => {
           {i18n('Continue in bot')}
         </Button>
       </>
+    );
+  }
+
+  if (creationError) {
+    return (
+      <Error
+        error={i18n('Error during request, please try again')}
+        onRetryButtonClick={() => createUser(formData)}
+      />
     );
   }
 
