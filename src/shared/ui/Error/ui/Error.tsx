@@ -7,7 +7,7 @@ import type { ErrorProps } from './Error.props';
 
 import styles from './Error.module.css';
 
-const Error: FC<ErrorProps> = (props) => {
+export const Error: FC<ErrorProps> = (props) => {
   const { onRetryButtonClick, error } = props;
 
   const { i18n } = useLocales();
@@ -22,5 +22,3 @@ const Error: FC<ErrorProps> = (props) => {
     </div>
   );
 };
-
-export default Error;
