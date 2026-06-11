@@ -73,7 +73,7 @@ export const useCreateUser = () => {
 
       sendMessage({
         text: i18n(
-          '✅ Your natal chart is ready!\n\n🔮 Continue using TAROTOPIA for:\n• Daily predictions\n• Tarot readings for your questions\n• Tracking favorable periods\n\nUse the buttons in the menu to get started! ✨',
+          '✅ Your natal chart is ready! You can find it in settings > profile.\n\n🔮 Continue using TAROTOPIA for:\n• Daily predictions\n• Tarot readings for your questions\n• Tracking favorable periods\n\nUse the buttons in the menu to get started! ✨',
         ),
         replyMarkup: {
           resizeKeyboard: true,

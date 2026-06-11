@@ -302,8 +302,8 @@ const TRANSLATIONS_RU = {
     'Не дублируй информацию о пользователе, не пиши о методах составления',
   'Describe the meaning of the chart to user':
     'Опиши значение карты для пользователя',
-  '✅ Your natal chart is ready!\n\n🔮 Continue using TAROTOPIA for:\n• Daily predictions\n• Tarot readings for your questions\n• Tracking favorable periods\n\nUse the buttons in the menu to get started! ✨':
-    '✅ Натальная карта сформирована!\n\n🔮 Продолжайте использовать TAROTOPIA для:\n• Ежедневных прогнозов\n• Раскладов Таро по вопросам\n• Отслеживания благоприятных периодов\n\nВоспользуйтесь кнопками в меню, чтобы начать! ✨',
+  '✅ Your natal chart is ready! You can find it in settings > profile.\n\n🔮 Continue using TAROTOPIA for:\n• Daily predictions\n• Tarot readings for your questions\n• Tracking favorable periods\n\nUse the buttons in the menu to get started! ✨':
+    '✅ Натальная карта сформирована! Ее можно будет посмотреть в разделе настройки > профиль в приложении\n\n🔮 Продолжайте использовать TAROTOPIA для:\n• Ежедневных прогнозов\n• Раскладов Таро по вопросам\n• Отслеживания благоприятных периодов\n\nВоспользуйтесь кнопками в меню, чтобы начать! ✨',
   'Daily prediction': 'Ежедневное предсказание',
   'Tarot reading': 'Расклад таро',
   'Month horoscope': 'Гороскоп на месяц',
