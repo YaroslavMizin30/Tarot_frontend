@@ -9,7 +9,7 @@ import { prepareSpreadsAnalysisPrompt } from '../lib/prepareSpreadsAnalysis';
 
 import { useUser } from '@/entities/User';
 
-export const useSummaries = () => {
+export const useSummaries = (onSummaryEnd?: () => void | Promise<void>) => {
   const { user } = useUser();
 
   const [summaries, setSummaries] = useState<Summary[] | null>();
@@ -47,7 +47,11 @@ export const useSummaries = () => {
       ]);
 
       if (response) {
-        return addNewSummary(user.id, response);
+        await addNewSummary(user.id, response);
+
+        await fetchSummaries();
+
+        onSummaryEnd?.();
       }
     } finally {
       setIsAnalyzing(false);

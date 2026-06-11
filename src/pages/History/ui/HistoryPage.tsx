@@ -23,13 +23,14 @@ export const HistoryPage = () => {
     spreads,
     isLoading: areSpreadsLoading,
     unsummarizedSpreads,
+    fetchSpreads,
   } = useSpreads();
   const {
     summaries,
     addSummary,
     isLoading: areSummariesLoading,
     isAnalyzing,
-  } = useSummaries();
+  } = useSummaries(fetchSpreads);
 
   const navigate = useNavigate();
 
@@ -64,9 +65,7 @@ export const HistoryPage = () => {
 
   const getSummaryTooltipContent = () => {
     if (Number(unsummarizedSpreads?.length) < MIN_SPREADS_FOR_SUMMARY) {
-      return i18n(
-        'Need at least 2 spreads, that are not summarized',
-      );
+      return i18n('Need at least 2 spreads, that are not summarized');
     }
 
     return getExpiredMessage();

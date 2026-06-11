@@ -51,5 +51,6 @@ export const useSpreads = () => {
     spreads,
     unsummarizedSpreads,
     todaysSpreadsCount,
+    fetchSpreads,
   };
 };
