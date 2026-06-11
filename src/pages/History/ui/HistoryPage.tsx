@@ -64,7 +64,14 @@ export const HistoryPage = () => {
   };
 
   const getSummaryTooltipContent = () => {
-    if (Number(unsummarizedSpreads?.length) < MIN_SPREADS_FOR_SUMMARY) {
+    if (
+      Number(spreads?.length) >= MIN_SPREADS_FOR_SUMMARY &&
+      Number(unsummarizedSpreads?.length) < MIN_SPREADS_FOR_SUMMARY
+    ) {
+      return i18n(
+        'Spreads have been summarized. Need at least 2 spreads, that are not summarized',
+      );
+    } else if (Number(unsummarizedSpreads?.length) < MIN_SPREADS_FOR_SUMMARY) {
       return i18n('Need at least 2 spreads, that are not summarized');
     }
 
