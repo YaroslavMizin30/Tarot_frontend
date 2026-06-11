@@ -126,6 +126,7 @@
   font-size: 18px;
   font-weight: 500;
   margin-bottom: 16px;
+  z-index: 1000;
 }
 
 .empty-state-subtitle {
