@@ -110,6 +110,8 @@ export const NatalChart = (props: NatalChartProps) => {
 
     if (vh < 560) return 160;
 
+    if (vh < 745) return 200;
+
     return isEditing ? 250 : 350;
   }, [viewportHeight, isEditing]);
 
@@ -359,7 +361,7 @@ export const NatalChart = (props: NatalChartProps) => {
       </section>
 
       <section
-        className={`${styles.section} ${styles.chartContainer} ${isEditing ? styles.chartContainerEdit : ''}`}
+        className={`${styles.section} ${styles.chartContainer} ${isEditing ? styles.chartContainerEdit : ''} custom-scrollbar`}
       >
         {!isEditing && (
           <TextContainer

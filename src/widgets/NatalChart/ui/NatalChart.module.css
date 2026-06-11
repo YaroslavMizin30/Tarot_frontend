@@ -56,6 +56,7 @@
   flex-direction: column;
   margin-top: 10px;
   overflow: hidden;
+  overflow-y: auto;
 }
 
 /* In edit mode the chart description + buttons are pinned at the bottom */
@@ -277,4 +278,7 @@
   .chart {
     padding: 6px;
   }
+}
+
+@media (max-height: 745px) {
 }
