@@ -17,7 +17,8 @@ import styles from './DailyCard.module.css';
 export const DailyCard = () => {
   const { i18n, addTranslations, locale } = useLocales();
 
-  const { isLoading, updateUserActivity, sign, id, isAvailable } = useDaily();
+  const { isLoading, updateUserActivity, sign, id, isAvailable, error } =
+    useDaily();
 
   const handleInterpretationsFinish = () => {
     updateUserActivity();
@@ -29,6 +30,14 @@ export const DailyCard = () => {
 
   if (isLoading) {
     return <Spinner size={'l'} />;
+  }
+
+  if (error) {
+    return (
+      <div className={styles.error}>
+        {i18n(error)} <Button>{i18n('Try again')}</Button>
+      </div>
+    );
   }
 
   if (!isAvailable) {

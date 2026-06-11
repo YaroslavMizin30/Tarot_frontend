@@ -8,7 +8,8 @@ import { isToday } from '@/shared/utils/isToday';
 export const useDaily = () => {
   const { user } = useUser();
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [isAvailable, setIsAvailable] = useState(true);
 
   const checkDaily = async () => {
@@ -17,8 +18,6 @@ export const useDaily = () => {
     }
 
     try {
-      setIsLoading(true);
-
       const activity = await getActivity(user.id);
 
       if (activity) {
@@ -28,6 +27,8 @@ export const useDaily = () => {
           setIsAvailable(false);
         }
       }
+    } catch {
+      setError('Error loading data. Please try again');
     } finally {
       setIsLoading(false);
     }
@@ -51,5 +52,6 @@ export const useDaily = () => {
     isLoading,
     updateUserActivity,
     id: user?.id,
+    error,
   };
 };

@@ -12,6 +12,11 @@ const TRANSLATIONS_RU = {
   'Your subscription has expired 😔. Available via subscription':
     'Ваша подписка истекла 😔. Доступно по подписке',
   'Available via subscription': 'Доступно по подписке',
+  'Try again': 'Попробовать снова',
+  'Error during request, please try again':
+    'Ошибка при запросе. Пожалуйста, попробуйте снова',
+  'Error loading data. Please try again':
+    'Ошибка при загрузке данных. Пожалуйста, попробуйте снова',
 };
 
 export default TRANSLATIONS_RU;

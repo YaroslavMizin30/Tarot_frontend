@@ -10,3 +10,7 @@
 .link {
   margin-top: 20px;
 }
+
+.error > button {
+  margin-top: 20px;
+}

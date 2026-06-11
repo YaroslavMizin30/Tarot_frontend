@@ -12,6 +12,11 @@ const TRANSLATIONS_EN = {
   'Your subscription has expired 😔. Available via subscription':
     'Your subscription has expired 😔. Available via subscription',
   'Available via subscription': 'Available via subscription',
+  'Try again': 'Try again',
+  'Error during request, please try again':
+    'Error during request, please try again',
+  'Error loading data. Please try again':
+    'Error loading data. Please try again',
 };
 
 export default TRANSLATIONS_EN;
