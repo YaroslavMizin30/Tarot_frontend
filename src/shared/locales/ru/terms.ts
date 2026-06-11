@@ -47,10 +47,10 @@ export const TRANSLATIONS_RU = {
     'Приложение предлагает три уровня доступа:',
   '- Free (trial): basic AI features, limited number of spreads;':
     '- Бесплатный (пробный): базовый функционал ИИ, ограниченное количество раскладов;',
-  '- Standard (120 rubles or 75 telegram stars per 30 days): daily spreads, predictions, access to preset Tarot layouts;':
-    '- Стандартный (120 руб. или 75 телеграм звезд за 30 дней): ежедневные расклады, предсказания, доступ к готовым раскладам Таро;',
-  '- Extended (200 rubles or 120 telegram stars per 30 days): all features, analysis of series of spreads, extended library of questions and topics.':
-    '- Расширенный (200 руб. или 120 телеграм звезд за 30 дней): все функции, анализ серии раскладов, доступ к расширенной библиотеке вопросов и тем.',
+  '- Standard (140 rubles or 90 telegram stars per 30 days): daily spreads, predictions, access to preset Tarot layouts;':
+    '- Стандартный (140 руб. или 90 телеграм звезд за 30 дней): ежедневные расклады, предсказания, доступ к готовым раскладам Таро;',
+  '- Extended (220 rubles or 130 telegram stars per 30 days): all features, analysis of series of spreads, extended library of questions and topics.':
+    '- Расширенный (220 руб. или 130 телеграм звезд за 30 дней): все функции, анализ серии раскладов, доступ к расширенной библиотеке вопросов и тем.',
   'All payments are final and non-refundable, except as provided by law.':
     'Все платежи являются окончательными и не подлежат возврату, за исключением случаев, установленных законодательством.',
   '8. Currency and Payment': '8. Валюта и оплата',

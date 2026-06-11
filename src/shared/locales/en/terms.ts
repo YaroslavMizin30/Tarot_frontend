@@ -46,10 +46,10 @@ export const TRANSLATIONS_EN = {
   'The App offers three access levels:': 'The App offers three access levels:',
   '- Free (trial): basic AI features, limited number of spreads;':
     '- Free (trial): basic AI features, limited number of spreads;',
-  '- Standard (120 rubles or 75 telegram stars per 30 days): daily spreads, predictions, access to preset Tarot layouts;':
-    '- Standard (120 rubles or 75 telegram stars per 30 days): daily spreads, predictions, access to preset Tarot layouts;',
-  '- Extended (200 rubles or 120 telegram stars per 30 days): all features, analysis of series of spreads, extended library of questions and topics.':
-    '- Extended (200 rubles or 120 telegram stars per 30 days): all features, analysis of series of spreads, extended library of questions and topics.',
+  '- Standard (140 rubles or 90 telegram stars per 30 days): daily spreads, predictions, access to preset Tarot layouts;':
+    '- Standard (140 rubles or 90 telegram stars per 30 days): daily spreads, predictions, access to preset Tarot layouts;',
+  '- Extended (220 rubles or 130 telegram stars per 30 days): all features, analysis of series of spreads, extended library of questions and topics.':
+    '- Extended (220 rubles or 130 telegram stars per 30 days): all features, analysis of series of spreads, extended library of questions and topics.',
   'All payments are final and non-refundable, except as provided by law.':
     'All payments are final and non-refundable, except as provided by law.',
   '8. Currency and Payment': '8. Currency and Payment',
