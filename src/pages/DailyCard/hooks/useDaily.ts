@@ -51,6 +51,7 @@ export const useDaily = () => {
     sign: user?.sign,
     isLoading,
     updateUserActivity,
+    checkDaily,
     id: user?.id,
     error,
   };

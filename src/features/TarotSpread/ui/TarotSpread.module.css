@@ -105,18 +105,6 @@
   margin-top: 20px;
 }
 
-.error {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  color: var(--border-inversed);
-}
-
-.error > button {
-  margin-top: 20px;
-}
-
 
 @keyframes fadeIn {
   0% {

@@ -6,6 +6,7 @@ import Button from '@/shared/ui/Button';
 import Modal from '@/shared/ui/Modal';
 import useLocales from '@/shared/hooks/useLocales';
 import RatingInput from '@/shared/ui/RatingInput';
+import Error from '@/shared/ui/Error';
 
 import TarotCard from '@/entities/TarotCard';
 import { updateSpread } from '@/entities/Spread';
@@ -99,13 +100,7 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
   }, [cards.length]);
 
   if (error) {
-    return (
-      <div className={styles.error}>
-        <span>{error}</span>
-
-        <Button onClick={handleRetryButtonClick}>{i18n('Try again')}</Button>
-      </div>
-    );
+    return <Error error={error} onRetryButtonClick={handleRetryButtonClick} />;
   }
 
   if (step === 'interpretation') {

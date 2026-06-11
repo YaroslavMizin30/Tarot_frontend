@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router';
-import Button from '@/shared/ui/Button';
 
 import TarotSpread from '@/features/TarotSpread';
 
@@ -9,6 +8,8 @@ import TRANSLATIONS_EN from '@/shared/locales/en/daily';
 import TRANSLATIONS_RU from '@/shared/locales/ru/daily';
 import Spinner from '@/shared/ui/Spinner';
 import Zodiac from '@/shared/ui/Zodiac';
+import Error from '@/shared/ui/Error';
+import Button from '@/shared/ui/Button';
 
 import { useDaily } from '../hooks/useDaily';
 
@@ -17,11 +18,22 @@ import styles from './DailyCard.module.css';
 export const DailyCard = () => {
   const { i18n, addTranslations, locale } = useLocales();
 
-  const { isLoading, updateUserActivity, sign, id, isAvailable, error } =
-    useDaily();
+  const {
+    isLoading,
+    updateUserActivity,
+    sign,
+    id,
+    isAvailable,
+    error,
+    checkDaily,
+  } = useDaily();
 
   const handleInterpretationsFinish = () => {
     updateUserActivity();
+  };
+
+  const handleRetryButtonClick = () => {
+    checkDaily();
   };
 
   useEffect(() => {
@@ -34,9 +46,7 @@ export const DailyCard = () => {
 
   if (error) {
     return (
-      <div className={styles.error}>
-        {i18n(error)} <Button>{i18n('Try again')}</Button>
-      </div>
+      <Error error={i18n(error)} onRetryButtonClick={handleRetryButtonClick} />
     );
   }
 
