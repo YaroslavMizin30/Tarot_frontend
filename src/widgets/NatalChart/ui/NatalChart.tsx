@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, type ChangeEvent } from 'react';
 
 import { useUser } from '@/entities/User';
 
@@ -80,6 +80,8 @@ export const NatalChart = (props: NatalChartProps) => {
     };
   });
 
+  const [agreed, setAgreed] = useState(false);
+
   const [error, setError] = useState('');
 
   const [nextAvailableAt, setNextAvailableAt] = useState<string | null>(null);
@@ -145,8 +147,14 @@ export const NatalChart = (props: NatalChartProps) => {
     setEditValues((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleTimeCheckboxClick = () => {
-    handleFieldChange('time', '');
+  const handleTimeCheckboxClick = (event: ChangeEvent<HTMLInputElement>) => {
+    const isChecked = event.currentTarget.checked;
+
+    setAgreed(isChecked);
+
+    if (isChecked) {
+      handleFieldChange('time', '');
+    }
   };
 
   const handleSave = async () => {
@@ -305,8 +313,9 @@ export const NatalChart = (props: NatalChartProps) => {
 
                   <Input
                     type={'checkbox'}
-                    checked={!editValues.time}
+                    checked={agreed}
                     onChange={handleTimeCheckboxClick}
+                    style={{marginLeft: '5px'}}
                   />
                 </div>
               </div>
