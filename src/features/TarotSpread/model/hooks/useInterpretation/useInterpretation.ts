@@ -15,6 +15,7 @@ export const useInterpretation = (options: { onFinish?: () => void }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [interpretation, setInterpretation] = useState<string[] | null>(null);
   const [spreadId, setSpreadId] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const { user, refetchUser } = useUser();
 
@@ -35,6 +36,7 @@ export const useInterpretation = (options: { onFinish?: () => void }) => {
 
     try {
       setIsLoading(true);
+      setError(null);
 
       const interpretation = await requestAi([
         { role: 'user', content: userMessage },
@@ -72,6 +74,10 @@ export const useInterpretation = (options: { onFinish?: () => void }) => {
           tarotSpreadsCount: tarotSpreadsCount + 1,
         });
       }
+    } catch {
+      setError(i18n('Error during request, please try again'));
+
+      setInterpretation(null);
     } finally {
       setIsLoading(false);
     }
@@ -82,5 +88,6 @@ export const useInterpretation = (options: { onFinish?: () => void }) => {
     getInterpretation,
     interpretation,
     spreadId,
+    error,
   };
 };

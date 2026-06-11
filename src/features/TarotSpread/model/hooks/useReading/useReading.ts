@@ -37,11 +37,18 @@ export const useReading = (): UseReadingResult => {
     }
   };
 
+  const resetSpread = () => {
+    setIsFinished(false);
+
+    setActiveCard(1);
+  };
+
   return {
     cards,
     isFinished,
     prepareCards,
     activeCard,
     changeActiveCard,
+    resetSpread,
   };
 };

@@ -27,9 +27,15 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
 
   const [step, setStep] = useState<'spread' | 'interpretation'>('spread');
 
-  const { cards, activeCard, isFinished, prepareCards, changeActiveCard } =
-    useReading();
-  const { getInterpretation, interpretation, isLoading, spreadId } =
+  const {
+    cards,
+    activeCard,
+    isFinished,
+    prepareCards,
+    changeActiveCard,
+    resetSpread,
+  } = useReading();
+  const { getInterpretation, interpretation, isLoading, spreadId, error } =
     useInterpretation({ onFinish: onInterpretationFinish });
 
   const { i18n } = useLocales();
@@ -66,6 +72,18 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
     proceed?.();
   };
 
+  const handleRetryButtonClick = () => {
+    setStep('spread');
+
+    prepareCards(cardsCount);
+
+    resetSpread();
+
+    if (cards.length) {
+      getInterpretation(cards, spread);
+    }
+  };
+
   useEffect(() => {
     prepareCards(cardsCount);
 
@@ -79,6 +97,16 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
       getInterpretation(cards, spread);
     }
   }, [cards.length]);
+
+  if (error) {
+    return (
+      <div className={styles.error}>
+        <span>{error}</span>
+
+        <Button onClick={handleRetryButtonClick}>{i18n('Try again')}</Button>
+      </div>
+    );
+  }
 
   if (step === 'interpretation') {
     return isLoading ? (

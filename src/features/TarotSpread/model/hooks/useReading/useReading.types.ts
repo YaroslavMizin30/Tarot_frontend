@@ -1,4 +1,4 @@
-import type { Card } from "@/entities/TarotCard";
+import type { Card } from '@/entities/TarotCard';
 
 export interface UseReadingResult {
   /**
@@ -21,4 +21,8 @@ export interface UseReadingResult {
    * Flag if the reading is finished
    */
   isFinished: boolean;
+  /**
+   * Reset spread to try again
+   */
+  resetSpread: () => void;
 }
