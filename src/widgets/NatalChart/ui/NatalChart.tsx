@@ -12,6 +12,7 @@ import useLocales from '@/shared/hooks/useLocales';
 import { useViewportHeight } from '@/shared/hooks/useViewportHeight';
 import TRANSLATIONS_EN from '@/shared/locales/en/natalchart';
 import TRANSLATIONS_RU from '@/shared/locales/ru/natalchart';
+import { compareObjects } from '@/shared/utils/compareObjects';
 
 import { COUNTRIES } from '@/pages/Registry/config/countries';
 import { YEARS, MONTHS, getDaysInMonth } from '@/pages/Registry/config/date';
@@ -65,7 +66,7 @@ export const NatalChart = (props: NatalChartProps) => {
 
   const [isEditing, setIsEditing] = useState(false);
 
-  const [editValues, setEditValues] = useState<NatalChartEditValues>(() => {
+  const initialValues = (() => {
     const { day, month, year } = parseBirthDate(user.birthDate);
     const { country, city } = parseBirthPlace(user.birthPlace);
 
@@ -78,7 +79,12 @@ export const NatalChart = (props: NatalChartProps) => {
       year,
       time: user.birthTime ?? '',
     };
-  });
+  })();
+
+  const [editValues, setEditValues] =
+    useState<NatalChartEditValues>(initialValues);
+
+  const { isEqual } = compareObjects(initialValues, editValues);
 
   const [agreed, setAgreed] = useState(false);
 
@@ -315,7 +321,7 @@ export const NatalChart = (props: NatalChartProps) => {
                     type={'checkbox'}
                     checked={agreed}
                     onChange={handleTimeCheckboxClick}
-                    style={{marginLeft: '5px'}}
+                    style={{ marginLeft: '5px' }}
                   />
                 </div>
               </div>
@@ -379,7 +385,7 @@ export const NatalChart = (props: NatalChartProps) => {
               <Button
                 className={styles.actionButton}
                 onClick={handleSave}
-                disabled={isUpdating}
+                disabled={isUpdating || isEqual}
               >
                 {i18n('Save')}
               </Button>
