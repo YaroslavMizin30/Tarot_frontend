@@ -7,7 +7,6 @@
   max-height: calc(100dvh - 40px);
   height: fit-content;
   padding: 10px;
-  overflow: hidden;
 
   color: var(--text-primary);
 
@@ -43,7 +42,6 @@
 .infoEdit {
   flex: 1 1 auto;
   min-height: 0;
-  overflow-y: auto;
   padding-bottom: 8px;
   border-bottom: 1px solid var(--border-primary);
 }
