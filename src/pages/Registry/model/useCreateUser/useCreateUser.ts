@@ -46,13 +46,15 @@ export const useCreateUser = () => {
         { role: 'user', content: i18n('Create natal chart for me') },
       ]);
 
+      const { id } = tgUser ?? {};
+
       await window.supabase.auth.signUp({
-        email: `${tgUser.id}@telegram.com`,
-        password: `${tgUser.id}@telegram.com`,
+        email: `${id}@telegram.com`,
+        password: `${id}`,
       });
 
       await insertRaw('users', {
-        id: tgUser.id,
+        id,
         user_name: name,
         birth_date: date,
         birth_place: place,
@@ -61,17 +63,9 @@ export const useCreateUser = () => {
         sign: i18n(zodiac),
       });
 
-      insertRaw('activity', { user_id: tgUser.id });
-
-      await sendAnalytics(tgUser.id, {
-        registered: true,
-        lastActionAt: new Date().toISOString(),
-        tarotSpreadsCount: 0,
-      });
-
       refetchUser();
 
-      sendMessage({
+      await sendMessage({
         text: i18n(
           '✅ Your natal chart is ready! You can find it in settings > profile.\n\n🔮 Continue using TAROTOPIA for:\n• Daily predictions\n• Tarot readings for your questions\n• Tracking favorable periods\n\nUse the buttons in the menu to get started! ✨',
         ),
@@ -89,6 +83,14 @@ export const useCreateUser = () => {
             ],
           ],
         },
+      });
+
+      insertRaw('activity', { user_id: tgUser.id });
+
+      sendAnalytics(id, {
+        registered: true,
+        lastActionAt: new Date().toISOString(),
+        tarotSpreadsCount: 0,
       });
     } catch (e) {
       setError(e);

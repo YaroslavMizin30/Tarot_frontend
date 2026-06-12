@@ -408,7 +408,6 @@ export const NatalChart = (props: NatalChartProps) => {
             {error}
             {nextAvailableAt && (
               <>
-                {' '}
                 {i18n('Next available update')}:{' '}
                 {new Date(nextAvailableAt).toLocaleDateString(locale, {
                   year: 'numeric',

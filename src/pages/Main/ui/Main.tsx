@@ -28,12 +28,6 @@ export const MainPage = () => {
   const { isAvailableForCurrentTariff, getExpiredMessage } = useSubscription();
 
   useEffect(() => {
-    if (!user) {
-      navigate('/reg');
-    }
-  }, []);
-
-  useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
   }, [locale]);
 

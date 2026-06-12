@@ -2,7 +2,7 @@ export const getTelegramUser = () => {
   const { DEV } = import.meta.env;
 
   if (DEV) {
-    return { id: import.meta.env.VITE_ADMIN_ID };
+    return { id: import.meta.env.VITE_ADMIN_ID as number };
   }
 
   if (!window.Telegram) {
