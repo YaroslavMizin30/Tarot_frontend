@@ -60,7 +60,7 @@ export const HistoryPage = () => {
       return;
     }
 
-    await addSummary(spreads);
+    await addSummary(unsummarizedSpreads ?? spreads);
   };
 
   const getSummaryTooltipContent = () => {
