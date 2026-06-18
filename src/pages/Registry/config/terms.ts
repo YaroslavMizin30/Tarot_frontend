@@ -1,3 +1,5 @@
+import { TARIFFS } from '@/shared/const/tariffs';
+
 export const TERMS_OF_SERVICE_LINES = [
   'This Terms of Service agreement (the “Agreement”) governs the use of the Telegram application TAROTOPIA, located at https://t.me/tarotopia_bot (the “App”), as well as the processing of personal data. By using the App, you automatically agree to the terms of this Agreement.',
   '',
@@ -34,8 +36,8 @@ export const TERMS_OF_SERVICE_LINES = [
   '7. Access Levels and Subscription',
   'The App offers three access levels:',
   '- Free (trial): basic AI features, limited number of spreads;',
-  '- Standard (140 rubles or 90 telegram stars per 30 days): daily spreads, predictions, access to preset Tarot layouts;',
-  '- Extended (220 rubles or 130 telegram stars per 30 days): all features, analysis of series of spreads, extended library of questions and topics.',
+  `- Standard (${TARIFFS.standard.rubles} rubles or ${TARIFFS.standard.stars} telegram stars per 30 days): ${TARIFFS.standard.spreads} spreads a day, predictions, access to preset Tarot layouts;`,
+  `- Extended (${TARIFFS.extended.rubles} rubles or ${TARIFFS.extended.stars} telegram stars per 30 days):  ${TARIFFS.extended.spreads} spreads a day, analysis of series of spreads, extended library of questions and topics.`,
   'All payments are final and non-refundable, except as provided by law.',
   '',
   '8. Currency and Payment',

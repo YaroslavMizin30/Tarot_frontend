@@ -1,3 +1,5 @@
+import { TARIFFS } from "@/shared/const/tariffs"
+
 export const TRANSLATIONS_EN = {
   'Terms of Service and Privacy Policy for the TAROTOPIA App':
     'Terms of Service and Privacy Policy for the TAROTOPIA App',
@@ -46,10 +48,10 @@ export const TRANSLATIONS_EN = {
   'The App offers three access levels:': 'The App offers three access levels:',
   '- Free (trial): basic AI features, limited number of spreads;':
     '- Free (trial): basic AI features, limited number of spreads;',
-  '- Standard (140 rubles or 90 telegram stars per 30 days): daily spreads, predictions, access to preset Tarot layouts;':
-    '- Standard (140 rubles or 90 telegram stars per 30 days): daily spreads, predictions, access to preset Tarot layouts;',
-  '- Extended (220 rubles or 130 telegram stars per 30 days): all features, analysis of series of spreads, extended library of questions and topics.':
-    '- Extended (220 rubles or 130 telegram stars per 30 days): all features, analysis of series of spreads, extended library of questions and topics.',
+  [`- Standard (${TARIFFS.standard.rubles} rubles or ${TARIFFS.standard.stars} telegram stars per 30 days): ${TARIFFS.standard.spreads} spreads a day, predictions, access to preset Tarot layouts;`]:
+    `- Standard (${TARIFFS.standard.rubles} rubles or ${TARIFFS.standard.stars} telegram stars per 30 days): ${TARIFFS.standard.spreads} spreads a day, predictions, access to preset Tarot layouts;`,
+  [`- Extended (${TARIFFS.extended.rubles} rubles or ${TARIFFS.extended.stars} telegram stars per 30 days):  ${TARIFFS.extended.spreads} spreads a day, analysis of series of spreads, extended library of questions and topics.`]:
+    `- Extended (${TARIFFS.extended.rubles} rubles or ${TARIFFS.extended.stars} telegram stars per 30 days):  ${TARIFFS.extended.spreads} spreads a day, analysis of series of spreads, extended library of questions and topics.`,
   'All payments are final and non-refundable, except as provided by law.':
     'All payments are final and non-refundable, except as provided by law.',
   '8. Currency and Payment': '8. Currency and Payment',

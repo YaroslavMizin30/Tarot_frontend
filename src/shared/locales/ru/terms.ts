@@ -1,3 +1,5 @@
+import { TARIFFS } from "@/shared/const/tariffs";
+
 export const TRANSLATIONS_RU = {
   'Terms of Service and Privacy Policy for the TAROTOPIA App':
     'Пользовательское соглашение и политика конфиденциальности приложения TAROTOPIA',
@@ -47,10 +49,10 @@ export const TRANSLATIONS_RU = {
     'Приложение предлагает три уровня доступа:',
   '- Free (trial): basic AI features, limited number of spreads;':
     '- Бесплатный (пробный): базовый функционал ИИ, ограниченное количество раскладов;',
-  '- Standard (140 rubles or 90 telegram stars per 30 days): daily spreads, predictions, access to preset Tarot layouts;':
-    '- Стандартный (140 руб. или 90 телеграм звезд за 30 дней): ежедневные расклады, предсказания, доступ к готовым раскладам Таро;',
-  '- Extended (220 rubles or 130 telegram stars per 30 days): all features, analysis of series of spreads, extended library of questions and topics.':
-    '- Расширенный (220 руб. или 130 телеграм звезд за 30 дней): все функции, анализ серии раскладов, доступ к расширенной библиотеке вопросов и тем.',
+  [`- Standard (${TARIFFS.standard.rubles} rubles or ${TARIFFS.standard.stars} telegram stars per 30 days): ${TARIFFS.standard.spreads} spreads a day, predictions, access to preset Tarot layouts;`]:
+    `- Стандартный (${TARIFFS.standard.rubles} руб. или ${TARIFFS.standard.stars} телеграм звезд за 30 дней): ${TARIFFS.standard.spreads} расклада в день, предсказания, доступ к готовым раскладам Таро;`,
+  [`- Extended (${TARIFFS.extended.rubles} rubles or ${TARIFFS.extended.stars} telegram stars per 30 days):  ${TARIFFS.extended.spreads} spreads a day, analysis of series of spreads, extended library of questions and topics.`]:
+    `- Расширенный (${TARIFFS.extended.rubles} руб. или ${TARIFFS.extended.stars} телеграм звезд за 30 дней): ${TARIFFS.extended.spreads} раскладов в день, анализ серии раскладов, доступ к расширенной библиотеке вопросов и тем.`,
   'All payments are final and non-refundable, except as provided by law.':
     'Все платежи являются окончательными и не подлежат возврату, за исключением случаев, установленных законодательством.',
   '8. Currency and Payment': '8. Валюта и оплата',
