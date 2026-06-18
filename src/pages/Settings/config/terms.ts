@@ -1,7 +1,11 @@
-import { TARIFFS } from "@/shared/const/tariffs";
+import { TARIFFS } from '@/shared/const/tariffs';
+import { LAST_PUBLICATION_DATE } from '@/shared/const/publication';
 
 export const TERMS_OF_SERVICE_LINES = [
   'This Terms of Service agreement (the “Agreement”) governs the use of the Telegram application TAROTOPIA, located at https://t.me/tarotopia_bot (the “App”), as well as the processing of personal data. By using the App, you automatically agree to the terms of this Agreement.',
+  '',
+  'Publication date:',
+  LAST_PUBLICATION_DATE,
   '',
   '1. Service Description',
   'TAROTOPIA is an interactive entertainment app providing tarot and astrology services using artificial intelligence (AI):',

@@ -1,10 +1,11 @@
-import { TARIFFS } from "@/shared/const/tariffs";
+import { TARIFFS } from '@/shared/const/tariffs';
 
 export const TRANSLATIONS_RU = {
   'Terms of Service and Privacy Policy for the TAROTOPIA App':
     'Пользовательское соглашение и политика конфиденциальности приложения TAROTOPIA',
   'This Terms of Service agreement (the “Agreement”) governs the use of the Telegram application TAROTOPIA, located at https://t.me/tarotopia_bot (the “App”), as well as the processing of personal data. By using the App, you automatically agree to the terms of this Agreement.':
     'Настоящее Пользовательское соглашение (далее — «Соглашение») регулирует использование Telegram-приложения TAROTOPIA, размещенного по адресу: https://t.me/tarotopia_bot (далее — «Приложение»), а также обработку персональных данных пользователей. Используя Приложение, вы автоматически соглашаетесь с условиями настоящего Соглашения.',
+  'Publication date:': 'Дата публикации:',
   '1. Service Description': '1. Описание сервиса',
   'TAROTOPIA is an interactive entertainment app providing tarot and astrology services using artificial intelligence (AI):':
     'TAROTOPIA — это интерактивное развлекательное приложение, которое предоставляет тарологические и астрологические услуги с использованием технологий искусственного интеллекта (ИИ):',
@@ -49,10 +50,8 @@ export const TRANSLATIONS_RU = {
     'Приложение предлагает три уровня доступа:',
   '- Free (trial): basic AI features, limited number of spreads;':
     '- Бесплатный (пробный): базовый функционал ИИ, ограниченное количество раскладов;',
-  [`- Standard (${TARIFFS.standard.rubles} rubles or ${TARIFFS.standard.stars} telegram stars per 30 days): ${TARIFFS.standard.spreads} spreads a day, predictions, access to preset Tarot layouts;`]:
-    `- Стандартный (${TARIFFS.standard.rubles} руб. или ${TARIFFS.standard.stars} телеграм звезд за 30 дней): ${TARIFFS.standard.spreads} расклада в день, предсказания, доступ к готовым раскладам Таро;`,
-  [`- Extended (${TARIFFS.extended.rubles} rubles or ${TARIFFS.extended.stars} telegram stars per 30 days):  ${TARIFFS.extended.spreads} spreads a day, analysis of series of spreads, extended library of questions and topics.`]:
-    `- Расширенный (${TARIFFS.extended.rubles} руб. или ${TARIFFS.extended.stars} телеграм звезд за 30 дней): ${TARIFFS.extended.spreads} раскладов в день, анализ серии раскладов, доступ к расширенной библиотеке вопросов и тем.`,
+  [`- Standard (${TARIFFS.standard.rubles} rubles or ${TARIFFS.standard.stars} telegram stars per 30 days): ${TARIFFS.standard.spreads} spreads a day, predictions, access to preset Tarot layouts;`]: `- Стандартный (${TARIFFS.standard.rubles} руб. или ${TARIFFS.standard.stars} телеграм звезд за 30 дней): ${TARIFFS.standard.spreads} расклада в день, предсказания, доступ к готовым раскладам Таро;`,
+  [`- Extended (${TARIFFS.extended.rubles} rubles or ${TARIFFS.extended.stars} telegram stars per 30 days):  ${TARIFFS.extended.spreads} spreads a day, analysis of series of spreads, extended library of questions and topics.`]: `- Расширенный (${TARIFFS.extended.rubles} руб. или ${TARIFFS.extended.stars} телеграм звезд за 30 дней): ${TARIFFS.extended.spreads} раскладов в день, анализ серии раскладов, доступ к расширенной библиотеке вопросов и тем.`,
   'All payments are final and non-refundable, except as provided by law.':
     'Все платежи являются окончательными и не подлежат возврату, за исключением случаев, установленных законодательством.',
   '8. Currency and Payment': '8. Валюта и оплата',

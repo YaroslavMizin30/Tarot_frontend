@@ -1,0 +1,1 @@
+export const LAST_PUBLICATION_DATE = '18.06.2026';

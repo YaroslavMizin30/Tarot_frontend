@@ -1,10 +1,11 @@
-import { TARIFFS } from "@/shared/const/tariffs"
+import { TARIFFS } from '@/shared/const/tariffs';
 
 export const TRANSLATIONS_EN = {
   'Terms of Service and Privacy Policy for the TAROTOPIA App':
     'Terms of Service and Privacy Policy for the TAROTOPIA App',
   'This Terms of Service agreement (the “Agreement”) governs the use of the Telegram application TAROTOPIA, located at https://t.me/tarotopia_bot (the “App”), as well as the processing of personal data. By using the App, you automatically agree to the terms of this Agreement.':
     'This Terms of Service agreement (the “Agreement”) governs the use of the Telegram application TAROTOPIA, located at https://t.me/tarotopia_bot (the “App”), as well as the processing of personal data. By using the App, you automatically agree to the terms of this Agreement.',
+  'Publication date:': 'Publication date:',
   '1. Service Description': '1. Service Description',
   'TAROTOPIA is an interactive entertainment app providing tarot and astrology services using artificial intelligence (AI):':
     'TAROTOPIA is an interactive entertainment app providing tarot and astrology services using artificial intelligence (AI):',
@@ -48,10 +49,8 @@ export const TRANSLATIONS_EN = {
   'The App offers three access levels:': 'The App offers three access levels:',
   '- Free (trial): basic AI features, limited number of spreads;':
     '- Free (trial): basic AI features, limited number of spreads;',
-  [`- Standard (${TARIFFS.standard.rubles} rubles or ${TARIFFS.standard.stars} telegram stars per 30 days): ${TARIFFS.standard.spreads} spreads a day, predictions, access to preset Tarot layouts;`]:
-    `- Standard (${TARIFFS.standard.rubles} rubles or ${TARIFFS.standard.stars} telegram stars per 30 days): ${TARIFFS.standard.spreads} spreads a day, predictions, access to preset Tarot layouts;`,
-  [`- Extended (${TARIFFS.extended.rubles} rubles or ${TARIFFS.extended.stars} telegram stars per 30 days):  ${TARIFFS.extended.spreads} spreads a day, analysis of series of spreads, extended library of questions and topics.`]:
-    `- Extended (${TARIFFS.extended.rubles} rubles or ${TARIFFS.extended.stars} telegram stars per 30 days):  ${TARIFFS.extended.spreads} spreads a day, analysis of series of spreads, extended library of questions and topics.`,
+  [`- Standard (${TARIFFS.standard.rubles} rubles or ${TARIFFS.standard.stars} telegram stars per 30 days): ${TARIFFS.standard.spreads} spreads a day, predictions, access to preset Tarot layouts;`]: `- Standard (${TARIFFS.standard.rubles} rubles or ${TARIFFS.standard.stars} telegram stars per 30 days): ${TARIFFS.standard.spreads} spreads a day, predictions, access to preset Tarot layouts;`,
+  [`- Extended (${TARIFFS.extended.rubles} rubles or ${TARIFFS.extended.stars} telegram stars per 30 days):  ${TARIFFS.extended.spreads} spreads a day, analysis of series of spreads, extended library of questions and topics.`]: `- Extended (${TARIFFS.extended.rubles} rubles or ${TARIFFS.extended.stars} telegram stars per 30 days):  ${TARIFFS.extended.spreads} spreads a day, analysis of series of spreads, extended library of questions and topics.`,
   'All payments are final and non-refundable, except as provided by law.':
     'All payments are final and non-refundable, except as provided by law.',
   '8. Currency and Payment': '8. Currency and Payment',
