@@ -63,11 +63,19 @@ const Header = () => {
 
   return (
     <header className={styles.header}>
-      <HomeIcon
-        className={styles.home}
-        onClick={handleHomeClick}
-        styles={{ opacity: user ? 1 : 0 }}
-      />
+      <Tooltip
+        isEnabled={pathname === '/'}
+        position={'right'}
+        style={{ position: 'relative', top: '3px' }}
+        content={i18n('Already here')}
+        tooltipClassName={styles.tooltip}
+      >
+        <HomeIcon
+          className={styles.home}
+          onClick={handleHomeClick}
+          styles={{ opacity: user ? 1 : 0 }}
+        />
+      </Tooltip>
 
       <div className={styles.rightSection}>
         <Theme
