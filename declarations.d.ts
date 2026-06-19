@@ -63,7 +63,14 @@ interface WebApp {
     onClick(callback: () => void): void;
     offClick(callback: () => void): void;
   };
-  MainButton: {
+  SettingsButton: {
+    isVisible: boolean;
+    show(): void;
+    hide(): void;
+    onClick(callback: () => void): void;
+    offClick(callback: () => void): void;
+  };
+  BottomButton: {
     text: string;
     color: string;
     textColor: string;
