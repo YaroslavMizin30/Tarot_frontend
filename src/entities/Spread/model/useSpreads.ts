@@ -5,7 +5,7 @@ import { useUser } from '@/entities/User';
 import { getTodayString } from '@/shared/utils/getTodayString';
 
 export const useSpreads = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [spreads, setSpreads] = useState<Spread[] | null>(null);
 
   const { user } = useUser();
@@ -36,10 +36,12 @@ export const useSpreads = () => {
     return spreads?.filter((spread) => !spread.isSummarized);
   }, [spreads]);
 
-  const todaysSpreadsCount = useMemo(() => {
+  const todaysSpreads = useMemo(() => {
     const today = getTodayString();
 
-    return spreads?.filter((spread) => spread.date === today).length ?? 0;
+    return spreads?.filter((spread) => {
+      return spread.date === today && spread.id !== 'single';
+    });
   }, [spreads]);
 
   useEffect(() => {
@@ -50,7 +52,7 @@ export const useSpreads = () => {
     isLoading,
     spreads,
     unsummarizedSpreads,
-    todaysSpreadsCount,
+    todaysSpreadsCount: todaysSpreads?.length ?? 0,
     fetchSpreads,
   };
 };
