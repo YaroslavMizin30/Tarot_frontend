@@ -41,8 +41,12 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
 
   const { i18n } = useLocales();
 
+  const audio = new Audio('/assets/sfx/flip.mp3');
+
   const handleCardClick = () => {
     changeActiveCard();
+
+    audio.play();
   };
 
   const [rating, setRating] = useState(0);

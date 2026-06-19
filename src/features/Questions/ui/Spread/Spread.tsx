@@ -27,6 +27,8 @@ const Spread: FC<SpreadProps> = (props) => {
 
   const handleSpreadButtonClick = () => {
     setIsReading(true);
+
+    new Audio('/assets/sfx/gong.mp3').play();
   };
 
   const getQuestion = () => {
