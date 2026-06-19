@@ -40,7 +40,7 @@ export const MainPage = () => {
         settings: window.Telegram?.WebApp?.SettingsButton?.isVisible,
       })}
       {JSON.stringify({
-        settings: window.Telegram?.WebApp?.BackButton?.isVisible,
+        expanded: window.Telegram?.WebApp?.isExpanded,
       })}
 
       <Tooltip
