@@ -86,7 +86,7 @@
 }
 
 .themes {
-  top: calc(100% + 5px);
+  top: 100%;
   right: 40px;
 }
 
