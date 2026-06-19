@@ -18,7 +18,3 @@ html {
 body {
   height: 100%;
 }
-
-#root {
-  height: var(--tg-viewport-stable-height, 100vh);
-}
