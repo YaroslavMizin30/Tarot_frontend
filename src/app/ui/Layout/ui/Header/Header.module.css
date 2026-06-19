@@ -6,13 +6,16 @@
   justify-content: space-between;
   align-items: center;
   padding: 8px;
-  padding-top: 40px;
-  height: 80px;
   width: 100%;
 
   color: var(--border-primary);
 
   background-color: var(--background-primary);
+}
+
+.header-mobile {
+  padding-top: 40px;
+  height: 80px;
 }
 
 .settings,
