@@ -6,9 +6,7 @@ import router from '../router';
 import store from '../store';
 
 export function App() {
-  window.Telegram?.WebApp?.setHeaderColor?.('#ffdb88');
-  window.Telegram?.WebApp?.BackButton?.hide();
-  window.Telegram?.WebApp?.MainButton?.hide();
+  window.Telegram?.WebApp?.expand();
 
   return (
     <Provider store={store}>
