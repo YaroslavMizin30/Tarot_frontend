@@ -15,9 +15,9 @@
   max-height: 80%;
   padding: 10px;
 
-  color: var(--border-inversed);
+  color: var(--text-primary);
 
-  border: 1px solid var(--border-inversed);
+  border: 1px solid var(--border-secondary);
   border-radius: 10px;
   overflow-y: auto;
   overflow-x: hidden;
@@ -31,5 +31,5 @@
   margin-bottom: 10px;
   font-size: 20px;
   font-weight: 700;
-  color: var(--border-inversed);
+  color: var(--text-primary);
 }

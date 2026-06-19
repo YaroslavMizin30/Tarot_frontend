@@ -29,7 +29,7 @@
 .criterionLabel {
   flex: 1;
   font-size: 14px;
-  color: var(--text-secondary);
+  color: var(--text-primary);
 }
 
 .feedback {
@@ -43,7 +43,7 @@
 .feedbackLabel {
   margin-bottom: 6px;
   font-size: 14px;
-  color: var(--text-secondary);
+  color: var(--text-primary);
 }
 
 .textarea {
@@ -52,7 +52,7 @@
   resize: none;
   font-family: inherit;
   background: rgba(255, 255, 255, 0.05);
-  color: var(--text-secondary);
+  color: var(--text-primary);
 }
 
 .actions {

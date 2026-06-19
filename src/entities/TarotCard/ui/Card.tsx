@@ -1,4 +1,5 @@
 import { useState, type FC } from 'react';
+import classNames from 'classnames/bind';
 
 import type { TarotCardProps } from './Card.props';
 
@@ -7,6 +8,8 @@ import GlassLoader from '@/shared/ui/GlassLoader';
 import { isShortSingleWord } from '../lib/isShortSingleWord';
 
 import styles from './Card.module.css';
+
+const cx = classNames.bind(styles);
 
 export const TarotCard: FC<TarotCardProps> = (props) => {
   const {
@@ -38,6 +41,10 @@ export const TarotCard: FC<TarotCardProps> = (props) => {
     }
   };
 
+  const theme = document.documentElement.getAttribute('data-theme') as
+    | 'standard'
+    | 'gray';
+
   return (
     <div
       className={`${styles.container} ${canTurnOver ? styles.clickable : ''} ${className} ${isInverted ? styles.inverted : ''}`}
@@ -51,9 +58,17 @@ export const TarotCard: FC<TarotCardProps> = (props) => {
           height: isLoaded ? undefined : '0px',
         }}
       >
-        <div className={styles.back}></div>
+        <div
+          className={cx('back', {
+            ['back-gray']: theme === 'gray',
+          })}
+        />
 
-        <div className={`${styles.front}`}>
+        <div
+          className={cx('front', {
+            ['front-gray']: theme === 'gray',
+          })}
+        >
           <div className={styles['image-wrapper']}>
             <img
               className={`${styles.image} ${isInverted && !isCardReversed ? styles.reversed : ''}`}
@@ -63,7 +78,10 @@ export const TarotCard: FC<TarotCardProps> = (props) => {
           </div>
 
           <div
-            className={`${styles.footer} ${isInverted && !isCardReversed ? styles.reversed : ''}`}
+            className={cx('footer', {
+              reversed: isInverted && !isCardReversed,
+              ['footer-gray']: theme === 'gray',
+            })}
           >
             <h2
               className={`${styles.name} ${isShortSingleWord(localizedName) ? styles.short : ''}`}

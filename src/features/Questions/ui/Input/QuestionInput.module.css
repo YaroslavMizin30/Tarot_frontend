@@ -7,7 +7,7 @@
 }
 
 .title {
-  color: var(--border-inversed);
+  color: var(--text-primary);
   text-align: center;
 }
 

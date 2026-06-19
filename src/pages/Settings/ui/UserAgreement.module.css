@@ -12,8 +12,8 @@
 }
 
 .agreement {
-  color: var(--border-primary);
-  border-color: var(--border-primary);
+  color: var(--text-secondary);
+  border-color: var(--text-secondary);
   background-color: var(--background-primary);
 }
 

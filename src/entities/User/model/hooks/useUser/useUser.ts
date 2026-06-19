@@ -31,7 +31,7 @@ export const useUser= () => {
     }
   };
 
-  const updateUser = async (id: string, data: GetUserResponse) => {
+  const updateUser = async (id: string, data: Partial<GetUserResponse>) => {
     try {
       await updateUserApi(id, data);
 

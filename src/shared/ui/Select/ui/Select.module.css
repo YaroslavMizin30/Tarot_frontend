@@ -45,11 +45,11 @@
 }
 
 .custom-select__value {
-  color: #1f2937;
+  color: var(--text-default) !important;
 }
 
 .custom-select__placeholder {
-  color: #9ca3af;
+  color: #616670;
 }
 
 .custom-select__arrow {
@@ -57,6 +57,7 @@
   font-size: 12px;
   color: #9ca3af;
   transition: transform 0.2s ease;
+  color: var(--text-default) !important;
 }
 
 .custom-select__arrow--rotated {
@@ -106,7 +107,7 @@
   padding: 0;
   max-height: 180px;
   overflow-y: auto;
-    border-bottom-left-radius: 6px;
+  border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
 }
 

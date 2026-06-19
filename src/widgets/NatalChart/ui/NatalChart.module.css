@@ -8,7 +8,7 @@
   height: fit-content;
   padding: 10px;
 
-  color: var(--text-primary);
+  color: var(--text-secondary);
 
   border: 1px solid var(--border-primary);
   background-color: var(--background-primary);
@@ -74,7 +74,7 @@
 }
 
 .section * {
-  color: var(--text-primary);
+  color: var(--text-secondary);
 }
 
 .item {
@@ -132,7 +132,7 @@
 .text {
   flex: 1 1 auto;
   min-height: 0;
-  color: var(--text-primary);
+  color: var(--text-secondary);
 }
 
 .actions {
@@ -156,7 +156,7 @@
   min-height: 200px;
   max-height: calc(100dvh - 40px);
 
-  color: var(--border-inversed);
+  color: var(--text-secondary);
   text-align: center;
 }
 

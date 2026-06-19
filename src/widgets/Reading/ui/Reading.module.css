@@ -7,14 +7,14 @@
   padding: 10px;
 
   text-align: center;
-  border: 1px solid var(--border-inversed);
+  border: 1px solid var(--border-secondary);
   border-radius: 10px;
 
-  color: var(--text-secondary);
+  color: var(--text-primary);
 }
 
 .link {
   margin-top: 20px;
-  color: var(--text-secondary);
+  color: var(--text-primary);
   text-decoration: none;
 }

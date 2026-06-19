@@ -1,12 +1,14 @@
 .input {
   padding: 4px;
 
-  color: var(--border-primary);
+  color: var(--text-secondary);
 
   border-radius: 6px;
   border: 1px solid var(--border-primary);
   border: none;
   outline: none;
+
+  color: var(--text-default) !important;
 }
 
 .input:focus {

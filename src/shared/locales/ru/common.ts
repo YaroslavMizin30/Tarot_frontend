@@ -17,6 +17,8 @@ const TRANSLATIONS_RU = {
     'Ошибка при запросе. Пожалуйста, попробуйте снова',
   'Error loading data. Please try again':
     'Ошибка при загрузке данных. Пожалуйста, попробуйте снова',
+  'Standard': 'Обычная тема',
+  'Gray': 'Серая тема',
 };
 
 export default TRANSLATIONS_RU;

@@ -71,7 +71,7 @@ export const Reading = () => {
   };
 
   const isLimitReached = () => {
-    if (!tariff) {
+    if (!tariff || tariff === 'trial') {
       return false;
     }
 

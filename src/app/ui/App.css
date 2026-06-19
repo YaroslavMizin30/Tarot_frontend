@@ -9,17 +9,36 @@
 
 :root {
   --background-primary: #ffdb88;
+  --background-secondary: #703f00;
 
   --gradient-primary: #ff91f0;
   --gradient-secondary: #001d73;
 
   --border-primary: #703f00;
-  --border-inversed: #ffdb88;
+  --border-secondary: #ffdb88;
 
   --shadow-primary: #e55bfb;
 
-  --text-primary: #3e3e3e;
-  --text-secondary: #ffdb88;
+  --text-primary: #ffdb88;
+  --text-secondary: #703f00;
+  --text-default: #703f00;
+}
+
+:root[data-theme='gray'] {
+  --background-primary: #4e378b;
+  --background-secondary: #8f8f8f;
+
+  --gradient-primary: #dadada;
+  --gradient-secondary: #31385e;
+
+  --border-primary: #707070;
+  --border-secondary: #707070;
+
+  --shadow-primary: #e55bfb;
+
+  --text-primary: #e0cc9e;
+  --text-secondary: #e0cc9e;
+  --text-default: #703f00;
 }
 
 .custom-scrollbar::-webkit-scrollbar {

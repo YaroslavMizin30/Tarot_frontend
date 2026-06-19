@@ -11,9 +11,9 @@
   font-size: 15px;
   font-weight: 700;
   text-align: center;
-  color: var(--border-inversed);
+  color: var(--text-primary);
 
-  border: 1px solid var(--border-inversed);
+  border: 1px solid var(--border-secondary);
   border-radius: 10px;
 }
 

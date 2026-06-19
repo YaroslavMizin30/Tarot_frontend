@@ -12,7 +12,7 @@
 }
 
 .instruction {
-  color: var(--border-inversed);
+  color: var(--text-primary);
   width: 200px;
   text-align: center;
 }
@@ -25,7 +25,7 @@
 
 .title {
   padding-top: 20px;
-  color: var(--border-inversed);
+  color: var(--text-primary);
 }
 
 .card {
@@ -80,7 +80,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: var(--text-secondary);
+  color: var(--text-primary);
 }
 
 .spinner {

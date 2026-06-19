@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from 'react-router';
 import SettingsIcon from '@/shared/assets/svg/common/settings.svg';
 import HomeIcon from '@/shared/assets/svg/common/home.svg';
 import GlobeIcon from '@/shared/assets/svg/common/globe.svg';
+import Theme from '@/shared/assets/svg/common/theme.svg';
 import useOutsideClick from '@/shared/hooks/useOutsideClick';
 import useLocales, { type Locale } from '@/shared/hooks/useLocales';
 import Tooltip from '@/shared/ui/Tooltip';
@@ -17,12 +18,18 @@ const LANGS: { name: string; locale: Locale }[] = [
   { name: 'Русский', locale: 'ru' },
 ];
 
+const THEMES: { name: string; value: 'standard' | 'gray' }[] = [
+  { name: 'Standard', value: 'standard' },
+  { name: 'Gray', value: 'gray' },
+];
+
 const Header = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const [isVisible, setIsVisible] = useState(false);
-  const { user } = useUser();
+  const [isLangSwitcherVisible, setIsLangSwitcherVisible] = useState(false);
+  const [isThemeSwitcherVisible, setIsThemeSwitcherVisible] = useState(false);
+  const { user, updateUser } = useUser();
 
   const handleSettingsClick = () => {
     if (user) {
@@ -37,14 +44,20 @@ const Header = () => {
   };
 
   const handleLangSwitcherClick = () => {
-    setIsVisible(!isVisible);
+    setIsLangSwitcherVisible(!isLangSwitcherVisible);
   };
 
-  const handleOutsideClick = () => {
-    setIsVisible(false);
+  const handleThemeSwitcherClick = () => {
+    setIsThemeSwitcherVisible(!isThemeSwitcherVisible);
   };
 
-  const ref = useOutsideClick(handleOutsideClick);
+  const langSwitcherRef = useOutsideClick(() =>
+    setIsLangSwitcherVisible(false),
+  );
+
+  const themeSwitcherRef = useOutsideClick(() =>
+    setIsThemeSwitcherVisible(false),
+  );
 
   const { changeLanguage, locale, i18n } = useLocales();
 
@@ -57,13 +70,43 @@ const Header = () => {
       />
 
       <div className={styles.rightSection}>
+        <Theme
+          ref={themeSwitcherRef}
+          className={styles.moon}
+          onClick={handleThemeSwitcherClick}
+        />
+
+        {isThemeSwitcherVisible && (
+          <div className={styles.themes}>
+            {THEMES.map((theme) => {
+              const handleThemeClick = async () => {
+                if (!user) {
+                  return;
+                }
+
+                await updateUser(String(user.id), { theme: theme.value });
+              };
+
+              return (
+                <div
+                  key={theme.value}
+                  className={`${styles.theme} ${theme.value === user?.theme ? styles.selected : ''}`}
+                  onClick={handleThemeClick}
+                >
+                  {i18n(theme.name)}
+                </div>
+              );
+            })}
+          </div>
+        )}
+
         <GlobeIcon
-          ref={ref}
+          ref={langSwitcherRef}
           className={styles.globe}
           onClick={handleLangSwitcherClick}
         />
 
-        {isVisible && (
+        {isLangSwitcherVisible && (
           <div className={styles.langs}>
             {LANGS.map((lang) => {
               const handleLocaleClick = () => {

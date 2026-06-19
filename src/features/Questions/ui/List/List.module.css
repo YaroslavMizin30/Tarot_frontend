@@ -4,11 +4,11 @@
   white-space: normal;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-  border-color: var(--border-inversed);
+  border-color: var(--border-secondary);
 }
 
 .title {
-  color: var(--border-inversed);
+  color: var(--text-primary);
   text-align: center;
   margin-top: 15px;
 }
@@ -21,10 +21,10 @@
 .description {
   padding: 6px 12px;
 
-  color: var(--border-inversed);
+  color: var(--text-primary);
   text-align: center;
   font-size: 14px;
-  border: 1px solid var(--border-inversed);
+  border: 1px solid var(--border-secondary);
   border-top: none;
   border-radius: 0 0 10px 10px;
 }

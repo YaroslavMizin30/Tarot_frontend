@@ -4,7 +4,7 @@
   grid-gap: 20px;
   align-items: center;
 
-  color: var(--border-inversed);
+  color: var(--text-primary);
   text-align: center;
 }
 

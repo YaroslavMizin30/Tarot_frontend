@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
 
-  color: var(--border-inversed);
+  color: var(--text-primary);
 }
 
 .button {

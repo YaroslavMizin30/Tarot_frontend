@@ -12,7 +12,7 @@ export interface GetUserResponse {
   free_spreads: number;
   tariff: 'standard' | 'trial' | 'extended';
   expiration_date: string;
-  theme: 'standard' | 'gothic';
+  theme: 'standard' | 'gray';
 }
 
 export interface User {
@@ -27,5 +27,5 @@ export interface User {
   freeSpreads: number;
   tariff: 'standard' | 'trial' | 'extended';
   expirationDate: string;
-  theme: 'standard' | 'gothic';
+  theme: 'standard' | 'gray';
 }

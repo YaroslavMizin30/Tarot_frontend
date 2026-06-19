@@ -20,11 +20,12 @@
 
 .settings,
 .home,
-.globe {
+.globe,
+.moon {
   width: 30px;
   height: 30px;
 
-  color: var(--border-primary);
+  color: var(--text-secondary);
 
   cursor: pointer;
 }
@@ -38,6 +39,12 @@
 .home {
   width: 25px;
   height: 25px;
+}
+
+.moon {
+  width: 20px;
+  height: 20px;
+  margin-right: 15px;
 }
 
 .title {
@@ -61,10 +68,10 @@
   align-items: center;
 }
 
-.langs {
+.langs,
+.themes {
   position: absolute;
   top: 100%;
-  right: 10px;
 
   display: flex;
   flex-direction: column;
@@ -74,7 +81,17 @@
   border-radius: 10px;
 }
 
-.lang {
+.langs {
+  right: 10px;
+}
+
+.themes {
+  top: calc(100% + 5px);
+  right: 40px;
+}
+
+.lang,
+.theme {
   padding: 15px;
   cursor: pointer;
 }
@@ -90,8 +107,8 @@
 }
 
 .selected {
-  background-color: var(--border-primary);
-  color: var(--background-primary);
+  background-color: var(--background-secondary);
+  color: var(--text-primary);
 }
 
 .tooltip {
