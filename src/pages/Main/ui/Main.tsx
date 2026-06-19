@@ -35,6 +35,14 @@ export const MainPage = () => {
     <div className={styles.container}>
       <Zodiac sign={user?.sign} />
 
+      {JSON.stringify({ device: window.Telegram?.WebApp?.platform })}
+      {JSON.stringify({
+        settings: window.Telegram?.WebApp?.SettingsButton?.isVisible,
+      })}
+      {JSON.stringify({
+        settings: window.Telegram?.WebApp?.BackButton?.isVisible,
+      })}
+
       <Tooltip
         position={'top'}
         content={getExpiredMessage()}
