@@ -18,8 +18,21 @@ export const Layout = () => {
 
   const { theme = 'standard' } = user ?? {};
 
+  const themeConfig = {
+    standard: {
+      header: '#ffdb88',
+      footer: '#ff91f0',
+    },
+    gray: {
+      header: '#4e378b',
+      footer: '#dadada',
+    },
+  };
+
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
+    window.Telegram?.WebApp?.setHeaderColor(themeConfig[theme].header);
+    window.Telegram?.WebApp?.setBottomBarColor(themeConfig[theme].footer);
   }, [theme]);
 
   return (
