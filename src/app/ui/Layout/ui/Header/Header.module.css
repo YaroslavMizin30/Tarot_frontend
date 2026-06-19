@@ -21,7 +21,8 @@
 .settings,
 .home,
 .globe,
-.moon {
+.moon,
+.audio {
   width: 30px;
   height: 30px;
 
@@ -102,12 +103,14 @@
   cursor: pointer;
 }
 
-.lang:last-child, .theme:last-child {
+.lang:last-child,
+.theme:last-child {
   border-bottom-left-radius: 7px;
   border-bottom-right-radius: 7px;
 }
 
-.lang:first-child, .theme:first-child {
+.lang:first-child,
+.theme:first-child {
   border-top-left-radius: 7px;
   border-top-right-radius: 7px;
 }
