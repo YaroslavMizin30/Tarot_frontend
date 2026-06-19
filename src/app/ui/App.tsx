@@ -6,9 +6,8 @@ import router from '../router';
 import store from '../store';
 
 export function App() {
-  window?.Telegram?.WebApp?.setBackgroundColor('#ffdb88');
-  window?.Telegram?.WebApp?.setBottomBarColor('#001d73');
-  window?.Telegram?.WebApp?.setHeaderColor('#001d73');
+  window?.Telegram?.WebApp?.setHeaderColor('#ffdb88');
+  window?.Telegram?.WebApp?.setBottomBarColor('#ff91f0');
 
   return (
     <Provider store={store}>
