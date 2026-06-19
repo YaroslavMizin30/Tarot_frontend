@@ -7,6 +7,7 @@ import TarotSpread from '@/features/TarotSpread';
 import useLocales from '@/shared/hooks/useLocales';
 import Spinner from '@/shared/ui/Spinner';
 import Button from '@/shared/ui/Button';
+import { TARIFFS } from '@/shared/const/tariffs';
 
 import { useSpreads, type SpreadParams } from '@/entities/Spread';
 import { useSubscription } from '@/entities/User';
@@ -21,9 +22,6 @@ import {
 import { Step } from '../config/steps';
 
 import styles from './Reading.module.css';
-
-const MAX_STANDARD_SPREADS = 5;
-const MAX_EXTENDED_SPREADS = 10;
 
 export const Reading = () => {
   const dispatch = useAppDispatch();
@@ -45,23 +43,31 @@ export const Reading = () => {
   };
 
   const getMaxSpreads = () => {
-    if (tariff === 'extended') {
-      return MAX_EXTENDED_SPREADS;
+    switch (tariff) {
+      case 'standard':
+        return TARIFFS.standard.spreads;
+      case 'extended':
+        return TARIFFS.extended.spreads;
+      default:
+        return 0;
     }
-
-    return MAX_STANDARD_SPREADS;
   };
 
   const getLimitMessage = () => {
-    if (tariff === 'extended') {
-      return i18n(
-        "You've reached the daily limit of 10 spreads for the extended tariff 😔",
-      );
-    }
+    switch (tariff) {
+      case 'extended':
+        return i18n(
+          `You've reached the daily limit of ${TARIFFS.extended.spreads} spreads for the extended tariff 😔`,
+        );
 
-    return i18n(
-      "You've reached the daily limit of 5 spreads for the standard tariff. Upgrade to the extended tariff to get more spreads",
-    );
+      case 'standard':
+        return i18n(
+          `You've reached the daily limit of ${TARIFFS.standard.spreads} spreads for the standard tariff. Upgrade to the extended tariff to get more spreads`,
+        );
+
+      default:
+        return i18n("You've reached the daily limit of spreads 😔");
+    }
   };
 
   const isLimitReached = () => {

@@ -5,6 +5,7 @@ import { useUser, useSubscription } from '@/entities/User';
 import useLocales from '@/shared/hooks/useLocales';
 import { getPluralForm } from '@/shared/utils/getPluralForm';
 import ArrowButton from '@/shared/ui/ArrowButton';
+import { TARIFFS } from '@/shared/const/tariffs';
 
 import styles from './SettingsPage.module.css';
 
@@ -75,7 +76,7 @@ const SubscriptionSettings = (props: { onBackButtonClick: () => void }) => {
                   <li>{i18n('monthly predictions')}</li>
                   <li>{i18n('daily card')}</li>
                   <li>{`${i18n('spreads up to')} 5 ${i18n('cards')}`}</li>
-                  <li>{`5 ${i18n('spreads a day')}`}</li>
+                  <li>{`${TARIFFS.standard.spreads} ${i18n('spreads a day')}`}</li>
                 </ul>
               </div>
             )}
@@ -105,7 +106,7 @@ const SubscriptionSettings = (props: { onBackButtonClick: () => void }) => {
                   <li>{i18n('monthly predictions')}</li>
                   <li>{i18n('daily card')}</li>
                   <li>{`${i18n('spreads up to')} 9 ${i18n('cards')}`}</li>
-                  <li>{`10 ${i18n('spreads a day')}`}</li>
+                  <li>{`${TARIFFS.extended.spreads} ${i18n('spreads a day')}`}</li>
                   <li>{i18n('predictions summary')}</li>
                   <li>{i18n('spreads summary')}</li>
                 </ul>

@@ -1,5 +1,7 @@
 import CARDS from './cards';
 
+import { TARIFFS } from '@/shared/const/tariffs';
+
 const TRANSLATIONS_EN: Record<string, string> = {
   'Topics': 'Topics',
 
@@ -203,11 +205,11 @@ const TRANSLATIONS_EN: Record<string, string> = {
   'Unfold the card': 'Unfold the card',
   'Shuffling the deck': 'Shuffling the deck',
 
-  "You've reached the daily limit of 5 spreads for the standard tariff. Upgrade to the extended tariff to get more spreads":
-    "You've reached the daily limit of 5 spreads for the standard tariff. Upgrade to the extended tariff to get more spreads",
-  "You've reached the daily limit of 10 spreads for the extended tariff 😔":
-    "You've reached the daily limit of 10 spreads for the extended tariff 😔",
-
+  [`You've reached the daily limit of ${TARIFFS.standard.spreads} spreads for the standard tariff. Upgrade to the extended tariff to get more spreads`]:
+    `You've reached the daily limit of ${TARIFFS.standard.spreads} spreads for the standard tariff. Upgrade to the extended tariff to get more spreads`,
+  [`You've reached the daily limit of ${TARIFFS.extended.spreads} spreads for the extended tariff 😔`]:
+    `You've reached the daily limit of ${TARIFFS.extended.spreads} spreads for the extended tariff 😔`,
+  "You've reached the daily limit of spreads 😔": "You've reached the daily limit of spreads 😔",
   ...CARDS,
 };
 

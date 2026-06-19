@@ -1,5 +1,7 @@
 import CARDS from './cards';
 
+import { TARIFFS } from '@/shared/const/tariffs';
+
 const TRANSLATIONS_RU: Record<string, string> = {
   'Topics': 'Темы раскладов',
 
@@ -200,11 +202,11 @@ const TRANSLATIONS_RU: Record<string, string> = {
   'Unfold the card': 'Переверните карту',
   'Shuffling the deck': 'Тасую колоду',
 
-  "You've reached the daily limit of 5 spreads for the standard tariff. Upgrade to the extended tariff to get more spreads":
-    'Вы достигли дневного лимита в 5 раскладов для стандартного тарифа. Перейдите на расширенный тариф, чтобы получить больше раскладов',
-  "You've reached the daily limit of 10 spreads for the extended tariff 😔":
-    'Вы достигли дневного лимита в 10 раскладов для расширенного тарифа 😔',
-
+  [`You've reached the daily limit of ${TARIFFS.standard.spreads} spreads for the standard tariff. Upgrade to the extended tariff to get more spreads`]:
+    `Вы достигли дневного лимита в ${TARIFFS.standard.spreads} раскладов для стандартного тарифа. Перейдите на расширенный тариф, чтобы получить больше раскладов`,
+  [`You've reached the daily limit of ${TARIFFS.extended.spreads} spreads for the extended tariff 😔`]:
+    `Вы достигли дневного лимита в ${TARIFFS.extended.spreads} раскладов для расширенного тарифа 😔`,
+  "You've reached the daily limit of spreads 😔": "Вы достигли дневного лимита раскладов 😔",
   ...CARDS,
 };
 
