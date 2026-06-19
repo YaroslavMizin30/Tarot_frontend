@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Outlet, useNavigation } from 'react-router';
 
 import Spinner from '@/shared/ui/Spinner';
@@ -15,17 +14,6 @@ export const Layout = () => {
   const isLoading = state === 'loading';
 
   const { isLoading: isAuthenticating, user } = useAuth();
-
-  useEffect(() => {
-    const telegram = window?.Telegram?.WebApp;
-
-    telegram?.ready();
-
-    if (telegram?.platform === 'ios' || telegram?.platform === 'android') {
-      telegram?.SettingsButton?.hide();
-      telegram?.expand();
-    }
-  }, []);
 
   return (
     <div className={styles.layout}>

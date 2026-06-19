@@ -7,7 +7,6 @@ import GlobeIcon from '@/shared/assets/svg/common/globe.svg';
 import useOutsideClick from '@/shared/hooks/useOutsideClick';
 import useLocales, { type Locale } from '@/shared/hooks/useLocales';
 import Tooltip from '@/shared/ui/Tooltip';
-import useTelegram from '@/shared/hooks/useTelegram';
 
 import { useUser } from '@/entities/User';
 
@@ -49,19 +48,13 @@ const Header = () => {
 
   const { changeLanguage, locale, i18n } = useLocales();
 
-  const { isMobile } = useTelegram();
-
   return (
-    <header
-      className={`${styles.header} ${isMobile ? styles['header-mobile'] : ''}`}
-    >
+    <header className={styles.header}>
       <HomeIcon
         className={styles.home}
         onClick={handleHomeClick}
         styles={{ opacity: user ? 1 : 0 }}
       />
-
-      <span className={styles.title}>Tarotopia</span>
 
       <div className={styles.rightSection}>
         <GlobeIcon
