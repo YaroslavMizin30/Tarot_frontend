@@ -10,12 +10,14 @@ import useTelegram from '@/shared/hooks/useTelegram';
 export function App() {
   const { prepareApp, isMobile, hideHeaderButtons, expandApp } = useTelegram();
 
-  prepareApp();
+  document.addEventListener('DOMContentLoaded', () => {
+    prepareApp();
 
-  if (isMobile) {
-    hideHeaderButtons();
-    expandApp();
-  }
+    if (isMobile) {
+      hideHeaderButtons();
+      expandApp();
+    }
+  });
 
   return (
     <Provider store={store}>
