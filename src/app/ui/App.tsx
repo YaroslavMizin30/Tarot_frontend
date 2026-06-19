@@ -6,6 +6,8 @@ import router from '../router';
 import store from '../store';
 
 export function App() {
+  window.Telegram?.WebApp?.setHeaderColor?.('#ffdb88');
+
   return (
     <Provider store={store}>
       <RouterProvider router={router} />
