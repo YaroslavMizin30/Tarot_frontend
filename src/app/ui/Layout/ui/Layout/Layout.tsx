@@ -23,7 +23,7 @@ export const Layout = () => {
 
     if (telegram?.platform === 'ios' || telegram?.platform === 'android') {
       telegram?.SettingsButton?.hide();
-      // telegram?.expand();
+      telegram?.expand();
     }
   }, []);
 
