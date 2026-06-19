@@ -13,6 +13,7 @@ export interface GetUserResponse {
   tariff: 'standard' | 'trial' | 'extended';
   expiration_date: string;
   theme: 'standard' | 'gray';
+  audio: boolean;
 }
 
 export interface User {
@@ -28,4 +29,5 @@ export interface User {
   tariff: 'standard' | 'trial' | 'extended';
   expirationDate: string;
   theme: 'standard' | 'gray';
+  audio: boolean;
 }

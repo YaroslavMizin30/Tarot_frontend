@@ -47,6 +47,12 @@
   margin-right: 15px;
 }
 
+.audio {
+  width: 23px;
+  height: 23px;
+  margin-right: 13px;
+}
+
 .title {
   margin-left: 30px;
   width: 100%;

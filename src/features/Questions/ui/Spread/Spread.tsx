@@ -1,10 +1,11 @@
-import { useState, type FC } from 'react';
+import { useEffect, useState, type FC } from 'react';
 
 import Button from '@/shared/ui/Button';
 import useLocales from '@/shared/hooks/useLocales';
 
 import TarotDeck from '@/entities/TarotDeck';
 import { SPREADS } from '@/features/TarotSpread';
+import { useUser } from '@/entities/User';
 
 import type { SpreadProps } from './Spread.props';
 
@@ -19,16 +20,23 @@ const Spread: FC<SpreadProps> = (props) => {
 
   const [isReading, setIsReading] = useState(false);
 
+  const { user } = useUser();
+
   const handleReadEnd = () => {
     setIsReading(false);
 
     onSpreadSelect(spread);
   };
 
+  const audio = new Audio('/assets/sfx/gong.mp3');
+
   const handleSpreadButtonClick = () => {
     setIsReading(true);
 
-    new Audio('/assets/sfx/gong.mp3').play();
+    if (user?.audio) {
+      audio.volume = 0.1;
+      audio.play();
+    }
   };
 
   const getQuestion = () => {
@@ -89,6 +97,10 @@ const Spread: FC<SpreadProps> = (props) => {
       </>
     );
   };
+
+  useEffect(() => {
+    return () => audio.pause();
+  }, []);
 
   return (
     <div className={styles.container}>

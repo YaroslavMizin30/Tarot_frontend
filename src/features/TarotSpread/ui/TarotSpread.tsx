@@ -10,6 +10,7 @@ import Error from '@/shared/ui/Error';
 
 import TarotCard from '@/entities/TarotCard';
 import { updateSpread } from '@/entities/Spread';
+import { useUser } from '@/entities/User';
 
 import { SpreadConfig } from '../config/spreads';
 import { useReading } from '../model/hooks/useReading/useReading';
@@ -41,12 +42,17 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
 
   const { i18n } = useLocales();
 
+  const { user } = useUser();
+
   const audio = new Audio('/assets/sfx/flip.mp3');
 
   const handleCardClick = () => {
     changeActiveCard();
 
-    audio.play();
+    if (user?.audio) {
+      audio.volume = 0.3;
+      audio.play();
+    }
   };
 
   const [rating, setRating] = useState(0);

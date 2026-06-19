@@ -5,6 +5,8 @@ import SettingsIcon from '@/shared/assets/svg/common/settings.svg';
 import HomeIcon from '@/shared/assets/svg/common/home.svg';
 import GlobeIcon from '@/shared/assets/svg/common/globe.svg';
 import Theme from '@/shared/assets/svg/common/theme.svg';
+import AudioOn from '@/shared/assets/svg/common/audio_on.svg';
+import AudioOff from '@/shared/assets/svg/common/audio_off.svg';
 import useOutsideClick from '@/shared/hooks/useOutsideClick';
 import useLocales, { type Locale } from '@/shared/hooks/useLocales';
 import Tooltip from '@/shared/ui/Tooltip';
@@ -59,6 +61,14 @@ const Header = () => {
     setIsThemeSwitcherVisible(false),
   );
 
+  const handleAudioClick = async () => {
+    if (!user) {
+      return;
+    }
+
+    await updateUser(`${user.id}`, { audio: !user?.audio });
+  };
+
   const { changeLanguage, locale, i18n } = useLocales();
 
   return (
@@ -78,6 +88,12 @@ const Header = () => {
       </Tooltip>
 
       <div className={styles.rightSection}>
+        {user?.audio ? (
+          <AudioOn onClick={handleAudioClick} className={styles.audio} />
+        ) : (
+          <AudioOff onClick={handleAudioClick} className={styles.audio} />
+        )}
+
         <Theme
           ref={themeSwitcherRef}
           className={styles.moon}
