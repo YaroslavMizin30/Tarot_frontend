@@ -312,6 +312,8 @@ const TRANSLATIONS_RU = {
   '📅 Subscription': '📅 Подписка',
 
   'Continue in bot': 'Продолжить в боте',
+  'or': 'или',
+  'Start reading': 'Сделать расклад',
   'Try again': 'Попробовать снова',
   'Error during request, please try again':
     'Ошибка при запросе. Пожалуйста, попробуйте снова',

@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router';
 
 import Input from '@/shared/ui/Input';
 import Button from '@/shared/ui/Button';
@@ -42,6 +43,8 @@ export const Registry = () => {
   const { createUser, isLoading, user, error: creationError } = useCreateUser();
 
   const [error, setError] = useState('');
+
+  const navigate = useNavigate();
 
   const translatedCountries = useMemo(() => {
     return COUNTRIES.map(({ value, label }) => {
@@ -109,6 +112,10 @@ export const Registry = () => {
     window.Telegram?.WebApp?.close();
   };
 
+  const handleContinueButtonClick = () => {
+    navigate('/');
+  };
+
   useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
   }, [locale]);
@@ -128,9 +135,18 @@ export const Registry = () => {
       <>
         <NatalChart user={user} />
 
-        <Button className={styles.botButton} onClick={handleBotButtonClick}>
-          {i18n('Continue in bot')}
-        </Button>
+        <div className={styles.bottom}>
+          <Button className={styles.botButton} onClick={handleBotButtonClick}>
+            {i18n('Continue in bot')}
+          </Button>
+          &nbsp;{i18n('or')}&nbsp;
+          <Button
+            className={styles.botButton}
+            onClick={handleContinueButtonClick}
+          >
+            {i18n('Start reading')}
+          </Button>
+        </div>
       </>
     );
   }

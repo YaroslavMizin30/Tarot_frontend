@@ -105,6 +105,8 @@
   margin-bottom: 20px;
 }
 
-.botButton {
+.bottom {
+  display: flex;
+  align-items: center;
   margin-top: 15px;
 }

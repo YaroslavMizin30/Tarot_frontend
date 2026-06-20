@@ -312,6 +312,8 @@ const TRANSLATIONS_EN = {
   '📅 Subscription': '📅 Subscription',
 
   'Continue in bot': 'Continue in bot',
+  'or': 'or',
+  'Start reading': 'Start reading',
   'Try again': 'Try again',
   'Error during request, please try again':
     'Error during request, please try again',
