@@ -81,22 +81,27 @@ const Header = () => {
         tooltipClassName={styles.tooltip}
       >
         <HomeIcon
-          className={styles.home}
+          className={`${styles.home} ${!user && styles.hidden}`}
           onClick={handleHomeClick}
-          styles={{ opacity: user ? 1 : 0 }}
         />
       </Tooltip>
 
       <div className={styles.rightSection}>
         {user?.audio ? (
-          <AudioOn onClick={handleAudioClick} className={styles.audio} />
+          <AudioOn
+            onClick={handleAudioClick}
+            className={`${styles.audio} ${!user && styles.hidden}`}
+          />
         ) : (
-          <AudioOff onClick={handleAudioClick} className={styles.audio} />
+          <AudioOff
+            onClick={handleAudioClick}
+            className={`${styles.audio} ${!user && styles.hidden}`}
+          />
         )}
 
         <Theme
           ref={themeSwitcherRef}
-          className={styles.moon}
+          className={`${styles.moon} ${!user && styles.hidden}`}
           onClick={handleThemeSwitcherClick}
         />
 
@@ -158,9 +163,8 @@ const Header = () => {
           tooltipClassName={styles.tooltip}
         >
           <SettingsIcon
-            className={styles.settings}
+            className={`${styles.settings} ${!user && styles.hidden}`}
             onClick={handleSettingsClick}
-            styles={{ opacity: user ? 1 : 0 }}
           />
         </Tooltip>
       </div>

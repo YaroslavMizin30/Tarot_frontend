@@ -123,3 +123,7 @@
 .tooltip {
   min-width: 80px;
 }
+
+.hidden {
+  opacity: 0;
+}
