@@ -32,7 +32,7 @@ export const useInterpretation = (options: { onFinish?: () => void }) => {
     }, '');
 
     const userMessage = `${i18n('Question')}: ${question ? `${i18n(question)}` : `${userAnswer}`}${detailsAnswer ? `, ${detailsAnswer}: ${userAnswer}` : ''}`;
-    const developerMessage = `${i18n('Need tarot spread interpretation')}. ${title ? `${'Spread title'}: "${title}".` : ''} ${i18n('Cards')}: ${cardInfo} ${i18n('Do not talk about user as a third person')}`;
+    const developerMessage = `${i18n('Need tarot spread interpretation')}. ${title ? `${i18n('Spread title')}: "${title}".` : ''} ${i18n('Cards')}: ${cardInfo} ${i18n('Do not talk about user as a third person')}`;
 
     try {
       setIsLoading(true);

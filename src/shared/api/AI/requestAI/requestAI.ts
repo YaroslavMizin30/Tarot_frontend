@@ -1,5 +1,5 @@
-interface Prompt {
-  role: 'user' | 'developer' | 'system';
+export interface Prompt {
+  role: 'user' | 'developer' | 'assistant';
   content: string;
 }
 
