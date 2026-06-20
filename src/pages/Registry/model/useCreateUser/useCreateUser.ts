@@ -70,16 +70,23 @@ export const useCreateUser = () => {
           '✅ Your natal chart is ready! You can find it in settings > profile.\n\n🔮 Continue using TAROTOPIA for:\n• Daily predictions\n• Tarot readings for your questions\n• Tracking favorable periods\n\nUse the buttons in the menu to get started! ✨',
         ),
         replyMarkup: {
-          resizeKeyboard: true,
-          keyboard: [
-            [{ text: i18n('Tarot reading') }],
+          inlineKeyboard: [
             [
-              { text: i18n('Daily prediction') },
-              { text: i18n('Weekly horoscope') },
+              {
+                text: i18n('Tarot reading'),
+                webApp: {
+                  url: 'https://tarotopia.jaroslavmizin.workers.dev/',
+                },
+              },
             ],
             [
-              { text: i18n('Month horoscope') },
-              { text: i18n('Horoscopes summary') },
+              { text: i18n('Daily prediction'), callbackData: 'menu:daily' },
+              { text: i18n('Weekly horoscope'), callbackData: 'menu:weekly' },
+              { text: i18n('Month horoscope'), callbackData: 'menu:monthly' },
+            ],
+            [
+              { text: i18n('Subscription'), callbackData: 'menu:subscription' },
+              { text: i18n('Support'), callbackData: 'menu:support' },
             ],
           ],
         },

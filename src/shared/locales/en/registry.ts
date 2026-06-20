@@ -304,11 +304,13 @@ const TRANSLATIONS_EN = {
     'Describe the meaning of the chart to user',
   '✅ Your natal chart is ready! You can find it in settings > profile.\n\n🔮 Continue using TAROTOPIA for:\n• Daily predictions\n• Tarot readings for your questions\n• Tracking favorable periods\n\nUse the buttons in the menu to get started! ✨':
     '✅ Your natal chart is ready! You can find it in settings > profile.\n\n🔮 Continue using TAROTOPIA for:\n• Daily predictions\n• Tarot readings for your questions\n• Tracking favorable periods\n\nUse the buttons in the menu to get started! ✨',
-  'Daily prediction': 'Daily prediction',
-  'Tarot reading': 'Tarot reading',
-  'Month horoscope': 'Month horoscope',
-  'Weekly horoscope': 'Weekly horoscope',
-  'Horoscopes summary': 'Horoscopes summary',
+  '🔮 Daily prediction': '🔮 Daily prediction',
+  '♦️ Tarot reading': '♦️ Tarot reading',
+  '✨ Month horoscope': '✨ Month horoscope',
+  '🌟 Weekly horoscope': '🌟 Weekly horoscope',
+  '🛠️ Support': '🛠️ Support',
+  '📅 Subscription': '📅 Subscription',
+
   'Continue in bot': 'Continue in bot',
   'Try again': 'Try again',
   'Error during request, please try again':
