@@ -12,7 +12,7 @@ export interface GetUserResponse {
   free_spreads: number;
   tariff: 'standard' | 'trial' | 'extended';
   expiration_date: string;
-  theme: 'standard' | 'gray';
+  theme: 'standard' | 'gray' | 'bronze';
   audio: boolean;
 }
 
@@ -28,6 +28,6 @@ export interface User {
   freeSpreads: number;
   tariff: 'standard' | 'trial' | 'extended';
   expirationDate: string;
-  theme: 'standard' | 'gray';
+  theme: 'standard' | 'gray' | 'bronze';
   audio: boolean;
 }

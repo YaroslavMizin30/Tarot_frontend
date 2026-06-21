@@ -27,6 +27,10 @@ export const Layout = () => {
       header: '#4e378b',
       footer: '#dadada',
     },
+    bronze: {
+      header: '',
+      footer: '',
+    }
   };
 
   useEffect(() => {

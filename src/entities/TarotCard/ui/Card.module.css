@@ -53,8 +53,16 @@
   background-image: url('/assets/images/card/cover/back_gray.png');
 }
 
+.front-bronze {
+  background-image: url('/assets/images/card/cover/back_bronze.png');
+}
+
 .back-gray {
   background-image: url('/assets/images/card/cover/back_gray.png');
+}
+
+.back-bronze {
+  background-image: url('/assets/images/card/cover/back_bronze.png');
 }
 
 .image-wrapper {
@@ -84,6 +92,10 @@
 }
 
 .footer-gray {
+  color: #fffb8d;
+}
+
+.footer-bronze {
   color: #fffb8d;
 }
 

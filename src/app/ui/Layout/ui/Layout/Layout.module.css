@@ -27,15 +27,30 @@
   overflow-x: hidden;
 }
 
+:root {
+  --cloud-top: #908e8e;
+  --cloud-bottom: #475587;
+}
+
+:root[data-theme='gray'] {
+  --cloud-top: #908e8e;
+  --cloud-bottom: #475587;
+}
+
+:root[data-theme='bronze'] {
+  --cloud-top: #a27a14;
+  --cloud-bottom: #ba6d3d;
+}
+
 .cloud,
 .couldBottom {
   position: absolute;
   width: 300px;
   height: 200px;
-  background-color: #908e8e;
+  background-color: var(--cloud-top);
   border-radius: 100%;
   opacity: 0.3;
-  box-shadow: 0px 0px 50px 50px #908e8e;
+  box-shadow: 0px 0px 50px 50px var(--cloud-top);
   z-index: 0;
 
   animation:
@@ -47,7 +62,7 @@
   top: 60%;
   width: 300px;
   background-color: #475587;
-  opacity: 0.2;
+  opacity: 0;
   box-shadow: 0px 0px 50px 50px #475587;
 
   animation: scale 10s infinite linear;

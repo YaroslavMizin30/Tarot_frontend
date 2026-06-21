@@ -19,6 +19,7 @@ const TRANSLATIONS_EN = {
     'Error loading data. Please try again',
   'Standard': 'Standard',
   'Gray': 'Gray',
+  'Bronze': 'Bronze',
 };
 
 export default TRANSLATIONS_EN;

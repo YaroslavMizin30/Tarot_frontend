@@ -18,11 +18,12 @@ export const TarotDeck: FC<TarotDeckProps> = (props) => {
 
   const theme = document.documentElement.getAttribute('data-theme') as
     | 'standard'
-    | 'gray';
+    | 'gray'
+    | 'bronze';
 
   return (
     <div
-      className={`${cx('deck', { ['deck-reading']: isReading, ['deck-gray']: theme === 'gray' })} ${className}`}
+      className={`${cx('deck', { ['deck-reading']: isReading, ['deck-gray']: theme === 'gray', ['deck-bronze']: theme === 'bronze' })} ${className}`}
       onAnimationEnd={handleAnimationEnd}
       {...rest}
     >

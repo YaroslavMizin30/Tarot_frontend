@@ -20,9 +20,10 @@ const LANGS: { name: string; locale: Locale }[] = [
   { name: 'Русский', locale: 'ru' },
 ];
 
-const THEMES: { name: string; value: 'standard' | 'gray' }[] = [
+const THEMES: { name: string; value: 'standard' | 'gray' | 'bronze' }[] = [
   { name: 'Standard', value: 'standard' },
   { name: 'Gray', value: 'gray' },
+  { name: 'Bronze', value: 'bronze' },
 ];
 
 const Header = () => {

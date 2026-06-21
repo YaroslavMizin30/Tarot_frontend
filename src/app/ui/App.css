@@ -41,6 +41,23 @@
   --text-default: #703f00;
 }
 
+:root[data-theme='bronze'] {
+  --background-primary: #311600;
+  --background-secondary: #d7973f;
+
+  --gradient-primary: #db9d9d;
+  --gradient-secondary: #6b2700;
+
+  --border-primary: #8d6767;
+  --border-secondary: #d9b5b5;
+
+  --shadow-primary: #fb5b5b;
+
+  --text-primary: #e0cc9e;
+  --text-secondary: #e0cc9e;
+  --text-default: #703f00;
+}
+
 .custom-scrollbar::-webkit-scrollbar {
   width: 10px; /* thickness of the vertical scrollbar */
   height: 10px; /* thickness of the horizontal scrollbar */

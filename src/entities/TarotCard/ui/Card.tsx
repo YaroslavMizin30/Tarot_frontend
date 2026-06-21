@@ -43,7 +43,8 @@ export const TarotCard: FC<TarotCardProps> = (props) => {
 
   const theme = document.documentElement.getAttribute('data-theme') as
     | 'standard'
-    | 'gray';
+    | 'gray'
+    | 'bronze';
 
   return (
     <div
@@ -61,12 +62,14 @@ export const TarotCard: FC<TarotCardProps> = (props) => {
         <div
           className={cx('back', {
             ['back-gray']: theme === 'gray',
+            ['back-bronze']: theme === 'bronze',
           })}
         />
 
         <div
           className={cx('front', {
             ['front-gray']: theme === 'gray',
+            ['front-bronze']: theme === 'bronze',
           })}
         >
           <div className={styles['image-wrapper']}>
@@ -81,6 +84,7 @@ export const TarotCard: FC<TarotCardProps> = (props) => {
             className={cx('footer', {
               reversed: isInverted && !isCardReversed,
               ['footer-gray']: theme === 'gray',
+              ['footer-bronze']: theme === 'bronze',
             })}
           >
             <h2

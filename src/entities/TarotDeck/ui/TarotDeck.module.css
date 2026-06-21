@@ -15,6 +15,10 @@
   background-image: url('/assets/images/card/cover/back_gray.png');
 }
 
+.deck-bronze {
+  background-image: url('/assets/images/card/cover/back_bronze.png');
+}
+
 .spinner {
   z-index: 40;
 }
