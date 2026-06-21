@@ -33,7 +33,6 @@
   width: 300px;
   height: 200px;
   background-color: #908e8e;
-  filter: blur(30px);
   border-radius: 100%;
   opacity: 0.5;
   box-shadow: 0px 0px 50px 50px #908e8e;
