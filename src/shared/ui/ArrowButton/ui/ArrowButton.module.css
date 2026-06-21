@@ -6,6 +6,7 @@
   background-color: transparent;
   cursor: pointer;
   border-radius: 50%;
+  z-index: 3;
 }
 
 .button:hover {

@@ -40,6 +40,10 @@ export const Layout = () => {
       <Header></Header>
 
       <main className={`${styles.main} custom-scrollbar`}>
+        <div className={styles.cloud}></div>
+
+        <div className={styles.couldBottom}></div>
+
         {isLoading || isAuthenticating ? (
           <Spinner size={'l'} />
         ) : (

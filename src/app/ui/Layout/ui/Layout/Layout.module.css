@@ -26,3 +26,66 @@
   overflow-y: auto;
   overflow-x: hidden;
 }
+
+.cloud,
+.couldBottom {
+  position: absolute;
+  width: 300px;
+  height: 200px;
+  background-color: #908e8e;
+  filter: blur(30px);
+  border-radius: 100%;
+  opacity: 0.5;
+  box-shadow: 0px 0px 50px 50px #908e8e;
+
+  animation:
+    shift 15s infinite linear,
+    rotate 20s infinite alternate;
+}
+
+.couldBottom {
+  top: 60%;
+  width: 300px;
+  background-color: #475587;
+  opacity: 0.4;
+  box-shadow: 0px 0px 50px 50px #475587;
+
+  animation: scale 10s infinite linear;
+}
+
+@keyframes shift {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 500px -500px;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+
+  50% {
+    transform: scale(1.5) rotate(180deg);
+  }
+
+  100% {
+    transform: scale(1) rotate(360deg);
+  }
+}
+
+@keyframes scale {
+  0% {
+    transform: scaleX(1) rotate(0deg)
+  }
+
+  50% {
+    transform: scaleX(2) rotate(30deg);
+  }
+
+  100% {
+    transform: scaleX(1) rotate(-20deg);
+  }
+}

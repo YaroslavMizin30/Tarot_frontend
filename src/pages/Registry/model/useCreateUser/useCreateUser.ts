@@ -79,13 +79,24 @@ export const useCreateUser = () => {
                 },
               },
             ],
+            [{ text: i18n('🔮 Daily prediction'), callbackData: 'menu:daily' }],
             [
-              { text: i18n('🔮 Daily prediction'), callbackData: 'menu:daily' },
-              { text: i18n('🌟 Weekly horoscope'), callbackData: 'menu:weekly' },
-              { text: i18n('✨ Month horoscope'), callbackData: 'menu:monthly' },
+              {
+                text: i18n('🌟 Weekly horoscope'),
+                callbackData: 'menu:weekly',
+              },
             ],
             [
-              { text: i18n('📅 Subscription'), callbackData: 'menu:subscription' },
+              {
+                text: i18n('✨ Month horoscope'),
+                callbackData: 'menu:monthly',
+              },
+            ],
+            [
+              {
+                text: i18n('📅 Subscription'),
+                callbackData: 'menu:subscription',
+              },
               { text: i18n('🛠️ Support'), callbackData: 'menu:support' },
             ],
           ],
