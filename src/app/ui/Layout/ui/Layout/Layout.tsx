@@ -28,8 +28,8 @@ export const Layout = () => {
       footer: '#dadada',
     },
     bronze: {
-      header: '',
-      footer: '',
+      header: '#311600',
+      footer: '#db9d9d',
     }
   };
 
