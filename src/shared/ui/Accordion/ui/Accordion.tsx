@@ -2,7 +2,6 @@ import { type FC, useState, useCallback, useMemo } from 'react';
 import classNames from 'classnames/bind';
 
 import Button from '@/shared/ui/Button';
-import Arrow from '@/shared/assets/svg/common/deck-arrow.svg';
 
 import { type AccordionProps } from './Accordion.props';
 
@@ -96,11 +95,7 @@ const Accordion: FC<AccordionProps> = (props) => {
             >
               {item.header}
 
-              <Arrow
-                className={cx('arrow', { 'arrow--open': isOpen })}
-                width={16}
-                height={16}
-              />
+              <div className={cx('chevron', { 'arrow--open': isOpen })}></div>
             </Button>
 
             <div

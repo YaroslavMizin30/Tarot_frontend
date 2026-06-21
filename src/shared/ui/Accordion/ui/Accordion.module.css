@@ -59,7 +59,7 @@
 .content-inner {
   overflow: hidden;
   overflow-y: auto;
-  max-height: 160px;
+  max-height: 168px;
   padding-right: 10px;
 }
 
@@ -108,4 +108,31 @@
   border: 1px solid var(--border-secondary);
   border-top: none;
   border-radius: 0 0 10px 10px;
+}
+
+/* Базовый шеврон */
+.chevron {
+  position: absolute;
+  right: 10px;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.3s ease;
+}
+
+/* Направления */
+.chevron.up {
+  transform: rotate(-135deg);
+}
+.chevron.down {
+  transform: rotate(45deg);
+}
+.chevron.left {
+  transform: rotate(135deg);
+}
+.chevron.right {
+  transform: rotate(-45deg);
 }
