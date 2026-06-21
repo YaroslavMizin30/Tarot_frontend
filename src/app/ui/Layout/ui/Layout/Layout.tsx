@@ -47,7 +47,9 @@ export const Layout = () => {
         {isLoading || isAuthenticating ? (
           <Spinner size={'l'} />
         ) : (
-          <Outlet context={{ user }} />
+          <div className={styles.container}>
+            <Outlet context={{ user }} />
+          </div>
         )}
       </main>
     </div>
