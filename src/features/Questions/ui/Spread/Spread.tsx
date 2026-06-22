@@ -39,6 +39,8 @@ const Spread: FC<SpreadProps> = (props) => {
     }
   };
 
+  console.log(question);
+
   const getQuestion = () => {
     if (question) {
       return (
@@ -104,37 +106,39 @@ const Spread: FC<SpreadProps> = (props) => {
 
   return (
     <div className={styles.container}>
-      {getQuestion()}
+      <div className={styles.list}>
+        {getQuestion()}
 
-      {getSpread()}
+        {getSpread()}
 
-      <TarotDeck
-        isReady={true}
-        isReading={isReading}
-        onReadEnd={handleReadEnd}
-        className={styles.deck}
-      />
+        <TarotDeck
+          isReady={true}
+          isReading={isReading}
+          onReadEnd={handleReadEnd}
+          className={styles.deck}
+        />
 
-      <span
-        className={styles.loadingMessage}
-        style={{
-          visibility: isReading ? 'visible' : 'hidden',
-        }}
-      >
-        {i18n('Shuffling the deck')}
-      </span>
-
-      <div className={styles.finish}>
-        <h3>{i18n('Ready?')}</h3>
-
-        <Button
-          className={styles.button}
-          disabled={!title}
-          onClick={handleSpreadButtonClick}
-          isLoading={isReading}
+        <span
+          className={styles.loadingMessage}
+          style={{
+            visibility: isReading ? 'visible' : 'hidden',
+          }}
         >
-          {i18n('Click')}
-        </Button>
+          {i18n('Shuffling the deck')}
+        </span>
+
+        <div className={styles.finish}>
+          <h3>{i18n('Ready?')}</h3>
+
+          <Button
+            className={styles.button}
+            disabled={!title}
+            onClick={handleSpreadButtonClick}
+            isLoading={isReading}
+          >
+            {i18n('Click')}
+          </Button>
+        </div>
       </div>
     </div>
   );

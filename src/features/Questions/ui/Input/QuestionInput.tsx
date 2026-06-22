@@ -9,13 +9,14 @@ import {
 
 import TextArea from '@/shared/ui/TextArea/TextArea';
 import useLocales from '@/shared/hooks/useLocales';
+import Button from '@/shared/ui/Button';
 
 import type { QuestionInputProps } from './QuestionInput.props';
 
 import styles from './QuestionInput.module.css';
 
 const QuestionInput: FC<QuestionInputProps> = (props) => {
-  const { spread, onQuestionInput } = props;
+  const { spread, onQuestionInput, onQuestionSet } = props;
 
   const { i18n } = useLocales();
 
@@ -50,19 +51,25 @@ const QuestionInput: FC<QuestionInputProps> = (props) => {
   }, []);
 
   return (
-    <div className={styles.container}>
-      <h3 className={styles.title}>{details}</h3>
+    <div className={styles.wrapper}>
+      <div className={styles.container}>
+        <h3 className={styles.title}>{details}</h3>
 
-      <TextArea
-        ref={ref}
-        name={'question'}
-        onChange={handleQuestionInput}
-        onBlur={handleInputBlur}
-        onFocus={handleInputFocus}
-        className={styles.input}
-        placeholder={i18n('Type here...')}
-        errorMessage={error ?? undefined}
-      />
+        <TextArea
+          ref={ref}
+          name={'question'}
+          onChange={handleQuestionInput}
+          onBlur={handleInputBlur}
+          onFocus={handleInputFocus}
+          className={styles.input}
+          placeholder={i18n('Type here...')}
+          errorMessage={error ?? undefined}
+        />
+
+        <Button className={styles.forward} onClick={onQuestionSet}>
+          {i18n('To spread')}
+        </Button>
+      </div>
     </div>
   );
 };

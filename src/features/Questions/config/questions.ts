@@ -4,11 +4,6 @@ import { SpreadType } from '@/entities/Spread';
 
 export const THEMES: Theme[] = [
   {
-    name: 'My own question',
-    questions: [],
-    isTemplate: false,
-  },
-  {
     name: 'Anxiety and uncertainty',
     questions: [
       {

@@ -6,14 +6,11 @@ import type { Question } from '../../model/types/questions';
 import { THEMES } from '../../config/questions';
 
 import Themes from '../Themes/Themes';
-import List from '../List/List';
 import Input from '../Input/QuestionInput';
 import Spread from '../Spread/Spread';
 
 import type { SpreadParams } from '@/entities/Spread';
 
-import useLocales from '@/shared/hooks/useLocales';
-import Button from '@/shared/ui/Button';
 import ArrowButton from '@/shared/ui/ArrowButton';
 
 import { type QuestionProps } from './Questions.props';
@@ -23,43 +20,11 @@ import styles from './Questions.module.css';
 export const Questions: FC<QuestionProps> = (props) => {
   const { onSpreadSelect } = props;
 
-  const {
-    changeStep,
-    changeSpread,
-    setQuestionsList,
-    changeTopic,
-    clearSpread,
-    topic,
-    questions,
-    spread,
-    step,
-  } = useQuestion();
+  const { changeStep, changeSpread, clearSpread, spread, step } = useQuestion();
 
   const navigate = useNavigate();
 
-  const { i18n } = useLocales();
-
   const [isSelected, setIsSelected] = useState(false);
-
-  const handleThemeChoose = (params: {
-    questions: Question[];
-    name: string;
-  }) => {
-    const { questions: questionList, name } = params;
-
-    changeTopic(name);
-
-    if (!questionList.length) {
-      changeStep({ isBack: false, value: 'input' });
-
-      changeSpread({ ...spread, details: i18n('My own question') });
-
-      return;
-    }
-
-    changeStep({ isBack: false, value: 'question' });
-    setQuestionsList(questionList);
-  };
 
   const handleQuestionChoose = (q: Question) => {
     const {
@@ -133,17 +98,17 @@ export const Questions: FC<QuestionProps> = (props) => {
   const Content = () => {
     switch (step) {
       case 'theme':
-        return <Themes themes={THEMES} onThemeChoose={handleThemeChoose} />;
-      case 'question':
         return (
-          <List
-            currentTheme={topic}
-            questions={questions}
-            onQuestionChoose={handleQuestionChoose}
-          />
+          <Themes themes={THEMES} onQuestionChoose={handleQuestionChoose} />
         );
       case 'input':
-        return <Input spread={spread} onQuestionInput={handleQuestionInput} />;
+        return (
+          <Input
+            spread={spread}
+            onQuestionInput={handleQuestionInput}
+            onQuestionSet={handleQuestionSet}
+          />
+        );
       case 'spread':
         return (
           <Spread
@@ -153,7 +118,9 @@ export const Questions: FC<QuestionProps> = (props) => {
           />
         );
       default:
-        return <Themes themes={THEMES} onThemeChoose={handleThemeChoose} />;
+        return (
+          <Themes themes={THEMES} onQuestionChoose={handleQuestionChoose} />
+        );
     }
   };
 
@@ -162,13 +129,7 @@ export const Questions: FC<QuestionProps> = (props) => {
       className={`${styles.questions}`}
       style={{ opacity: isSelected ? 0 : 1 }}
     >
-      <div className={`${styles.container} custom-scrollbar`}>{Content()}</div>
-
-      {step === 'input' && (
-        <Button className={styles.forward} onClick={handleQuestionSet}>
-          {i18n('To spread')}
-        </Button>
-      )}
+      {Content()}
 
       <ArrowButton className={styles.back} onClick={handleBackButtonClick} />
     </div>
