@@ -22,15 +22,15 @@ export const Layout = () => {
 
   const themeConfig = {
     standard: {
-      header: '#ffdb88',
+      header: '#001d73',
       footer: '#ff91f0',
     },
     gray: {
-      header: '#4e378b',
+      header: '#282e51',
       footer: '#dadada',
     },
     bronze: {
-      header: '#311600',
+      header: '#6b2700',
       footer: '#db9d9d',
     },
   };
