@@ -12,6 +12,7 @@ const Torch: FC<TorchProps> = (props) => {
       <div className={styles.flame} style={{ animationDelay: delay }}>
         <div className={styles.red} style={{ animationDelay: delay }}></div>
         <div className={styles.yellow} style={{ animationDelay: delay }}></div>
+        <div className={styles.red} style={{ animationDelay: delay }}></div>
         <div className={styles.blue}></div>
         <div className={styles.wick}></div>
       </div>
