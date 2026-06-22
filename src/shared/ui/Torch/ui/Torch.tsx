@@ -5,13 +5,13 @@ import type { TorchProps } from './Torch.props';
 import styles from './Torch.module.css';
 
 const Torch: FC<TorchProps> = (props) => {
-  const { style = {}, className } = props;
+  const { style = {}, className = '', delay } = props;
 
   return (
     <div className={`${styles.torch} ${className}`} style={style}>
-      <div className={styles.flame}>
-        <div className={styles.red}></div>
-        <div className={styles.yellow}></div>
+      <div className={styles.flame} style={{ animationDelay: delay }}>
+        <div className={styles.red} style={{ animationDelay: delay }}></div>
+        <div className={styles.yellow} style={{ animationDelay: delay }}></div>
         <div className={styles.blue}></div>
         <div className={styles.wick}></div>
       </div>

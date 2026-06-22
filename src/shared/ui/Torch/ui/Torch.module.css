@@ -10,9 +10,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 50%;
-  height: 35%;
-  animation: flame 15s infinite linear;
+  width: 36%;
+  height: 40%;
+  animation: flame 2s infinite linear;
+  transform-origin: bottom;
 }
 
 .red {
@@ -21,9 +22,9 @@
   background-color: #fb471f;
   border-top-left-radius: 50%;
   border-top-right-radius: 50%;
-  filter: blur(5px);
+  filter: blur(4px);
 
-  animation: red 3s infinite linear;
+  animation: shake 1s infinite linear;
 }
 
 .yellow {
@@ -33,20 +34,24 @@
   border-top-left-radius: 50%;
   border-top-right-radius: 50%;
   border-right: 1px solid #fb471f;
-  border-left: 2px solid #fb471f;
+  border-left: 3px solid #fb471f;
 
   border-bottom-left-radius: 30%;
   border-bottom-right-radius: 30%;
-  filter: blur(5px);
+  filter: blur(4px);
 
-  animation: yellow 15s infinite linear;
+  box-shadow: 0px 0px 20px 2px #ffff00;
+
+  animation: shake 1s infinite linear;
 }
 
 .blue {
   width: 40%;
   height: 20%;
   background-color: #2a38ff;
-  filter: blur(3px);
+  filter: blur(5px);
+
+  animation: shake 1s infinite linear;
 }
 
 .wick {
@@ -58,62 +63,55 @@
 
 .stick {
   height: 100%;
+  width: 55%;
   background-color: #f0f086;
   border-top-left-radius: 30%;
   border-top-right-radius: 30%;
+  border-bottom-right-radius: 10%;
+  border-bottom-left-radius: 10%;
   border-left: 5px solid #898921;
-  border-right: 5px solid #d4d43b;
+  border-right: 5px solid #b4b42d;
 
   opacity: 0.7;
-  filter: blur(5px);
-  box-shadow: 2px 2px 20px 3px #f0f086;
+  filter: blur(3px);
+  box-shadow: 0px 0px 7px 0px #f0f086;
 }
 
 .bottom {
   height: 1%;
-  width: 135%;
+  width: 80%;
   background-color: #232314;
   filter: blur(5px);
-  box-shadow: 2px 8px 30px 5px #232314;
+  box-shadow: 0px 2px 30px 5px #232314;
 }
 
 @keyframes flame {
   0% {
-    transform: scale(1);
+    transform: scaleY(1);
   }
 
   50% {
-    transform: scale(1.4);
+    transform: scaleY(1.2);
   }
   100% {
-    transform: scale(1);
+    transform: scaleY(1);
   }
 }
 
-@keyframes yellow {
+@keyframes shake {
   0% {
-    transform: translateX(0);
+    transform: translateX(0px);
   }
 
-  50% {
+  25% {
     transform: translateX(1px);
   }
 
-  100% {
+  50% {
     transform: translateX(-1px);
   }
-}
-
-@keyframes red {
-  0% {
-    transform: translateX(0);
-  }
-
-  50% {
-    transform: translateX(3px);
-  }
 
   100% {
-    transform: translateX(-3px);
+    transform: translateX(0px);
   }
 }
