@@ -39,8 +39,6 @@ const Spread: FC<SpreadProps> = (props) => {
     }
   };
 
-  console.log(question);
-
   const getQuestion = () => {
     if (question) {
       return (
