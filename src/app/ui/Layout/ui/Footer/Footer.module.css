@@ -32,7 +32,8 @@
 
   border-radius: 10px;
   background-color: var(--gradient-secondary);
-  box-shadow: 0px 0px 20px 5px var(--gradient-secondary);
+  box-shadow: 0px -9px 20px -6px var(--gradient-secondary);
+  filter: blur(3px);
 }
 
 .section {
