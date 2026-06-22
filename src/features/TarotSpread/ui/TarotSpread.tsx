@@ -1,12 +1,13 @@
 import { useEffect, useState, type FC } from 'react';
 
-import { useBlocker, Link } from 'react-router';
+import { useBlocker, useNavigate } from 'react-router';
 
 import Button from '@/shared/ui/Button';
 import Modal from '@/shared/ui/Modal';
 import useLocales from '@/shared/hooks/useLocales';
 import RatingInput from '@/shared/ui/RatingInput';
 import Error from '@/shared/ui/Error';
+import ArrowButton from '@/shared/ui/ArrowButton';
 
 import TarotCard from '@/entities/TarotCard';
 import { updateSpread } from '@/entities/Spread';
@@ -15,7 +16,6 @@ import { useUser } from '@/entities/User';
 import { SpreadConfig } from '../config/spreads';
 import { useReading } from '../model/hooks/useReading/useReading';
 import { useInterpretation } from '../model/hooks/useInterpretation/useInterpretation';
-import Spinner from '@/shared/ui/Spinner';
 
 import Placeholder from './Placeholder/Placeholder';
 import TorchComposition from './TorchComposition/TorchComposition';
@@ -30,6 +30,8 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
 
   const [step, setStep] = useState<'spread' | 'interpretation'>('spread');
 
+  const navigate = useNavigate();
+
   const {
     cards,
     activeCard,
@@ -38,8 +40,13 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
     changeActiveCard,
     resetSpread,
   } = useReading();
-  const { getInterpretation, interpretation, isLoading, spreadId, error } =
-    useInterpretation({ onFinish: onInterpretationFinish });
+  const {
+    getInterpretation,
+    interpretation = ['Thinking...'],
+    isLoading,
+    spreadId,
+    error,
+  } = useInterpretation({ onFinish: onInterpretationFinish });
 
   const { i18n } = useLocales();
 
@@ -58,7 +65,7 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
 
   const [rating, setRating] = useState(0);
 
-  const { state, reset, proceed } = useBlocker(!interpretation);
+  const { state, reset, proceed } = useBlocker(isLoading);
 
   const handleRatingInputChange = async (rate: number) => {
     setRating(rate);
@@ -115,43 +122,46 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
   }
 
   if (step === 'interpretation') {
-    return isLoading ? (
-      <div className={styles.loading}>
-        {i18n('Interpreting')}...
-        <Spinner size={'l'} className={styles.spinner} />
-      </div>
-    ) : (
+    return (
       <div className={styles.tarotSpread}>
+        <TorchComposition className={styles.torchComposition} />
+
         <h3 className={styles.title}>{title}</h3>
 
-        <div className={styles['cards-small']}>
-          {cards.map((card) => {
-            const { name, isInverted } = card;
+        <div className={styles['interpretation-container']}>
+          <div className={`${styles['cards-small']} custom-scrollbar`}>
+            {cards.map((card) => {
+              const { name, isInverted } = card;
 
-            return (
-              <TarotCard
-                name={name}
-                key={name}
-                localizedName={i18n(name)}
-                isInverted={isInverted}
-                className={styles['card-small']}
-              />
-            );
-          })}
+              return (
+                <TarotCard
+                  name={name}
+                  key={name}
+                  localizedName={i18n(name)}
+                  isInverted={isInverted}
+                  className={styles['card-small']}
+                />
+              );
+            })}
+          </div>
+
+          <TextContainer
+            paragraphs={interpretation ?? []}
+            maxHeight={596}
+            maxHeightMeasure={'px'}
+            className={styles.interpretation}
+          >
+            <RatingInput className={styles.rating} value={rating} onChange={handleRatingInputChange} />
+          </TextContainer>
         </div>
 
-        <TextContainer
-          paragraphs={interpretation ?? []}
-          maxHeight={400}
-          maxHeightMeasure={'px'}
-          className={styles.interpretation}
-        />
+        <div className={styles.bottom}>
+          <ArrowButton onClick={() => navigate('/')} />
 
-        <RatingInput value={rating} onChange={handleRatingInputChange} />
-
-        <Link to={'/history'} className={styles.link}>
-          <Button>{i18n('To spreads history')}</Button>
-        </Link>
+          <Button onClick={() => navigate('/history')}>
+            {i18n('To spreads history')}
+          </Button>
+        </div>
       </div>
     );
   }

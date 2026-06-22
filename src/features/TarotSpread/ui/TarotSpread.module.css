@@ -3,7 +3,9 @@
   flex-direction: column;
   align-items: center;
   flex: 1;
-  padding-bottom: 20px;
+  height: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .button {
@@ -42,23 +44,26 @@
 
 .cards-small {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 10px;
-}
-
-.cards-small > div + div {
-  margin-left: 10px;
-}
-
-.cards-small > div {
-  margin-top: 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+  padding-right: 5px;
+  max-height: 526px;
+  margin-right: 10px;
+  min-width: 80px;
 }
 
 .card-small {
   height: 120px;
+  min-height: 120px;
   width: 60px;
+  min-width: 60px;
+}
+
+.card-small + .card-small {
+  margin-top: 10px;
 }
 
 .card-small * {
@@ -69,8 +74,17 @@
   box-shadow: 0 0px 30px 5px var(--shadow-primary);
 }
 
+.interpretation-container {
+  display: flex;
+  justify-content: space-between;
+  max-height: 80%;
+  overflow: hidden;
+  padding-top: 20px;
+  z-index: 1;
+}
+
 .interpretation {
-  width: 300px !important;
+  background-color: #544e4e89;
 }
 
 .loading {
@@ -118,4 +132,18 @@
   position: absolute;
   width: 100%;
   height: 100%;
+}
+
+.rating {
+  margin-top: 10px;
+}
+
+.bottom {
+  display: flex;
+  margin-top: 10px;
+  z-index: 1;
+}
+
+.bottom > button + button {
+  margin-left: 10px;
 }
