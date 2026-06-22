@@ -7,7 +7,6 @@ import useLocales from '@/shared/hooks/useLocales';
 import TRANSLATIONS_EN from '@/shared/locales/en/daily';
 import TRANSLATIONS_RU from '@/shared/locales/ru/daily';
 import Spinner from '@/shared/ui/Spinner';
-import Zodiac from '@/shared/ui/Zodiac';
 import Error from '@/shared/ui/Error';
 import Button from '@/shared/ui/Button';
 
@@ -21,7 +20,6 @@ export const DailyCard = () => {
   const {
     isLoading,
     updateUserActivity,
-    sign,
     id,
     isAvailable,
     error,
@@ -53,8 +51,6 @@ export const DailyCard = () => {
   if (!isAvailable) {
     return (
       <div className={styles.empty}>
-        <Zodiac sign={sign} />
-
         <span>{i18n("You've already had your card today")}</span>
 
         <Link className={styles.link} to={'/history'}>

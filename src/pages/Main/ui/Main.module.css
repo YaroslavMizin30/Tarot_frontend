@@ -3,6 +3,7 @@
   grid-template-columns: 1fr;
   grid-gap: 20px;
   width: 240px;
+  padding-top: 50%;
 }
 
 .container * {

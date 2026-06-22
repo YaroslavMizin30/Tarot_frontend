@@ -3,13 +3,12 @@ import { useNavigate } from 'react-router';
 
 import { useSpreads, useSummaries } from '@/entities/Spread';
 import TarotCard from '@/entities/TarotCard';
-import { useUser, useSubscription } from '@/entities/User';
+import { useSubscription } from '@/entities/User';
 
 import ArrowButton from '@/shared/ui/ArrowButton';
 import useLocales from '@/shared/hooks/useLocales';
 import TRANSLATIONS_EN from '@/shared/locales/en/history';
 import TRANSLATIONS_RU from '@/shared/locales/ru/history';
-import Zodiac from '@/shared/ui/Zodiac';
 import Button from '@/shared/ui/Button';
 import Spinner from '@/shared/ui/Spinner';
 import Tooltip from '@/shared/ui/Tooltip';
@@ -35,14 +34,13 @@ export const HistoryPage = () => {
   const navigate = useNavigate();
 
   const { i18n, addTranslations, locale } = useLocales();
-  const { user, isLoading: isUserLoading } = useUser();
   const { isAvailableForCurrentTariff, getExpiredMessage } = useSubscription();
 
   useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
   }, [locale]);
 
-  if (isUserLoading || areSpreadsLoading || areSummariesLoading) {
+  if (areSpreadsLoading || areSummariesLoading) {
     return <Spinner size={'l'} />;
   }
 
@@ -93,8 +91,6 @@ export const HistoryPage = () => {
   return (
     <div className={styles.container}>
       <h3 className={styles.title}>{i18n('Spreads history')}</h3>
-
-      <Zodiac sign={user?.sign} className={styles.zodiac} />
 
       {spreads && spreads.length > 0 ? (
         <div className={`${styles.spreads} custom-scrollbar`}>

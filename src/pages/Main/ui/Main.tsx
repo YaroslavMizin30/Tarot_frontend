@@ -1,14 +1,13 @@
 import { useEffect, type SyntheticEvent } from 'react';
-import { useNavigate, useOutletContext } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import Button from '@/shared/ui/Button';
 import TRANSLATIONS_EN from '@/shared/locales/en/common';
 import TRANSLATIONS_RU from '@/shared/locales/ru/common';
 import useLocales from '@/shared/hooks/useLocales';
-import Zodiac from '@/shared/ui/Zodiac';
 import Tooltip from '@/shared/ui/Tooltip';
 
-import { type User, useSubscription } from '@/entities/User';
+import { useSubscription } from '@/entities/User';
 
 import styles from './Main.module.css';
 
@@ -23,8 +22,6 @@ export const MainPage = () => {
 
   const { i18n, addTranslations, locale } = useLocales();
 
-  const { user } = useOutletContext<{ user: User }>();
-
   const { isAvailableForCurrentTariff, getExpiredMessage } = useSubscription();
 
   useEffect(() => {
@@ -33,8 +30,6 @@ export const MainPage = () => {
 
   return (
     <div className={styles.container}>
-      <Zodiac sign={user?.sign} />
-
       <Tooltip
         position={'top'}
         content={getExpiredMessage()}

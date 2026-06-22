@@ -1,8 +1,10 @@
 import { Outlet, useNavigation } from 'react-router';
 
 import Spinner from '@/shared/ui/Spinner';
+import Zodiac from '@/shared/ui/Zodiac';
 
 import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 
 import { useAuth } from '@/app/auth/auth';
 
@@ -30,7 +32,7 @@ export const Layout = () => {
     bronze: {
       header: '#311600',
       footer: '#db9d9d',
-    }
+    },
   };
 
   useEffect(() => {
@@ -48,6 +50,8 @@ export const Layout = () => {
 
         <div className={styles.couldBottom}></div>
 
+        <Zodiac sign={user?.sign} className={styles.zodiac} />
+
         {isLoading || isAuthenticating ? (
           <Spinner size={'l'} />
         ) : (
@@ -56,6 +60,8 @@ export const Layout = () => {
           </div>
         )}
       </main>
+
+      <Footer />
     </div>
   );
 };
