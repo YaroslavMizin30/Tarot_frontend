@@ -8,11 +8,17 @@ import Footer from '../Footer/Footer';
 
 import { useAuth } from '@/app/auth/auth';
 
+import useLocales from '@/shared/hooks/useLocales';
+import TRANSLATIONS_EN from '@/shared/locales/en/common';
+import TRANSLATIONS_RU from '@/shared/locales/ru/common';
+
 import styles from './Layout.module.css';
 import { useEffect } from 'react';
 
 export const Layout = () => {
   const { state } = useNavigation();
+
+  const { addTranslations, locale } = useLocales();
 
   const isLoading = state === 'loading';
 
@@ -34,6 +40,10 @@ export const Layout = () => {
       footer: '#db9d9d',
     },
   };
+
+  useEffect(() => {
+    addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
+  }, [locale]);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);

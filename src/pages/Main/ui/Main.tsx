@@ -1,9 +1,7 @@
-import { useEffect, type SyntheticEvent } from 'react';
+import { type SyntheticEvent } from 'react';
 import { useNavigate } from 'react-router';
 
 import Button from '@/shared/ui/Button';
-import TRANSLATIONS_EN from '@/shared/locales/en/common';
-import TRANSLATIONS_RU from '@/shared/locales/ru/common';
 import useLocales from '@/shared/hooks/useLocales';
 
 import styles from './Main.module.css';
@@ -17,11 +15,7 @@ export const MainPage = () => {
     navigate(e.currentTarget.value);
   };
 
-  const { i18n, addTranslations, locale } = useLocales();
-
-  useEffect(() => {
-    addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
-  }, [locale]);
+  const { i18n } = useLocales();
 
   return (
     <div className={styles.container}>

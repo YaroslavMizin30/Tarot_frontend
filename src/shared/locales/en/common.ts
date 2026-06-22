@@ -20,6 +20,11 @@ const TRANSLATIONS_EN = {
   'Standard': 'Standard',
   'Gray': 'Gray',
   'Bronze': 'Bronze',
+  'Tarot': 'Tarot',
+  'Astrology': 'Astrology',
+  'Roulette': 'Roulette',
+  'Purchase': 'Purchase',
+  'Profile': 'Profile',
 };
 
 export default TRANSLATIONS_EN;

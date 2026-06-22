@@ -20,6 +20,11 @@ const TRANSLATIONS_RU = {
   'Standard': 'Обычная',
   'Gray': 'Серая',
   'Bronze': 'Бронза',
+  'Tarot': 'Таро',
+  'Astrology': 'Астрология',
+  'Roulette': 'Рулетка',
+  'Purchase': 'Покупки',
+  'Profile': 'Профиль',
 };
 
 export default TRANSLATIONS_RU;
