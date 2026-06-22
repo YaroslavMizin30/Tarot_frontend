@@ -30,57 +30,13 @@ export const MainPage = () => {
 
   return (
     <div className={styles.container}>
-      <Tooltip
-        position={'top'}
-        content={getExpiredMessage()}
-        isEnabled={
-          !isAvailableForCurrentTariff({
-            standard: true,
-            extended: true,
-            trial: false,
-          })
-        }
-      >
-        <Button
-          value={'/daily'}
-          onClick={handleNavigationButtonClick}
-          disabled={
-            !isAvailableForCurrentTariff({
-              standard: true,
-              extended: true,
-              trial: false,
-            })
-          }
-        >
-          {i18n('Card of the day')}
-        </Button>
-      </Tooltip>
+      <Button value={'/daily'} onClick={handleNavigationButtonClick}>
+        {i18n('Card of the day')}
+      </Button>
 
-      <Tooltip
-        position={'top'}
-        content={getExpiredMessage()}
-        isEnabled={
-          !isAvailableForCurrentTariff({
-            standard: true,
-            extended: true,
-            trial: false,
-          })
-        }
-      >
-        <Button
-          value={'/reading'}
-          onClick={handleNavigationButtonClick}
-          disabled={
-            !isAvailableForCurrentTariff({
-              standard: true,
-              extended: true,
-              trial: false,
-            })
-          }
-        >
-          {i18n('Make spread')}
-        </Button>
-      </Tooltip>
+      <Button value={'/reading'} onClick={handleNavigationButtonClick}>
+        {i18n('Make spread')}
+      </Button>
 
       <Button value={'/history'} onClick={handleNavigationButtonClick}>
         {i18n('Spreads history')}
