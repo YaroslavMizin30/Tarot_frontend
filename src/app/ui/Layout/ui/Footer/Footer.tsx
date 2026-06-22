@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 import useLocales from '@/shared/hooks/useLocales';
 
@@ -12,8 +12,10 @@ import styles from './Footer.module.css';
 
 const Footer = () => {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   const TAROT_PAGES = ['/', '/reading', '/about', '/daily', '/history'];
+  const SETTING_PAGES = ['/settings'];
 
   const { i18n } = useLocales();
 
@@ -23,6 +25,7 @@ const Footer = () => {
         <div className={styles.cover}></div>
         <div
           className={`${styles.section} ${TAROT_PAGES.includes(pathname) ? styles.active : ''}`}
+          onClick={() => navigate('/')}
         >
           <TarotPage />
 
@@ -47,10 +50,13 @@ const Footer = () => {
           <span>{i18n('Purchase')}</span>
         </div>
 
-        <div className={styles.section}>
+        <div
+          className={`${styles.section} ${SETTING_PAGES.includes(pathname) ? styles.active : ''}`}
+          onClick={() => navigate('/settings')}
+        >
           <ProfilePage />
 
-          <span>Profile</span>
+          <span>{i18n('Profile')}</span>
         </div>
       </div>
     </footer>
