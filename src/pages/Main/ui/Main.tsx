@@ -6,8 +6,6 @@ import TRANSLATIONS_EN from '@/shared/locales/en/common';
 import TRANSLATIONS_RU from '@/shared/locales/ru/common';
 import useLocales from '@/shared/hooks/useLocales';
 
-import { useSubscription } from '@/entities/User';
-
 import styles from './Main.module.css';
 
 export const MainPage = () => {
