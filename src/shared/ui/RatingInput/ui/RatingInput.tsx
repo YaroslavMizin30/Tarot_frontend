@@ -9,6 +9,7 @@ export const RatingInput = ({
   onChange,
   size = 'md',
   disabled = false,
+  className = '',
 }: RatingInputProps) => {
   const [hoverRating, setHoverRating] = useState(0);
 
@@ -31,7 +32,7 @@ export const RatingInput = ({
   };
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${className}`}>
       {[1, 2, 3, 4, 5].map((star) => (
         <button
           key={star}

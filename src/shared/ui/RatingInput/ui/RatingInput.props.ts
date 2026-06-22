@@ -3,4 +3,5 @@ export interface RatingInputProps {
   onChange: (rating: number) => void;
   size?: 'sm' | 'md' | 'lg';
   disabled?: boolean;
+  className?: string;
 }
