@@ -3,14 +3,14 @@
   z-index: 1000;
 
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   padding: 8px;
   width: 100%;
 
   color: var(--border-primary);
 
-  background-color: var(--background-primary);
+  background-color: var(--gradient-secondary);
 }
 
 .header-mobile {
@@ -26,7 +26,7 @@
   width: 30px;
   height: 30px;
 
-  color: var(--text-secondary);
+  color: var(--text-primary);
 
   cursor: pointer;
 }
@@ -34,7 +34,7 @@
 .globe {
   width: 20px;
   height: 20px;
-  margin-right: 10px;
+  margin-right: 15px;
 }
 
 .home {
@@ -51,7 +51,7 @@
 .audio {
   width: 23px;
   height: 23px;
-  margin-right: 13px;
+  margin-right: 10px;
 }
 
 .title {

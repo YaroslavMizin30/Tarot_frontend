@@ -1,15 +1,11 @@
 import { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router';
 
-import SettingsIcon from '@/shared/assets/svg/common/settings.svg';
-import HomeIcon from '@/shared/assets/svg/common/home.svg';
 import GlobeIcon from '@/shared/assets/svg/common/globe.svg';
 import Theme from '@/shared/assets/svg/common/theme.svg';
 import AudioOn from '@/shared/assets/svg/common/audio_on.svg';
 import AudioOff from '@/shared/assets/svg/common/audio_off.svg';
 import useOutsideClick from '@/shared/hooks/useOutsideClick';
 import useLocales, { type Locale } from '@/shared/hooks/useLocales';
-import Tooltip from '@/shared/ui/Tooltip';
 
 import { useUser } from '@/entities/User';
 
@@ -27,24 +23,9 @@ const THEMES: { name: string; value: 'standard' | 'gray' | 'bronze' }[] = [
 ];
 
 const Header = () => {
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-
   const [isLangSwitcherVisible, setIsLangSwitcherVisible] = useState(false);
   const [isThemeSwitcherVisible, setIsThemeSwitcherVisible] = useState(false);
   const { user, updateUser } = useUser();
-
-  const handleSettingsClick = () => {
-    if (user) {
-      navigate('/settings');
-    }
-  };
-
-  const handleHomeClick = () => {
-    if (user) {
-      navigate('/');
-    }
-  };
 
   const handleLangSwitcherClick = () => {
     setIsLangSwitcherVisible(!isLangSwitcherVisible);
@@ -74,32 +55,7 @@ const Header = () => {
 
   return (
     <header className={styles.header}>
-      <Tooltip
-        isEnabled={pathname === '/'}
-        position={'right'}
-        style={{ position: 'relative', top: '3px' }}
-        content={i18n('Already here')}
-        tooltipClassName={styles.tooltip}
-      >
-        <HomeIcon
-          className={`${styles.home} ${!user && styles.hidden}`}
-          onClick={handleHomeClick}
-        />
-      </Tooltip>
-
       <div className={styles.rightSection}>
-        {user?.audio ? (
-          <AudioOn
-            onClick={handleAudioClick}
-            className={`${styles.audio} ${!user && styles.hidden}`}
-          />
-        ) : (
-          <AudioOff
-            onClick={handleAudioClick}
-            className={`${styles.audio} ${!user && styles.hidden}`}
-          />
-        )}
-
         <Theme
           ref={themeSwitcherRef}
           className={`${styles.moon} ${!user && styles.hidden}`}
@@ -156,18 +112,17 @@ const Header = () => {
           </div>
         )}
 
-        <Tooltip
-          isEnabled={pathname === '/settings'}
-          position={'left'}
-          style={{ position: 'relative', top: '3px' }}
-          content={i18n('Already here')}
-          tooltipClassName={styles.tooltip}
-        >
-          <SettingsIcon
-            className={`${styles.settings} ${!user && styles.hidden}`}
-            onClick={handleSettingsClick}
+        {user?.audio ? (
+          <AudioOn
+            onClick={handleAudioClick}
+            className={`${styles.audio} ${!user && styles.hidden}`}
           />
-        </Tooltip>
+        ) : (
+          <AudioOff
+            onClick={handleAudioClick}
+            className={`${styles.audio} ${!user && styles.hidden}`}
+          />
+        )}
       </div>
     </header>
   );
