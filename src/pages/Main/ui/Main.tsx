@@ -5,7 +5,6 @@ import Button from '@/shared/ui/Button';
 import TRANSLATIONS_EN from '@/shared/locales/en/common';
 import TRANSLATIONS_RU from '@/shared/locales/ru/common';
 import useLocales from '@/shared/hooks/useLocales';
-import Tooltip from '@/shared/ui/Tooltip';
 
 import { useSubscription } from '@/entities/User';
 
@@ -21,8 +20,6 @@ export const MainPage = () => {
   };
 
   const { i18n, addTranslations, locale } = useLocales();
-
-  const { isAvailableForCurrentTariff, getExpiredMessage } = useSubscription();
 
   useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
