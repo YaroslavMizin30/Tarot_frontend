@@ -69,13 +69,15 @@ const routes: RouteObject[] = [
           },
         },
       },
-      {path: '/history/summary/:id', lazy: {
-        async Component() {
-          const { default: SummaryPage } = await import('@/pages/Summary');
+      {
+        path: '/history/summary/:id',
+        lazy: {
+          async Component() {
+            const { default: SummaryPage } = await import('@/pages/Summary');
 
-          return SummaryPage;
+            return SummaryPage;
+          },
         },
-      }
       },
       {
         path: '/reg',
@@ -84,9 +86,19 @@ const routes: RouteObject[] = [
             const { default: RegisterPage } = await import('@/pages/Registry');
 
             return RegisterPage;
-          }
-        }
-      }
+          },
+        },
+      },
+      {
+        path: '/astrology',
+        lazy: {
+          async Component() {
+            const { default: AstrologyPage } = await import('@/pages/Astrology');
+
+            return AstrologyPage;
+          },
+        },
+      },
     ],
   },
 ];

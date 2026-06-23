@@ -16,6 +16,7 @@ const Footer = () => {
 
   const TAROT_PAGES = ['/', '/reading', '/about', '/daily', '/history'];
   const SETTING_PAGES = ['/settings'];
+  const ASTROLOGY_PAGES = ['/astrology'];
 
   const { i18n } = useLocales();
 
@@ -32,7 +33,10 @@ const Footer = () => {
           <span>{i18n('Tarot')}</span>
         </div>
 
-        <div className={styles.section}>
+        <div
+          className={`${styles.section} ${ASTROLOGY_PAGES.includes(pathname) ? styles.active : ''}`}
+          onClick={() => navigate('/astrology')}
+        >
           <AstrologyPage />
 
           <span>{i18n('Astrology')}</span>
