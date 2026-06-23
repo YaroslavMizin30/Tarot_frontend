@@ -11,10 +11,8 @@ import styles from './AstrologyPage.module.css';
 export const AstrologyPage = () => {
   const navigate = useNavigate();
 
-  const handleOpen = (subsection: Subsection) => {
-    if (subsection === 'natal-chart') {
-      navigate('/natal-chart');
-    }
+  const handleOpen = (subsection: `${Subsection}`) => {
+    navigate(subsection);
   };
 
   return (

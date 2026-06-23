@@ -10,6 +10,7 @@
 
 .menu {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   position: relative;
   z-index: 1;
@@ -18,4 +19,8 @@
 
 .menuButton {
   width: 100%;
+}
+
+.menuButton + .menuButton {
+  margin-top: 20px;
 }

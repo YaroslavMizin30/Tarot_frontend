@@ -101,13 +101,24 @@ const routes: RouteObject[] = [
         },
       },
       {
-        path: 'natal-chart',
+        path: '/natal-chart',
         lazy: {
           async Component() {
             const { default: NatalChartPage } =
               await import('@/pages/NatalChart');
 
             return NatalChartPage;
+          },
+        },
+      },
+      {
+        path: '/horoscopes',
+        lazy: {
+          async Component() {
+            const { default: HoroscopesPage } =
+              await import('@/pages/Horoscopes');
+
+            return HoroscopesPage;
           },
         },
       },
