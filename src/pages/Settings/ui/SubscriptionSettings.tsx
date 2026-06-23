@@ -107,8 +107,6 @@ const SubscriptionSettings = (props: { onBackButtonClick: () => void }) => {
                   <li>{i18n('daily card')}</li>
                   <li>{`${i18n('spreads up to')} 9 ${i18n('cards')}`}</li>
                   <li>{`${TARIFFS.extended.spreads} ${i18n('spreads a day')}`}</li>
-                  <li>{i18n('predictions summary')}</li>
-                  <li>{i18n('spreads summary')}</li>
                 </ul>
               </div>
             )}

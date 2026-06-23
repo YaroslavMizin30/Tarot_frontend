@@ -125,8 +125,6 @@ const TRANSLATIONS_EN = {
   'cards': 'cards',
   'spreads a day': 'spreads a day',
   'Extended': 'Extended',
-  'predictions summary': 'predictions summary',
-  'spreads summary': 'spreads summary',
 
   'Rate the app': 'Rate the app',
   'Rating convenience': 'Convenience',

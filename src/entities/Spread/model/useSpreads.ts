@@ -19,10 +19,6 @@ export const useSpreads = () => {
     enabled: !!user,
   });
 
-  const unsummarizedSpreads = useMemo(() => {
-    return spreads?.filter((spread) => !spread.isSummarized);
-  }, [spreads]);
-
   const todaysSpreads = useMemo(() => {
     const today = getTodayString();
 
@@ -34,7 +30,6 @@ export const useSpreads = () => {
   return {
     isLoading,
     spreads,
-    unsummarizedSpreads,
     todaysSpreadsCount: todaysSpreads?.length ?? 0,
     fetchSpreads: refetch,
   };

@@ -126,8 +126,6 @@ const TRANSLATIONS_RU = {
   'cards': 'карт',
   'spreads a day': 'раскладов в день',
   'Extended': 'Расширенная',
-  'predictions summary': 'обобщения предсказаний',
-  'spreads summary': 'обобщения раскладов',
 
   'Rate the app': 'Оценить приложение',
   'Rating convenience': 'Удобство',

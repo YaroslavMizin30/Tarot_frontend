@@ -29,7 +29,6 @@ export type Spread = SpreadParams & {
   interpretation: string;
   date: string;
   spreadId: string;
-  isSummarized?: boolean;
   rating?: number;
 };
 
@@ -44,12 +43,4 @@ export interface Activity {
    * Used to enforce the once-per-paid-period update restriction.
    */
   natalChartLastUpdate?: string;
-}
-
-export interface Summary {
-  userId: string;
-  date: string;
-  summary: string;
-  id: string;
-  rating?: number;
 }

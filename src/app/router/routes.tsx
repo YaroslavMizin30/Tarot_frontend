@@ -70,16 +70,6 @@ const routes: RouteObject[] = [
         },
       },
       {
-        path: '/history/summary/:id',
-        lazy: {
-          async Component() {
-            const { default: SummaryPage } = await import('@/pages/Summary');
-
-            return SummaryPage;
-          },
-        },
-      },
-      {
         path: '/reg',
         lazy: {
           async Component() {

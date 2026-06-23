@@ -12,11 +12,6 @@ export const queryKeys = {
     all: ['spreads'] as const,
     byUserId: (userId: string | number) => ['spreads', String(userId)] as const,
   },
-  summaries: {
-    all: ['summaries'] as const,
-    byUserId: (userId: string | number) =>
-      ['summaries', String(userId)] as const,
-  },
   rating: {
     all: ['rating'] as const,
     byUserId: (userId: string | number) => ['rating', String(userId)] as const,

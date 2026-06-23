@@ -18,8 +18,7 @@
   margin-top: 16px;
 }
 
-.spreads,
-.summaries {
+.spreads {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -29,12 +28,7 @@
   z-index: 100;
 }
 
-.summaries > div + div {
-  margin-top: 10px;
-}
-
-.spread,
-.summary {
+.spread {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
@@ -96,11 +90,6 @@
   justify-content: center;
   align-items: center;
   color: var(--text-primary);
-}
-
-.summary-button {
-  margin-top: 10px;
-  margin-bottom: 10px;
 }
 
 .spinner {

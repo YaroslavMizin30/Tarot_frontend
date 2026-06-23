@@ -1,9 +1,8 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
-import { useSpreads, useSummaries } from '@/entities/Spread';
+import { useSpreads } from '@/entities/Spread';
 import TarotCard from '@/entities/TarotCard';
-import { useSubscription } from '@/entities/User';
 
 import ArrowButton from '@/shared/ui/ArrowButton';
 import useLocales from '@/shared/hooks/useLocales';
@@ -11,82 +10,23 @@ import TRANSLATIONS_EN from '@/shared/locales/en/history';
 import TRANSLATIONS_RU from '@/shared/locales/ru/history';
 import Button from '@/shared/ui/Button';
 import Spinner from '@/shared/ui/Spinner';
-import Tooltip from '@/shared/ui/Tooltip';
 
 import styles from './HistoryPage.module.css';
 
-const MIN_SPREADS_FOR_SUMMARY = 2;
-
 export const HistoryPage = () => {
-  const {
-    spreads,
-    isLoading: areSpreadsLoading,
-    unsummarizedSpreads,
-    fetchSpreads,
-  } = useSpreads();
-  const {
-    summaries,
-    addSummary,
-    isLoading: areSummariesLoading,
-    isAnalyzing,
-  } = useSummaries(fetchSpreads);
+  const { spreads, isLoading: areSpreadsLoading } = useSpreads();
 
   const navigate = useNavigate();
 
   const { i18n, addTranslations, locale } = useLocales();
-  const { isAvailableForCurrentTariff, getExpiredMessage } = useSubscription();
 
   useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
   }, [locale]);
 
-  if (areSpreadsLoading || areSummariesLoading) {
+  if (areSpreadsLoading) {
     return <Spinner size={'l'} />;
   }
-
-  if (isAnalyzing) {
-    return (
-      <div className={styles.loading}>
-        {i18n('Analyzing spreads')}...
-        <Spinner size={'l'} className={styles.spinner} />
-      </div>
-    );
-  }
-
-  const handleSummaryButtonClick = async () => {
-    if (!spreads) {
-      return;
-    }
-
-    await addSummary(unsummarizedSpreads ?? spreads);
-  };
-
-  const getSummaryTooltipContent = () => {
-    if (
-      Number(spreads?.length) >= MIN_SPREADS_FOR_SUMMARY &&
-      Number(unsummarizedSpreads?.length) < MIN_SPREADS_FOR_SUMMARY
-    ) {
-      return i18n(
-        'Spreads have been summarized. Need at least 2 spreads, that are not summarized',
-      );
-    } else if (Number(unsummarizedSpreads?.length) < MIN_SPREADS_FOR_SUMMARY) {
-      return i18n('Need at least 2 spreads, that are not summarized');
-    }
-
-    return getExpiredMessage();
-  };
-
-  const isSummaryEnabled = () => {
-    if (Number(unsummarizedSpreads?.length) < MIN_SPREADS_FOR_SUMMARY) {
-      return false;
-    }
-
-    return isAvailableForCurrentTariff({
-      trial: false,
-      standard: false,
-      extended: true,
-    });
-  };
 
   return (
     <div className={styles.container}>
@@ -143,51 +83,6 @@ export const HistoryPage = () => {
             {i18n('Make spread')}
           </Button>
         </div>
-      )}
-
-      <Tooltip
-        position={'top'}
-        content={getSummaryTooltipContent()}
-        isEnabled={!isSummaryEnabled()}
-        style={{ textAlign: 'center' }}
-      >
-        <Button
-          className={styles['summary-button']}
-          onClick={handleSummaryButtonClick}
-          disabled={!isSummaryEnabled()}
-        >
-          {i18n('Make summary')}
-        </Button>
-      </Tooltip>
-
-      {Boolean(summaries?.length) && (
-        <>
-          <h3 className={styles.title}>{i18n('Summaries')}</h3>
-
-          <div className={`${styles.summaries} custom-scrollbar`}>
-            {summaries?.map((item) => {
-              const { id, summary, date } = item;
-
-              return (
-                <div key={id} className={styles.summary}>
-                  <div className={styles.info}>
-                    {`${i18n('Date')}: ${new Date(date).toLocaleDateString()}`}{' '}
-                    <Button
-                      onClick={() =>
-                        navigate(`/history/summary/${id}`, { state: item })
-                      }
-                    >
-                      {i18n('View')}
-                    </Button>
-                  </div>
-                  <div className={`${styles.interpretation} custom-scrollbar`}>
-                    {summary}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </>
       )}
 
       <ArrowButton
