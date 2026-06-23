@@ -93,9 +93,21 @@ const routes: RouteObject[] = [
         path: '/astrology',
         lazy: {
           async Component() {
-            const { default: AstrologyPage } = await import('@/pages/Astrology');
+            const { default: AstrologyPage } =
+              await import('@/pages/Astrology');
 
             return AstrologyPage;
+          },
+        },
+      },
+      {
+        path: 'natal-chart',
+        lazy: {
+          async Component() {
+            const { default: NatalChartPage } =
+              await import('@/pages/NatalChart');
+
+            return NatalChartPage;
           },
         },
       },

@@ -16,7 +16,7 @@ const Footer = () => {
 
   const TAROT_PAGES = ['/', '/reading', '/about', '/daily', '/history'];
   const SETTING_PAGES = ['/settings'];
-  const ASTROLOGY_PAGES = ['/astrology'];
+  const ASTROLOGY_PAGES = ['/astrology', '/natal-chart'];
 
   const { i18n } = useLocales();
 
