@@ -1,58 +1,47 @@
-import { useEffect, useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { updateActivity, getActivity } from '@/entities/Spread';
 import { useUser } from '@/entities/User';
+import { queryKeys } from '@/shared/api/queryKeys';
 
 import { isToday } from '@/shared/utils/isToday';
 
 export const useDaily = () => {
   const { user } = useUser();
+  const queryClient = useQueryClient();
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [isAvailable, setIsAvailable] = useState(true);
+  const {
+    data: activity,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: queryKeys.activity.byUserId(user?.id ?? 'no-user'),
+    queryFn: () => getActivity(user!.id),
+    enabled: !!user,
+  });
 
-  const checkDaily = async () => {
-    if (!user) {
-      return;
-    }
-
-    try {
-      const activity = await getActivity(user.id);
-
-      if (activity) {
-        const { dailyCardLastDate } = activity;
-
-        if (isToday(dailyCardLastDate)) {
-          setIsAvailable(false);
-        }
+  const updateActivityMutation = useMutation({
+    mutationFn: async () => {
+      if (user) {
+        await updateActivity(user.id, {
+          dailyCardLastDate: new Date().toISOString(),
+        });
       }
-    } catch {
-      setError('Error loading data. Please try again');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.activity.all });
+    },
+  });
 
-  const updateUserActivity = async () => {
-    if (user) {
-      await updateActivity(user.id, {
-        dailyCardLastDate: new Date().toISOString(),
-      });
-    }
-  };
-
-  useEffect(() => {
-    checkDaily();
-  }, []);
+  const isAvailable = activity ? !isToday(activity.dailyCardLastDate) : true;
 
   return {
     isAvailable,
     sign: user?.sign,
     isLoading,
-    updateUserActivity,
-    checkDaily,
+    updateUserActivity: updateActivityMutation.mutateAsync,
+    checkDaily: refetch,
     id: user?.id,
-    error,
+    error: null,
   };
 };

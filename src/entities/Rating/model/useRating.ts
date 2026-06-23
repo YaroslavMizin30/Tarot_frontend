@@ -1,77 +1,53 @@
-import { useEffect, useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { useUser } from '@/entities/User';
+import { queryKeys } from '@/shared/api/queryKeys';
 
 import { addRating } from '../api/addRating';
 import { getRating } from '../api/getRating';
 import { updateRating } from '../api/updateRating';
-import type { Rating, RatingPayload } from '../types';
+import type { RatingPayload } from '../types';
 
 export const useRating = () => {
   const { user } = useUser();
+  const queryClient = useQueryClient();
 
-  const [rating, setRating] = useState<Rating | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [hasRated, setHasRated] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const {
+    data: rating,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: queryKeys.rating.byUserId(user?.id ?? 'no-user'),
+    queryFn: () => getRating(user!.id),
+    enabled: !!user,
+  });
 
-  const fetchRating = async () => {
-    if (!user) {
-      return;
-    }
+  const submitMutation = useMutation({
+    mutationFn: async (payload: RatingPayload) => {
+      if (!user) {
+        return false;
+      }
 
-    try {
-      setIsLoading(true);
-
-      const response = await getRating(user.id);
-
-      setRating(response);
-      setHasRated(Boolean(response));
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load rating');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const submitRating = async (payload: RatingPayload): Promise<boolean> => {
-    if (!user) {
-      return false;
-    }
-
-    try {
-      setIsSubmitting(true);
-      setError(null);
+      const hasRated = !!rating;
 
       const result = hasRated
         ? await updateRating(user.id, payload)
         : await addRating(user.id, payload);
 
-      setRating(result);
-      setHasRated(true);
-
-      return true;
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to submit rating');
-      return false;
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchRating();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user?.id]);
+      return !!result;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.rating.all });
+    },
+  });
 
   return {
     rating,
     isLoading,
-    isSubmitting,
-    hasRated,
-    error,
-    submitRating,
-    refetch: fetchRating,
+    isSubmitting: submitMutation.isPending,
+    hasRated: !!rating,
+    error: submitMutation.error?.message ?? null,
+    submitRating: submitMutation.mutateAsync,
+    refetch,
   };
 };

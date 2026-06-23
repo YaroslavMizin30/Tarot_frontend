@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { v4 } from 'uuid';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import requestAi from '@/shared/api/AI';
+import { queryKeys } from '@/shared/api/queryKeys';
 import useLocales from '@/shared/hooks/useLocales';
 import { getTodayString } from '@/shared/utils/getTodayString';
 
@@ -12,38 +14,39 @@ import { useUser, incrementFreeSpreads } from '@/entities/User';
 import { sendAnalytics, getAnalytics } from '@/entities/Analytics';
 
 export const useInterpretation = (options: { onFinish?: () => void }) => {
-  const [isLoading, setIsLoading] = useState(false);
   const [interpretation, setInterpretation] = useState<string[] | null>(null);
   const [spreadId, setSpreadId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const { user, refetchUser } = useUser();
+  const queryClient = useQueryClient();
 
   const { i18n } = useLocales();
 
-  const getInterpretation = async (cards: Card[], spread: SpreadParams) => {
-    const { title, userAnswer, question, detailsAnswer } = spread;
+  const getInterpretationMutation = useMutation({
+    mutationFn: async ({
+      cards,
+      spread,
+    }: {
+      cards: Card[];
+      spread: SpreadParams;
+    }) => {
+      const { title, userAnswer, question, detailsAnswer } = spread;
 
-    const cardInfo = cards.reduce((acc, card, index) => {
-      //eslint-disable-next-line
-      acc += `${i18n(card.name)}${card.isInverted ? '(перевернута)' : ''}${index === cards.length - 1 ? '.' : ', '} `;
+      const cardInfo = cards.reduce((acc, card, index) => {
+        //eslint-disable-next-line
+        acc += `${i18n(card.name)}${card.isInverted ? '(перевернута)' : ''}${index === cards.length - 1 ? '.' : ', '} `;
 
-      return acc;
-    }, '');
+        return acc;
+      }, '');
 
-    const userMessage = `${i18n('Question')}: ${question ? `${i18n(question)}` : `${userAnswer}`}${detailsAnswer ? `, ${detailsAnswer}: ${userAnswer}` : ''}`;
-    const developerMessage = `${i18n('Need tarot spread interpretation')}. ${title ? `${i18n('Spread title')}: "${title}".` : ''} ${i18n('Cards')}: ${cardInfo} ${i18n('Do not talk about user as a third person')}`;
-
-    try {
-      setIsLoading(true);
-      setError(null);
+      const userMessage = `${i18n('Question')}: ${question ? `${i18n(question)}` : `${userAnswer}`}${detailsAnswer ? `, ${detailsAnswer}: ${userAnswer}` : ''}`;
+      const developerMessage = `${i18n('Need tarot spread interpretation')}. ${title ? `${i18n('Spread title')}: "${title}".` : ''} ${i18n('Cards')}: ${cardInfo} ${i18n('Do not talk about user as a third person')}`;
 
       const interpretation = await requestAi([
         { role: 'user', content: userMessage },
         { role: 'developer', content: developerMessage },
       ]);
-
-      setInterpretation(interpretation.split('\n'));
 
       if (user) {
         const uuid = v4();
@@ -63,8 +66,6 @@ export const useInterpretation = (options: { onFinish?: () => void }) => {
           refetchUser();
         }
 
-        options.onFinish?.();
-
         setSpreadId(uuid);
 
         const { tarotSpreadsCount = 0 } = (await getAnalytics(user.id)) ?? {};
@@ -74,18 +75,31 @@ export const useInterpretation = (options: { onFinish?: () => void }) => {
           tarotSpreadsCount: tarotSpreadsCount + 1,
         });
       }
-    } catch {
-      setError(i18n('Error during request, please try again'));
 
+      return interpretation;
+    },
+    onSuccess: (interpretation) => {
+      setInterpretation(interpretation.split('\n'));
+
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.spreads.all,
+      });
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.analytics.all,
+      });
+
+      options.onFinish?.();
+    },
+    onError: () => {
+      setError(i18n('Error during request, please try again'));
       setInterpretation(null);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    },
+  });
 
   return {
-    isLoading,
-    getInterpretation,
+    isLoading: getInterpretationMutation.isPending,
+    getInterpretation: (cards: Card[], spread: SpreadParams) =>
+      getInterpretationMutation.mutateAsync({ cards, spread }),
     interpretation,
     spreadId,
     error,

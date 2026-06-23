@@ -1,45 +1,35 @@
-import { useEffect, useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import requestAi, { type Prompt } from '@/shared/api/AI';
+import { queryKeys } from '@/shared/api/queryKeys';
 
 import { getSummaries } from '../api/getSummaries';
 import { addSummary as addNewSummary } from '../api/addSummary';
-import type { Spread, Summary } from '../types';
+import type { Spread } from '../types';
 
 import { useUser } from '@/entities/User';
 import useLocales from '@/shared/hooks/useLocales';
 
 export const useSummaries = (onSummaryEnd?: () => void | Promise<void>) => {
   const { user } = useUser();
+  const queryClient = useQueryClient();
 
-  const [summaries, setSummaries] = useState<Summary[] | null>();
-  const [isLoading, setIsLoading] = useState(false);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
   const { i18n } = useLocales();
 
-  const fetchSummaries = async () => {
-    try {
-      setIsLoading(true);
+  const {
+    data: summaries,
+    isLoading,
+  } = useQuery({
+    queryKey: queryKeys.summaries.byUserId(user?.id ?? 'no-user'),
+    queryFn: () => getSummaries(user!.id),
+    enabled: !!user,
+  });
 
+  const addSummaryMutation = useMutation({
+    mutationFn: async (spreads: Spread[]) => {
       if (!user) {
-        return;
+        throw new Error('No user');
       }
-
-      const response = await getSummaries(user.id);
-
-      setSummaries(response);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const addSummary = async (spreads: Spread[]) => {
-    if (!user) {
-      return;
-    }
-
-    try {
-      setIsAnalyzing(true);
 
       const messages = spreads.map((spread) => {
         const {
@@ -93,24 +83,21 @@ export const useSummaries = (onSummaryEnd?: () => void | Promise<void>) => {
 
       if (response) {
         await addNewSummary(user.id, response);
-
-        await fetchSummaries();
-
-        onSummaryEnd?.();
       }
-    } finally {
-      setIsAnalyzing(false);
-    }
-  };
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.summaries.all,
+      });
 
-  useEffect(() => {
-    fetchSummaries();
-  }, []);
+      onSummaryEnd?.();
+    },
+  });
 
   return {
     isLoading,
-    isAnalyzing,
+    isAnalyzing: addSummaryMutation.isPending,
     summaries,
-    addSummary,
+    addSummary: addSummaryMutation.mutateAsync,
   };
 };

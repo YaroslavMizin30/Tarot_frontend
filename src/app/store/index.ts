@@ -9,5 +9,3 @@ export {
 } from './slices/locales';
 
 export { setSpread } from './slices/spread';
-
-export { setUser } from './slices/user';

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 
 import requestAi from '@/shared/api/AI';
 import { updateRaw } from '@/shared/api/supabase';
@@ -34,7 +35,6 @@ export const getNextAvailableUpdate = (
     const exp = new Date(expirationDate);
 
     if (!Number.isNaN(exp.getTime())) {
-      // The next paid period starts right after the current one expires.
       candidates.push(exp.getTime());
     }
   }
@@ -43,7 +43,6 @@ export const getNextAvailableUpdate = (
     const last = new Date(lastUpdate);
 
     if (!Number.isNaN(last.getTime())) {
-      // After an update, the user can edit again one month later.
       const next = new Date(last);
 
       next.setMonth(next.getMonth() + 1);
@@ -56,7 +55,6 @@ export const getNextAvailableUpdate = (
 
   const nextAt = new Date(Math.max(...candidates));
 
-  // If both candidates are in the past, the user can update right now.
   if (nextAt.getTime() <= now.getTime()) return undefined;
 
   return nextAt.toISOString();
@@ -71,26 +69,21 @@ export const canUpdateNatalChart = (
 
 export const useUpdateNatalChart = () => {
   const { i18n } = useLocales();
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null | unknown>(null);
 
-  const updateNatalChart = async (
-    options: UpdateNatalChartOptions,
-  ): Promise<UpdateNatalChartResult> => {
-    const { day, year, month, name, country, city, time, userId } = options;
+  const updateMutation = useMutation({
+    mutationFn: async (
+      options: UpdateNatalChartOptions,
+    ): Promise<UpdateNatalChartResult> => {
+      const { day, year, month, name, country, city, time, userId } = options;
 
-    const date = `${day}.${month}.${year}`;
-    const place = `${country}, ${city}`;
+      const date = `${day}.${month}.${year}`;
+      const place = `${country}, ${city}`;
 
-    const zodiac = getZodiacSign(Number(day), Number(month));
+      const zodiac = getZodiacSign(Number(day), Number(month));
 
-    try {
       setError(null);
-      setIsLoading(true);
 
-      // Enforce the once-per-paid-period restriction: if the user has
-      // already updated in the current subscription period, bail out
-      // before calling the AI.
       const activity = await getActivity(Number(userId));
 
       const { expirationDate } = options;
@@ -132,25 +125,20 @@ export const useUpdateNatalChart = () => {
         throw updateError;
       }
 
-      // Persist the update timestamp so the restriction holds for the
-      // remainder of the current paid period.
       await updateActivity(Number(userId), {
         natalChartLastUpdate: new Date().toISOString(),
       });
 
       return { success: true };
-    } catch (e) {
+    },
+    onError: (e) => {
       setError(e);
-
-      return { success: false, reason: 'error' };
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    },
+  });
 
   return {
-    updateNatalChart,
-    isLoading,
+    updateNatalChart: updateMutation.mutateAsync,
+    isLoading: updateMutation.isPending,
     error,
   };
 };

@@ -1,51 +1,61 @@
 import { useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
-import {
-  useAppSelector,
-  useAppDispatch,
-  setUser,
-  type RootState,
-} from '@/app/store';
-
-import getTelegramUser from '@/entities/TelegramUser';
+import { getUser } from '@/entities/User/api/getUser/getUser';
 import { updateUser as updateUserApi } from '@/entities/User/api/updateUser/updateUser';
+import getTelegramUser from '@/entities/TelegramUser';
+import { ensureSupabase } from '@/shared/api/supabase';
+import { queryKeys } from '@/shared/api/queryKeys';
 import type { GetUserResponse } from '../../../types/user';
 
-export const useUser= () => {
+export const useUser = () => {
   const [error, setError] = useState<string | null>(null);
-  const { user, isLoading } = useAppSelector((state: RootState) => state.user);
+  const queryClient = useQueryClient();
 
-  const dispatch = useAppDispatch();
+  const telegramUser = getTelegramUser();
+  const telegramId = telegramUser?.id;
 
-  const refetchUser = () => {
-    try {
-      const telegramUser = getTelegramUser();
+  const {
+    data: user,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: queryKeys.user.byId(telegramId ?? 'no-user'),
+    queryFn: async () => {
+      await ensureSupabase();
+      return getUser(telegramId!);
+    },
+    enabled: !!telegramId,
+  });
 
-      if (telegramUser && !isLoading) {
-        const { id } = telegramUser;
-
-        dispatch(setUser(id));
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const updateUser = async (id: string, data: Partial<GetUserResponse>) => {
-    try {
-      await updateUserApi(id, data);
-
-      dispatch(setUser(String(user?.id)));
-    } catch {
+  const updateUserMutation = useMutation({
+    mutationFn: async ({
+      id,
+      data,
+    }: {
+      id: string;
+      data: Partial<GetUserResponse>;
+    }) => {
+      await ensureSupabase();
+      return updateUserApi(id, data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.user.all });
+    },
+    onError: () => {
       setError('Error updating user data');
-    }
+    },
+  });
+
+  const updateUser = (id: string, data: Partial<GetUserResponse>) => {
+    return updateUserMutation.mutateAsync({ id, data });
   };
 
   return {
     isLoading,
     user,
     updateUser,
-    refetchUser,
+    refetchUser: refetch,
     error,
   };
 };

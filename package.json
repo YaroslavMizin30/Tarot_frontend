@@ -12,6 +12,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "2.11.2",
     "@supabase/supabase-js": "2.100.1",
+    "@tanstack/react-query": "5.101.1",
     "camelize": "1.0.1",
     "classnames": "2.5.1",
     "dayjs": "1.11.20",
