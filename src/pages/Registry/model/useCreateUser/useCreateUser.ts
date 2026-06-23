@@ -55,11 +55,11 @@ export const useCreateUser = () => {
 
       await insertRaw('users', {
         id,
-        user_name: name,
-        birth_date: date,
-        birth_place: place,
-        birth_time: time,
-        natal_chart: card,
+        userName: name,
+        birthDate: date,
+        birthPlace: place,
+        birthTime: time,
+        natalChart: card,
         sign: i18n(zodiac),
       });
 
@@ -103,7 +103,7 @@ export const useCreateUser = () => {
         },
       });
 
-      insertRaw('activity', { user_id: tgUser.id });
+      insertRaw('activity', { userId: tgUser.id });
 
       sendAnalytics(id, {
         registered: true,

@@ -1,23 +1,20 @@
-import snakeize from 'snakeize';
-import camelize from 'camelize';
-
 import { updateRaw } from '@/shared/api/supabase';
 
-import { type User, type GetUserResponse } from '../../types/user';
+import { type User } from '../../types/user';
 
 export const updateUser = async (userId: string, userData: Partial<User>) => {
-  const { data, error } = await updateRaw<GetUserResponse>(
+  const updated = await updateRaw<User>(
     'users',
-    snakeize(userData),
+    userData,
     {
       key: 'id',
       value: userId,
     },
   );
 
-  if (error || !data) {
+  if (!updated) {
     return false;
   }
 
-  return camelize(data[0]);
+  return updated[0];
 };

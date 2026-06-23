@@ -1,12 +1,10 @@
-import camelize from 'camelize';
-
 import { getDataFromDB } from '@/shared/api/supabase';
 
-import { type AnalyticsUserState } from '../types';
+import { type AnalyticsPayload } from '../types';
 
 export const getAnalytics = async (userId: number) => {
-  const { data } = await getDataFromDB<AnalyticsUserState>('analytics', ['*'], {
-    key: 'telegram_user_id',
+  const data = await getDataFromDB<AnalyticsPayload>('analytics', {
+    key: 'telegramUserId',
     value: String(userId),
   });
 
@@ -14,5 +12,5 @@ export const getAnalytics = async (userId: number) => {
     return null;
   }
 
-  return camelize(data[0]);
+  return data[0];
 };

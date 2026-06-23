@@ -1,18 +1,18 @@
+import http from '../../http/http';
+
 export interface Prompt {
   role: 'user' | 'developer' | 'assistant';
   content: string;
 }
 
 export const requestAi = async (prompts: Prompt[]) => {
-  const response = await fetch(
+  const answer = await http<string>(
     'https://hadjujaanfwgepckluqy.supabase.co/functions/v1/ai-request',
     {
       method: 'POST',
-      body: JSON.stringify({ prompt: prompts }),
+      body: { prompt: prompts },
     },
   );
 
-  const answer = await response.json();
-
-  return answer.replace(/[*|#]|---/g, '');
+  return (answer as unknown as string).replace(/[*|#]|---/g, '');
 };

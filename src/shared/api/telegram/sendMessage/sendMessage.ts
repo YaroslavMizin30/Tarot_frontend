@@ -1,4 +1,4 @@
-import snakeize from 'snakeize';
+import http from '../../http/http';
 
 import type {
   SendMessageParams,
@@ -13,16 +13,16 @@ export const sendMessage = async (params: SendMessageParams) => {
     ...params,
   };
 
-  const response = await fetch(
+  const response = await http<SendMessageResponse>(
     `https://api.telegram.org/${import.meta.env.VITE_TELEGRAM_BOT_TOKEN}/sendMessage`,
     {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(snakeize(body)),
+      body,
     },
   );
 
-  return response.json() as Promise<SendMessageResponse>;
+  return response;
 };

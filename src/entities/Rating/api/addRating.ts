@@ -1,5 +1,3 @@
-import snakeize from 'snakeize';
-
 import { insertRaw } from '@/shared/api/supabase';
 
 import type { Rating, RatingPayload } from '../types';
@@ -8,14 +6,11 @@ export const addRating = async (
   userId: number,
   payload: RatingPayload,
 ): Promise<Rating> => {
-  const { error } = await insertRaw<Rating>(
-    'app_ratings',
-    snakeize({ ...payload, userId }),
-  );
+  const data = await insertRaw<Rating>('app_ratings', { ...payload, userId });
 
-  if (error) {
-    throw error;
+  if (!data) {
+    throw new Error('Failed to add rating');
   }
 
-  return { ...payload, userId };
+  return data[0];
 };

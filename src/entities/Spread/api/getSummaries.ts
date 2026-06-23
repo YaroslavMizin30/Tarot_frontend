@@ -1,14 +1,12 @@
-import camelize from 'camelize';
-
 import { getDataFromDB } from '@/shared/api/supabase';
 
-import type { Summary, SummaryResponse } from '../types';
+import type { Summary } from '../types';
 
 export const getSummaries = async (
   userId: number,
 ): Promise<Summary[] | null> => {
-  const { data } = await getDataFromDB<SummaryResponse>('spread_summaries', ['*'], {
-    key: 'user_id',
+  const data = await getDataFromDB<Summary>('spread_summaries', {
+    key: 'userId',
     value: String(userId),
   });
 
@@ -16,5 +14,5 @@ export const getSummaries = async (
     return null;
   }
 
-  return camelize(data);
+  return data;
 };

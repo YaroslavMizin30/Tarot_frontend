@@ -1,14 +1,12 @@
-import camelize from 'camelize';
-
 import { getDataFromDB } from '@/shared/api/supabase';
 
-import type { Rating, RatingResponse } from '../types';
+import type { Rating } from '../types';
 
 export const getRating = async (
   userId: number,
 ): Promise<Rating | null> => {
-  const { data } = await getDataFromDB<RatingResponse>('app_ratings', ['*'], {
-    key: 'user_id',
+  const data = await getDataFromDB<Rating>('app_ratings', {
+    key: 'userId',
     value: String(userId),
   });
 
@@ -16,5 +14,5 @@ export const getRating = async (
     return null;
   }
 
-  return camelize(data[0]) as Rating;
+  return data[0];
 };

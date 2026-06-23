@@ -1,5 +1,3 @@
-import snakeize from 'snakeize';
-
 import type { Activity } from '../types';
 
 import { getActivity } from './getActivity';
@@ -13,17 +11,14 @@ export const updateActivity = async (
   const userActivity = await getActivity(userId);
 
   if (userActivity) {
-    await updateRaw('activity', snakeize({ ...activity }), {
-      key: 'user_id',
+    await updateRaw('activity', { ...activity }, {
+      key: 'userId',
       value: userId,
     });
   } else {
-    await insertRaw(
-      'activity',
-      snakeize({
-        ...activity,
-        userId,
-      }),
-    );
+    await insertRaw('activity', {
+      ...activity,
+      userId,
+    });
   }
 };

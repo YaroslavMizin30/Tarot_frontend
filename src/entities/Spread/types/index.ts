@@ -33,23 +33,6 @@ export type Spread = SpreadParams & {
   rating?: number;
 };
 
-export interface SpreadResponse {
-  title?: string;
-  user_answer?: string;
-  question: string;
-  cards_count: number;
-  details?: string;
-  details_answer?: string;
-  id: `${SpreadType}`;
-  cards: string;
-  interpretation: string;
-  date: string;
-  spread_id: string;
-  is_summarized?: boolean;
-  rating?: number;
-  user_id: number;
-}
-
 export interface Activity {
   dailyCardLastDate: string;
   dailyHoroscopeLastDate: string;
@@ -63,26 +46,10 @@ export interface Activity {
   natalChartLastUpdate?: string;
 }
 
-export interface ActivityResponse {
-  daily_card_last_date: string;
-  daily_horoscope_last_date: string;
-  daily_horoscope_last_id: number;
-  monthly_horoscope_last_date: string;
-  monthly_horoscope_last_id: number;
-  natal_chart_last_update?: string;
-}
-
 export interface Summary {
   userId: string;
   date: string;
   summary: string;
   id: string;
   rating?: number;
-}
-
-export interface SummaryResponse {
-  user_id: string;
-  date: string;
-  summary: string;
-  id: string;
 }

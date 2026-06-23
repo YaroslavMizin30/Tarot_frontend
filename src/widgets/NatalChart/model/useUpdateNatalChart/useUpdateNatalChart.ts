@@ -105,14 +105,14 @@ export const useUpdateNatalChart = () => {
         { role: 'user', content: i18n('Create natal chart for me') },
       ]);
 
-      const { error: updateError } = await updateRaw(
+      const updated = await updateRaw(
         'users',
         {
-          user_name: name,
-          birth_date: date,
-          birth_place: place,
-          birth_time: time ?? null,
-          natal_chart: card,
+          userName: name,
+          birthDate: date,
+          birthPlace: place,
+          birthTime: time ?? null,
+          natalChart: card,
           sign: i18n(zodiac),
         },
         {
@@ -121,8 +121,8 @@ export const useUpdateNatalChart = () => {
         },
       );
 
-      if (updateError) {
-        throw updateError;
+      if (!updated) {
+        throw new Error('Failed to update user');
       }
 
       await updateActivity(Number(userId), {

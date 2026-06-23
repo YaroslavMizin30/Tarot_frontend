@@ -1,41 +1,34 @@
-import snakeize from 'snakeize';
-import camelize from 'camelize';
-
 import { getDataFromDB, updateRaw } from '@/shared/api/supabase';
 
-import type { GetUserResponse } from '../../types/user';
+import type { User } from '../../types/user';
 
 export const incrementFreeSpreads = async (userId: string | number) => {
   const id = String(userId);
 
-  const { data: userRows } = await getDataFromDB<GetUserResponse>(
-    'users',
-    ['free_spreads'],
-    {
-      key: 'id',
-      value: id,
-    },
-  );
+  const data = await getDataFromDB<User>('users', {
+    key: 'id',
+    value: id,
+  });
 
-  if (!userRows || userRows.length === 0) {
+  if (!data || data.length === 0) {
     return false;
   }
 
-  const currentFreeSpreads = Number(userRows[0].free_spreads ?? 0);
+  const currentFreeSpreads = Number(data[0].freeSpreads ?? 0);
   const newFreeSpreads = currentFreeSpreads + 1;
 
-  const { data, error } = await updateRaw(
+  const updated = await updateRaw<User>(
     'users',
-    snakeize({ free_spreads: newFreeSpreads }),
+    { freeSpreads: newFreeSpreads },
     {
       key: 'id',
       value: id,
     },
   );
 
-  if (error || !data) {
+  if (!updated) {
     return false;
   }
 
-  return camelize(data[0]);
+  return updated[0];
 };

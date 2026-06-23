@@ -1,18 +1,16 @@
-import camelize from 'camelize';
-
 import { getDataFromDB } from '@/shared/api/supabase';
 
-import type { GetUserResponse } from '../../types/user';
+import type { User } from '../../types/user';
 
-export const getUser = async (id: string | number) => {
-  const { data: user } = await getDataFromDB<GetUserResponse>('users', ['*'], {
+export const getUser = async (id: string | number): Promise<User | null> => {
+  const data = await getDataFromDB<User>('users', {
     key: 'id',
     value: String(id),
   });
 
-  if (!user) {
+  if (!data || data.length === 0) {
     return null;
   }
 
-  return camelize(user[0]);
+  return data[0];
 };

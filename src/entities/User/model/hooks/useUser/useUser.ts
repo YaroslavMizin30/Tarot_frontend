@@ -6,7 +6,7 @@ import { updateUser as updateUserApi } from '@/entities/User/api/updateUser/upda
 import getTelegramUser from '@/entities/TelegramUser';
 import { ensureSupabase } from '@/shared/api/supabase';
 import { queryKeys } from '@/shared/api/queryKeys';
-import type { GetUserResponse } from '../../../types/user';
+import type { User } from '../../../types/user';
 
 export const useUser = () => {
   const [error, setError] = useState<string | null>(null);
@@ -34,7 +34,7 @@ export const useUser = () => {
       data,
     }: {
       id: string;
-      data: Partial<GetUserResponse>;
+      data: Partial<User>;
     }) => {
       await ensureSupabase();
       return updateUserApi(id, data);
@@ -47,7 +47,7 @@ export const useUser = () => {
     },
   });
 
-  const updateUser = (id: string, data: Partial<GetUserResponse>) => {
+  const updateUser = (id: string, data: Partial<User>) => {
     return updateUserMutation.mutateAsync({ id, data });
   };
 

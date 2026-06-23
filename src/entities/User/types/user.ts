@@ -1,21 +1,5 @@
 import { type Sign } from '@/shared/ui/Zodiac';
 
-export interface GetUserResponse {
-  id: number;
-  sign: Sign;
-  user_name: string;
-  birth_date: string;
-  birth_time?: string;
-  birth_place: string;
-  natal_chart: string;
-  free_horoscopes: number;
-  free_spreads: number;
-  tariff: 'standard' | 'trial' | 'extended';
-  expiration_date: string;
-  theme: 'standard' | 'gray' | 'bronze';
-  audio: boolean;
-}
-
 export interface User {
   id: number;
   sign: Sign;

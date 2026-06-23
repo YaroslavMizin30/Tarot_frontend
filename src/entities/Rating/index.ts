@@ -1,4 +1,4 @@
-export type { Rating, RatingResponse, RatingPayload } from './types';
+export type { Rating, RatingPayload } from './types';
 
 export { getRating } from './api/getRating';
 export { addRating } from './api/addRating';
