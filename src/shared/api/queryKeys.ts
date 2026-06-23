@@ -3,6 +3,11 @@ export const queryKeys = {
     all: ['user'] as const,
     byId: (id: string | number) => ['user', String(id)] as const,
   },
+  horoscopes: {
+    all: ['horoscopes'] as const,
+    byUserId: (userId: string | number) =>
+      ['horoscopes', String(userId)] as const,
+  },
   spreads: {
     all: ['spreads'] as const,
     byUserId: (userId: string | number) => ['spreads', String(userId)] as const,
