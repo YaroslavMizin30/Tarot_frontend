@@ -1,4 +1,4 @@
-import { useEffect, useRef, type FC } from 'react';
+import { useEffect, useRef, type FC, type ReactNode } from 'react';
 
 import type { FeedProps, Message } from './Feed.props';
 
@@ -6,10 +6,38 @@ import styles from './Feed.module.css';
 
 const MESSAGE_ID_ATTR = 'data-feed-message-id';
 
+const MONTH_NAMES = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
+];
+
 const formatTime = (date: Date): string => {
   const hours = date.getHours().toString().padStart(2, '0');
   const minutes = date.getMinutes().toString().padStart(2, '0');
   return `${hours}:${minutes}`;
+};
+
+const getDateKey = (date: Date): string => {
+  return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+};
+
+const formatDateLabel = (date: Date): string => {
+  const now = new Date();
+  const todayKey = getDateKey(now);
+  const yesterday = new Date(now);
+  yesterday.setDate(yesterday.getDate() - 1);
+  const yesterdayKey = getDateKey(yesterday);
+  const dateKey = getDateKey(date);
+
+  if (dateKey === todayKey) {
+    return 'Today';
+  }
+
+  if (dateKey === yesterdayKey) {
+    return 'Yesterday';
+  }
+
+  return `${date.getDate()} ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
 };
 
 const getInitials = (name: string): string => {
@@ -19,6 +47,17 @@ const getInitials = (name: string): string => {
     .join('')
     .toUpperCase()
     .slice(0, 2);
+};
+
+/** Renders a date separator line between message groups */
+const DateSeparator: FC<{ label: string }> = ({ label }) => {
+  return (
+    <div className={styles.dateSeparator}>
+      <span className={styles.dateSeparatorLine} />
+      <span className={styles.dateSeparatorLabel}>{label}</span>
+      <span className={styles.dateSeparatorLine} />
+    </div>
+  );
 };
 
 const MessageItem: FC<{ message: Message }> = ({ message }) => {
@@ -98,15 +137,40 @@ export const Feed: FC<FeedProps> = (props) => {
     }
   }, [scrollToMessageId]);
 
+  // Group messages by date and render with separators
+  const renderMessages = () => {
+    if (messages.length === 0) {
+      return null;
+    }
+
+    const elements: ReactNode[] = [];
+    let lastDateKey: string | null = null;
+
+    messages.forEach((message) => {
+      const dateKey = getDateKey(message.date);
+
+      if (dateKey !== lastDateKey) {
+        elements.push(
+          <DateSeparator key={`sep-${dateKey}`} label={formatDateLabel(message.date)} />,
+        );
+        lastDateKey = dateKey;
+      }
+
+      elements.push(
+        <MessageItem key={message.id} message={message} />,
+      );
+    });
+
+    return elements;
+  };
+
   return (
     <div className={styles.container} style={{ maxHeight: `${maxHeight}${maxHeightMeasure}` }}>
       <div className={`${styles.feed} custom-scrollbar ${className}`} ref={feedRef}>
         {messages.length === 0 && !isLoading ? (
           <div className={styles.empty}>No messages yet</div>
         ) : (
-          messages.map((message) => (
-            <MessageItem key={message.id} message={message} />
-          ))
+          renderMessages()
         )}
 
         {isLoading && (

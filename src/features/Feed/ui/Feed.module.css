@@ -57,6 +57,36 @@
   background-color: rgba(255, 219, 136, 0.08);
 }
 
+/* Date separator between message groups */
+.dateSeparator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0 10px;
+  width: 100%;
+}
+
+.dateSeparator:first-child {
+  margin-top: 0;
+}
+
+.dateSeparatorLine {
+  flex: 1;
+  height: 1px;
+  background-color: var(--border-secondary);
+  opacity: 0.5;
+}
+
+.dateSeparatorLabel {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-primary);
+  opacity: 0.5;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
 .avatar {
   flex-shrink: 0;
   width: 36px;
