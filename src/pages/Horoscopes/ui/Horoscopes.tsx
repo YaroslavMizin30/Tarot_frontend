@@ -1,8 +1,8 @@
-import useLocales from '@/shared/hooks/useLocales';
+import Feed from '@/features/Feed';
 
 import StarsComposition from '@/pages/ui/StarsComposition';
 
-import TextContainer from '@/shared/ui/TextContainer';
+import useLocales from '@/shared/hooks/useLocales';
 import Button from '@/shared/ui/Button';
 import ArrowButton from '@/shared/ui/ArrowButton';
 
@@ -24,8 +24,8 @@ export const Horoscopes = () => {
           })}
         </div>
 
-        <TextContainer
-          paragraphs={[]}
+        <Feed
+          messages={[]}
           maxHeight={80}
           maxHeightMeasure={'%'}
           className={styles.feed}
