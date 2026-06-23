@@ -1,6 +1,6 @@
 import styles from './StarsComposition.module.css';
 
-const StarsComposition = () => {
+export const StarsComposition = () => {
   return (
     <div className={styles.composition}>
       <div className={styles.smallStar} style={{ top: '35%', left: '25%' }} />
@@ -64,5 +64,3 @@ const StarsComposition = () => {
     </div>
   );
 };
-
-export default StarsComposition;

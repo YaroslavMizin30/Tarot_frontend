@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router';
 
 import Button from '@/shared/ui/Button';
 
-import StarsComposition from '../StarsComposition/StarsComposition';
+import StarsComposition from '@/pages/ui/StarsComposition';
 import { SUBSECTIONS } from '../../config/subsections';
 import type { Subsection } from '../../config/subsections';
 

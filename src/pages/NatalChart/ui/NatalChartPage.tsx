@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router';
 
 import { useUser } from '@/entities/User';
 import ArrowButton from '@/shared/ui/ArrowButton';
-import StarsComposition from '@/pages/Astrology/ui/StarsComposition/StarsComposition';
+import StarsComposition from '@/pages/ui/StarsComposition';
 import NatalChart from '@/widgets/NatalChart';
 
 import styles from './NatalChartPage.module.css';
