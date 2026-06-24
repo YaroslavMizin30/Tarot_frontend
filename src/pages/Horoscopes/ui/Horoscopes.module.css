@@ -15,6 +15,7 @@
   height: 65%;
   z-index: 1;
   width: 100%;
+  padding-bottom: 100px;
 }
 
 .content-header {
@@ -49,4 +50,37 @@
 .active {
   color: var(--text-primary);
   background-color: var(--background-secondary);
+}
+
+.composeForm {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 0;
+}
+
+.composeInput {
+  width: 100%;
+  min-height: 80px;
+  padding: 10px;
+  border: 1px solid var(--border-secondary);
+  border-radius: 8px;
+  background-color: var(--background-secondary);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 14px;
+  resize: vertical;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.composeInput:focus {
+  border-color: var(--accent-primary);
+}
+
+.composeActions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 
 import Feed from '@/features/Feed';
 import type { Message } from '@/features/Feed/ui/Feed.props';
@@ -8,6 +8,8 @@ import StarsComposition from '@/pages/ui/StarsComposition';
 import { useHoroscopes } from '@/entities/Horoscope';
 
 import useLocales from '@/shared/hooks/useLocales';
+import TRANSLATIONS_EN from '@/shared/locales/en/horoscopes';
+import TRANSLATIONS_RU from '@/shared/locales/ru/horoscopes';
 import Button from '@/shared/ui/Button';
 import ArrowButton from '@/shared/ui/ArrowButton';
 
@@ -20,14 +22,25 @@ const TYPES: { name: string; value: 'daily' | 'weekly' | 'monthly' }[] = [
 ];
 
 export const Horoscopes = () => {
-  const [selectedType, setSelectedType] = useState<'daily' | 'weekly' | 'monthly'>('daily');
+  const [selectedType, setSelectedType] = useState<
+    'daily' | 'weekly' | 'monthly'
+  >('daily');
 
-  const { i18n } = useLocales();
-  const { horoscopes, isLoading } = useHoroscopes();
+  const { i18n, addTranslations, locale } = useLocales();
+  const {
+    horoscopes,
+    isLoading,
+    addHoroscope,
+    isAdding,
+    setUserMessage,
+    message,
+  } = useHoroscopes();
 
-  const filteredHoroscopes = horoscopes?.filter(
-    (h) => h.type === selectedType,
-  );
+  useEffect(() => {
+    addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
+  }, [locale]);
+
+  const filteredHoroscopes = horoscopes?.filter((h) => h.type === selectedType);
 
   const messages: Message[] | undefined = filteredHoroscopes?.map((h) => ({
     id: h.id,
@@ -36,6 +49,12 @@ export const Horoscopes = () => {
     sender: 'Tarotopia',
     isUser: false,
   }));
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+
+    addHoroscope(selectedType);
+  };
 
   return (
     <div className={styles.container}>
@@ -52,7 +71,7 @@ export const Horoscopes = () => {
                 className={`${styles.button} ${isActive ? styles.active : ''}`}
                 onClick={() => setSelectedType(type.value)}
               >
-                {type.name}
+                {i18n(type.name)}
               </Button>
             );
           })}
@@ -66,7 +85,19 @@ export const Horoscopes = () => {
           isLoading={isLoading}
         />
 
-        <Button>{i18n('Compose')}</Button>
+        <form className={styles.composeForm} onSubmit={handleSubmit}>
+          <textarea
+            className={styles.composeInput}
+            value={message}
+            onChange={(e) => setUserMessage(e.target.value)}
+            placeholder={i18n('Additional thoughts (optional)...')}
+          />
+          <div className={styles.composeActions}>
+            <Button type={'submit'} disabled={isAdding} isLoading={isAdding}>
+              {isAdding ? i18n('Generating...') : i18n('Compose')}
+            </Button>
+          </div>
+        </form>
       </div>
 
       <ArrowButton />
