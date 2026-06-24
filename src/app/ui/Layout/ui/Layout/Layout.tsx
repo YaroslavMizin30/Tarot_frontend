@@ -51,6 +51,13 @@ export const Layout = () => {
     window.Telegram?.WebApp?.setBottomBarColor(themeConfig[theme].footer);
   }, [theme]);
 
+  useEffect(() => {
+    if (isAuthenticating) {
+      window.Telegram?.WebApp?.setHeaderColor('#323232');
+      window.Telegram?.WebApp?.setBottomBarColor('#323232');
+    }
+  }, [isAuthenticating]);
+
   return (
     <div className={styles.layout}>
       <Header isLoading={isAuthenticating}></Header>
