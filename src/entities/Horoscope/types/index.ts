@@ -4,4 +4,6 @@ export interface Horoscope {
   id: string;
   date: string;
   type: 'daily' | 'weekly' | 'monthly';
+  isUserMessage?: boolean;
+  sender?: string;
 }
