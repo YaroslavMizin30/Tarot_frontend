@@ -3,7 +3,7 @@ import styles from './StarsComposition.module.css';
 export const StarsComposition = () => {
   return (
     <div className={styles.composition}>
-      <div className={styles.smallStar} style={{ top: '35%', left: '25%' }} />
+      <div className={styles.smallStar} style={{ top: '35%', left: '55%' }} />
       <div className={styles.mediumStar} style={{ top: '50%', left: '45%' }} />
       <div className={styles.largeStar} style={{ top: '40%', right: '30%' }} />
       <div
@@ -61,6 +61,22 @@ export const StarsComposition = () => {
         style={{ bottom: '28%', right: '50%' }}
       />
       <div className={styles.smallStar} style={{ top: '72%', left: '48%' }} />
+      <div className={styles.smallStar} style={{ top: '56%', left: '30%' }} />
+      <div className={styles.smallStar} style={{ top: '35%', right: '18%' }} />
+      <div className={styles.smallStar} style={{ top: '70%', left: '35%' }} />
+      <div className={styles.smallStar} style={{ top: '38%', right: '35%' }} />
+      <div className={styles.smallStar} style={{ top: '60%', left: '15%' }} />
+      <div className={styles.smallStar} style={{ top: '60%', right: '50%' }} />
+      <div className={styles.smallStar} style={{ top: '80%', left: '28%' }} />
+      <div className={styles.smallStar} style={{ top: '43%', right: '28%' }} />
+      <div className={styles.smallStar} style={{ top: '80%', left: '40%' }} />
+      <div className={styles.smallStar} style={{ top: '45%', right: '40%' }} />
+      <div className={styles.smallStar} style={{ top: '71%', left: '18%' }} />
+      <div className={styles.smallStar} style={{ top: '48%', right: '22%' }} />
+      <div className={styles.smallStar} style={{ top: '50%', left: '32%' }} />
+      <div className={styles.smallStar} style={{ top: '50%', right: '32%' }} />
+      <div className={styles.smallStar} style={{ top: '52%', left: '22%' }} />
+      <div className={styles.smallStar} style={{ top: '52%', right: '38%' }} />
     </div>
   );
 };
