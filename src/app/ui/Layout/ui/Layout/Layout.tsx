@@ -51,19 +51,12 @@ export const Layout = () => {
     window.Telegram?.WebApp?.setBottomBarColor(themeConfig[theme].footer);
   }, [theme]);
 
-  useEffect(() => {
-    if (isAuthenticating) {
-      window.Telegram?.WebApp?.setHeaderColor('#323232');
-      window.Telegram?.WebApp?.setBottomBarColor('#323232');
-    }
-  }, [isAuthenticating]);
-
   return (
     <div className={styles.layout}>
       <Header isLoading={isAuthenticating}></Header>
 
       <main
-        className={`${styles.main} ${isLoading || isAuthenticating ? styles.loading : ''} custom-scrollbar`}
+        className={`${styles.main} ${isAuthenticating ? styles.loading : ''} custom-scrollbar`}
       >
         <div className={styles.cloud}></div>
 

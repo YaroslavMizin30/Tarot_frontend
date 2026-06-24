@@ -17,6 +17,9 @@ const queryClient = new QueryClient({
 });
 
 export function App() {
+  window.Telegram?.WebApp?.setHeaderColor('#323232');
+  window.Telegram?.WebApp?.setBottomBarColor('#323232');
+
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
