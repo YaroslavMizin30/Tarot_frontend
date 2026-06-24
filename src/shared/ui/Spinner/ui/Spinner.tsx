@@ -9,6 +9,11 @@ export const Spinner: FC<SpinnerProps> = (props) => {
   const { className = '', size = 's' } = props;
 
   return (
-    <SpinnerIcon className={`${styles.spinner} ${styles[size]} ${className}`} />
+    <div className={styles.container}>
+      <div className={styles.light}></div>
+      <SpinnerIcon
+        className={`${styles.spinner} ${styles[size]} ${className}`}
+      />
+    </div>
   );
 };
