@@ -23,6 +23,7 @@ const TRANSLATIONS_RU = {
   'Speak to user directly': 'Обращайся к пользователю напрямую',
   'Do not mention user rating. Use rating to mention less spreads with low rating':
     'Не упоминай о рейтинге раскладов. Используй рейтинг, чтобы упоминать меньше о раскладах с низким рейтингом',
+  'To spreads history': 'К истории раскладов',
 };
 
 export default TRANSLATIONS_RU;

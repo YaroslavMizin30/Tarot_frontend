@@ -7,8 +7,6 @@ import TextContainer from '@/shared/ui/TextContainer';
 import Button from '@/shared/ui/Button';
 import TRANSLATIONS_HISTORY_EN from '@/shared/locales/en/history';
 import TRANSLATIONS_HISTORY_RU from '@/shared/locales/ru/history';
-import TRANSLATIONS_READING_EN from '@/shared/locales/en/reading';
-import TRANSLATIONS_READING_RU from '@/shared/locales/ru/reading';
 import RatingInput from '@/shared/ui/RatingInput';
 import ArrowButton from '@/shared/ui/ArrowButton';
 
@@ -23,13 +21,7 @@ export const SpreadPage = () => {
   const { i18n, addTranslations, locale } = useLocales();
   const navigate = useNavigate();
 
-  const {
-    interpretation,
-    title,
-    cards,
-    spreadId,
-    rating,
-  } = state as Spread;
+  const { interpretation, title, cards, spreadId, rating } = state as Spread;
 
   const [rate, setRate] = useState(rating);
 
@@ -41,8 +33,8 @@ export const SpreadPage = () => {
 
   useEffect(() => {
     addTranslations({
-      en: { ...TRANSLATIONS_HISTORY_EN, ...TRANSLATIONS_READING_EN },
-      ru: { ...TRANSLATIONS_HISTORY_RU, ...TRANSLATIONS_READING_RU },
+      en: { ...TRANSLATIONS_HISTORY_EN },
+      ru: { ...TRANSLATIONS_HISTORY_RU },
     });
   }, [locale]);
 

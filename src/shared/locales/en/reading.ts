@@ -194,7 +194,6 @@ const TRANSLATIONS_EN: Record<string, string> = {
   'Cards': 'Cards',
   'Do not talk about user as a third person':
     'Do not talk about user as a third person',
-  'To spreads history': 'To spreads history',
   'Your spread is not ready yet. Are you sure?':
     'Your spread is not ready yet. Are you sure?',
   'Yes': 'Yes',

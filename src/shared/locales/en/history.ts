@@ -23,6 +23,7 @@ const TRANSLATIONS_EN = {
   'Speak to user directly': 'Speak to user directly',
   'Do not mention user rating. Use rating to mention less spreads with low rating':
     'Do not mention user rating. Use rating to mention less spreads with low rating',
+  'To spreads history': 'To spreads history',
 };
 
 export default TRANSLATIONS_EN;
