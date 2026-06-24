@@ -1,3 +1,4 @@
+import camelize from 'camelize';
 import type { Horoscope } from '../types';
 
 export const getHoroscopes = async (
@@ -10,7 +11,7 @@ export const getHoroscopes = async (
       .eq('user_id', userId)
       .order('date', { ascending: true });
 
-    return data as Horoscope[] | null;
+    return camelize(data) as Horoscope[] | null;
   } catch {
     return null;
   }

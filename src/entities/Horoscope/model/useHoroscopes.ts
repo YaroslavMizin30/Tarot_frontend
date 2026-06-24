@@ -87,10 +87,23 @@ export const useHoroscopes = () => {
 
       const content = await requestAi(MESSAGES[type]);
 
+      if (message) {
+        await addHoroscopeApi({
+          id: v4(),
+          content: message,
+          type,
+          sender: user!.userName,
+          userId: user!.id,
+          date: new Date().toISOString(),
+          isUserMessage: true,
+        });
+      }
+
       return addHoroscopeApi({
         id: v4(),
         content,
         type,
+        sender: 'Tarotopia',
         userId: user!.id,
         date: new Date().toISOString(),
       } as Horoscope);

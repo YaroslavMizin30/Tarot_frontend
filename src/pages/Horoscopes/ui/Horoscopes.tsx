@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useMemo, useState, type FormEvent } from 'react';
 
 import Feed from '@/features/Feed';
 import type { Message } from '@/features/Feed/ui/Feed.props';
@@ -30,8 +30,8 @@ export const Horoscopes = () => {
   const {
     horoscopes,
     isLoading,
-    addHoroscope,
     isAdding,
+    addHoroscope,
     setUserMessage,
     message,
   } = useHoroscopes();
@@ -40,14 +40,16 @@ export const Horoscopes = () => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
   }, [locale]);
 
-  const filteredHoroscopes = horoscopes?.filter((h) => h.type === selectedType);
+  const filteredHoroscopes = useMemo(() => {
+    return horoscopes?.filter((h) => h.type === selectedType);
+  }, [selectedType, horoscopes]);
 
   const messages: Message[] | undefined = filteredHoroscopes?.map((h) => ({
     id: h.id,
     text: h.content,
     date: new Date(h.date),
-    sender: 'Tarotopia',
-    isUser: false,
+    sender: h.sender ?? 'Tarotopia',
+    isUser: h.isUserMessage ?? false,
   }));
 
   const handleSubmit = (e: FormEvent) => {
