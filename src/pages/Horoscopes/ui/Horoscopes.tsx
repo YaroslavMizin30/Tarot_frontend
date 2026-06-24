@@ -50,6 +50,9 @@ export const Horoscopes = () => {
     date: new Date(h.date),
     sender: h.sender ?? 'Tarotopia',
     isUser: h.isUserMessage ?? false,
+    avatar: !h.isUserMessage
+      ? '/assets/images/horoscope/tarotopia-avatar.jpeg'
+      : undefined,
   }));
 
   const handleSubmit = (e: FormEvent) => {
@@ -84,7 +87,7 @@ export const Horoscopes = () => {
           maxHeight={80}
           maxHeightMeasure={'%'}
           className={styles.feed}
-          isLoading={isLoading}
+          isLoading={isLoading || isAdding}
         />
 
         <form className={styles.composeForm} onSubmit={handleSubmit}>
