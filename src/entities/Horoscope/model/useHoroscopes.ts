@@ -56,17 +56,6 @@ interface UseHoroscopesOptions {
   onSuccess?: () => void;
 }
 
-const getLastHoroscope = (type: string, horoscopes?: Horoscope[] | null) => {
-  if (!horoscopes) {
-    return;
-  }
-  for (let i = horoscopes.length; i > 0; i--) {
-    if (horoscopes[i].type === type) {
-      return horoscopes[i];
-    }
-  }
-};
-
 export const useHoroscopes = (options?: UseHoroscopesOptions) => {
   const { user } = useUser() ?? {};
   const queryClient = useQueryClient();
@@ -139,9 +128,11 @@ export const useHoroscopes = (options?: UseHoroscopesOptions) => {
   const findExistingHoroscopeInPeriod = useCallback(
     (type: 'daily' | 'weekly' | 'monthly'): Horoscope | null => {
       if (!horoscopes) return null;
-      return horoscopes
-        .filter((h) => h.type === type)
-        .find(isHoroscopeInCurrentPeriod) ?? null;
+      return (
+        horoscopes
+          .filter((h) => h.type === type)
+          .find(isHoroscopeInCurrentPeriod) ?? null
+      );
     },
     [horoscopes],
   );
@@ -149,12 +140,6 @@ export const useHoroscopes = (options?: UseHoroscopesOptions) => {
   const { mutate: addHoroscope, isPending: isAdding } = useMutation({
     mutationFn: async (type: 'daily' | 'weekly' | 'monthly') => {
       const prompt = MESSAGES[type];
-
-      const lastHoroscope = getLastHoroscope(type, horoscopes);
-
-      if (lastHoroscope) {
-        prompt.unshift({ role: 'assistant', content: lastHoroscope.content });
-      }
 
       if (message) {
         await addHoroscopeApi({
