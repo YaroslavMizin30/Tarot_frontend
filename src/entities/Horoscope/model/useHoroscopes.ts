@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { v4 } from 'uuid';
 
@@ -11,7 +11,63 @@ import requestAi, { type Prompt } from '@/shared/api/AI';
 
 import type { Horoscope } from '../types';
 
-export const useHoroscopes = () => {
+/**
+ * Check whether a horoscope's date falls within the current period of its type.
+ * - daily: same calendar date as today
+ * - weekly: falls within this Mon–Sun week
+ * - monthly: same month and year as now
+ */
+export const isHoroscopeInCurrentPeriod = (horoscope: Horoscope): boolean => {
+  const hDate = new Date(horoscope.date);
+  const now = new Date();
+
+  switch (horoscope.type) {
+    case 'daily':
+      return hDate.toDateString() === now.toDateString();
+
+    case 'weekly': {
+      const startOfWeek = (d: Date): Date => {
+        const date = new Date(d);
+        const day = date.getDay();
+        const diff = date.getDate() - day + (day === 0 ? -6 : 1);
+        date.setDate(diff);
+        date.setHours(0, 0, 0, 0);
+        return date;
+      };
+      const weekStart = startOfWeek(now);
+      const weekEnd = new Date(weekStart);
+      weekEnd.setDate(weekEnd.getDate() + 7);
+      return hDate >= weekStart && hDate < weekEnd;
+    }
+
+    case 'monthly':
+      return (
+        hDate.getMonth() === now.getMonth() &&
+        hDate.getFullYear() === now.getFullYear()
+      );
+
+    default:
+      return false;
+  }
+};
+
+interface UseHoroscopesOptions {
+  /** Called after a horoscope is successfully added (post-invalidation) */
+  onSuccess?: () => void;
+}
+
+const getLastHoroscope = (type: string, horoscopes?: Horoscope[] | null) => {
+  if (!horoscopes) {
+    return;
+  }
+  for (let i = horoscopes.length; i > 0; i--) {
+    if (horoscopes[i].type === type) {
+      return horoscopes[i];
+    }
+  }
+};
+
+export const useHoroscopes = (options?: UseHoroscopesOptions) => {
   const { user } = useUser() ?? {};
   const queryClient = useQueryClient();
 
@@ -24,6 +80,10 @@ export const useHoroscopes = () => {
     queryFn: () => getHoroscopes(String(user!.id)),
     enabled: !!user,
   });
+
+  const hasDaily = horoscopes?.some((h) => h.type === 'daily') ?? false;
+  const hasWeekly = horoscopes?.some((h) => h.type === 'weekly') ?? false;
+  const hasMonthly = horoscopes?.some((h) => h.type === 'monthly') ?? false;
 
   const { i18n } = useLocales();
 
@@ -76,16 +136,25 @@ export const useHoroscopes = () => {
     setMessage(value);
   };
 
+  const findExistingHoroscopeInPeriod = useCallback(
+    (type: 'daily' | 'weekly' | 'monthly'): Horoscope | null => {
+      if (!horoscopes) return null;
+      return horoscopes
+        .filter((h) => h.type === type)
+        .find(isHoroscopeInCurrentPeriod) ?? null;
+    },
+    [horoscopes],
+  );
+
   const { mutate: addHoroscope, isPending: isAdding } = useMutation({
     mutationFn: async (type: 'daily' | 'weekly' | 'monthly') => {
       const prompt = MESSAGES[type];
-      const lastHoroscope = horoscopes?.[horoscopes?.length - 1];
+
+      const lastHoroscope = getLastHoroscope(type, horoscopes);
 
       if (lastHoroscope) {
         prompt.unshift({ role: 'assistant', content: lastHoroscope.content });
       }
-
-      const content = await requestAi(MESSAGES[type]);
 
       if (message) {
         await addHoroscopeApi({
@@ -98,6 +167,8 @@ export const useHoroscopes = () => {
           isUserMessage: true,
         });
       }
+
+      const content = await requestAi(prompt);
 
       return addHoroscopeApi({
         id: v4(),
@@ -115,6 +186,7 @@ export const useHoroscopes = () => {
       });
 
       setUserMessage('');
+      options?.onSuccess?.();
     },
   });
 
@@ -126,5 +198,9 @@ export const useHoroscopes = () => {
     setUserMessage,
     message,
     isAdding,
+    hasDaily,
+    hasWeekly,
+    hasMonthly,
+    findExistingHoroscopeInPeriod,
   };
 };

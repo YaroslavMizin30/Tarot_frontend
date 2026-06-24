@@ -22,6 +22,16 @@ const TRANSLATIONS_RU: Record<string, string> = {
   'Make it brief': 'Сделай его лаконичным',
   'Do not repeat information from previous horoscope':
     'Не повторяй информацию из предыдущего гороскопа',
+  'Generating daily horoscope...': 'Составляем гороскоп...',
+  'Generating weekly horoscope...': 'Составляем гороскоп на неделю...',
+  'Generating monthly horoscope...': 'Составляем гороскоп на месяц...',
+  'Loading...': 'Загрузка...',
+  'You already have a daily horoscope for today':
+    'У вас уже есть гороскоп на сегодня',
+  'You already have a weekly horoscope for this week':
+    'У вас уже есть гороскоп на эту неделю',
+  'You already have a monthly horoscope for this month':
+    'У вас уже есть гороскоп на этот месяц',
 };
 
 export default TRANSLATIONS_RU;

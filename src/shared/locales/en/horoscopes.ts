@@ -21,6 +21,16 @@ const TRANSLATIONS_EN: Record<string, string> = {
   'Make it brief': 'Make it brief',
   'Do not repeat information from previous horoscope':
     'Do not repeat information from previous horoscope',
+  'Generating daily horoscope...': 'Generating daily horoscope...',
+  'Generating weekly horoscope...': 'Generating weekly horoscope...',
+  'Generating monthly horoscope...': 'Generating monthly horoscope...',
+  'Loading...': 'Loading...',
+  'You already have a daily horoscope for today':
+    'You already have a daily horoscope for today',
+  'You already have a weekly horoscope for this week':
+    'You already have a weekly horoscope for this week',
+  'You already have a monthly horoscope for this month':
+    'You already have a monthly horoscope for this month',
 };
 
 export default TRANSLATIONS_EN;

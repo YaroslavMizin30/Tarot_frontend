@@ -6,6 +6,8 @@ export interface Message {
   avatar?: string;
   /** When true, the message bubble is aligned to the right (user's own messages) */
   isUser: boolean;
+  /** Optional horoscope type (daily/weekly/monthly) shown as a badge */
+  type?: 'daily' | 'weekly' | 'monthly';
 }
 
 export interface FeedProps {
