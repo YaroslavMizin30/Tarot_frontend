@@ -104,7 +104,9 @@ const http = <TResponse, TBody = Record<string, any>>(
       }
     };
 
-    xhr.onerror = () => reject(new Error('Network error'));
+    xhr.onerror = () => {
+      reject(new Error('Network error'));
+    };
 
     const payload = body ? JSON.stringify(snakeize(body)) : undefined;
     xhr.send(payload);
