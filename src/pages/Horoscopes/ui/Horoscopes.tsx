@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react';
+import { useNavigate } from 'react-router';
 
 import Feed from '@/features/Feed';
 import type { Message } from '@/features/Feed/ui/Feed.props';
@@ -30,6 +31,8 @@ export const Horoscopes = () => {
   const [pendingMessages, setPendingMessages] = useState<Message[]>([]);
   const [systemMessage, setSystemMessage] = useState<Message | null>(null);
   const [scrollOverrideId, setScrollOverrideId] = useState<string | null>(null);
+
+  const navigate = useNavigate();
 
   const { i18n, addTranslations, locale } = useLocales();
   const { user } = useUser() ?? {};
@@ -211,7 +214,10 @@ export const Horoscopes = () => {
         </form>
       </div>
 
-      <ArrowButton />
+      <ArrowButton
+        className={styles.back}
+        onClick={() => navigate('/astrology')}
+      />
     </div>
   );
 };

@@ -84,3 +84,7 @@
   gap: 8px;
   justify-content: flex-end;
 }
+
+.back {
+  z-index: 1;
+}
