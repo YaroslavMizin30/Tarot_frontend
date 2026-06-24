@@ -53,9 +53,11 @@ export const Layout = () => {
 
   return (
     <div className={styles.layout}>
-      <Header></Header>
+      <Header isLoading={isAuthenticating}></Header>
 
-      <main className={`${styles.main} custom-scrollbar`}>
+      <main
+        className={`${styles.main} ${isLoading || isAuthenticating ? styles.loading : ''} custom-scrollbar`}
+      >
         <div className={styles.cloud}></div>
 
         <div className={styles.couldBottom}></div>
@@ -71,7 +73,7 @@ export const Layout = () => {
         )}
       </main>
 
-      <Footer />
+      <Footer isLoading={isAuthenticating} />
     </div>
   );
 };

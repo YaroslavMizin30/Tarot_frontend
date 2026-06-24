@@ -11,6 +11,10 @@
   width: 100%;
 }
 
+.footer-loading {
+  background: #323232;
+}
+
 .wrapper {
   position: relative;
   padding: 5px;
@@ -22,6 +26,12 @@
 
   font-size: 12px;
   color: var(--text-primary);
+
+  transition: opacity 1s ease;
+}
+
+.wrapper-loading {
+  opacity: 0;
 }
 
 .cover {

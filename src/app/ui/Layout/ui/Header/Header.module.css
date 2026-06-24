@@ -74,6 +74,11 @@
 
   display: flex;
   align-items: center;
+  transition: opacity 1s ease;
+}
+
+.rightSection-loading {
+  opacity: 0;
 }
 
 .langs,
@@ -127,4 +132,8 @@
 
 .hidden {
   opacity: 0;
+}
+
+.loading {
+  background: #323232;
 }

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
 import Button from '@/shared/ui/Button';
@@ -6,10 +7,19 @@ import StarsComposition from '@/pages/ui/StarsComposition';
 import { SUBSECTIONS } from '../../config/subsections';
 import type { Subsection } from '../../config/subsections';
 
+import useLocales from '@/shared/hooks/useLocales';
+import TRANSLATIONS_EN from '@/shared/locales/en/astrology';
+import TRANSLATIONS_RU from '@/shared/locales/ru/astrology';
+
 import styles from './AstrologyPage.module.css';
 
 export const AstrologyPage = () => {
+  const { i18n, addTranslations, locale } = useLocales();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
+  }, [locale]);
 
   const handleOpen = (subsection: `${Subsection}`) => {
     navigate(subsection);
@@ -26,7 +36,7 @@ export const AstrologyPage = () => {
             className={styles.menuButton}
             onClick={() => handleOpen(key)}
           >
-            {label}
+            {i18n(label)}
           </Button>
         ))}
       </div>

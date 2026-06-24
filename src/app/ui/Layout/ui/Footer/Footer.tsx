@@ -10,7 +10,9 @@ import ProfilePage from '@/shared/assets/svg/common/profile_page.svg';
 
 import styles from './Footer.module.css';
 
-const Footer = () => {
+const Footer = (props: { isLoading?: boolean }) => {
+  const { isLoading } = props;
+
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
@@ -21,8 +23,12 @@ const Footer = () => {
   const { i18n } = useLocales();
 
   return (
-    <footer className={styles.footer}>
-      <div className={styles.wrapper}>
+    <footer
+      className={`${styles.footer} ${isLoading ? styles['footer-loading'] : ''}`}
+    >
+      <div
+        className={`${styles.wrapper} ${isLoading ? styles['wrapper-loading'] : ''}`}
+      >
         <div className={styles.cover}></div>
         <div
           className={`${styles.section} ${TAROT_PAGES.includes(pathname) ? styles.active : ''}`}

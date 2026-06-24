@@ -22,7 +22,9 @@ const THEMES: { name: string; value: 'standard' | 'gray' | 'bronze' }[] = [
   { name: 'Bronze', value: 'bronze' },
 ];
 
-const Header = () => {
+const Header = (props: { isLoading?: boolean }) => {
+  const { isLoading } = props;
+
   const [isLangSwitcherVisible, setIsLangSwitcherVisible] = useState(false);
   const [isThemeSwitcherVisible, setIsThemeSwitcherVisible] = useState(false);
   const { user, updateUser } = useUser();
@@ -54,8 +56,10 @@ const Header = () => {
   const { changeLanguage, locale, i18n } = useLocales();
 
   return (
-    <header className={styles.header}>
-      <div className={styles.rightSection}>
+    <header className={`${styles.header} ${isLoading ? styles.loading : ''}`}>
+      <div
+        className={`${styles.rightSection} ${isLoading ? styles['rightSection-loading'] : ''}`}
+      >
         <Theme
           ref={themeSwitcherRef}
           className={`${styles.moon} ${!user && styles.hidden}`}

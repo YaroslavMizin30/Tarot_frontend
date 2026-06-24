@@ -26,6 +26,11 @@
 
   overflow-y: auto;
   overflow-x: hidden;
+  transition: background-color 1 ease;
+}
+
+.loading {
+  background: #323232;
 }
 
 :root {
@@ -118,5 +123,15 @@
 
   100% {
     transform: scaleX(1) rotate(-20deg);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
   }
 }

@@ -19,21 +19,39 @@ export const MainPage = () => {
 
   return (
     <div className={styles.container}>
-      <Button value={'/daily'} onClick={handleNavigationButtonClick}>
-        {i18n('Card of the day')}
-      </Button>
+      <div className={styles.menu}>
+        <Button
+          className={styles.menuButton}
+          value={'/daily'}
+          onClick={handleNavigationButtonClick}
+        >
+          {i18n('Card of the day')}
+        </Button>
 
-      <Button value={'/reading'} onClick={handleNavigationButtonClick}>
-        {i18n('Make spread')}
-      </Button>
+        <Button
+          className={styles.menuButton}
+          value={'/reading'}
+          onClick={handleNavigationButtonClick}
+        >
+          {i18n('Make spread')}
+        </Button>
 
-      <Button value={'/history'} onClick={handleNavigationButtonClick}>
-        {i18n('Spreads history')}
-      </Button>
+        <Button
+          className={styles.menuButton}
+          value={'/history'}
+          onClick={handleNavigationButtonClick}
+        >
+          {i18n('Spreads history')}
+        </Button>
 
-      <Button value={'/about'} onClick={handleNavigationButtonClick}>
-        {i18n('About Tarot')}
-      </Button>
+        <Button
+          className={styles.menuButton}
+          value={'/about'}
+          onClick={handleNavigationButtonClick}
+        >
+          {i18n('About Tarot')}
+        </Button>
+      </div>
     </div>
   );
 };
