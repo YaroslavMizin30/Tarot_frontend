@@ -21,4 +21,8 @@ export interface ModalProps {
    * Custom class for modal content
    */
   contentClassName?: string;
+  /**
+   * Flag if modal can be closed
+   */
+  isClosable?: boolean;
 }

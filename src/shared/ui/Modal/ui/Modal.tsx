@@ -11,6 +11,7 @@ export const Modal: FC<ModalProps> = (props) => {
     children,
     isOpen,
     onClose,
+    isClosable = true,
   } = props;
 
   return (
@@ -22,9 +23,11 @@ export const Modal: FC<ModalProps> = (props) => {
         className={`${styles.modal} ${className}`}
         style={{ display: isOpen ? 'flex' : 'none' }}
       >
-        <div className={styles['icon-wrapper']} onClick={onClose}>
-          <div className={styles['close-icon']}></div>
-        </div>
+        {isClosable && (
+          <div className={styles['icon-wrapper']} onClick={onClose}>
+            <div className={styles['close-icon']}></div>
+          </div>
+        )}
 
         <div className={`${styles.content} ${contentClassName}`}>
           {children}

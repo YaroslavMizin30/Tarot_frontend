@@ -1,33 +1,34 @@
 import { useEffect, useState } from 'react';
 
-import { Link, useLocation } from 'react-router';
+import { useNavigate, Link, useLocation } from 'react-router';
 
 import useLocales from '@/shared/hooks/useLocales';
 import TextContainer from '@/shared/ui/TextContainer';
-import TRANSLATIONS_EN from '@/shared/locales/en/history';
-import TRANSLATIONS_RU from '@/shared/locales/ru/history';
+import Button from '@/shared/ui/Button';
+import TRANSLATIONS_HISTORY_EN from '@/shared/locales/en/history';
+import TRANSLATIONS_HISTORY_RU from '@/shared/locales/ru/history';
+import TRANSLATIONS_READING_EN from '@/shared/locales/en/reading';
+import TRANSLATIONS_READING_RU from '@/shared/locales/ru/reading';
 import RatingInput from '@/shared/ui/RatingInput';
 import ArrowButton from '@/shared/ui/ArrowButton';
 
 import { type Spread, updateSpread } from '@/entities/Spread';
 import TarotCard from '@/entities/TarotCard';
+import TorchComposition from '@/features/TarotSpread/ui/TorchComposition/TorchComposition';
 
 import styles from './SpreadPage.module.css';
 
 export const SpreadPage = () => {
   const { state } = useLocation();
   const { i18n, addTranslations, locale } = useLocales();
+  const navigate = useNavigate();
 
   const {
-    date,
     interpretation,
     title,
-    userAnswer,
-    detailsAnswer,
     cards,
-    question,
-    rating,
     spreadId,
+    rating,
   } = state as Spread;
 
   const [rate, setRate] = useState(rating);
@@ -40,54 +41,56 @@ export const SpreadPage = () => {
 
   useEffect(() => {
     addTranslations({
-      en: TRANSLATIONS_EN,
-      ru: TRANSLATIONS_RU,
+      en: { ...TRANSLATIONS_HISTORY_EN, ...TRANSLATIONS_READING_EN },
+      ru: { ...TRANSLATIONS_HISTORY_RU, ...TRANSLATIONS_READING_RU },
     });
   }, [locale]);
 
   return (
-    <div className={`${styles.container} custom-scrollbar`}>
-      <div className={styles.info}>
-        <span>{`${i18n('Question')}: ${question || userAnswer}`}</span>
+    <div className={styles.tarotSpread}>
+      <TorchComposition className={styles.torchComposition} />
 
-        {detailsAnswer && <span>{`${detailsAnswer}: ${userAnswer}`}</span>}
+      <h3 className={styles.title}>{title}</h3>
 
-        {title && <span>{`${i18n('Title')}: ${title}`}</span>}
+      <div className={styles['interpretation-container']}>
+        <div className={`${styles['cards-small']} custom-scrollbar`}>
+          {cards.map((card) => {
+            const { name, isInverted } = card;
 
-        <span>
-          {i18n('Date')}: {date}
-        </span>
+            return (
+              <TarotCard
+                name={name}
+                key={name}
+                localizedName={i18n(name)}
+                isInverted={isInverted}
+                className={styles['card-small']}
+                hasLoadingState
+              />
+            );
+          })}
+        </div>
+
+        <TextContainer
+          paragraphs={interpretation.split('\n')}
+          maxHeight={596}
+          maxHeightMeasure={'px'}
+          className={styles.interpretation}
+        >
+          <RatingInput
+            className={styles.rating}
+            value={rate ?? 0}
+            onChange={handleRatingInputChange}
+          />
+        </TextContainer>
       </div>
 
-      <div className={styles['cards-small']}>
-        {cards.map((card) => {
-          const { name, isInverted } = card;
+      <div className={styles.bottom}>
+        <ArrowButton onClick={() => navigate('/')} />
 
-          return (
-            <TarotCard
-              name={name}
-              key={name}
-              localizedName={i18n(name)}
-              isInverted={isInverted}
-              className={styles['card-small']}
-              hasLoadingState
-            />
-          );
-        })}
+        <Link className={styles.link} to={'/history'}>
+          <Button>{i18n('To spreads history')}</Button>
+        </Link>
       </div>
-
-      <TextContainer
-        paragraphs={interpretation.split('\n')}
-        maxHeight={350}
-        maxHeightMeasure={'px'}
-        className={styles.interpretation}
-      />
-
-      <RatingInput value={rate ?? 0} onChange={handleRatingInputChange} />
-
-      <Link className={styles.link} to={'/history'}>
-        <ArrowButton />
-      </Link>
     </div>
   );
 };

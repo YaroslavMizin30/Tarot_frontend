@@ -1,43 +1,12 @@
-.container {
+.tarotSpread {
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: var(--text-primary);
-  max-width: 80%;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  flex: 1;
   height: 100%;
-}
-
-.info {
-  display: flex;
-  flex-direction: column;
-}
-
-.info > * {
-  margin-bottom: 10px;
-}
-
-.cards-small {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 10px;
-}
-
-.card-small {
-  height: 120px;
-  width: 60px;
-  margin-top: 10px;
-}
-
-.card-small + .card-small {
-  margin-left: 10px;
-}
-
-.card-small * {
-  font-size: 7px;
+  padding-left: 15px;
+  padding-right: 15px;
+  position: relative;
 }
 
 .title {
@@ -45,10 +14,69 @@
   color: var(--text-primary);
 }
 
+.interpretation-container {
+  display: flex;
+  justify-content: space-between;
+  max-height: 80%;
+  overflow: hidden;
+  padding-top: 20px;
+  z-index: 1;
+}
+
+.cards-small {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+  padding-right: 5px;
+  max-height: 526px;
+  margin-right: 10px;
+  min-width: 80px;
+}
+
+.card-small {
+  height: 120px;
+  min-height: 120px;
+  width: 60px;
+  min-width: 60px;
+}
+
+.card-small + .card-small {
+  margin-top: 10px;
+}
+
+.card-small * {
+  font-size: 7px;
+}
+
 .interpretation {
-  width: 300px !important;
+  background-color: #544e4e89;
+}
+
+.torchComposition {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.rating {
+  margin-top: 10px;
+}
+
+.bottom {
+  display: flex;
+  margin-top: 10px;
+  z-index: 1;
+  align-items: center;
+}
+
+.bottom > * + * {
+  margin-left: 10px;
 }
 
 .link {
-  margin-top: 20px;
+  color: var(--text-primary);
+  text-decoration: none;
 }

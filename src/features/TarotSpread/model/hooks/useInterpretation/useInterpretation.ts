@@ -13,7 +13,7 @@ import { addSpread } from '@/entities/Spread';
 import { useUser, incrementFreeSpreads } from '@/entities/User';
 import { sendAnalytics, getAnalytics } from '@/entities/Analytics';
 
-export const useInterpretation = (options: { onFinish?: () => void }) => {
+export const useInterpretation = (options: { onFinish?: (interpretation?: string) => void }) => {
   const [interpretation, setInterpretation] = useState<string[] | null>(null);
   const [spreadId, setSpreadId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);

@@ -5,13 +5,11 @@ import { useBlocker, useNavigate } from 'react-router';
 import Button from '@/shared/ui/Button';
 import Modal from '@/shared/ui/Modal';
 import useLocales from '@/shared/hooks/useLocales';
-import RatingInput from '@/shared/ui/RatingInput';
 import Error from '@/shared/ui/Error';
-import ArrowButton from '@/shared/ui/ArrowButton';
 
 import TarotCard from '@/entities/TarotCard';
-import { updateSpread } from '@/entities/Spread';
 import { useUser } from '@/entities/User';
+import { getTodayString } from '@/shared/utils/getTodayString';
 
 import { SpreadConfig } from '../config/spreads';
 import { useReading } from '../model/hooks/useReading/useReading';
@@ -21,14 +19,11 @@ import Placeholder from './Placeholder/Placeholder';
 import TorchComposition from './TorchComposition/TorchComposition';
 import { type TarotSpreadProps } from './TartotSpread.props';
 import styles from './TarotSpread.module.css';
-import TextContainer from '@/shared/ui/TextContainer';
 
 export const TarotSpread: FC<TarotSpreadProps> = (props) => {
-  const { spread, onSpreadFinish, onInterpretationFinish } = props;
+  const { spread, onSpreadFinish } = props;
 
   const { title, id, cardsCount } = spread;
-
-  const [step, setStep] = useState<'spread' | 'interpretation'>('spread');
 
   const navigate = useNavigate();
 
@@ -40,19 +35,32 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
     changeActiveCard,
     resetSpread,
   } = useReading();
-  const {
-    getInterpretation,
-    interpretation = ['Thinking...'],
-    isLoading,
-    spreadId,
-    error,
-  } = useInterpretation({ onFinish: onInterpretationFinish });
+  const { getInterpretation, interpretation, isLoading, spreadId, error } =
+    useInterpretation({});
 
   const { i18n } = useLocales();
 
   const { user } = useUser();
 
   const audio = new Audio('/assets/sfx/flip.mp3');
+
+  // State to track pending navigation after interpretation finishes
+  const [pendingNavigation, setPendingNavigation] = useState(false);
+
+  // Navigate when interpretation finishes while waiting
+  useEffect(() => {
+    if (pendingNavigation && interpretation && spreadId) {
+      navigate(`/history/${spreadId}`, {
+        state: {
+          ...spread,
+          cards,
+          interpretation: interpretation.join('\n'),
+          date: getTodayString(),
+          spreadId,
+        },
+      });
+    }
+  }, [pendingNavigation, interpretation, spreadId]);
 
   const handleCardClick = () => {
     changeActiveCard();
@@ -63,24 +71,32 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
     }
   };
 
-  const [rating, setRating] = useState(0);
-
-  const { state, reset, proceed } = useBlocker(isLoading);
-
-  const handleRatingInputChange = async (rate: number) => {
-    setRating(rate);
-
-    if (spreadId) {
-      await updateSpread(spreadId, { rating: rate });
+  const { state, reset, proceed } = useBlocker(({ nextLocation }) => {
+    if (nextLocation.pathname.includes('/history/')) {
+      return false;
     }
-  };
+
+    return isLoading;
+  });
 
   const handleFinishButtonClick = () => {
     reset?.();
 
-    setStep('interpretation');
-
     onSpreadFinish?.(spread, cards);
+
+    if (interpretation && spreadId) {
+      navigate(`/history/${spreadId}`, {
+        state: {
+          ...spread,
+          cards,
+          interpretation: interpretation.join('\n'),
+          date: getTodayString(),
+          spreadId,
+        },
+      });
+    } else {
+      setPendingNavigation(true);
+    }
   };
 
   const handleModalClose = () => {
@@ -92,8 +108,6 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
   };
 
   const handleRetryButtonClick = () => {
-    setStep('spread');
-
     prepareCards(cardsCount);
 
     resetSpread();
@@ -119,51 +133,6 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
 
   if (error) {
     return <Error error={error} onRetryButtonClick={handleRetryButtonClick} />;
-  }
-
-  if (step === 'interpretation') {
-    return (
-      <div className={styles.tarotSpread}>
-        <TorchComposition className={styles.torchComposition} />
-
-        <h3 className={styles.title}>{title}</h3>
-
-        <div className={styles['interpretation-container']}>
-          <div className={`${styles['cards-small']} custom-scrollbar`}>
-            {cards.map((card) => {
-              const { name, isInverted } = card;
-
-              return (
-                <TarotCard
-                  name={name}
-                  key={name}
-                  localizedName={i18n(name)}
-                  isInverted={isInverted}
-                  className={styles['card-small']}
-                />
-              );
-            })}
-          </div>
-
-          <TextContainer
-            paragraphs={interpretation ?? []}
-            maxHeight={596}
-            maxHeightMeasure={'px'}
-            className={styles.interpretation}
-          >
-            <RatingInput className={styles.rating} value={rating} onChange={handleRatingInputChange} />
-          </TextContainer>
-        </div>
-
-        <div className={styles.bottom}>
-          <ArrowButton onClick={() => navigate('/')} />
-
-          <Button onClick={() => navigate('/history')}>
-            {i18n('To spreads history')}
-          </Button>
-        </div>
-      </div>
-    );
   }
 
   return (
@@ -240,6 +209,18 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
           </span>
         )}
       </div>
+
+      {/* Loading overlay when waiting for interpretation before navigation */}
+      {pendingNavigation && (
+        <Modal
+          onClose={handleModalClose}
+          isOpen={true}
+          className={styles.modal}
+          isClosable={false}
+        >
+          {i18n('Interpreting')}...
+        </Modal>
+      )}
 
       {state === 'blocked' && (
         <Modal
