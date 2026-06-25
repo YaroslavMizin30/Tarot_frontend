@@ -19,6 +19,8 @@ export const MainPage = () => {
 
   return (
     <div className={styles.container}>
+      {JSON.stringify(window.Telegram?.WebApp?.initDataUnsafe)}
+
       <div className={styles.menu}>
         <Button
           className={styles.menuButton}
