@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://web.resource.org/cc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:svg="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:ns1="http://sozi.baierouge.fr" xmlns:xlink="http://www.w3.org/1999/xlink" id="svg2" viewBox="0 0 176.5 167.66" version="1.1" inkscape:version="0.91 r13725">
+  <g id="layer1">
+    <path id="path3019" style="stroke:currentColor;stroke-width:1px;fill:currentColor" d="m87.906 0.5-29.468 92.094l5.9688 4.8125 22.75-71.75 11.688 35.063 8.6875-0.25-19.624-59.969zm7.0938 11.969 2.4688 8.1875c23.711 3.049 43.671 18.053 53.691 38.75l8.84 0.375c-10.9-26.06-35.61-44.877-65-47.312zm-13.812 0.0625c-29.95 2.797-54.945 22.627-65.188 49.718h8.5312c9.416-21.923 29.759-38.037 54.188-41.469l2.4688-8.25zm94.812 49.437l-97.812 1.625-2.1562 7.2188 77.281-0.875-32.406 23.875 2 7.625 53.09-39.471zm-111.5 1.875-64 1.0625 79.281 56.438 6.7188-5.2188-61.563-44.719 37.406-0.4375 2.1562-7.125zm47 8.7812-8.5938 0.25 24.219 72.75-30.187-21.938-7.1562 4.7812l52.153 37.17-30.44-93.005zm52.781 0.8125-7.1562 4.8125c0.6132 3.715 0.9375 7.5172 0.9375 11.406 0 19.918-8.37 37.875-21.781 50.563l2.3438 8.5312c16.728-14.218 27.344-35.423 27.344-59.094 0-5.5632-0.57343-10.988-1.6875-16.219zm-152.06 2.6875c-0.77394 4.3942-1.1875 8.915-1.1875 13.531 0 23.178 10.184 43.983 26.312 58.188l2.531-8.4c-12.942-12.64-20.969-30.27-20.969-49.784 0-3.036 0.18514-6.0355 0.5625-8.9688l-7.25-4.5625zm97.78 25.754l-61.344 45.25 11.562-36.5-6.218-4.25-19.438 60.71 77.598-57.68-2.16-7.53zm8.5625 50.562c-9.0953 4.3653-19.3 6.8125-30.062 6.8125-10.736 0-20.919-2.4366-30-6.7812l-7.4062 5.0625c11.09 6.1301 23.84 9.625 37.406 9.625 13.563 0 26.319-3.4976 37.406-9.625l-7.3438-5.0938z"/>
+  </g>
+  <metadata>
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+        <cc:license rdf:resource="http://creativecommons.org/licenses/publicdomain/"/>
+        <dc:publisher>
+          <cc:Agent rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>Pentagram</dc:title>
+        <dc:date>2010-11-10T08:16:47</dc:date>
+        <dc:description>Pentagram Symbol</dc:description>
+        <dc:source>https://openclipart.org/detail/94993/pentagram-by-kuba</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>kuba</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>black</rdf:li>
+            <rdf:li>magic</rdf:li>
+            <rdf:li>pagan</rdf:li>
+            <rdf:li>pentacle</rdf:li>
+            <rdf:li>pentagram</rdf:li>
+            <rdf:li>symbol</rdf:li>
+            <rdf:li>wicca</rdf:li>
+            <rdf:li>witch</rdf:li>
+            <rdf:li>witchcraft</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License rdf:about="http://creativecommons.org/licenses/publicdomain/">
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction"/>
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Distribution"/>
+        <cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks"/>
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>
