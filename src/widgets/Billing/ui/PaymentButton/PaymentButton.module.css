@@ -1,0 +1,30 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--border-secondary);
+
+  color: var(--text-primary);
+  border-radius: 12px;
+  font-size: 14px;
+  padding: 15px;
+  background-color: #544e4e89;
+  box-shadow: inset 0px 0px 25px -5px #f3ed7e;
+}
+
+.button + .button {
+  margin-top: 15px;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+}

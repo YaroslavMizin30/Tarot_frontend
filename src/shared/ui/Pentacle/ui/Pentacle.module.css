@@ -1,0 +1,14 @@
+.container {
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  border: 1px solid #af9a13;
+}
+
+.pentacle {
+  position: relative;
+  bottom: 1px;
+  width: 100%;
+  height: 100%;
+  color: #af9a13;
+}
