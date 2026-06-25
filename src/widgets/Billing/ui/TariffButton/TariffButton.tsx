@@ -48,14 +48,14 @@ const TariffButton: FC<TariffButtonProps> = (props) => {
             const isFollowing = index !== prices.length - 1;
 
             return (
-              <div className={styles.price}>
-                {price}&nbsp;{currency} {isFollowing ? 'or' : null}
+              <div className={styles.price} key={`${price}-${index}`}>
+                {price}&nbsp;{currency} {isFollowing ? i18n('or') : null}
               </div>
             );
           })}
         </div>
 
-        {addition && <div className={styles.addition}>{addition}</div>}
+        {addition && <div className={styles.addition}>{i18n(addition)}</div>}
       </div>
     </div>
   );

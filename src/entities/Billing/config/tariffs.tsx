@@ -1,5 +1,4 @@
 import StarIcon from '@/shared/assets/svg/billing/telegram_star.svg';
-import TelegramIcon from '@/shared/assets/svg/billing/telegram.svg';
 import SBPIcon from '@/shared/assets/svg/billing/sbp.svg';
 
 import type { Tariff } from '../types';
@@ -12,17 +11,21 @@ export const TARIFFS: Tariff[] = [
         price: 150,
         currency: '₽',
         paymentMethods: [
-          { code: 'sbp', icon: <SBPIcon width={80} height={40} />, paymentPhrase: 'через СБП' },
+          {
+            code: 'sbp',
+            icon: <SBPIcon width={80} height={40} />,
+            paymentPhrase: 'sbp_payment',
+          },
         ],
       },
       {
         price: 90,
-        currency: <StarIcon width={20} height={20} />,
+        currency: '⭐️',
         paymentMethods: [
           {
             code: 'stars',
-            icon: <TelegramIcon width={40} height={40} />,
-            paymentPhrase: 'Telegram Stars',
+            icon: <StarIcon width={40} height={40} />,
+            paymentPhrase: 'stars_payment',
           },
         ],
       },
@@ -35,22 +38,26 @@ export const TARIFFS: Tariff[] = [
         price: 250,
         currency: '₽',
         paymentMethods: [
-          { code: 'sbp', icon: <SBPIcon width={80} height={40} />, paymentPhrase: 'через СБП' },
+          {
+            code: 'sbp',
+            icon: <SBPIcon width={80} height={40} />,
+            paymentPhrase: 'sbp_payment',
+          },
         ],
       },
       {
         price: 150,
-        currency: <StarIcon width={20} height={20} />,
+        currency: '⭐️',
         paymentMethods: [
           {
             code: 'stars',
-            icon: <TelegramIcon width={40} height={40} />,
-            paymentPhrase: 'Telegram Stars',
+            icon: <StarIcon width={40} height={40} />,
+            paymentPhrase: 'stars_payment',
           },
         ],
       },
     ],
-    addition: '+ 10 horoscopes',
+    addition: 'tariff_addition_10',
   },
   {
     amount: 200,
@@ -59,21 +66,25 @@ export const TARIFFS: Tariff[] = [
         price: 350,
         currency: '₽',
         paymentMethods: [
-          { code: 'sbp', icon: <SBPIcon width={80} height={40} />, paymentPhrase: 'через СБП' },
+          {
+            code: 'sbp',
+            icon: <SBPIcon width={80} height={40} />,
+            paymentPhrase: 'sbp_payment',
+          },
         ],
       },
       {
         price: 200,
-        currency: <StarIcon width={20} height={20} />,
+        currency: '⭐️',
         paymentMethods: [
           {
             code: 'stars',
-            icon: <TelegramIcon width={40} height={40} />,
-            paymentPhrase: 'Telegram Stars',
+            icon: <StarIcon width={40} height={40} />,
+            paymentPhrase: 'stars_payment',
           },
         ],
       },
     ],
-    addition: '+ 30 horoscopes',
+    addition: 'tariff_addition_30',
   },
 ];

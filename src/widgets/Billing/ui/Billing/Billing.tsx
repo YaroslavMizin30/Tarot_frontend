@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 import { TARIFFS, type Tariff } from '@/entities/Billing';
 import TextContainer from '@/shared/ui/TextContainer';
+import useLocales from '@/shared/hooks/useLocales';
 
-import { DESCRIPTION } from '../../config/description';
 import TariffSelection from '../TariffSelection/TariffSelection';
 import PaymentSelection from '../PaymentSelection/PaymentSelection';
 
@@ -11,6 +11,7 @@ import styles from './Billing.module.css';
 
 export const Billing = () => {
   const [tariff, setTariff] = useState<Tariff | null>(null);
+  const { i18n } = useLocales();
 
   const handleTariffSelect = (trf: Tariff) => {
     setTariff(trf);
@@ -31,10 +32,16 @@ export const Billing = () => {
     );
   };
 
+  const descriptionParagraphs = [
+    i18n('desc_title'),
+    i18n('desc_2'),
+    i18n('desc_3'),
+  ];
+
   return (
     <div className={styles.container}>
       <TextContainer
-        paragraphs={DESCRIPTION}
+        paragraphs={descriptionParagraphs}
         maxHeight={200}
         maxHeightMeasure={'px'}
       />
