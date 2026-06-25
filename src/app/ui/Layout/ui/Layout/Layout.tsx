@@ -71,6 +71,8 @@ export const Layout = () => {
 
         <Zodiac sign={user?.sign} className={styles.zodiac} />
 
+        {JSON.stringify(window.Telegram?.WebApp?.initDataUnsafe)}
+
         {isLoading || isAuthenticating ? (
           <Spinner size={'l'} />
         ) : (
