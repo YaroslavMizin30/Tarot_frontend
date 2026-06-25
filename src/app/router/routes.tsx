@@ -112,6 +112,17 @@ const routes: RouteObject[] = [
           },
         },
       },
+      {
+        path: '/billing',
+        lazy: {
+          async Component() {
+            const { default: BillingPage } =
+              await import('@/pages/Billing');
+
+            return BillingPage;
+          },
+        },
+      },
     ],
   },
 ];

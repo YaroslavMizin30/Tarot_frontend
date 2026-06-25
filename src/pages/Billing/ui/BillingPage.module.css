@@ -1,0 +1,8 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  padding-bottom: 100px;
+  padding-top: 20px;
+}
