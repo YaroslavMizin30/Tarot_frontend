@@ -46,16 +46,14 @@ export const Layout = () => {
   }, [locale]);
 
   useEffect(() => {
-    if (isAuthenticating) {
+    if (theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      window.Telegram?.WebApp?.setHeaderColor(themeConfig[theme].header);
+      window.Telegram?.WebApp?.setBottomBarColor(themeConfig[theme].footer);
+    } else {
       window.Telegram?.WebApp?.setHeaderColor('#323232');
       window.Telegram?.WebApp?.setBottomBarColor('#323232');
-
-      return;
     }
-
-    document.documentElement.setAttribute('data-theme', theme);
-    window.Telegram?.WebApp?.setHeaderColor(themeConfig[theme].header);
-    window.Telegram?.WebApp?.setBottomBarColor(themeConfig[theme].footer);
   }, [theme]);
 
   return (
