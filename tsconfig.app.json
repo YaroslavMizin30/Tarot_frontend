@@ -40,5 +40,5 @@
       "@/types/*": ["src/shared/types/*"]
     }
   },
-  "include": ["src", "vite-env.d.ts", "declarations.d.ts", "module.d.ts"]
+  "include": ["src", "vite-env.d.ts", "declarations.d.ts", "module.d.ts", "public/telegram"]
 }
