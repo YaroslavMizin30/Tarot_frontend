@@ -24,7 +24,7 @@ export const Layout = () => {
 
   const { isLoading: isAuthenticating, user } = useAuth();
 
-  const { theme = 'standard' } = user ?? {};
+  const { theme } = user ?? {};
 
   const themeConfig = {
     standard: {
