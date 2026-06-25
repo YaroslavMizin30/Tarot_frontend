@@ -63,11 +63,11 @@ export const Layout = () => {
       <main
         className={`${styles.main} ${isAuthenticating ? styles.loading : ''} custom-scrollbar`}
       >
-        <div className={styles.cloud}></div>
-
-        <div className={styles.couldBottom}></div>
-
-        <Zodiac sign={user?.sign} className={styles.zodiac} />
+        <div className={styles.background}>
+          <div className={styles.cloud}></div>
+          <div className={styles.couldBottom}></div>
+          <Zodiac sign={user?.sign} className={styles.zodiac} />
+        </div>
 
         {isLoading || isAuthenticating ? (
           <Spinner size={'l'} />
