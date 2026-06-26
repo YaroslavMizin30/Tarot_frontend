@@ -4,15 +4,9 @@ export interface Prompt {
 }
 
 export const requestAi = async (prompts: Prompt[]) => {
-  const response = await fetch(
-    'https://hadjujaanfwgepckluqy.supabase.co/functions/v1/ai-request',
-    {
-      method: 'POST',
-      body: JSON.stringify({ prompt: prompts }),
-    },
-  );
+  const { data } = await window.supabase.functions.invoke('ai-request', {
+    body: { prompt: prompts },
+  });
 
-  const answer = await response.json();
-
-  return answer.replace(/[*|#]|---/g, '');
+  return data.replace(/[*|#]|---/g, '');
 };
