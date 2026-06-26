@@ -7,3 +7,4 @@ export {
   isHoroscopeInCurrentPeriod,
 } from './model/useHoroscopes';
 export { useCalendar } from './model/useCalendar';
+export { useEphemeris } from './model/useEphemeris';
