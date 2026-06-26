@@ -15,10 +15,10 @@ const TorchComposition: FC<TorchCompositionProps> = (props) => {
         <Torch
           style={{
             position: 'absolute',
-            top: '38%',
+            top: '51%',
             width: '30px',
-            height: '120px',
-            left: '35%',
+            height: '73px',
+            left: '51%',
           }}
           delay={'1s'}
         />
@@ -26,16 +26,61 @@ const TorchComposition: FC<TorchCompositionProps> = (props) => {
         <Torch
           style={{
             position: 'absolute',
-            top: '40%',
+            top: '42%',
+            width: '30px',
+            height: '100px',
+            right: '20%',
+          }}
+          delay={'5s'}
+        />
+
+        <Torch
+          style={{
+            position: 'absolute',
+            top: '43%',
+            width: '30px',
+            height: '120px',
+            left: '46%',
+          }}
+          delay={'1s'}
+        />
+
+        <Torch
+          style={{
+            position: 'absolute',
+            top: '46%',
+            width: '30px',
+            height: '110px',
+            left: '43%',
+          }}
+          delay={'3s'}
+        />
+
+        <Torch
+          style={{
+            position: 'absolute',
+            top: '46%',
+            width: '30px',
+            height: '120px',
+            right: '4%',
+          }}
+          delay={'1s'}
+        />
+
+        <Torch
+          style={{
+            position: 'absolute',
+            top: '46%',
             width: '40px',
-            left: '15%',
+            left: '22%',
+            height: '130px',
           }}
           delay={'3s'}
         />
         <Torch
           style={{
             position: 'absolute',
-            top: '40%',
+            top: '47%',
             width: '40px',
             right: '10%',
           }}
@@ -44,7 +89,7 @@ const TorchComposition: FC<TorchCompositionProps> = (props) => {
         <Torch
           style={{
             position: 'absolute',
-            top: '50%',
+            top: '47%',
             width: '55px',
             left: '5%',
           }}
@@ -61,7 +106,7 @@ const TorchComposition: FC<TorchCompositionProps> = (props) => {
         <Torch
           style={{
             position: 'absolute',
-            top: '60%',
+            top: '51%',
             width: '70px',
             height: '170px',
             left: '10%',
@@ -71,9 +116,9 @@ const TorchComposition: FC<TorchCompositionProps> = (props) => {
         <Torch
           style={{
             position: 'absolute',
-            top: '63%',
+            top: '55%',
             width: '72px',
-            height: '174px',
+            height: '148px',
             right: '17%',
           }}
           delay={'2s'}
