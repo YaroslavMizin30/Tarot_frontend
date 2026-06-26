@@ -8,6 +8,9 @@ export const queryKeys = {
     byUserId: (userId: string | number) =>
       ['horoscopes', String(userId)] as const,
   },
+  calendar: {
+    all: ['calendar'] as const,
+  },
   spreads: {
     all: ['spreads'] as const,
     byUserId: (userId: string | number) => ['spreads', String(userId)] as const,
