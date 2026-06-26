@@ -9,7 +9,7 @@ export const queryKeys = {
       ['horoscopes', String(userId)] as const,
   },
   calendar: {
-    all: ['calendar'] as const,
+    all: ['calendar', 'ephemeris'] as const,
   },
   spreads: {
     all: ['spreads'] as const,
