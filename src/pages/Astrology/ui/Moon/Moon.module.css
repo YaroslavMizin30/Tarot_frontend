@@ -65,7 +65,7 @@
 }
 
 .newmoon {
-  box-shadow: inset -0em 0px 3em 2em #626262;
+  box-shadow: inset -0em 0px 3em 2em #414141;
 }
 
 .waxingcrescent {
@@ -74,26 +74,26 @@
 }
 
 .firstquarter {
-  box-shadow: inset 1em 0px 2em 0.5em #626262;
+  box-shadow: inset 1em 0px 2em 0.5em #414141;
 }
 
 .waxinggibbous {
-  box-shadow: inset 1em 0px 1em 0.2em #626262;
+  box-shadow: inset 1em 0px 1em 0.2em #414141;
 }
 
 .waninggibbous {
-  box-shadow: inset -1em 0px 1em 0.2em #626262;
+  box-shadow: inset -1em 0px 1em 0.2em #414141;
 }
 
 .lastquarter {
-  box-shadow: inset -1em 0px 2em 0.5em #626262;
+  box-shadow: inset -1em 0px 2em 0.5em #414141;
 }
 
 .waningcrescent {
-  background: #626262;
+  background: #414141;
   box-shadow: inset 1em 0px 1em 0.2em #bababa;
 }
 
 .fullmoon {
-  box-shadow: inset 0em 0px 1em 0.2em #626262;
+  box-shadow: inset 0em 0px 2em 0.1px #414141;
 }
