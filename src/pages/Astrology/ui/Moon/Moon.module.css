@@ -1,0 +1,99 @@
+.moon {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  background: #bababa;
+  border-radius: 100%;
+  font-size: 12px;
+  filter: blur(1px);
+}
+
+.shadow {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+}
+
+.spot,
+.spot2,
+.spot3 {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #71717188;
+  border-radius: 100%;
+  opacity: 0.8;
+  filter: blur(2px);
+  overflow: hidden;
+  border: 2px solid #bababa90;
+}
+
+.spot2 {
+  background: #5f5f5f;
+}
+
+.spot3 {
+  background: #bababa;
+}
+
+.spot-center {
+  width: 1px;
+  height: 1px;
+  box-shadow: 0px 0px 10px 5px #3c3c3c60;
+  border-radius: 100%;
+}
+
+.light {
+  width: 100%;
+  height: 100%;
+  box-shadow: 0px 0px 10px 1px #ababab;
+  border-radius: 100%;
+}
+
+.light-small {
+  box-shadow: 0px 0px 1em 0.4em #a3a3a3;
+}
+
+.moon-small {
+  width: 40px;
+  height: 40px;
+  margin: 4px 0;
+  font-size: 6px;
+}
+
+.newmoon {
+  box-shadow: inset -0em 0px 3em 2em #626262;
+}
+
+.waxingcrescent {
+  background: #626262;
+  box-shadow: inset -1em 0px 1em 0.2em #bababa;
+}
+
+.firstquarter {
+  box-shadow: inset 1em 0px 2em 0.5em #626262;
+}
+
+.waxinggibbous {
+  box-shadow: inset 1em 0px 1em 0.2em #626262;
+}
+
+.waninggibbous {
+  box-shadow: inset -1em 0px 1em 0.2em #626262;
+}
+
+.lastquarter {
+  box-shadow: inset -1em 0px 2em 0.5em #626262;
+}
+
+.waningcrescent {
+  background: #626262;
+  box-shadow: inset 1em 0px 1em 0.2em #bababa;
+}
+
+.fullmoon {
+  box-shadow: inset 0em 0px 1em 0.2em #626262;
+}
