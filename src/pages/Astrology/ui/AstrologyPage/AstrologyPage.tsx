@@ -11,6 +11,10 @@ import useLocales from '@/shared/hooks/useLocales';
 import TRANSLATIONS_EN from '@/shared/locales/en/astrology';
 import TRANSLATIONS_RU from '@/shared/locales/ru/astrology';
 
+import { useCalendar } from '@/entities/Horoscope';
+
+import Moon from '../Moon/Moon';
+
 import styles from './AstrologyPage.module.css';
 
 export const AstrologyPage = () => {
@@ -25,11 +29,54 @@ export const AstrologyPage = () => {
     navigate(subsection);
   };
 
+  const { calendar } = useCalendar();
+
+  const { phase, zodiac, nextPhases } = calendar ?? {};
+  const { name } = phase ?? {};
+  const { sign } = zodiac ?? {};
+
   return (
     <div className={styles.container}>
       <StarsComposition />
 
       <div className={styles.menu}>
+        <div className={styles.calendar}>
+          {name ? (
+            <Moon
+              phase={name?.toLowerCase().replace(/\s/g, '')}
+              size={'l'}
+              style={{ position: 'absolute', right: 0 }}
+            />
+          ) : null}
+
+          <h4 className={styles.title}>{new Date().toLocaleDateString()}</h4>
+
+          <div className={styles.current}>
+            {name ? <span>{`${i18n('Phase')}: ${i18n(name)}`}</span> : null}
+            {sign ? <span>{`${i18n('In sign')}: ${i18n(sign)}`}</span> : null}
+          </div>
+
+          {nextPhases ? `${i18n('Next phases')}:` : null}
+
+          {nextPhases ? (
+            <div className={styles.nextPhases}>
+              {Object.entries(nextPhases).map(([phase, date]) => {
+                return (
+                  <div className={styles.phase} key={phase}>
+                    <span style={{ zIndex: 1 }}>
+                      {new Date(date).toLocaleDateString()}
+                    </span>
+
+                    <Moon phase={phase?.toLowerCase()} size={'s'} />
+
+                    <span>{i18n(phase)}</span>
+                  </div>
+                );
+              })}
+            </div>
+          ) : null}
+        </div>
+
         {SUBSECTIONS.map(({ key, label }) => (
           <Button
             key={key}
