@@ -1,3 +1,5 @@
+import type { Sign } from '@/shared/ui/Zodiac';
+
 export interface Horoscope {
   userId: number;
   content: string;
@@ -145,10 +147,15 @@ export interface AstroBody {
   position_text: string; // Форматированная строка ("10°24' Pisces")
   degree_in_sign: number; // Градус в знаке (0-30)
   longitude_deg: number; // Эклиптическая долгота (0-360)
-
-  // ⭐ Опциональные поля (есть не у всех тел)
   declination_deg?: number; // Склонение (нет у Sun)
   motion_state: MotionState; // "direct" | "retrograde" | "stationary"
+}
+
+interface Ingress {
+  body: BodyName;
+  sign: Sign;
+  degree_in_sign: number;
+  direction: 'entering_sign' | 'leaving_sign';
 }
 
 // Коллекция всех тел
@@ -158,8 +165,25 @@ export interface EphemerisData {
   timestamp: string; // ISO 8601 datetime (UTC)
   local_timestamp: string; // ISO 8601 datetime с часовым поясом
   bodies: BodiesCollection;
+  astrology: {
+    angular_bodies: string[];
+    ingresses: Ingress[];
+    moon_phase: {
+      name: MoonPhaseName;
+      phase_angle_deg: number;
+      is_waxing: boolean;
+    };
+    moon_void_of_course: {
+      is_void: boolean;
+      definition: string;
+      current_sign: ZodiacSign;
+      next_sign: Sign;
+      sign_ingress_at: string;
+    };
+    notable_conditions: string[];
+    retrograde_bodies: BodyName[];
+    stations: string[];
+  };
 }
 
-export interface EphemerisResponse {
-  data: EphemerisData;
-}
+export type EphemerisResponse = EphemerisData;
