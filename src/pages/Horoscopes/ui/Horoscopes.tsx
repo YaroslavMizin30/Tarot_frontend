@@ -223,18 +223,18 @@ export const Horoscopes = () => {
         <h3>{`${i18n('Planets')} ${new Date().toLocaleDateString()}`}</h3>
 
         <div className={styles.planets}>
-          <div className={`${styles.planet} ${styles.mercury}`}>
+          <div className={`${styles.planet} ${styles.moon}`}>
             {/* @ts-expect-error nocheck*/}
-            <span className={styles.name}>{i18n(bodies?.Mercury?.name)}</span>
+            <span className={styles.name}>{i18n(bodies?.Moon?.name)}</span>
 
             <img
-              width={'119%'}
-              height={'119%'}
-              src={'/assets/images/horoscope/mercury.png'}
+              width={'123%'}
+              height={'123%'}
+              src={'/assets/images/horoscope/moon.png'}
             />
 
             {/* @ts-expect-error nocheck*/}
-            <span className={styles.sign}>{i18n(bodies?.Mercury?.sign)}</span>
+            <span className={styles.sign}>{i18n(bodies?.Moon?.sign)}</span>
           </div>
 
           <div className={`${styles.planet} ${styles.sun}`}>
@@ -251,18 +251,18 @@ export const Horoscopes = () => {
             <span className={styles.sign}>{i18n(bodies?.Sun?.sign)}</span>
           </div>
 
-          <div className={`${styles.planet} ${styles.moon}`}>
+          <div className={`${styles.planet} ${styles.mercury}`}>
             {/* @ts-expect-error nocheck*/}
-            <span className={styles.name}>{i18n(bodies?.Moon?.name)}</span>
+            <span className={styles.name}>{i18n(bodies?.Mercury?.name)}</span>
 
             <img
-              width={'123%'}
-              height={'123%'}
-              src={'/assets/images/horoscope/moon.png'}
+              width={'119%'}
+              height={'119%'}
+              src={'/assets/images/horoscope/mercury.png'}
             />
 
             {/* @ts-expect-error nocheck*/}
-            <span className={styles.sign}>{i18n(bodies?.Moon?.sign)}</span>
+            <span className={styles.sign}>{i18n(bodies?.Mercury?.sign)}</span>
           </div>
 
           <div className={`${styles.planet} ${styles.venus}`}>

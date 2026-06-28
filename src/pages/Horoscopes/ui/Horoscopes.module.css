@@ -131,9 +131,10 @@
 }
 
 .moon {
-  width: 55px;
-  height: 55px;
+  width: 45px;
+  height: 45px;
   box-shadow: 0px 0px 15px 1px #fff;
+  margin-right: -7px;
 }
 
 .sun {
@@ -143,10 +144,9 @@
 }
 
 .mercury {
-  width: 45px;
-  height: 45px;
+  width: 55px;
+  height: 55px;
   box-shadow: 0px 0px 15px 5px #4a4a4a;
-  margin-right: -7px;
 }
 
 .venus {
