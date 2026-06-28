@@ -8,6 +8,7 @@ import StarsComposition from '@/pages/ui/StarsComposition';
 
 import { useHoroscopes } from '@/entities/Horoscope';
 import { useUser } from '@/entities/User';
+import { useEphemeris } from '@/entities/Horoscope';
 
 import useLocales from '@/shared/hooks/useLocales';
 import TRANSLATIONS_EN from '@/shared/locales/en/horoscopes';
@@ -33,6 +34,8 @@ export const Horoscopes = () => {
   const [scrollOverrideId, setScrollOverrideId] = useState<string | null>(null);
 
   const navigate = useNavigate();
+
+  const { bodies } = useEphemeris();
 
   const { i18n, addTranslations, locale } = useLocales();
   const { user } = useUser() ?? {};
@@ -168,6 +171,8 @@ export const Horoscopes = () => {
     addHoroscope(selectedType);
   };
 
+  console.log(bodies);
+
   return (
     <div className={styles.container}>
       <StarsComposition />
@@ -214,10 +219,73 @@ export const Horoscopes = () => {
         </form>
       </div>
 
-      <ArrowButton
-        className={styles.back}
-        onClick={() => navigate('/astrology')}
-      />
+      <div className={styles['current-planets']}>
+        <h3>{new Date().toLocaleDateString()}</h3>
+
+        <div className={styles.planets}>
+          <div className={`${styles.planet} ${styles.mercury}`}>
+            <img
+              width={'119%'}
+              height={'119%'}
+              src={'/assets/images/horoscope/mercury.png'}
+            />
+
+            {/* @ts-expect-error nocheck*/}
+            <span className={styles.sign}>{i18n(bodies?.Mercury?.sign)}</span>
+          </div>
+
+          <div className={`${styles.planet} ${styles.sun}`}>
+            <img
+              width={'140%'}
+              height={'140%'}
+              src={'/assets/images/horoscope/sun.png'}
+            />
+
+            {/* @ts-expect-error nocheck*/}
+            <span className={styles.sign}>{i18n(bodies?.Sun?.sign)}</span>
+          </div>
+
+          <div className={`${styles.planet} ${styles.moon}`}>
+            <img
+              width={'123%'}
+              height={'123%'}
+              src={'/assets/images/horoscope/moon.png'}
+            />
+
+            {/* @ts-expect-error nocheck*/}
+            <span className={styles.sign}>{i18n(bodies?.Moon?.sign)}</span>
+          </div>
+
+          <div className={`${styles.planet} ${styles.venus}`}>
+            <img
+              width={'134%'}
+              height={'134%'}
+              src={'/assets/images/horoscope/venus.png'}
+            />
+
+            {/* @ts-expect-error nocheck*/}
+            <span className={styles.sign}>{i18n(bodies?.Venus?.sign)}</span>
+          </div>
+
+          <div className={`${styles.planet} ${styles.mars}`}>
+            <img
+              width={'100%'}
+              height={'100%'}
+              src={'/assets/images/horoscope/mars.png'}
+            />
+
+            {/* @ts-expect-error nocheck*/}
+            <span className={styles.sign}>{i18n(bodies?.Mars?.sign)}</span>
+          </div>
+        </div>
+      </div>
+
+      <div className={styles.bottom}>
+        <ArrowButton
+          className={styles.back}
+          onClick={() => navigate('/astrology')}
+        />
+      </div>
     </div>
   );
 };

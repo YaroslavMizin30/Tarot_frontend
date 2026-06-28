@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   z-index: 1;
 }
 
@@ -87,4 +87,86 @@
 
 .back {
   z-index: 1;
+}
+
+.current-planets {
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.planets {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 30px;
+  padding-top: 10px;
+
+  animation: fadeIn 1s ease;
+}
+
+.planet {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+}
+
+.sign {
+  position: absolute;
+  bottom: -40%;
+  font-size: 12px;
+  text-shadow: 1px 1px 1px var(--text-default);
+}
+
+.planet + .planet {
+  margin-left: 10px;
+}
+
+.moon {
+  width: 55px;
+  height: 55px;
+  box-shadow: 0px 0px 15px 1px #fff;
+}
+
+.sun {
+  width: 50px;
+  height: 50px;
+  box-shadow: 0px 0px 15px 1px #ff5e00;
+}
+
+.mercury {
+  width: 45px;
+  height: 45px;
+  box-shadow: 0px 0px 15px 5px #4a4a4a;
+}
+
+.venus {
+  width: 50px;
+  height: 50px;
+  box-shadow: 0px 0px 15px 5px #4a4a4a;
+}
+
+.mars {
+  width: 50px;
+  height: 50px;
+  box-shadow: 0px 0px 15px 1px #812f00;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  padding-bottom: 10px;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }

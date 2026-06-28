@@ -13,7 +13,7 @@ export const useEphemeris = () => {
     refetch,
     error,
   } = useQuery({
-    queryKey: queryKeys.calendar.all,
+    queryKey: queryKeys.ephemeris.all,
     queryFn: getEphemeris,
     enabled: !!user,
   });
