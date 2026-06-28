@@ -20,7 +20,8 @@ export const useEphemeris = () => {
 
   return {
     isLoading,
-    ephemeris,
+    bodies: ephemeris?.bodies ?? {},
+    astrology: ephemeris?.astrology ?? {},
     fetchCalendar: refetch,
     error,
   };
