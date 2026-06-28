@@ -32,6 +32,12 @@ const TRANSLATIONS_RU: Record<string, string> = {
     'У вас уже есть гороскоп на эту неделю',
   'You already have a monthly horoscope for this month':
     'У вас уже есть гороскоп на этот месяц',
+  'Planets': 'Планеты',
+  'Mercury': 'Меркурий',
+  'Sun': 'Солнце',
+  'Moon': 'Луна',
+  'Venus': 'Венера',
+  'Mars': 'Марс',
 };
 
 export default TRANSLATIONS_RU;

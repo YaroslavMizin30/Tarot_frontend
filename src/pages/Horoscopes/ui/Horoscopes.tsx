@@ -220,10 +220,13 @@ export const Horoscopes = () => {
       </div>
 
       <div className={styles['current-planets']}>
-        <h3>{new Date().toLocaleDateString()}</h3>
+        <h3>{`${i18n('Planets')} ${new Date().toLocaleDateString()}`}</h3>
 
         <div className={styles.planets}>
           <div className={`${styles.planet} ${styles.mercury}`}>
+            {/* @ts-expect-error nocheck*/}
+            <span className={styles.name}>{i18n(bodies?.Mercury?.name)}</span>
+
             <img
               width={'119%'}
               height={'119%'}
@@ -235,6 +238,9 @@ export const Horoscopes = () => {
           </div>
 
           <div className={`${styles.planet} ${styles.sun}`}>
+            {/* @ts-expect-error nocheck*/}
+            <span className={styles.name}>{i18n(bodies?.Sun?.name)}</span>
+
             <img
               width={'140%'}
               height={'140%'}
@@ -246,6 +252,9 @@ export const Horoscopes = () => {
           </div>
 
           <div className={`${styles.planet} ${styles.moon}`}>
+            {/* @ts-expect-error nocheck*/}
+            <span className={styles.name}>{i18n(bodies?.Moon?.name)}</span>
+
             <img
               width={'123%'}
               height={'123%'}
@@ -257,6 +266,9 @@ export const Horoscopes = () => {
           </div>
 
           <div className={`${styles.planet} ${styles.venus}`}>
+            {/* @ts-expect-error nocheck*/}
+            <span className={styles.name}>{i18n(bodies?.Venus?.name)}</span>
+
             <img
               width={'134%'}
               height={'134%'}
@@ -268,6 +280,9 @@ export const Horoscopes = () => {
           </div>
 
           <div className={`${styles.planet} ${styles.mars}`}>
+            {/* @ts-expect-error nocheck*/}
+            <span className={styles.name}>{i18n(bodies?.Mars?.name)}</span>
+
             <img
               width={'100%'}
               height={'100%'}

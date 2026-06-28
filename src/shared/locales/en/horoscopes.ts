@@ -31,6 +31,12 @@ const TRANSLATIONS_EN: Record<string, string> = {
     'You already have a weekly horoscope for this week',
   'You already have a monthly horoscope for this month':
     'You already have a monthly horoscope for this month',
+  'Planets': 'Planets',
+  'Mercury': 'Mercury',
+  'Sun': 'Sun',
+  'Moon': 'Moon',
+  'Venus': 'Venus',
+  'Mars': 'Mars',
 };
 
 export default TRANSLATIONS_EN;
