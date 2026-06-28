@@ -6,6 +6,8 @@ const TRANSLATIONS_RU: Record<string, string> = {
   'Phase': 'Фаза',
   'Next phases': 'Следующие фазы',
 
+  'Moon': 'Луна',
+
   'New Moon': 'Новолуние',
   'Waxing Crescent': 'Растущий серп',
   'First Quarter': 'Первая четверть',

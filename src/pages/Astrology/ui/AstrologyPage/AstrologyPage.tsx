@@ -35,6 +35,17 @@ export const AstrologyPage = () => {
   const { name } = phase ?? {};
   const { sign } = zodiac ?? {};
 
+  const moonPhases = Object.entries(nextPhases ?? {})
+    .sort((prev, next) => {
+      const [, prevDate] = prev;
+      const [, nextDate] = next;
+
+      return new Date(prevDate) < new Date(nextDate) ? -1 : 1;
+    })
+    .map(([name, date]) => {
+      return { name, date };
+    });
+
   return (
     <div className={styles.container}>
       <StarsComposition />
@@ -49,7 +60,7 @@ export const AstrologyPage = () => {
             />
           ) : null}
 
-          <h4 className={styles.title}>{new Date().toLocaleDateString()}</h4>
+          <h4 className={styles.title}>{`${i18n('Moon')} ${new Date().toLocaleDateString()}`}</h4>
 
           <div className={styles.current}>
             {name ? <span>{`${i18n('Phase')}: ${i18n(name)}`}</span> : null}
@@ -58,18 +69,18 @@ export const AstrologyPage = () => {
 
           {nextPhases ? `${i18n('Next phases')}:` : null}
 
-          {nextPhases ? (
+          {moonPhases ? (
             <div className={styles.nextPhases}>
-              {Object.entries(nextPhases).map(([phase, date]) => {
+              {moonPhases.map(({name, date}) => {
                 return (
-                  <div className={styles.phase} key={phase}>
+                  <div className={styles.phase} key={date}>
                     <span style={{ zIndex: 1 }}>
                       {new Date(date).toLocaleDateString()}
                     </span>
 
-                    <Moon phase={phase?.toLowerCase()} size={'s'} />
+                    <Moon phase={name?.toLowerCase()} size={'s'} />
 
-                    <span>{i18n(phase)}</span>
+                    <span>{i18n(name)}</span>
                   </div>
                 );
               })}
