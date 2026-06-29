@@ -10,5 +10,5 @@ export const getEphemeris = async () => {
     return null;
   }
 
-  return camelize(JSON.parse(data) as EphemerisResponse);
+  return camelize(JSON.parse(data)) as EphemerisResponse;
 };
