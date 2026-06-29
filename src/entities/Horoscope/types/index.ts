@@ -135,26 +135,26 @@ export interface AstroBody {
   id: BodyId;
   name: BodyName;
   sign: ZodiacSign;
-  sign_abbr: string; // Сокращение знака ("Pis", "Leo")
-  sign_id: ZodiacSign;
+  signAbbr: string; // Сокращение знака ("Pis", "Leo")
+  signId: ZodiacSign;
   pos: number; // Позиция в знаке (0-30°)
-  abs_pos: number; // Абсолютная позиция (0-360°)
+  absPos: number; // Абсолютная позиция (0-360°)
   retrograde: boolean;
   speed: number; // Скорость в градусах/день (отриц. = ретроградное)
-  is_stationary: boolean; // Стационарная точка (смена движения)
-  latitude_deg: number; // Эклиптическая широта
-  distance_au: number; // Расстояние в астрономических единицах
-  position_text: string; // Форматированная строка ("10°24' Pisces")
-  degree_in_sign: number; // Градус в знаке (0-30)
-  longitude_deg: number; // Эклиптическая долгота (0-360)
-  declination_deg?: number; // Склонение (нет у Sun)
-  motion_state: MotionState; // "direct" | "retrograde" | "stationary"
+  isStationary: boolean; // Стационарная точка (смена движения)
+  latitudeDeg: number; // Эклиптическая широта
+  distanceAu: number; // Расстояние в астрономических единицах
+  positionText: string; // Форматированная строка ("10°24' Pisces")
+  degreeInSign: number; // Градус в знаке (0-30)
+  longitudeDeg: number; // Эклиптическая долгота (0-360)
+  declinationDeg?: number; // Склонение (нет у Sun)
+  motionState: MotionState; // "direct" | "retrograde" | "stationary"
 }
 
 interface Ingress {
   body: BodyName;
   sign: Sign;
-  degree_in_sign: number;
+  degreeInSign: number;
   direction: 'entering_sign' | 'leaving_sign';
 }
 
@@ -163,25 +163,25 @@ export type BodiesCollection = Partial<Record<BodyName, AstroBody>>;
 
 export interface EphemerisData {
   timestamp: string; // ISO 8601 datetime (UTC)
-  local_timestamp: string; // ISO 8601 datetime с часовым поясом
+  localTimestamp: string; // ISO 8601 datetime с часовым поясом
   bodies: BodiesCollection;
   astrology: {
-    angular_bodies: string[];
+    angularBodies: string[];
     ingresses: Ingress[];
-    moon_phase: {
+    moonPhase: {
       name: MoonPhaseName;
-      phase_angle_deg: number;
-      is_waxing: boolean;
+      phaseAngleDeg: number;
+      isWaxing: boolean;
     };
-    moon_void_of_course: {
-      is_void: boolean;
+    moonVoidOfCourse: {
+      isVoid: boolean;
       definition: string;
-      current_sign: ZodiacSign;
-      next_sign: Sign;
-      sign_ingress_at: string;
+      currentSign: ZodiacSign;
+      nextSign: Sign;
+      signIngressAt: string;
     };
-    notable_conditions: string[];
-    retrograde_bodies: BodyName[];
+    notableConditions: string[];
+    retrogradeBodies: BodyName[];
     stations: string[];
   };
 }

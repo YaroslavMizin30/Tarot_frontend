@@ -1,4 +1,4 @@
-export { type Horoscope } from './types';
+export type { Horoscope, MoonPhaseName, Planet, ZodiacSign } from './types';
 
 export { getHoroscopes } from './api/getHoroscopes';
 export { addHoroscope } from './api/addHoroscope';
