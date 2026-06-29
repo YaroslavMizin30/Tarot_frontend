@@ -1,0 +1,158 @@
+.circle {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 240px;
+  min-height: 240px;
+  border-radius: 100%;
+  border: 2px solid var(--border-secondary);
+}
+
+.inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 140px;
+  min-height: 140px;
+  border: 2px solid var(--border-secondary);
+  border-radius: 100%;
+}
+
+.houses {
+  min-width: 75px;
+  min-height: 75px;
+  border-radius: 100%;
+  border: 2px solid var(--border-secondary);
+}
+
+.line {
+  position: absolute;
+  height: 100%;
+  width: 2px;
+  background: radial-gradient(
+    circle,
+    var(--border-secondary) 0%,
+    var(--border-secondary) 30%,
+    transparent 30%,
+    transparent 55%,
+    var(--border-secondary) 70%,
+    var(--border-secondary) 100%
+  );
+}
+
+.degree,
+.name,
+.house {
+  position: absolute;
+  color: var(--text-primary);
+  font-size: 11px;
+}
+
+.name {
+  display: inline-flex;
+  justify-content: center;
+  width: 38px;
+  text-align: center;
+  font-size: 10px;
+}
+
+.zodiac {
+  position: absolute;
+  animation: blink 2s linear infinite;
+}
+
+.Aquarius {
+  top: 40px;
+  left: 40px;
+  animation-delay: 0s;
+}
+
+.Pisces {
+  top: 85px;
+  left: 20px;
+  animation-delay: 1s;
+}
+
+.Aries {
+  bottom: 85px;
+  left: 20px;
+  animation-delay: 3s;
+}
+
+.Taurus {
+  bottom: 40px;
+  left: 40px;
+  animation-delay: 4s;
+}
+
+.Gemini {
+  bottom: 20px;
+  left: 85px;
+  animation-delay: 1s;
+}
+
+.Cancer {
+  bottom: 20px;
+  right: 85px;
+  animation-delay: 2s;
+}
+
+.Leo {
+  bottom: 40px;
+  right: 40px;
+  animation-delay: 3s;
+}
+
+.Virgo {
+  bottom: 85px;
+  right: 20px;
+  animation-delay: 4s;
+}
+
+.Libra {
+  top: 85px;
+  right: 20px;
+  animation-delay: 1s;
+}
+
+.Scorpio {
+  top: 40px;
+  right: 40px;
+  animation-delay: 2s;
+}
+
+.Sagittarius {
+  top: 20px;
+  right: 85px;
+  animation-delay: 3s;
+}
+
+.Capricorn {
+  top: 20px;
+  left: 85px;
+  animation-delay: 4s;
+}
+
+.planet {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
