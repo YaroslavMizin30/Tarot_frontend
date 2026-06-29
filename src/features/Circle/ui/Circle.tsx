@@ -1,4 +1,4 @@
-import React, { type FC } from 'react';
+import { type FC } from 'react';
 
 import Zodiac from '@/shared/ui/Zodiac';
 import useLocales from '@/shared/hooks/useLocales';

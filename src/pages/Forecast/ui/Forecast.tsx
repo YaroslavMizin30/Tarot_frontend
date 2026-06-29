@@ -1,4 +1,7 @@
+import { useNavigate } from 'react-router';
+
 import useLocales from '@/shared/hooks/useLocales';
+import ArrowButton from '@/shared/ui/ArrowButton';
 
 import {
   useEphemeris,
@@ -18,9 +21,8 @@ export const Forecast = () => {
   const { calendar } = useCalendar();
   const { bodies, astrology } = useEphemeris();
 
-  console.log(astrology);
-
   const { i18n } = useLocales();
+  const navigate = useNavigate();
 
   const { phase, zodiac, nextPhases } = calendar ?? {};
   const { name } = phase ?? {};
@@ -134,6 +136,13 @@ export const Forecast = () => {
             })}
           </div>
         ) : null}
+      </div>
+
+      <div className={styles.bottom}>
+        <ArrowButton
+          onClick={() => navigate('/astrology')}
+          style={{ zIndex: 1 }}
+        />
       </div>
     </div>
   );

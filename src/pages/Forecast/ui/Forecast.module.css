@@ -128,3 +128,11 @@
   width: 20px;
   height: 20px;
 }
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  padding-bottom: 10px;
+}
