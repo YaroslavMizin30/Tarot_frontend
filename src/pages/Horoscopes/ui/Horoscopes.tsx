@@ -15,6 +15,7 @@ import TRANSLATIONS_EN from '@/shared/locales/en/horoscopes';
 import TRANSLATIONS_RU from '@/shared/locales/ru/horoscopes';
 import Button from '@/shared/ui/Button';
 import ArrowButton from '@/shared/ui/ArrowButton';
+import Zodiac from '@/shared/ui/Zodiac';
 
 import styles from './Horoscopes.module.css';
 
@@ -171,8 +172,6 @@ export const Horoscopes = () => {
     addHoroscope(selectedType);
   };
 
-  console.log(bodies);
-
   return (
     <div className={styles.container}>
       <StarsComposition />
@@ -227,70 +226,90 @@ export const Horoscopes = () => {
             {/* @ts-expect-error nocheck*/}
             <span className={styles.name}>{i18n(bodies?.Moon?.name)}</span>
 
+            <Zodiac
+              type={'small'}
+              /* @ts-expect-error nocheck */
+              sign={bodies?.Moon?.sign}
+              className={styles.zodiac}
+            />
+
             <img
               width={'123%'}
               height={'123%'}
               src={'/assets/images/horoscope/moon.png'}
             />
-
-            {/* @ts-expect-error nocheck*/}
-            <span className={styles.sign}>{i18n(bodies?.Moon?.sign)}</span>
           </div>
 
           <div className={`${styles.planet} ${styles.sun}`}>
             {/* @ts-expect-error nocheck*/}
             <span className={styles.name}>{i18n(bodies?.Sun?.name)}</span>
 
+            <Zodiac
+              type={'small'}
+              /* @ts-expect-error nocheck */
+              sign={bodies?.Sun?.sign}
+              className={styles.zodiac}
+            />
+
             <img
               width={'140%'}
               height={'140%'}
               src={'/assets/images/horoscope/sun.png'}
             />
-
-            {/* @ts-expect-error nocheck*/}
-            <span className={styles.sign}>{i18n(bodies?.Sun?.sign)}</span>
           </div>
 
           <div className={`${styles.planet} ${styles.mercury}`}>
             {/* @ts-expect-error nocheck*/}
             <span className={styles.name}>{i18n(bodies?.Mercury?.name)}</span>
 
+            <Zodiac
+              type={'small'}
+              /* @ts-expect-error nocheck */
+              sign={bodies?.Mercury?.sign}
+              className={styles.zodiac}
+            />
+
             <img
               width={'119%'}
               height={'119%'}
               src={'/assets/images/horoscope/mercury.png'}
             />
-
-            {/* @ts-expect-error nocheck*/}
-            <span className={styles.sign}>{i18n(bodies?.Mercury?.sign)}</span>
           </div>
 
           <div className={`${styles.planet} ${styles.venus}`}>
             {/* @ts-expect-error nocheck*/}
             <span className={styles.name}>{i18n(bodies?.Venus?.name)}</span>
 
+            <Zodiac
+              type={'small'}
+              /* @ts-expect-error nocheck */
+              sign={bodies?.Venus?.sign}
+              className={styles.zodiac}
+            />
+
             <img
               width={'134%'}
               height={'134%'}
               src={'/assets/images/horoscope/venus.png'}
             />
-
-            {/* @ts-expect-error nocheck*/}
-            <span className={styles.sign}>{i18n(bodies?.Venus?.sign)}</span>
           </div>
 
           <div className={`${styles.planet} ${styles.mars}`}>
             {/* @ts-expect-error nocheck*/}
             <span className={styles.name}>{i18n(bodies?.Mars?.name)}</span>
 
+            <Zodiac
+              type={'small'}
+              /* @ts-expect-error nocheck */
+              sign={bodies?.Mars?.sign}
+              className={styles.zodiac}
+            />
+
             <img
               width={'100%'}
               height={'100%'}
               src={'/assets/images/horoscope/mars.png'}
             />
-
-            {/* @ts-expect-error nocheck*/}
-            <span className={styles.sign}>{i18n(bodies?.Mars?.sign)}</span>
           </div>
         </div>
       </div>
