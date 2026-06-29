@@ -1,6 +1,7 @@
 const TRANSLATIONS_EN: Record<string, string> = {
   'Natal chart': 'Natal chart',
   'Horoscopes': 'Horoscopes',
+  'Common forecast': 'Common forecast',
 
   'In sign': 'In sign',
   'Phase': 'Phase',
@@ -38,6 +39,43 @@ const TRANSLATIONS_EN: Record<string, string> = {
   'Capricorn': 'Capricorn',
   'Aquarius': 'Aquarius',
   'Pisces': 'Pisces',
+
+  'Ingresses': 'Ingresses',
+
+  'leaving_sign': 'leaving_sign',
+  'entering_sign': 'entering_sign',
+
+  'Planets': 'Planets',
+  'Mercury': 'Mercury',
+  'Sun': 'Sun',
+  'Venus': 'Venus',
+  'Mars': 'Mars',
+  'Jupiter': 'Jupiter',
+  'Saturn': 'Saturn',
+  'Uranus': 'Uranus',
+  'Neptune': 'Neptune',
+  'Pluto': 'Pluto',
+
+  'is in sign': 'is in sign',
+
+  'The moon is void of course. Time for rest, routine activities or wrapping old matters.':
+    'The moon is void of course. Time for rest, routine activities or wrapping old matters.',
+  'A time for new beginnings and planting seeds of intention.':
+    'A time for new beginnings and planting seeds of intention.',
+  'A time to act, overcoming early obstacles':
+    'A time to act, overcoming early obstacles',
+  'A moment to exercise willpower and overcome doubts':
+    'A moment to exercise willpower and overcome doubts',
+  'A time for patience, analysis, and faith in your path':
+    'A time for patience, analysis, and faith in your path',
+  'A powerful moment for release and celebrating achievements':
+    'A powerful moment for release and celebrating achievements',
+  "Energy begins to wane. Share experiences, express appreciation for what you've received":
+    "Energy begins to wane. Share experiences, express appreciation for what you've received",
+  'Let go of what no longer serves.': 'Let go of what no longer serves.',
+  'A time for solitude, meditation, and preparing for new beginnings':
+    'A time for solitude, meditation, and preparing for new beginnings',
+  'Positions': 'Positions',
 };
 
 export default TRANSLATIONS_EN;

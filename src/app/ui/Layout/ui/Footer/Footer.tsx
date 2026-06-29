@@ -18,7 +18,7 @@ const Footer = (props: { isLoading?: boolean }) => {
 
   const TAROT_PAGES = ['/', '/reading', '/about', '/daily', '/history'];
   const SETTING_PAGES = ['/settings'];
-  const ASTROLOGY_PAGES = ['/astrology', '/natal-chart', '/horoscopes'];
+  const ASTROLOGY_PAGES = ['/astrology', '/natal-chart', '/horoscopes', '/forecast'];
   const BILLING_PAGES = ['/billing'];
 
   const { i18n } = useLocales();
