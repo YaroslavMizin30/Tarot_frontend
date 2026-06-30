@@ -66,7 +66,7 @@ export const Circle: FC<CircleProps> = (props) => {
   return (
     <div className={`${styles.circle} ${className}`}>
       {positions.sun ? (
-        <div className={styles.planet} style={planetPositions[positions.sun]}>
+        <div className={styles.planet} style={{...planetPositions[positions.sun], boxShadow: '0px 0px 30px 16px #ff7b00'}}>
           <img
             src={'/assets/images/horoscope/sun.png'}
             width={'180%'}
@@ -103,7 +103,7 @@ export const Circle: FC<CircleProps> = (props) => {
 
       {positions.uranus ? (
         <div
-          className={styles.planet}
+          className={`${styles.planet} ${styles.uranus}`}
           style={planetPositions[positions.uranus]}
         >
           <img
@@ -116,7 +116,7 @@ export const Circle: FC<CircleProps> = (props) => {
 
       {positions.neptune ? (
         <div
-          className={styles.planet}
+          className={`${styles.planet} ${styles.neptune}`}
           style={planetPositions[positions.neptune]}
         >
           <img
@@ -128,7 +128,10 @@ export const Circle: FC<CircleProps> = (props) => {
       ) : null}
 
       {positions.venus ? (
-        <div className={styles.planet} style={planetPositions[positions.venus]}>
+        <div
+          className={`${styles.planet} ${styles.venus}`}
+          style={planetPositions[positions.venus]}
+        >
           <img
             src={'/assets/images/horoscope/venus.png'}
             width={'85%'}
@@ -138,7 +141,10 @@ export const Circle: FC<CircleProps> = (props) => {
       ) : null}
 
       {positions.mars ? (
-        <div className={styles.planet} style={planetPositions[positions.mars]}>
+        <div
+          className={`${styles.planet} ${styles.mars}`}
+          style={planetPositions[positions.mars]}
+        >
           <img
             src={'/assets/images/horoscope/mars.png'}
             width={'55%'}
@@ -149,7 +155,7 @@ export const Circle: FC<CircleProps> = (props) => {
 
       {positions.mercury ? (
         <div
-          className={styles.planet}
+          className={`${styles.planet} ${styles.mercury}`}
           style={planetPositions[positions.mercury]}
         >
           <img
@@ -161,17 +167,36 @@ export const Circle: FC<CircleProps> = (props) => {
       ) : null}
 
       {positions.moon ? (
-        <div className={styles.planet} style={planetPositions[positions.moon]}>
+        <div
+          className={`${styles.planet} ${styles.moon}`}
+          style={{ ...planetPositions[positions.moon] }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              boxShadow: '0px 0px 10px 5px #fff',
+              borderRadius: '50%',
+              width: '30%',
+              height: '30%',
+              bottom: '1px',
+              right: '2px',
+            }}
+          />
+
           <img
             src={'/assets/images/horoscope/moon.png'}
             width={'50%'}
             height={'50%'}
+            style={{ zIndex: 1 }}
           />
         </div>
       ) : null}
 
       {positions.pluto ? (
-        <div className={styles.planet} style={planetPositions[positions.pluto]}>
+        <div
+          className={`${styles.planet} ${styles.pluto}`}
+          style={planetPositions[positions.pluto]}
+        >
           <img
             src={'/assets/images/horoscope/pluto.png'}
             width={'40%'}

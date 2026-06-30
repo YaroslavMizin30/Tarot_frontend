@@ -143,6 +143,17 @@
   height: 25px;
 }
 
+/* смещаем маленькие планеты в угол, чтобы не было эффекта матрешки */
+.mars,
+.neptune,
+.pluto,
+.moon,
+.venus,
+.mercury {
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
 @keyframes blink {
   0% {
     opacity: 1;
