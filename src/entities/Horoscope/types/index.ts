@@ -186,4 +186,4 @@ export interface EphemerisData {
   };
 }
 
-export type EphemerisResponse = EphemerisData;
+export type EphemerisResponse = { data: EphemerisData };
