@@ -3,12 +3,10 @@ import { useNavigate } from 'react-router';
 import useLocales from '@/shared/hooks/useLocales';
 import ArrowButton from '@/shared/ui/ArrowButton';
 import Spinner from '@/shared/ui/Spinner';
+import TRANSLATIONS_RU from '@/shared/locales/ru/forecast';
+import TRANSLATIONS_EN from '@/shared/locales/en/forecast';
 
-import {
-  useEphemeris,
-  useCalendar,
-  type MoonPhaseName,
-} from '@/entities/Horoscope';
+import { useEphemeris, useCalendar } from '@/entities/Horoscope';
 
 import Circle from '@/features/Circle';
 
@@ -17,9 +15,11 @@ import StarsComposition from '@/pages/ui/StarsComposition';
 import Moon from './Moon/Moon';
 
 import styles from './Forecast.module.css';
+import { useEffect } from 'react';
 
 export const Forecast = () => {
-  const { calendar, moonPhases } = useCalendar();
+  const { moonPhases, getMoonDescription, phaseName, zodiac } =
+    useCalendar();
   const {
     bodies,
     isLoading,
@@ -29,47 +29,12 @@ export const Forecast = () => {
     isMoonVoidOfCourse,
   } = useEphemeris();
 
-  const { i18n } = useLocales();
+  const { i18n, locale, addTranslations } = useLocales();
   const navigate = useNavigate();
 
-  const { phase, zodiac, nextPhases } = calendar ?? {};
-  const { name } = phase ?? {};
-  const { sign } = zodiac ?? {};
-
-  const getMoonDescription = (phaseName: MoonPhaseName) => {
-    if (isMoonVoidOfCourse) {
-      return i18n(
-        'The moon is void of course. Time for rest, routine activities or wrapping old matters.',
-      );
-    }
-
-    switch (phaseName) {
-      case 'New Moon':
-        return i18n(
-          'A time for new beginnings and planting seeds of intention.',
-        );
-      case 'First Quarter':
-        return i18n('A moment to exercise willpower and overcome doubts');
-      case 'Last Quarter':
-        return i18n('Let go of what no longer serves.');
-      case 'Full Moon':
-        return i18n(
-          'A powerful moment for release and celebrating achievements',
-        );
-      case 'Waning Crescent':
-        return i18n(
-          'A time for solitude, meditation, and preparing for new beginnings',
-        );
-      case 'Waning Gibbous':
-        return i18n(
-          "Energy begins to wane. Share experiences, express appreciation for what you've received",
-        );
-      case 'Waxing Crescent':
-        return i18n('A time to act, overcoming early obstacles');
-      case 'Waxing Gibbous':
-        return i18n('A time for patience, analysis, and faith in your path');
-    }
-  };
+  useEffect(() => {
+    addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
+  }, [locale]);
 
   if (isLoading) {
     return <Spinner size={'l'} />;
@@ -103,22 +68,22 @@ export const Forecast = () => {
         <div className={styles.data}>
           {retrogradeBodies?.length ? (
             <span>
-              {i18n('Retrograde bodies:')} {retrogradeBodies}
+              {i18n('Retrograde bodies')}: {retrogradeBodies}
             </span>
           ) : null}
 
           {stations?.length ? (
             <span>
-              {i18n('Station bodies:')} {stations}
+              {i18n('Station bodies')}: {stations}
             </span>
           ) : null}
         </div>
       </div>
 
       <div className={styles.calendar}>
-        {name ? (
+        {phaseName ? (
           <Moon
-            phase={name?.toLowerCase().replace(/\s/g, '')}
+            phase={phaseName?.toLowerCase().replace(/\s/g, '')}
             size={'l'}
             style={{ position: 'absolute', right: 0 }}
           />
@@ -127,14 +92,16 @@ export const Forecast = () => {
         <h4 className={styles.title}>{`${i18n('Moon')}`}</h4>
 
         <div className={styles.current}>
-          {name ? <span>{`${i18n(name)}`}</span> : null}&nbsp;
-          {sign ? (
+          {phaseName ? <span>{`${i18n(phaseName)}`}</span> : null}&nbsp;
+          {zodiac ? (
             <span>{`${i18n('is in sign')} ${i18n(bodies?.Moon?.sign ?? '')}.`}</span>
           ) : null}{' '}
-          <span className={styles.conclusion}>{getMoonDescription(name!)}</span>
+          <span className={styles.conclusion}>
+            {getMoonDescription(isMoonVoidOfCourse)}
+          </span>
         </div>
 
-        {nextPhases ? `${i18n('Next phases')}:` : null}
+        {moonPhases ? `${i18n('Next phases')}:` : null}
 
         {moonPhases ? (
           <div className={styles.nextPhases}>
