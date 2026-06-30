@@ -39,7 +39,11 @@
 }
 
 .waxingcrescent {
-  box-shadow: inset -1em 0px 1em 0.2em #bababa;
+  width: 1px;
+  height: 1px;
+  top: 50%;
+  left: 0;
+  box-shadow: 3em 0px 2em 4em #414141;
 }
 
 .firstquarter {
@@ -59,7 +63,11 @@
 }
 
 .waningcrescent {
-  box-shadow: inset 1em 0px 1em 0.2em #bababa;
+  width: 1px;
+  height: 1px;
+  top: 50%;
+  right: 0;
+  box-shadow: -2em 0px 2em 4em #414141;
 }
 
 .fullmoon {
