@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router';
 
 import useLocales from '@/shared/hooks/useLocales';
 import ArrowButton from '@/shared/ui/ArrowButton';
+import Spinner from '@/shared/ui/Spinner';
 
 import {
   useEphemeris,
@@ -18,8 +19,15 @@ import Moon from './Moon/Moon';
 import styles from './Forecast.module.css';
 
 export const Forecast = () => {
-  const { calendar } = useCalendar();
-  const { bodies, astrology } = useEphemeris();
+  const { calendar, moonPhases } = useCalendar();
+  const {
+    bodies,
+    isLoading,
+    retrogradeBodies,
+    stations,
+    dateTime,
+    isMoonVoidOfCourse,
+  } = useEphemeris();
 
   const { i18n } = useLocales();
   const navigate = useNavigate();
@@ -29,7 +37,7 @@ export const Forecast = () => {
   const { sign } = zodiac ?? {};
 
   const getMoonDescription = (phaseName: MoonPhaseName) => {
-    if (astrology?.moonVoidOfCourse?.isVoid) {
+    if (isMoonVoidOfCourse) {
       return i18n(
         'The moon is void of course. Time for rest, routine activities or wrapping old matters.',
       );
@@ -63,40 +71,49 @@ export const Forecast = () => {
     }
   };
 
-  const moonPhases = Object.entries(nextPhases ?? {})
-    .sort((prev, next) => {
-      const [, prevDate] = prev;
-      const [, nextDate] = next;
-
-      return new Date(prevDate) < new Date(nextDate) ? -1 : 1;
-    })
-    .map(([name, date]) => {
-      return { name, date };
-    });
+  if (isLoading) {
+    return <Spinner size={'l'} />;
+  }
 
   return (
     <div className={styles.container}>
       <StarsComposition />
 
-      <h4 className={styles.title}>{`${new Date().toLocaleDateString()}`}</h4>
+      <h4 className={styles.title}>{dateTime}</h4>
 
-      <h4 className={styles.title}>{`${i18n('Planets')}`}</h4>
+      <div className={styles.positions}>
+        <h4 className={styles.title}>{`${i18n('Planets')}`}</h4>
 
-      <Circle
-        className={styles.circle}
-        positions={{
-          moon: bodies?.Moon?.signId,
-          mars: bodies?.Mars?.signId,
-          venus: bodies?.Venus?.signId,
-          sun: bodies?.Sun?.signId,
-          mercury: bodies?.Mercury?.signId,
-          jupiter: bodies?.Jupiter?.signId,
-          uranus: bodies?.Uranus?.signId,
-          neptune: bodies?.Uranus?.signId,
-          saturn: bodies?.Saturn?.signId,
-          pluto: bodies?.Pluto?.signId,
-        }}
-      />
+        <Circle
+          className={styles.circle}
+          positions={{
+            moon: bodies?.Moon?.signId,
+            mars: bodies?.Mars?.signId,
+            venus: bodies?.Venus?.signId,
+            sun: bodies?.Sun?.signId,
+            mercury: bodies?.Mercury?.signId,
+            jupiter: bodies?.Jupiter?.signId,
+            uranus: bodies?.Uranus?.signId,
+            neptune: bodies?.Uranus?.signId,
+            saturn: bodies?.Saturn?.signId,
+            pluto: bodies?.Pluto?.signId,
+          }}
+        />
+
+        <div className={styles.data}>
+          {retrogradeBodies?.length ? (
+            <span>
+              {i18n('Retrograde bodies:')} {retrogradeBodies}
+            </span>
+          ) : null}
+
+          {stations?.length ? (
+            <span>
+              {i18n('Station bodies:')} {stations}
+            </span>
+          ) : null}
+        </div>
+      </div>
 
       <div className={styles.calendar}>
         {name ? (

@@ -6,9 +6,7 @@
   height: 100%;
 }
 
-.calendar,
-.ingresses,
-.positions {
+.calendar {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -22,8 +20,26 @@
   font-size: 14px;
 }
 
-.circle {
+.positions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70%;
+  color: var(--text-primary);
+  font-size: 14px;
+  text-shadow: 1px 1px 2px #353535;
   animation: fadeIn 4s ease;
+}
+
+.data {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  width: 100%;
+  z-index: 1;
+}
+
+.circle {
   margin-top: 10px;
   margin-bottom: 10px;
 }

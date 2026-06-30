@@ -18,9 +18,21 @@ export const useCalendar = () => {
     enabled: !!user,
   });
 
+  const moonPhases = Object.entries(calendar?.nextPhases ?? {})
+    .sort((prev, next) => {
+      const [, prevDate] = prev;
+      const [, nextDate] = next;
+
+      return new Date(prevDate) < new Date(nextDate) ? -1 : 1;
+    })
+    .map(([name, date]) => {
+      return { name, date };
+    });
+
   return {
     isLoading,
     calendar,
+    moonPhases,
     fetchCalendar: refetch,
     error,
   };

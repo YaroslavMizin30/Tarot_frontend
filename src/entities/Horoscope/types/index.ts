@@ -182,8 +182,8 @@ export interface EphemerisData {
     };
     notableConditions: string[];
     retrogradeBodies: BodyName[];
-    stations: string[];
+    stations: { body: BodyName; motionState: string; speed: number }[];
   };
 }
 
-export type EphemerisResponse = { data: EphemerisData };
+export type EphemerisResponse = EphemerisData;
