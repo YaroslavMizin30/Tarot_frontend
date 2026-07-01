@@ -6,7 +6,6 @@
   position: relative;
   justify-content: flex-end;
   align-items: center;
-  padding-bottom: 100px;
 }
 
 .menu {
@@ -17,6 +16,7 @@
   z-index: 1;
   width: 240px;
   animation: fadeIn 1s ease;
+  padding-bottom: 100px;
 }
 
 .menuButton {
