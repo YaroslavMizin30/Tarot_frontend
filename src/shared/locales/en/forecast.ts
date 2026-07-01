@@ -74,6 +74,8 @@ const TRANSLATIONS_EN = {
   'Positions': 'Positions',
   'Retrograde bodies': 'Retrograde bodies',
   'Station bodies': 'Station bodies',
+
+  'at': 'at',
 };
 
 export default TRANSLATIONS_EN;

@@ -76,6 +76,8 @@ const TRANSLATIONS_RU = {
   'Positions': 'Позиции планет',
   'Retrograde bodies': 'Ретроградные тела',
   'Station bodies': 'Стационарность',
+
+  'at': 'на',
 };
 
 export default TRANSLATIONS_RU;

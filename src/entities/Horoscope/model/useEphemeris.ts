@@ -31,7 +31,7 @@ export const useEphemeris = () => {
       ? `${date.getMinutes()}`
       : `0${date.getMinutes()}`;
 
-  const dateTime = `${date.toLocaleDateString()} ${hours}:${minutes}`;
+  const dateTime = `${date.toLocaleDateString()} ${i18n('at')} ${hours}:${minutes}`;
 
   const retrogradeBodies = ephemeris?.astrology?.retrogradeBodies?.reduce(
     (acc, curr, index, array) => {

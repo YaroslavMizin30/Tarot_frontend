@@ -66,7 +66,13 @@ export const Circle: FC<CircleProps> = (props) => {
   return (
     <div className={`${styles.circle} ${className}`}>
       {positions.sun ? (
-        <div className={styles.planet} style={{...planetPositions[positions.sun], boxShadow: '0px 0px 30px 16px #ff7b00'}}>
+        <div
+          className={styles.planet}
+          style={{
+            ...planetPositions[positions.sun],
+            boxShadow: '0px 0px 30px 16px #ff7b00',
+          }}
+        >
           <img
             src={'/assets/images/horoscope/sun.png'}
             width={'180%'}
@@ -410,96 +416,120 @@ export const Circle: FC<CircleProps> = (props) => {
         330°
       </span>
 
-      <span
-        className={styles.house}
-        style={{ left: '87px', top: '118px', transform: 'rotate(75deg)' }}
-      >
-        1
-      </span>
-
-      <span
-        className={styles.house}
-        style={{ left: '95px', top: '130px', transform: 'rotate(45deg)' }}
-      >
-        2
-      </span>
-
-      <span
-        className={styles.house}
-        style={{ left: '108px', top: '138px', transform: 'rotate(15deg)' }}
-      >
-        3
-      </span>
-
-      <span
-        className={styles.house}
-        style={{ right: '108px', top: '138px', transform: 'rotate(-15deg)' }}
-      >
-        4
-      </span>
-
-      <span
-        className={styles.house}
-        style={{ right: '95px', top: '130px', transform: 'rotate(-45deg)' }}
-      >
-        5
-      </span>
-
-      <span
-        className={styles.house}
-        style={{ right: '87px', top: '118px', transform: 'rotate(-75deg)' }}
-      >
-        6
-      </span>
-
-      <span
-        className={styles.house}
-        style={{ right: '87px', bottom: '120px', transform: 'rotate(-115deg)' }}
-      >
-        7
-      </span>
-
-      <span
-        className={styles.house}
-        style={{ right: '95px', bottom: '132px', transform: 'rotate(-135deg)' }}
-      >
-        8
-      </span>
-
-      <span
-        className={styles.house}
-        style={{
-          right: '108px',
-          bottom: '140px',
-          transform: 'rotate(-165deg)',
-        }}
-      >
-        9
-      </span>
-
-      <span
-        className={styles.house}
-        style={{ left: '104px', bottom: '139px', transform: 'rotate(172deg)' }}
-      >
-        10
-      </span>
-
-      <span
-        className={styles.house}
-        style={{ left: '93px', bottom: '132px', transform: 'rotate(142deg)' }}
-      >
-        11
-      </span>
-
-      <span
-        className={styles.house}
-        style={{ left: '85px', bottom: '118px', transform: 'rotate(110deg)' }}
-      >
-        12
-      </span>
-
       <div className={styles.inner}>
-        <div className={styles.houses}></div>
+        <div className={styles.houses}>
+          <span
+            className={styles.house}
+            style={{ left: '87px', top: '118px', transform: 'rotate(75deg)' }}
+          >
+            1
+          </span>
+
+          <span
+            className={styles.house}
+            style={{ left: '95px', top: '130px', transform: 'rotate(45deg)' }}
+          >
+            2
+          </span>
+
+          <span
+            className={styles.house}
+            style={{ left: '108px', top: '138px', transform: 'rotate(15deg)' }}
+          >
+            3
+          </span>
+
+          <span
+            className={styles.house}
+            style={{
+              right: '108px',
+              top: '138px',
+              transform: 'rotate(-15deg)',
+            }}
+          >
+            4
+          </span>
+
+          <span
+            className={styles.house}
+            style={{ right: '95px', top: '130px', transform: 'rotate(-45deg)' }}
+          >
+            5
+          </span>
+
+          <span
+            className={styles.house}
+            style={{ right: '87px', top: '118px', transform: 'rotate(-75deg)' }}
+          >
+            6
+          </span>
+
+          <span
+            className={styles.house}
+            style={{
+              right: '87px',
+              bottom: '120px',
+              transform: 'rotate(-115deg)',
+            }}
+          >
+            7
+          </span>
+
+          <span
+            className={styles.house}
+            style={{
+              right: '95px',
+              bottom: '132px',
+              transform: 'rotate(-135deg)',
+            }}
+          >
+            8
+          </span>
+
+          <span
+            className={styles.house}
+            style={{
+              right: '108px',
+              bottom: '140px',
+              transform: 'rotate(-165deg)',
+            }}
+          >
+            9
+          </span>
+
+          <span
+            className={styles.house}
+            style={{
+              left: '104px',
+              bottom: '139px',
+              transform: 'rotate(172deg)',
+            }}
+          >
+            10
+          </span>
+
+          <span
+            className={styles.house}
+            style={{
+              left: '93px',
+              bottom: '132px',
+              transform: 'rotate(142deg)',
+            }}
+          >
+            11
+          </span>
+
+          <span
+            className={styles.house}
+            style={{
+              left: '85px',
+              bottom: '118px',
+              transform: 'rotate(110deg)',
+            }}
+          >
+            12
+          </span>
+        </div>
       </div>
     </div>
   );
