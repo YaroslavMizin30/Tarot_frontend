@@ -20,6 +20,9 @@
 }
 
 .houses {
+  position: relative;
+  display: flex;
+  justify-content: center;
   min-width: 75px;
   min-height: 75px;
   border-radius: 100%;
@@ -32,13 +35,18 @@
   width: 2px;
   background: radial-gradient(
     circle,
-    var(--border-secondary) 0%,
-    var(--border-secondary) 30%,
-    transparent 30%,
+    transparent 0%,
     transparent 55%,
     var(--border-secondary) 70%,
     var(--border-secondary) 100%
   );
+}
+
+.line-inner {
+  position: absolute;
+  height: 100%;
+  width: 1.5px;
+  background: var(--border-secondary);
 }
 
 .degree,

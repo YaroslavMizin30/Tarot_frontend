@@ -420,46 +420,42 @@ export const Circle: FC<CircleProps> = (props) => {
         <div className={styles.houses}>
           <span
             className={styles.house}
-            style={{ left: '87px', top: '118px', transform: 'rotate(75deg)' }}
+            style={{ left: '7px', top: '35px', transform: 'rotate(75deg)' }}
           >
             1
           </span>
 
           <span
             className={styles.house}
-            style={{ left: '95px', top: '130px', transform: 'rotate(45deg)' }}
+            style={{ left: '14px', top: '48px', transform: 'rotate(45deg)' }}
           >
             2
           </span>
 
           <span
             className={styles.house}
-            style={{ left: '108px', top: '138px', transform: 'rotate(15deg)' }}
+            style={{ left: '25px', top: '55px', transform: 'rotate(15deg)' }}
           >
             3
           </span>
 
           <span
             className={styles.house}
-            style={{
-              right: '108px',
-              top: '138px',
-              transform: 'rotate(-15deg)',
-            }}
+            style={{ right: '25px', top: '55px', transform: 'rotate(-15deg)' }}
           >
             4
           </span>
 
           <span
             className={styles.house}
-            style={{ right: '95px', top: '130px', transform: 'rotate(-45deg)' }}
+            style={{ right: '14px', top: '48px', transform: 'rotate(-45deg)' }}
           >
             5
           </span>
 
           <span
             className={styles.house}
-            style={{ right: '87px', top: '118px', transform: 'rotate(-75deg)' }}
+            style={{ right: '7px', top: '35px', transform: 'rotate(-75deg)' }}
           >
             6
           </span>
@@ -467,8 +463,8 @@ export const Circle: FC<CircleProps> = (props) => {
           <span
             className={styles.house}
             style={{
-              right: '87px',
-              bottom: '120px',
+              right: '7px',
+              bottom: '35px',
               transform: 'rotate(-115deg)',
             }}
           >
@@ -478,8 +474,8 @@ export const Circle: FC<CircleProps> = (props) => {
           <span
             className={styles.house}
             style={{
-              right: '95px',
-              bottom: '132px',
+              right: '14px',
+              bottom: '48px',
               transform: 'rotate(-135deg)',
             }}
           >
@@ -489,8 +485,8 @@ export const Circle: FC<CircleProps> = (props) => {
           <span
             className={styles.house}
             style={{
-              right: '108px',
-              bottom: '140px',
+              right: '25px',
+              bottom: '55px',
               transform: 'rotate(-165deg)',
             }}
           >
@@ -500,9 +496,9 @@ export const Circle: FC<CircleProps> = (props) => {
           <span
             className={styles.house}
             style={{
-              left: '104px',
-              bottom: '139px',
-              transform: 'rotate(172deg)',
+              left: '22px',
+              bottom: '56px',
+              transform: 'rotate(-195deg)',
             }}
           >
             10
@@ -511,9 +507,9 @@ export const Circle: FC<CircleProps> = (props) => {
           <span
             className={styles.house}
             style={{
-              left: '93px',
-              bottom: '132px',
-              transform: 'rotate(142deg)',
+              left: '11px',
+              bottom: '48px',
+              transform: 'rotate(135deg)',
             }}
           >
             11
@@ -522,13 +518,35 @@ export const Circle: FC<CircleProps> = (props) => {
           <span
             className={styles.house}
             style={{
-              left: '85px',
-              bottom: '118px',
-              transform: 'rotate(110deg)',
+              left: '3px',
+              bottom: '35px',
+              transform: 'rotate(115deg)',
             }}
           >
             12
           </span>
+
+          <div className={styles['line-inner']}></div>
+          <div
+            className={styles['line-inner']}
+            style={{ transform: 'rotate(90deg)' }}
+          />
+          <div
+            className={styles['line-inner']}
+            style={{ transform: 'rotate(30deg)' }}
+          />
+          <div
+            className={styles['line-inner']}
+            style={{ transform: 'rotate(60deg)' }}
+          />
+          <div
+            className={styles['line-inner']}
+            style={{ transform: 'rotate(120deg)' }}
+          />
+          <div
+            className={styles['line-inner']}
+            style={{ transform: 'rotate(150deg)' }}
+          />
         </div>
       </div>
     </div>
