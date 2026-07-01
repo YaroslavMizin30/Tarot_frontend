@@ -6,7 +6,7 @@ import Spinner from '@/shared/ui/Spinner';
 import TRANSLATIONS_RU from '@/shared/locales/ru/forecast';
 import TRANSLATIONS_EN from '@/shared/locales/en/forecast';
 
-import { useEphemeris, useCalendar } from '@/entities/Horoscope';
+import { useDailyEphemeris, useCalendar } from '@/entities/Horoscope';
 
 import Circle from '@/features/Circle';
 
@@ -27,7 +27,7 @@ export const Forecast = () => {
     stations,
     dateTime,
     isMoonVoidOfCourse,
-  } = useEphemeris();
+  } = useDailyEphemeris();
 
   const { i18n, locale, addTranslations } = useLocales();
   const navigate = useNavigate();

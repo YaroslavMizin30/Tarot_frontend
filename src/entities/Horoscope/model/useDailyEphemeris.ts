@@ -5,7 +5,7 @@ import { useUser } from '@/entities/User';
 import { queryKeys } from '@/shared/api/queryKeys';
 import useLocales from '@/shared/hooks/useLocales';
 
-export const useEphemeris = () => {
+export const useDailyEphemeris = () => {
   const { user } = useUser() ?? {};
 
   const {

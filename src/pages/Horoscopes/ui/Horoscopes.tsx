@@ -6,9 +6,8 @@ import type { Message } from '@/features/Feed/ui/Feed.props';
 
 import StarsComposition from '@/pages/ui/StarsComposition';
 
-import { useHoroscopes } from '@/entities/Horoscope';
+import { useDailyEphemeris, useHoroscopes } from '@/entities/Horoscope';
 import { useUser } from '@/entities/User';
-import { useEphemeris } from '@/entities/Horoscope';
 
 import useLocales from '@/shared/hooks/useLocales';
 import TRANSLATIONS_EN from '@/shared/locales/en/horoscopes';
@@ -36,7 +35,7 @@ export const Horoscopes = () => {
 
   const navigate = useNavigate();
 
-  const { bodies } = useEphemeris();
+  const { bodies } = useDailyEphemeris();
 
   const { i18n, addTranslations, locale } = useLocales();
   const { user } = useUser() ?? {};
