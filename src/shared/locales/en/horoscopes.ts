@@ -17,6 +17,7 @@ const TRANSLATIONS_EN: Record<string, string> = {
   'I want horoscope for this week': 'I want horoscope for this week',
   'Make weekly horoscope for user. Start from today to the end of the week':
     'Make weekly horoscope for user. Start from today to the end of the week. ',
+  'Make monthly horoscope for user.': 'Make monthly horoscope for user.',
   'I want my monthly horoscope': 'I want my monthly horoscope',
   'Make it brief': 'Make it brief',
   'Do not repeat information from previous horoscope':
@@ -37,6 +38,27 @@ const TRANSLATIONS_EN: Record<string, string> = {
   'Moon': 'Moon',
   'Venus': 'Venus',
   'Mars': 'Mars',
+
+  // Знаки зодиака
+  'Aries': 'Aries',
+  'Taurus': 'Taurus',
+  'Gemini': 'Gemini',
+  'Cancer': 'Cancer',
+  'Leo': 'Leo',
+  'Virgo': 'Virgo',
+  'Libra': 'Libra',
+  'Scorpio': 'Scorpio',
+  'Sagittarius': 'Sagittarius',
+  'Capricorn': 'Capricorn',
+  'Aquarius': 'Aquarius',
+  'Pisces': 'Pisces',
+
+  'Bodies positions for today': 'Bodies positions for today',
+  'Bodies positions for the period': 'Bodies positions for the period',
+
+  'Do not describe each day in too much detail. Give the overall picture.':
+    'Do not describe each day in too much detail. Give the overall picture.',
+  'User name': 'User name',
 };
 
 export default TRANSLATIONS_EN;

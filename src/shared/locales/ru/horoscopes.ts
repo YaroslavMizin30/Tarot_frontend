@@ -18,6 +18,8 @@ const TRANSLATIONS_RU: Record<string, string> = {
   'I want horoscope for this week': 'Я хочу гороскоп на эту неделю',
   'Make weekly horoscope for user. Start from today to the end of the week':
     'Составь еженедельный гороскоп для пользователя. Начни с сегодняшнего дня до конца недели. ',
+  'Make monthly horoscope for user.':
+    'Составь гороскоп на месяц для пользователя.',
   'I want my monthly horoscope': 'Я хочу свой ежемесячный гороскоп',
   'Make it brief': 'Сделай его лаконичным',
   'Do not repeat information from previous horoscope':
@@ -38,6 +40,28 @@ const TRANSLATIONS_RU: Record<string, string> = {
   'Moon': 'Луна',
   'Venus': 'Венера',
   'Mars': 'Марс',
+
+  // Знаки зодиака
+  'Aries': 'Овен',
+  'Taurus': 'Телец',
+  'Gemini': 'Близнецы',
+  'Cancer': 'Рак',
+  'Leo': 'Лев',
+  'Virgo': 'Дева',
+  'Libra': 'Весы',
+  'Scorpio': 'Скорпион',
+  'Sagittarius': 'Стрелец',
+  'Capricorn': 'Козерог',
+  'Aquarius': 'Водолей',
+  'Pisces': 'Рыбы',
+
+  'Bodies positions for today': 'Положения планет сегодня',
+  'Bodies positions for the period': 'Положения тел на указанный период',
+
+  'User name': 'Имя пользователя',
+
+  'Do not describe each day in too much detail. Give the overall picture.':
+    'Не нужно описывать каждый день слишком подробно. Дай общую картину с разделением по периодам',
 };
 
 export default TRANSLATIONS_RU;

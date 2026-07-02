@@ -13,6 +13,8 @@ export const queryKeys = {
   },
   ephemeris: {
     all: ['ephemeris'] as const,
+    month: ['ephemeris', 'week'] as const,
+    week: ['ephemeris', 'month'] as const,
   },
   spreads: {
     all: ['spreads'] as const,

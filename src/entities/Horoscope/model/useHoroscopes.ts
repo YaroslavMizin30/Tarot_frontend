@@ -2,6 +2,8 @@ import { useCallback, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { v4 } from 'uuid';
 
+import { useEphemerisByRange } from './useEphemerisByRange';
+import { useDailyEphemeris } from './useDailyEphemeris';
 import { getHoroscopes } from '../api/getHoroscopes';
 import { addHoroscope as addHoroscopeApi } from '../api/addHoroscope';
 import { useUser } from '@/entities/User';
@@ -9,7 +11,7 @@ import { queryKeys } from '@/shared/api/queryKeys';
 import useLocales from '@/shared/hooks/useLocales';
 import requestAi, { type Prompt } from '@/shared/api/AI';
 
-import type { Horoscope } from '../types';
+import type { EphemerisByRangeResponse, Horoscope } from '../types';
 
 /**
  * Check whether a horoscope's date falls within the current period of its type.
@@ -60,6 +62,10 @@ export const useHoroscopes = (options?: UseHoroscopesOptions) => {
   const { user } = useUser() ?? {};
   const queryClient = useQueryClient();
 
+  const { bodies } = useDailyEphemeris();
+  const { ephemeris: monthlyEphemeris } = useEphemerisByRange('month');
+  const { ephemeris: weeklyEphemeris } = useEphemerisByRange('week');
+
   const {
     data: horoscopes,
     isLoading,
@@ -76,18 +82,48 @@ export const useHoroscopes = (options?: UseHoroscopesOptions) => {
 
   const { i18n } = useLocales();
 
+  const prepareEphemerisRange = (
+    ephemeris?: EphemerisByRangeResponse | null,
+  ) => {
+    if (!ephemeris) {
+      return '';
+    }
+
+    return ephemeris.reduce(
+      (acc, current, index, array) => {
+        const { bodies, timestamp } = current;
+
+        if (new Date(timestamp) < new Date()) {
+          //eslint-disable-next-line
+          acc += '';
+        } else {
+          //eslint-disable-next-line
+          acc +=
+            `${new Date(timestamp).toLocaleDateString()}: ` +
+            `${i18n(bodies.Moon?.name ?? '')} - ${i18n(bodies.Moon?.sign ?? '')}, ` +
+            `${i18n(bodies.Mercury?.name ?? '')} - ${i18n(bodies.Mercury?.sign ?? '')}, ` +
+            `${i18n(bodies.Venus?.name ?? '')} - ${i18n(bodies.Venus?.sign ?? '')}, ` +
+            `${i18n(bodies.Mars?.name ?? '')} - ${i18n(bodies.Mars?.sign ?? '')}, ` +
+            `${i18n(bodies.Sun?.name ?? '')} - ${i18n(bodies.Sun?.sign ?? '')}` +
+            `${index === array.length - 1 ? '.' : '; '}`;
+        }
+
+        return acc;
+      },
+      `${i18n('Bodies positions for the period')}: `,
+    );
+  };
+
   const [message, setMessage] = useState('');
 
   const DEVELOPER_MESSAGE =
     i18n('Make horoscope as a professional astrologist.') +
     i18n('Call user by name.') +
     i18n('User zodiac sign:') +
-    user?.sign +
-    user?.natalChart
-      ? i18n('User natal chart:') + user?.natalChart
-      : '' +
-        i18n('Answer confidently. Do not discuss accuracy of the answer') +
-        i18n('Do not repeat information from previous horoscope');
+    `${user?.sign}. ` +
+    `${i18n('User name')}: ` +
+    `${user?.userName}. ` +
+    i18n('Answer confidently. Do not discuss accuracy of the answer');
 
   const MESSAGES: Record<'daily' | 'weekly' | 'monthly', Prompt[]> = {
     daily: [
@@ -96,8 +132,13 @@ export const useHoroscopes = (options?: UseHoroscopesOptions) => {
         role: 'developer',
         content:
           i18n('Make daily horoscope for user') +
-          DEVELOPER_MESSAGE +
-          i18n('Make it brief'),
+          `${i18n('Bodies positions for today')}: ` +
+          `${i18n(String(bodies.Moon?.name))} - ${i18n(String(bodies?.Moon?.sign))}, ` +
+          `${i18n(String(bodies.Mercury?.name))} - ${i18n(String(bodies?.Mercury?.sign))}, ` +
+          `${i18n(String(bodies.Venus?.name))} - ${i18n(String(bodies?.Venus?.sign))}, ` +
+          `${i18n(String(bodies.Mars?.name))} - ${i18n(String(bodies?.Mars?.sign))}, ` +
+          `${i18n(String(bodies.Sun?.name))} - ${i18n(String(bodies?.Sun?.sign))}.` +
+          DEVELOPER_MESSAGE,
       },
     ],
     weekly: [
@@ -110,13 +151,28 @@ export const useHoroscopes = (options?: UseHoroscopesOptions) => {
         content:
           i18n(
             'Make weekly horoscope for user. Start from today to the end of the week',
-          ) + DEVELOPER_MESSAGE,
+          ) +
+          prepareEphemerisRange(weeklyEphemeris) +
+          i18n(
+            'Do not describe each day in too much detail. Give the overall picture.',
+          ) +
+          DEVELOPER_MESSAGE,
       },
     ],
     monthly: [
       {
         role: 'user',
         content: message || i18n('I want my monthly horoscope'),
+      },
+      {
+        role: 'developer',
+        content:
+          i18n('Make monthly horoscope for user.') +
+          prepareEphemerisRange(monthlyEphemeris) +
+          i18n(
+            'Do not describe each day in too much detail. Give the overall picture.',
+          ) +
+          DEVELOPER_MESSAGE,
       },
     ],
   };

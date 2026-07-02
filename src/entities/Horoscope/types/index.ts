@@ -187,3 +187,5 @@ export interface EphemerisData {
 }
 
 export type EphemerisResponse = EphemerisData;
+
+export type EphemerisByRangeResponse = Array<EphemerisData>;
