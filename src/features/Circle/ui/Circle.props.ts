@@ -1,6 +1,6 @@
-import { type Planet, type ZodiacSign } from '@/entities/Horoscope';
+import type { BodyName, AstroBody } from '@/entities/Horoscope/types';
 
 export interface CircleProps {
-  positions: Record<Partial<Planet>, ZodiacSign | undefined>;
+  bodies: Partial<Record<BodyName, AstroBody>>;
   className?: string;
 }

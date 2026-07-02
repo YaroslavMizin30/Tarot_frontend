@@ -18,8 +18,7 @@ import styles from './Forecast.module.css';
 import { useEffect } from 'react';
 
 export const Forecast = () => {
-  const { moonPhases, getMoonDescription, phaseName, zodiac } =
-    useCalendar();
+  const { moonPhases, getMoonDescription, phaseName, zodiac } = useCalendar();
   const {
     bodies,
     isLoading,
@@ -49,21 +48,7 @@ export const Forecast = () => {
       <div className={styles.positions}>
         <h4 className={styles.title}>{`${i18n('Planets')}`}</h4>
 
-        <Circle
-          className={styles.circle}
-          positions={{
-            moon: bodies?.Moon?.signId,
-            mars: bodies?.Mars?.signId,
-            venus: bodies?.Venus?.signId,
-            sun: bodies?.Sun?.signId,
-            mercury: bodies?.Mercury?.signId,
-            jupiter: bodies?.Jupiter?.signId,
-            uranus: bodies?.Uranus?.signId,
-            neptune: bodies?.Uranus?.signId,
-            saturn: bodies?.Saturn?.signId,
-            pluto: bodies?.Pluto?.signId,
-          }}
-        />
+        <Circle className={styles.circle} bodies={bodies} />
 
         <div className={styles.data}>
           {retrogradeBodies?.length ? (

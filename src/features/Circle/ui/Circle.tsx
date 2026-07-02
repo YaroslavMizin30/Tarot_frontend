@@ -8,209 +8,27 @@ import type { CircleProps } from './Circle.props';
 import styles from './Circle.module.css';
 
 export const Circle: FC<CircleProps> = (props) => {
-  const { positions, className = '' } = props;
+  const { bodies, className = '' } = props;
 
   const { i18n } = useLocales();
 
-  const planetPositions = {
-    aries: {
-      bottom: '92px',
-      left: '55px',
-    },
-    taurus: {
-      bottom: '68px',
-      left: '68px',
-    },
-    gemini: {
-      bottom: '55px',
-      left: '92px',
-    },
-    cancer: {
-      bottom: '55px',
-      right: '92px',
-    },
-    leo: {
-      bottom: '68px',
-      right: '68px',
-    },
-    virgo: {
-      bottom: '92px',
-      right: '55px',
-    },
-    libra: {
-      top: '92px',
-      right: '55px',
-    },
-    scorpio: {
-      top: '68px',
-      right: '68px',
-    },
-    sagittarius: {
-      top: '55px',
-      right: '92px',
-    },
-    capricorn: {
-      top: '55px',
-      left: '92px',
-    },
-    aquarius: {
-      top: '68px',
-      left: '68px',
-    },
-    pisces: {
-      top: '92px',
-      left: '55px',
-    },
+  const zodiacDegrees = {
+    aries: 0,
+    taurus: 30,
+    gemini: 60,
+    cancer: 90,
+    leo: 120,
+    virgo: 150,
+    libra: 180,
+    scorpio: 210,
+    sagittarius: 240,
+    capricorn: 270,
+    aquarius: 300,
+    pisces: 330,
   };
 
   return (
     <div className={`${styles.circle} ${className}`}>
-      {positions.sun ? (
-        <div
-          className={styles.planet}
-          style={{
-            ...planetPositions[positions.sun],
-            boxShadow: '0px 0px 30px 16px #ff7b00',
-          }}
-        >
-          <img
-            src={'/assets/images/horoscope/sun.png'}
-            width={'180%'}
-            height={'180%'}
-          />
-        </div>
-      ) : null}
-
-      {positions.jupiter ? (
-        <div
-          className={styles.planet}
-          style={planetPositions[positions.jupiter]}
-        >
-          <img
-            src={'/assets/images/horoscope/jupiter.png'}
-            width={'240%'}
-            height={'120%'}
-          />
-        </div>
-      ) : null}
-
-      {positions.saturn ? (
-        <div
-          className={styles.planet}
-          style={planetPositions[positions.saturn]}
-        >
-          <img
-            src={'/assets/images/horoscope/saturn.png'}
-            width={'240%'}
-            height={'120%'}
-          />
-        </div>
-      ) : null}
-
-      {positions.uranus ? (
-        <div
-          className={`${styles.planet} ${styles.uranus}`}
-          style={planetPositions[positions.uranus]}
-        >
-          <img
-            src={'/assets/images/horoscope/uranus.png'}
-            width={'180%'}
-            height={'90%'}
-          />
-        </div>
-      ) : null}
-
-      {positions.neptune ? (
-        <div
-          className={`${styles.planet} ${styles.neptune}`}
-          style={planetPositions[positions.neptune]}
-        >
-          <img
-            src={'/assets/images/horoscope/neptune.png'}
-            width={'85%'}
-            height={'85%'}
-          />
-        </div>
-      ) : null}
-
-      {positions.venus ? (
-        <div
-          className={`${styles.planet} ${styles.venus}`}
-          style={planetPositions[positions.venus]}
-        >
-          <img
-            src={'/assets/images/horoscope/venus.png'}
-            width={'85%'}
-            height={'85%'}
-          />
-        </div>
-      ) : null}
-
-      {positions.mars ? (
-        <div
-          className={`${styles.planet} ${styles.mars}`}
-          style={planetPositions[positions.mars]}
-        >
-          <img
-            src={'/assets/images/horoscope/mars.png'}
-            width={'55%'}
-            height={'55%'}
-          />
-        </div>
-      ) : null}
-
-      {positions.mercury ? (
-        <div
-          className={`${styles.planet} ${styles.mercury}`}
-          style={planetPositions[positions.mercury]}
-        >
-          <img
-            src={'/assets/images/horoscope/mercury.png'}
-            width={'60%'}
-            height={'60%'}
-          />
-        </div>
-      ) : null}
-
-      {positions.moon ? (
-        <div
-          className={`${styles.planet} ${styles.moon}`}
-          style={{ ...planetPositions[positions.moon] }}
-        >
-          <div
-            style={{
-              position: 'absolute',
-              boxShadow: '0px 0px 10px 5px #fff',
-              borderRadius: '50%',
-              width: '30%',
-              height: '30%',
-              bottom: '1px',
-              right: '2px',
-            }}
-          />
-
-          <img
-            src={'/assets/images/horoscope/moon.png'}
-            width={'50%'}
-            height={'50%'}
-            style={{ zIndex: 1 }}
-          />
-        </div>
-      ) : null}
-
-      {positions.pluto ? (
-        <div
-          className={`${styles.planet} ${styles.pluto}`}
-          style={planetPositions[positions.pluto]}
-        >
-          <img
-            src={'/assets/images/horoscope/pluto.png'}
-            width={'40%'}
-            height={'40%'}
-          />
-        </div>
-      ) : null}
-
       <div className={styles.line}></div>
       <div className={styles.line} style={{ transform: 'rotate(30deg)' }} />
       <div className={styles.line} style={{ transform: 'rotate(60deg)' }} />
@@ -417,6 +235,262 @@ export const Circle: FC<CircleProps> = (props) => {
       </span>
 
       <div className={styles.inner}>
+        <div
+          className={styles.orbit}
+          style={{
+            transform:
+              bodies.Sun &&
+              `rotate(-${zodiacDegrees[bodies.Sun?.signId] + bodies.Sun?.degreeInSign}deg)`,
+          }}
+        >
+          <div className={styles['orbit-inner']}>
+            {bodies.Sun ? (
+              <div
+                className={styles.planet}
+                style={{
+                  top: 'calc(50% - 12px)',
+                  boxShadow: '0px 0px 30px 16px #ff7b00',
+                }}
+              >
+                <img
+                  src={'/assets/images/horoscope/sun.png'}
+                  width={'180%'}
+                  height={'180%'}
+                />
+              </div>
+            ) : null}
+          </div>
+        </div>
+
+        <div
+          className={styles.orbit}
+          style={{
+            transform:
+              bodies.Jupiter &&
+              `rotate(-${zodiacDegrees[bodies.Jupiter?.signId] + bodies.Jupiter?.degreeInSign}deg)`,
+          }}
+        >
+          <div className={styles['orbit-inner']}>
+            {bodies.Jupiter ? (
+              <div
+                className={styles.planet}
+                style={{ top: 'calc(50% + 20px)' }}
+              >
+                <img
+                  src={'/assets/images/horoscope/jupiter.png'}
+                  width={'240%'}
+                  height={'120%'}
+                />
+              </div>
+            ) : null}
+          </div>
+        </div>
+
+        <div
+          className={styles.orbit}
+          style={{
+            transform:
+              bodies.Saturn &&
+              `rotate(-${zodiacDegrees[bodies.Saturn?.signId] + bodies.Saturn?.degreeInSign}deg)`,
+          }}
+        >
+          <div className={styles['orbit-inner']}>
+            {bodies.Saturn ? (
+              <div
+                className={styles.planet}
+                style={{ top: 'calc(50% - 12px)' }}
+              >
+                <img
+                  src={'/assets/images/horoscope/saturn.png'}
+                  width={'240%'}
+                  height={'120%'}
+                />
+              </div>
+            ) : null}
+          </div>
+        </div>
+
+        <div
+          className={styles.orbit}
+          style={{
+            transform:
+              bodies.Uranus?.signId &&
+              `rotate(-${zodiacDegrees[bodies.Uranus?.signId] + bodies.Uranus?.degreeInSign}deg)`,
+          }}
+        >
+          <div className={styles['orbit-inner']}>
+            {bodies.Uranus ? (
+              <div
+                className={`${styles.planet} ${styles.uranus}`}
+                style={{ top: 'calc(50% - 14px)' }}
+              >
+                <img
+                  src={'/assets/images/horoscope/uranus.png'}
+                  width={'180%'}
+                  height={'90%'}
+                />
+              </div>
+            ) : null}
+          </div>
+        </div>
+
+        <div
+          className={styles.orbit}
+          style={{
+            transform:
+              bodies.Neptune &&
+              `rotate(-${zodiacDegrees[bodies.Neptune?.signId] + bodies.Neptune?.degreeInSign}deg)`,
+          }}
+        >
+          <div className={styles['orbit-inner']}>
+            {bodies.Neptune ? (
+              <div
+                className={`${styles.planet} ${styles.neptune}`}
+                style={{ top: 'calc(50% - 15px)' }}
+              >
+                <img
+                  src={'/assets/images/horoscope/neptune.png'}
+                  width={'85%'}
+                  height={'85%'}
+                />
+              </div>
+            ) : null}
+          </div>
+        </div>
+
+        <div
+          className={styles.orbit}
+          style={{
+            transform:
+              bodies.Venus &&
+              `rotate(-${zodiacDegrees[bodies.Venus?.signId] + bodies.Venus?.degreeInSign}deg)`,
+          }}
+        >
+          <div className={styles['orbit-inner']}>
+            {bodies.Venus ? (
+              <div
+                className={`${styles.planet} ${styles.venus}`}
+                style={{ top: 'calc(50% - 15px)' }}
+              >
+                <img
+                  src={'/assets/images/horoscope/venus.png'}
+                  width={'85%'}
+                  height={'85%'}
+                />
+              </div>
+            ) : null}
+          </div>
+        </div>
+
+        <div
+          className={styles.orbit}
+          style={{
+            transform:
+              bodies.Mars?.signId &&
+              `rotate(-${zodiacDegrees[bodies.Mars?.signId] + bodies.Mars?.degreeInSign}deg)`,
+          }}
+        >
+          <div className={styles['orbit-inner']}>
+            {bodies.Mars ? (
+              <div
+                className={`${styles.planet} ${styles.mars}`}
+                style={{ top: 'calc(50% - 19px)' }}
+              >
+                <img
+                  src={'/assets/images/horoscope/mars.png'}
+                  width={'55%'}
+                  height={'55%'}
+                />
+              </div>
+            ) : null}
+          </div>
+        </div>
+
+        <div
+          className={styles.orbit}
+          style={{
+            transform:
+              bodies.Mercury?.signId &&
+              `rotate(-${zodiacDegrees[bodies.Mercury?.signId] + bodies.Mercury?.degreeInSign}deg)`,
+          }}
+        >
+          <div className={styles['orbit-inner']}>
+            {bodies.Mercury ? (
+              <div
+                className={`${styles.planet} ${styles.mercury}`}
+                style={{ top: 'calc(50% - 18px)' }}
+              >
+                <img
+                  src={'/assets/images/horoscope/mercury.png'}
+                  width={'60%'}
+                  height={'60%'}
+                />
+              </div>
+            ) : null}
+          </div>
+        </div>
+
+        <div
+          className={styles.orbit}
+          style={{
+            transform:
+              bodies.Moon?.signId &&
+              `rotate(-${zodiacDegrees[bodies.Moon?.signId] + bodies.Moon?.degreeInSign}deg)`,
+          }}
+        >
+          <div className={styles['orbit-inner']}>
+            {bodies.Moon ? (
+              <div
+                className={`${styles.planet} ${styles.moon}`}
+                style={{ top: 'calc(50% - 20px)' }}
+              >
+                <div
+                  style={{
+                    position: 'absolute',
+                    boxShadow: '0px 0px 10px 5px #fff',
+                    borderRadius: '50%',
+                    width: '30%',
+                    height: '30%',
+                    bottom: '1px',
+                    right: '2px',
+                  }}
+                />
+
+                <img
+                  src={'/assets/images/horoscope/moon.png'}
+                  width={'50%'}
+                  height={'50%'}
+                  style={{ zIndex: 1 }}
+                />
+              </div>
+            ) : null}
+          </div>
+        </div>
+
+        <div
+          className={styles.orbit}
+          style={{
+            transform:
+              bodies.Pluto?.signId &&
+              `rotate(-${zodiacDegrees[bodies.Pluto?.signId] + bodies.Pluto?.degreeInSign}deg)`,
+          }}
+        >
+          <div className={styles['orbit-inner']}>
+            {bodies.Pluto ? (
+              <div
+                className={`${styles.planet} ${styles.pluto}`}
+                style={{ top: 'calc(50% - 21px)' }}
+              >
+                <img
+                  src={'/assets/images/horoscope/pluto.png'}
+                  width={'40%'}
+                  height={'40%'}
+                />
+              </div>
+            ) : null}
+          </div>
+        </div>
+
         <div className={styles.houses}>
           <span
             className={styles.house}
