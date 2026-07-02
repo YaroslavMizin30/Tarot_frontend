@@ -8,3 +8,4 @@ export {
 } from './model/useHoroscopes';
 export { useCalendar } from './model/useCalendar';
 export { useDailyEphemeris } from './model/useDailyEphemeris';
+export { useEphemerisByRange } from './model/useEphemerisByRange';
