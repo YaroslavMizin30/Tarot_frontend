@@ -53,6 +53,10 @@ const TRANSLATIONS_EN: Record<string, string> = {
   'Aquarius': 'Aquarius',
   'Pisces': 'Pisces',
 
+  'retrograde': 'retrograde',
+  'retrograde (f)': 'retrograde',
+  'retrograde (m)': 'retrograde',
+
   'Bodies positions for today': 'Bodies positions for today',
   'Bodies positions for the period': 'Bodies positions for the period',
 

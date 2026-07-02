@@ -55,6 +55,10 @@ const TRANSLATIONS_RU: Record<string, string> = {
   'Aquarius': 'Водолей',
   'Pisces': 'Рыбы',
 
+  'retrograde': 'ретроградное',
+  'retrograde (f)': 'ретроградная',
+  'retrograde (m)': 'ретроградный',
+
   'Bodies positions for today': 'Положения планет сегодня',
   'Bodies positions for the period': 'Положения тел на указанный период',
 

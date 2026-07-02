@@ -100,12 +100,12 @@ export const useHoroscopes = (options?: UseHoroscopesOptions) => {
           //eslint-disable-next-line
           acc +=
             `${new Date(timestamp).toLocaleDateString()}: ` +
-            `${i18n(bodies.Moon?.name ?? '')} - ${i18n(bodies.Moon?.sign ?? '')}, ` +
-            `${i18n(bodies.Mercury?.name ?? '')} - ${i18n(bodies.Mercury?.sign ?? '')}, ` +
-            `${i18n(bodies.Venus?.name ?? '')} - ${i18n(bodies.Venus?.sign ?? '')}, ` +
-            `${i18n(bodies.Mars?.name ?? '')} - ${i18n(bodies.Mars?.sign ?? '')}, ` +
-            `${i18n(bodies.Sun?.name ?? '')} - ${i18n(bodies.Sun?.sign ?? '')}` +
-            `${index === array.length - 1 ? '.' : '; '}`;
+            `${i18n(bodies.Moon?.name ?? '')}${bodies.Moon?.retrograde ? `(${i18n('retrograde (f)')})` : ''} - ${i18n(bodies.Moon?.sign ?? '')}, ` +
+            `${i18n(bodies.Mercury?.name ?? '')}${bodies.Mercury?.retrograde ? `(${i18n('retrograde (m)')})` : ''} - ${i18n(bodies.Mercury?.sign ?? '')}, ` +
+            `${i18n(bodies.Venus?.name ?? '')}${bodies.Venus?.retrograde ? `(${i18n('retrograde (f)')})` : ''} - ${i18n(bodies.Venus?.sign ?? '')}, ` +
+            `${i18n(bodies.Mars?.name ?? '')}${bodies.Mars?.retrograde ? `(${i18n('retrograde (m)')})` : ''} - ${i18n(bodies.Mars?.sign ?? '')}, ` +
+            `${i18n(bodies.Sun?.name ?? '')}${bodies.Sun?.retrograde ? `(${i18n('retrograde')})` : ''} - ${i18n(bodies.Sun?.sign ?? '')}` +
+            `${index === array.length - 1 ? '. ' : '; '}`;
         }
 
         return acc;
@@ -117,9 +117,9 @@ export const useHoroscopes = (options?: UseHoroscopesOptions) => {
   const [message, setMessage] = useState('');
 
   const DEVELOPER_MESSAGE =
-    i18n('Make horoscope as a professional astrologist.') +
-    i18n('Call user by name.') +
-    i18n('User zodiac sign:') +
+    `${i18n('Make horoscope as a professional astrologist.')} ` +
+    `${i18n('Call user by name.')}. ` +
+    `${i18n('User zodiac sign:')} ` +
     `${user?.sign}. ` +
     `${i18n('User name')}: ` +
     `${user?.userName}. ` +
@@ -131,13 +131,13 @@ export const useHoroscopes = (options?: UseHoroscopesOptions) => {
       {
         role: 'developer',
         content:
-          i18n('Make daily horoscope for user') +
+          `${i18n('Make daily horoscope for user')}. ` +
           `${i18n('Bodies positions for today')}: ` +
-          `${i18n(String(bodies.Moon?.name))} - ${i18n(String(bodies?.Moon?.sign))}, ` +
-          `${i18n(String(bodies.Mercury?.name))} - ${i18n(String(bodies?.Mercury?.sign))}, ` +
-          `${i18n(String(bodies.Venus?.name))} - ${i18n(String(bodies?.Venus?.sign))}, ` +
-          `${i18n(String(bodies.Mars?.name))} - ${i18n(String(bodies?.Mars?.sign))}, ` +
-          `${i18n(String(bodies.Sun?.name))} - ${i18n(String(bodies?.Sun?.sign))}.` +
+          `${i18n(String(bodies.Moon?.name))}${bodies.Moon?.retrograde ? `(${i18n('retrograde (f)')})` : ''} - ${i18n(String(bodies?.Moon?.sign))}, ` +
+          `${i18n(String(bodies.Mercury?.name))}${bodies.Mercury?.retrograde ? `(${i18n('retrograde (m)')})` : ''} - ${i18n(String(bodies?.Mercury?.sign))}, ` +
+          `${i18n(String(bodies.Venus?.name))}${bodies.Venus?.retrograde ? `(${i18n('retrograde (f)')})` : ''} - ${i18n(String(bodies?.Venus?.sign))}, ` +
+          `${i18n(String(bodies.Mars?.name))}${bodies.Mars?.retrograde ? `(${i18n('retrograde (m)')})` : ''} - ${i18n(String(bodies?.Mars?.sign))}, ` +
+          `${i18n(String(bodies.Sun?.name))}${bodies.Sun?.retrograde ? `(${i18n('retrograde')})` : ''} - ${i18n(String(bodies?.Sun?.sign))}. ` +
           DEVELOPER_MESSAGE,
       },
     ],
@@ -149,13 +149,13 @@ export const useHoroscopes = (options?: UseHoroscopesOptions) => {
       {
         role: 'developer',
         content:
-          i18n(
+          `${i18n(
             'Make weekly horoscope for user. Start from today to the end of the week',
-          ) +
+          )}. ` +
           prepareEphemerisRange(weeklyEphemeris) +
-          i18n(
+          `${i18n(
             'Do not describe each day in too much detail. Give the overall picture.',
-          ) +
+          )} ` +
           DEVELOPER_MESSAGE,
       },
     ],
@@ -167,11 +167,11 @@ export const useHoroscopes = (options?: UseHoroscopesOptions) => {
       {
         role: 'developer',
         content:
-          i18n('Make monthly horoscope for user.') +
+          `${i18n('Make monthly horoscope for user.')} ` +
           prepareEphemerisRange(monthlyEphemeris) +
-          i18n(
+          `${i18n(
             'Do not describe each day in too much detail. Give the overall picture.',
-          ) +
+          )} ` +
           DEVELOPER_MESSAGE,
       },
     ],
