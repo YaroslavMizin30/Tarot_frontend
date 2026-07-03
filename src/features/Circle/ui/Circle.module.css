@@ -168,6 +168,7 @@
   justify-content: center;
   width: 25px;
   height: 25px;
+  border-radius: 100%;
 }
 
 /* смещаем маленькие планеты в угол, чтобы не было эффекта матрешки */
