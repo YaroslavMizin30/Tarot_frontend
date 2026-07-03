@@ -43,6 +43,7 @@
   min-height: 75px;
   border-radius: 100%;
   border: 2px solid var(--border-secondary);
+  animation: rotateClockWise 1s ease;
 }
 
 .line {
@@ -191,5 +192,17 @@
 
   100% {
     opacity: 1;
+  }
+}
+
+@keyframes rotateClockWise {
+  0% {
+    opacity: 0;
+    transform: rotate(-350deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: rotate(0deg);
   }
 }
