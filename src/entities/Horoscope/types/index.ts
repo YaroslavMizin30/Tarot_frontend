@@ -10,7 +10,22 @@ export interface Horoscope {
   sender?: string;
 }
 
+
 export type ZodiacSign =
+  | 'Aries'
+  | 'Taurus'
+  | 'Gemini'
+  | 'Cancer'
+  | 'Leo'
+  | 'Virgo'
+  | 'Libra'
+  | 'Scorpio'
+  | 'Sagittarius'
+  | 'Capricorn'
+  | 'Aquarius'
+  | 'Pisces';
+
+export type ZodiacSignId =
   | 'aries'
   | 'taurus'
   | 'gemini'
@@ -24,7 +39,11 @@ export type ZodiacSign =
   | 'aquarius'
   | 'pisces';
 
-export type Planet =
+// ==========================================
+// Планеты и точки
+// ==========================================
+
+export type PlanetId =
   | 'sun'
   | 'moon'
   | 'mercury'
@@ -34,16 +53,26 @@ export type Planet =
   | 'saturn'
   | 'uranus'
   | 'neptune'
-  | 'pluto';
+  | 'pluto'
+  | 'north_node'
+  | 'chiron'
+  | 'lilith';
 
-export type Aspect =
-  | 'conjunction'
-  | 'opposition'
-  | 'trine'
-  | 'square'
-  | 'sextile'
-  | 'quincunx'
-  | 'semisextile';
+export type PlanetName =
+  | 'Sun'
+  | 'Moon'
+  | 'Mercury'
+  | 'Venus'
+  | 'Mars'
+  | 'Jupiter'
+  | 'Saturn'
+  | 'Uranus'
+  | 'Neptune'
+  | 'Pluto'
+  | 'North Node'
+  | 'Chiron'
+  | 'Lilith';
+
 
 export type MoonPhaseName =
   | 'New Moon'
@@ -136,7 +165,7 @@ export interface AstroBody {
   name: BodyName;
   sign: ZodiacSign;
   signAbbr: string; // Сокращение знака ("Pis", "Leo")
-  signId: ZodiacSign;
+  signId: ZodiacSignId;
   pos: number; // Позиция в знаке (0-30°)
   absPos: number; // Абсолютная позиция (0-360°)
   retrograde: boolean;
