@@ -1,6 +1,7 @@
-import type { BodyName, AstroBody } from '@/entities/Horoscope/types';
+import type { BodyName, AstroBody, PlanetId } from '@/entities/Horoscope/types';
 
 export interface CircleProps {
-  bodies: Partial<Record<BodyName, AstroBody>>;
+  bodies: Partial<Record<BodyName | PlanetId, AstroBody>>;
+  firstHouseSignDegree?: number;
   className?: string;
 }

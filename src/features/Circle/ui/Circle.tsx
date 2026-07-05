@@ -8,7 +8,7 @@ import type { CircleProps } from './Circle.props';
 import styles from './Circle.module.css';
 
 export const Circle: FC<CircleProps> = (props) => {
-  const { bodies, className = '' } = props;
+  const { bodies, className = '', firstHouseSignDegree } = props;
 
   const { i18n } = useLocales();
 
@@ -471,6 +471,55 @@ export const Circle: FC<CircleProps> = (props) => {
           className={styles.orbit}
           style={{
             transform:
+              bodies.Lilith?.signId &&
+              `rotate(-${zodiacDegrees[bodies.Lilith?.signId] + bodies.Lilith?.degreeInSign}deg)`,
+          }}
+        >
+          <div className={styles['orbit-inner']}>
+            {bodies.Lilith ? (
+              <div
+                className={`${styles.planet}`}
+                style={{ top: 'calc(50% - 20px)' }}
+              >
+                <img
+                  src={'/assets/images/horoscope/lilith.png'}
+                  width={'35%'}
+                  height={'35%'}
+                  style={{ zIndex: 1 }}
+                />
+              </div>
+            ) : null}
+          </div>
+        </div>
+
+        <div
+          className={styles.orbit}
+          style={{
+            transform:
+              bodies.Chiron?.signId &&
+              `rotate(-${zodiacDegrees[bodies.Chiron?.signId] + bodies.Chiron?.degreeInSign}deg)`,
+          }}
+        >
+          <div className={styles['orbit-inner']}>
+            {bodies.Chiron ? (
+              <div
+                className={`${styles.planet}`}
+                style={{ top: 'calc(50% - 20px)' }}
+              >
+                <img
+                  src={'/assets/images/horoscope/chiron.png'}
+                  width={'40%'}
+                  height={'40%'}
+                />
+              </div>
+            ) : null}
+          </div>
+        </div>
+
+        <div
+          className={styles.orbit}
+          style={{
+            transform:
               bodies.Pluto?.signId &&
               `rotate(-${zodiacDegrees[bodies.Pluto?.signId] + bodies.Pluto?.degreeInSign}deg)`,
           }}
@@ -491,7 +540,14 @@ export const Circle: FC<CircleProps> = (props) => {
           </div>
         </div>
 
-        <div className={styles.houses}>
+        <div
+          className={styles.houses}
+          style={{
+            transform: firstHouseSignDegree
+              ? `rotate(-${firstHouseSignDegree}deg)`
+              : undefined,
+          }}
+        >
           <span
             className={styles.house}
             style={{ left: '7px', top: '35px', transform: 'rotate(75deg)' }}
