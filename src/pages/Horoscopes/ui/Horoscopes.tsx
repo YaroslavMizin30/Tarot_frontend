@@ -148,6 +148,7 @@ export const Horoscopes = () => {
         sender: 'Tarotopia',
         isUser: false,
         type: selectedType,
+        avatar: '/assets/images/horoscope/tarotopia-avatar.jpeg',
       });
 
       return;
@@ -227,7 +228,6 @@ export const Horoscopes = () => {
 
             <Zodiac
               type={'small'}
-              /* @ts-expect-error nocheck */
               sign={bodies?.Moon?.sign}
               className={styles.zodiac}
             />
@@ -245,7 +245,6 @@ export const Horoscopes = () => {
 
             <Zodiac
               type={'small'}
-              /* @ts-expect-error nocheck */
               sign={bodies?.Sun?.sign}
               className={styles.zodiac}
             />
@@ -263,7 +262,6 @@ export const Horoscopes = () => {
 
             <Zodiac
               type={'small'}
-              /* @ts-expect-error nocheck */
               sign={bodies?.Mercury?.sign}
               className={styles.zodiac}
             />
@@ -281,7 +279,6 @@ export const Horoscopes = () => {
 
             <Zodiac
               type={'small'}
-              /* @ts-expect-error nocheck */
               sign={bodies?.Venus?.sign}
               className={styles.zodiac}
             />
@@ -299,7 +296,6 @@ export const Horoscopes = () => {
 
             <Zodiac
               type={'small'}
-              /* @ts-expect-error nocheck */
               sign={bodies?.Mars?.sign}
               className={styles.zodiac}
             />
