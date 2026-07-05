@@ -2,8 +2,12 @@ import { getDataFromDB } from '@/shared/api/supabase';
 
 import type { User } from '../../types/user';
 
+interface UserResponse extends Omit<User, 'natalChart'> {
+  natalChart: string;
+}
+
 export const getUser = async (id: string | number): Promise<User | null> => {
-  const data = await getDataFromDB<User>('users', {
+  const data = await getDataFromDB<UserResponse>('users', {
     key: 'id',
     value: String(id),
   });
@@ -12,5 +16,7 @@ export const getUser = async (id: string | number): Promise<User | null> => {
     return null;
   }
 
-  return data[0];
+  const user = data[0];
+
+  return { ...user, natalChart: JSON.parse(user.natalChart ?? '') };
 };

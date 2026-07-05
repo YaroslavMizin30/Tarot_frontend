@@ -1,5 +1,7 @@
 import { type Sign } from '@/shared/ui/Zodiac';
 
+import { type NatalChart } from '@/entities/Horoscope/types/chart';
+
 export interface User {
   id: number;
   sign: Sign;
@@ -7,7 +9,7 @@ export interface User {
   birthDate: string;
   birthTime?: string;
   birthPlace: string;
-  natalChart: string;
+  natalChart: NatalChart;
   freeHoroscopes: number;
   freeSpreads: number;
   tariff: 'standard' | 'trial' | 'extended';
