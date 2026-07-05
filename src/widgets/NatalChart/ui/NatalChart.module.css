@@ -1,4 +1,4 @@
-.chart {
+.edit {
   display: flex;
   flex-direction: column;
 
@@ -15,13 +15,67 @@
   border-radius: 10px;
 }
 
-.header {
+.name {
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+
+.chart {
   display: flex;
   flex-direction: column;
-  flex-shrink: 0;
-  border-bottom: 1px solid var(--border-primary);
-  padding-bottom: 8px;
-  margin-bottom: 8px;
+  align-items: center;
+}
+
+.title {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+.metadata {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+  width: 100%;
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+.sign {
+  position: relative;
+  width: 15px;
+  height: 15px;
+  margin-left: 8px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  max-width: 280px;
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 280px;
+  color: var(--text-primary);
+}
+
+.body {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.house {
+  display: inline-flex;
+}
+
+.house + .house {
+  margin-top: 5px;
 }
 
 .section {
@@ -69,27 +123,14 @@
   margin-top: 8px;
 }
 
-.section > .formItem + .formItem {
-  margin-top: 8px;
-}
-
-.section * {
-  color: var(--text-secondary);
-}
-
-.item {
-  display: flex;
-  align-items: center;
-}
-
-.item > label + span {
-  margin-left: 10px;
-}
-
 .formItem {
   display: flex;
   flex-direction: column;
   text-align: left;
+}
+
+.formItem + .formItem {
+  margin-top: 14px;
 }
 
 .formItem > .subtitle {
@@ -148,6 +189,14 @@
 
 .actionButton {
   flex: 1;
+  align-self: center;
+}
+
+.action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 15px;
 }
 
 .loader {

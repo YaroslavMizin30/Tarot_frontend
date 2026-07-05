@@ -300,6 +300,17 @@ const TRANSLATIONS_EN = {
   'Capricorn': 'Capricorn',
   'Aquarius': 'Aquarius',
   'Pisces': 'Pisces',
+
+  'core': 'Core self',
+  'mind': 'Mind',
+  'work': 'Work path',
+  'love': 'Love relating',
+  'social': 'Social collective',
+  'karmic': 'Karmic healing',
+
+  'Change': 'Change',
+  'Compose chart': 'Compose chart',
+  'Edit chart': 'Edit chart',
 };
 
 export default TRANSLATIONS_EN;

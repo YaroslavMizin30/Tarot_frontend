@@ -299,6 +299,17 @@ const TRANSLATIONS_RU = {
   'Capricorn': 'Козерог',
   'Aquarius': 'Водолей',
   'Pisces': 'Рыбы',
+
+  'core': 'Ядро личности',
+  'mind': 'Сознание',
+  'work': 'Профессиональный путь',
+  'love': 'Отношение к любви',
+  'social': 'Социальное взаимодействие',
+  'karmic': 'Кармическое исцеление',
+
+  'Change': 'Изменить',
+  'Compose chart': 'Составить карту',
+  'Edit chart': 'Редактировать карту',
 };
 
 export default TRANSLATIONS_RU;

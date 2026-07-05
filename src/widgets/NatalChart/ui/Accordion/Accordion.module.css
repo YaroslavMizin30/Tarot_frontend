@@ -1,0 +1,99 @@
+.accordion {
+  display: flex;
+  flex-direction: column;
+  width: 270px;
+  color: var(--text-primary);
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+}
+
+.section + .section {
+  margin-top: 5px;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  text-shadow: 1px 1px #363636;
+}
+
+.items-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s ease;
+}
+
+.items-wrapper--opened {
+  grid-template-rows: 1fr;
+  padding: 10px;
+  padding-right: 0;
+}
+
+.items {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 200px;
+  padding-right: 10px;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+}
+
+.item + .item {
+  margin-top: 5px;
+}
+
+.title {
+  text-shadow: 1px 1px #000;
+}
+
+.text {
+  font-size: 13px;
+}
+
+.sign {
+  margin-left: 5px;
+  position: relative;
+}
+
+.core {
+  box-shadow: inset 0px 0px 20px 5px #fff;
+}
+
+.mind {
+  box-shadow: inset 0px 0px 20px 5px #adedf9;
+}
+
+.work {
+  box-shadow: inset 0px 0px 20px 5px #f9efad;
+}
+
+.love {
+  box-shadow: inset 0px 0px 20px 5px #f9adad;
+}
+
+.social {
+  box-shadow: inset 0px 0px 20px 5px #d3f9ad;
+}
+
+.karmic {
+  box-shadow: inset 0px 0px 20px 5px #f5adf9;
+}
