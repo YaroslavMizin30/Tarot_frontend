@@ -8,7 +8,12 @@ import type { CircleProps } from './Circle.props';
 import styles from './Circle.module.css';
 
 export const Circle: FC<CircleProps> = (props) => {
-  const { bodies, className = '', firstHouseSignDegree } = props;
+  const {
+    bodies,
+    className = '',
+    firstHouseSignDegree,
+    highlightedBodies,
+  } = props;
 
   const { i18n } = useLocales();
 
@@ -40,6 +45,7 @@ export const Circle: FC<CircleProps> = (props) => {
         type={'small'}
         sign={'Aquarius'}
         className={`${styles.zodiac} ${styles.Aquarius}`}
+        isHighlighted={highlightedBodies?.aquarius}
       />
       <span
         className={styles.name}
@@ -52,6 +58,7 @@ export const Circle: FC<CircleProps> = (props) => {
         type={'small'}
         sign={'Pisces'}
         className={`${styles.zodiac} ${styles.Pisces}`}
+        isHighlighted={highlightedBodies?.pisces}
       />
       <span
         className={styles.name}
@@ -64,6 +71,7 @@ export const Circle: FC<CircleProps> = (props) => {
         type={'small'}
         sign={'Aries'}
         className={`${styles.zodiac} ${styles.Aries}`}
+        isHighlighted={highlightedBodies?.aries}
       />
       <span
         className={styles.name}
@@ -76,6 +84,7 @@ export const Circle: FC<CircleProps> = (props) => {
         type={'small'}
         sign={'Taurus'}
         className={`${styles.zodiac} ${styles.Taurus}`}
+        isHighlighted={highlightedBodies?.taurus}
       />
       <span
         className={styles.name}
@@ -88,6 +97,7 @@ export const Circle: FC<CircleProps> = (props) => {
         type={'small'}
         sign={'Gemini'}
         className={`${styles.zodiac} ${styles.Gemini}`}
+        isHighlighted={highlightedBodies?.gemini}
       />
       <span
         className={styles.name}
@@ -100,6 +110,7 @@ export const Circle: FC<CircleProps> = (props) => {
         type={'small'}
         sign={'Cancer'}
         className={`${styles.zodiac} ${styles.Cancer}`}
+        isHighlighted={highlightedBodies?.cancer}
       />
       <span
         className={styles.name}
@@ -112,6 +123,7 @@ export const Circle: FC<CircleProps> = (props) => {
         type={'small'}
         sign={'Leo'}
         className={`${styles.zodiac} ${styles.Leo}`}
+        isHighlighted={highlightedBodies?.leo}
       />
       <span
         className={styles.name}
@@ -124,6 +136,7 @@ export const Circle: FC<CircleProps> = (props) => {
         type={'small'}
         sign={'Virgo'}
         className={`${styles.zodiac} ${styles.Virgo}`}
+        isHighlighted={highlightedBodies?.virgo}
       />
       <span
         className={styles.name}
@@ -136,6 +149,7 @@ export const Circle: FC<CircleProps> = (props) => {
         type={'small'}
         sign={'Libra'}
         className={`${styles.zodiac} ${styles.Libra}`}
+        isHighlighted={highlightedBodies?.libra}
       />
       <span
         className={styles.name}
@@ -148,6 +162,7 @@ export const Circle: FC<CircleProps> = (props) => {
         type={'small'}
         sign={'Scorpio'}
         className={`${styles.zodiac} ${styles.Scorpio}`}
+        isHighlighted={highlightedBodies?.scorpio}
       />
       <span
         className={styles.name}
@@ -160,6 +175,7 @@ export const Circle: FC<CircleProps> = (props) => {
         type={'small'}
         sign={'Sagittarius'}
         className={`${styles.zodiac} ${styles.Sagittarius}`}
+        isHighlighted={highlightedBodies?.sagittarius}
       />
       <span
         className={styles.name}
@@ -172,6 +188,7 @@ export const Circle: FC<CircleProps> = (props) => {
         type={'small'}
         sign={'Capricorn'}
         className={`${styles.zodiac} ${styles.Capricorn}`}
+        isHighlighted={highlightedBodies?.capricorn}
       />
       <span
         className={styles.name}
@@ -249,7 +266,9 @@ export const Circle: FC<CircleProps> = (props) => {
                 className={styles.planet}
                 style={{
                   top: 'calc(50% - 12px)',
-                  boxShadow: '0px 0px 30px 16px #ff7b00',
+                  boxShadow: highlightedBodies?.sun
+                    ? '0px 0px 40px 30px #ff5e00'
+                    : '0px 0px 30px 16px #ff7b00',
                 }}
               >
                 <img
@@ -274,7 +293,12 @@ export const Circle: FC<CircleProps> = (props) => {
             {bodies.Jupiter ? (
               <div
                 className={styles.planet}
-                style={{ top: 'calc(50% + 20px)' }}
+                style={{
+                  top: 'calc(50% + 20px)',
+                  boxShadow: highlightedBodies?.jupiter
+                    ? '0px 0px 30px 20px #99552e'
+                    : undefined,
+                }}
               >
                 <img
                   src={'/assets/images/horoscope/jupiter.png'}
@@ -298,7 +322,12 @@ export const Circle: FC<CircleProps> = (props) => {
             {bodies.Saturn ? (
               <div
                 className={styles.planet}
-                style={{ top: 'calc(50% - 12px)' }}
+                style={{
+                  top: 'calc(50% - 12px)',
+                  boxShadow: highlightedBodies?.saturn
+                    ? '0px 0px 20px 10px #ffb700'
+                    : undefined,
+                }}
               >
                 <img
                   src={'/assets/images/horoscope/saturn.png'}
@@ -322,8 +351,24 @@ export const Circle: FC<CircleProps> = (props) => {
             {bodies.Uranus ? (
               <div
                 className={`${styles.planet} ${styles.uranus}`}
-                style={{ top: 'calc(50% - 14px)' }}
+                style={{
+                  top: 'calc(50% - 14px)',
+                }}
               >
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '2px',
+                    right: '2px',
+                    width: '88%',
+                    height: '88%',
+                    boxShadow: highlightedBodies?.uranus
+                      ? '0px 0px 15px 10px #00bfff'
+                      : undefined,
+                    borderRadius: '50%',
+                  }}
+                />
+
                 <img
                   src={'/assets/images/horoscope/uranus.png'}
                   width={'180%'}
@@ -348,6 +393,20 @@ export const Circle: FC<CircleProps> = (props) => {
                 className={`${styles.planet} ${styles.neptune}`}
                 style={{ top: 'calc(50% - 15px)' }}
               >
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '6px',
+                    right: '2px',
+                    width: '70%',
+                    height: '70%',
+                    boxShadow: highlightedBodies?.neptune
+                      ? '0px 0px 15px 10px #0026ff'
+                      : undefined,
+                    borderRadius: '50%',
+                  }}
+                />
+
                 <img
                   src={'/assets/images/horoscope/neptune.png'}
                   width={'85%'}
@@ -372,6 +431,20 @@ export const Circle: FC<CircleProps> = (props) => {
                 className={`${styles.planet} ${styles.venus}`}
                 style={{ top: 'calc(50% - 15px)' }}
               >
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '7px',
+                    right: '3.5px',
+                    width: '63%',
+                    height: '63%',
+                    boxShadow: highlightedBodies?.venus
+                      ? '0px 0px 20px 10px #aeaeac'
+                      : undefined,
+                    borderRadius: '50%',
+                  }}
+                />
+
                 <img
                   src={'/assets/images/horoscope/venus.png'}
                   width={'85%'}
@@ -396,6 +469,20 @@ export const Circle: FC<CircleProps> = (props) => {
                 className={`${styles.planet} ${styles.mars}`}
                 style={{ top: 'calc(50% - 19px)' }}
               >
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '12px',
+                    right: '1px',
+                    width: '50%',
+                    height: '50%',
+                    boxShadow: highlightedBodies?.mars
+                      ? '0px 0px 16px 12px #711212'
+                      : undefined,
+                    borderRadius: '50%',
+                  }}
+                />
+
                 <img
                   src={'/assets/images/horoscope/mars.png'}
                   width={'55%'}
@@ -420,6 +507,20 @@ export const Circle: FC<CircleProps> = (props) => {
                 className={`${styles.planet} ${styles.mercury}`}
                 style={{ top: 'calc(50% - 18px)' }}
               >
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '11.5px',
+                    right: '1px',
+                    width: '48%',
+                    height: '48%',
+                    boxShadow: highlightedBodies?.mercury
+                      ? '0px 0px 16px 12px #a1a1a1'
+                      : undefined,
+                    borderRadius: '50%',
+                  }}
+                />
+
                 <img
                   src={'/assets/images/horoscope/mercury.png'}
                   width={'60%'}
@@ -447,7 +548,9 @@ export const Circle: FC<CircleProps> = (props) => {
                 <div
                   style={{
                     position: 'absolute',
-                    boxShadow: '0px 0px 10px 5px #fff',
+                    boxShadow: highlightedBodies?.moon
+                      ? '0px 0px 10px 5px #fff'
+                      : undefined,
                     borderRadius: '50%',
                     width: '30%',
                     height: '30%',
@@ -481,6 +584,20 @@ export const Circle: FC<CircleProps> = (props) => {
                 className={`${styles.planet}`}
                 style={{ top: 'calc(50% - 20px)' }}
               >
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '8px',
+                    right: '9px',
+                    width: '33%',
+                    height: '33%',
+                    boxShadow: highlightedBodies?.lilith
+                      ? '0px 0px 10px 5px #000000'
+                      : undefined,
+                    borderRadius: '50%',
+                  }}
+                />
+
                 <img
                   src={'/assets/images/horoscope/lilith.png'}
                   width={'35%'}
@@ -506,10 +623,76 @@ export const Circle: FC<CircleProps> = (props) => {
                 className={`${styles.planet}`}
                 style={{ top: 'calc(50% - 20px)' }}
               >
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '8px',
+                    right: '8px',
+                    width: '38%',
+                    height: '38%',
+                    boxShadow: highlightedBodies?.chiron
+                      ? '0px 0px 10px 5px #000000'
+                      : undefined,
+                    borderRadius: '50%',
+                  }}
+                />
+
                 <img
                   src={'/assets/images/horoscope/chiron.png'}
                   width={'40%'}
                   height={'40%'}
+                />
+              </div>
+            ) : null}
+          </div>
+        </div>
+
+        <div
+          className={styles.orbit}
+          style={{
+            transform:
+              bodies.Pluto?.signId &&
+              //@ts-expect-error type
+              `rotate(-${zodiacDegrees[bodies['North_node']?.signId] + bodies['North_node']?.degreeInSign}deg)`,
+          }}
+        >
+          <div className={styles['orbit-inner']}>
+            {bodies.Pluto ? (
+              <div
+                className={`${styles.planet} ${styles.pluto}`}
+                style={{ top: 'calc(50% - 21px)' }}
+              >
+                <div
+                  style={{
+                    position: 'absolute',
+                    boxShadow: highlightedBodies?.north_node
+                      ? '0px 0px 6px 4px #fff'
+                      : '0px 0px 4px 1px #fff',
+                    borderRadius: '50%',
+                    width: '1px',
+                    height: '10px',
+                    bottom: '5px',
+                    right: '3px',
+                    backgroundColor: '#fff',
+                    filter: 'blur(0.7px)',
+                  }}
+                />
+
+                <div
+                  style={{
+                    position: 'absolute',
+                    boxShadow: highlightedBodies?.north_node
+                      ? '0px 0px 6px 4px #fff'
+                      : '0px 0px 4px 1px #fff',
+                    borderRadius: '50%',
+                    width: '1px',
+                    height: '10px',
+                    bottom: '5px',
+                    right: '3px',
+                    transform: 'rotate(90deg)',
+                    backgroundColor: '#fff',
+                    filter: 'blur(0.7px)',
+                  }}
                 />
               </div>
             ) : null}
@@ -530,6 +713,20 @@ export const Circle: FC<CircleProps> = (props) => {
                 className={`${styles.planet} ${styles.pluto}`}
                 style={{ top: 'calc(50% - 21px)' }}
               >
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '15px',
+                    right: '0px',
+                    width: '38%',
+                    height: '38%',
+                    boxShadow: highlightedBodies?.pluto
+                      ? '0px 0px 10px 5px #828282'
+                      : undefined,
+                    borderRadius: '50%',
+                  }}
+                />
+
                 <img
                   src={'/assets/images/horoscope/pluto.png'}
                   width={'40%'}
@@ -553,12 +750,34 @@ export const Circle: FC<CircleProps> = (props) => {
             style={{ left: '7px', top: '35px', transform: 'rotate(75deg)' }}
           >
             1
+            {highlightedBodies?.house_1 ? (
+              <div
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: '50%',
+                  boxShadow: '0px 8px 10px 5px #fff',
+                  filter: 'blur(2px)',
+                }}
+              />
+            ) : null}
           </span>
 
           <span
             className={styles.house}
             style={{ left: '14px', top: '48px', transform: 'rotate(45deg)' }}
           >
+            {highlightedBodies?.house_2 ? (
+              <div
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: '50%',
+                  boxShadow: '0px 8px 10px 5px #fff',
+                  filter: 'blur(2px)',
+                }}
+              />
+            ) : null}
             2
           </span>
 
@@ -566,6 +785,17 @@ export const Circle: FC<CircleProps> = (props) => {
             className={styles.house}
             style={{ left: '25px', top: '55px', transform: 'rotate(15deg)' }}
           >
+            {highlightedBodies?.house_3 ? (
+              <div
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: '50%',
+                  boxShadow: '0px 8px 10px 5px #fff',
+                  filter: 'blur(2px)',
+                }}
+              />
+            ) : null}
             3
           </span>
 
@@ -573,6 +803,17 @@ export const Circle: FC<CircleProps> = (props) => {
             className={styles.house}
             style={{ right: '25px', top: '55px', transform: 'rotate(-15deg)' }}
           >
+            {highlightedBodies?.house_4 ? (
+              <div
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: '50%',
+                  boxShadow: '0px 8px 10px 5px #fff',
+                  filter: 'blur(2px)',
+                }}
+              />
+            ) : null}
             4
           </span>
 
@@ -580,6 +821,17 @@ export const Circle: FC<CircleProps> = (props) => {
             className={styles.house}
             style={{ right: '14px', top: '48px', transform: 'rotate(-45deg)' }}
           >
+            {highlightedBodies?.house_5 ? (
+              <div
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: '50%',
+                  boxShadow: '0px 8px 10px 5px #fff',
+                  filter: 'blur(2px)',
+                }}
+              />
+            ) : null}
             5
           </span>
 
@@ -587,6 +839,17 @@ export const Circle: FC<CircleProps> = (props) => {
             className={styles.house}
             style={{ right: '7px', top: '35px', transform: 'rotate(-75deg)' }}
           >
+            {highlightedBodies?.house_6 ? (
+              <div
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: '50%',
+                  boxShadow: '0px 8px 10px 5px #fff',
+                  filter: 'blur(2px)',
+                }}
+              />
+            ) : null}
             6
           </span>
 
@@ -598,6 +861,17 @@ export const Circle: FC<CircleProps> = (props) => {
               transform: 'rotate(-115deg)',
             }}
           >
+            {highlightedBodies?.house_7 ? (
+              <div
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: '50%',
+                  boxShadow: '0px 8px 10px 5px #fff',
+                  filter: 'blur(2px)',
+                }}
+              />
+            ) : null}
             7
           </span>
 
@@ -609,6 +883,17 @@ export const Circle: FC<CircleProps> = (props) => {
               transform: 'rotate(-135deg)',
             }}
           >
+            {highlightedBodies?.house_8 ? (
+              <div
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: '50%',
+                  boxShadow: '0px 8px 10px 5px #fff',
+                  filter: 'blur(2px)',
+                }}
+              />
+            ) : null}
             8
           </span>
 
@@ -620,6 +905,17 @@ export const Circle: FC<CircleProps> = (props) => {
               transform: 'rotate(-165deg)',
             }}
           >
+            {highlightedBodies?.house_9 ? (
+              <div
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: '50%',
+                  boxShadow: '0px 8px 10px 5px #fff',
+                  filter: 'blur(2px)',
+                }}
+              />
+            ) : null}
             9
           </span>
 
@@ -631,6 +927,17 @@ export const Circle: FC<CircleProps> = (props) => {
               transform: 'rotate(-195deg)',
             }}
           >
+            {highlightedBodies?.house_10 ? (
+              <div
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: '50%',
+                  boxShadow: '0px 8px 10px 5px #fff',
+                  filter: 'blur(2px)',
+                }}
+              />
+            ) : null}
             10
           </span>
 
@@ -642,6 +949,17 @@ export const Circle: FC<CircleProps> = (props) => {
               transform: 'rotate(135deg)',
             }}
           >
+            {highlightedBodies?.house_11 ? (
+              <div
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: '50%',
+                  boxShadow: '0px 8px 10px 5px #fff',
+                  filter: 'blur(2px)',
+                }}
+              />
+            ) : null}
             11
           </span>
 
@@ -653,6 +971,17 @@ export const Circle: FC<CircleProps> = (props) => {
               transform: 'rotate(115deg)',
             }}
           >
+            {highlightedBodies?.house_12 ? (
+              <div
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: '50%',
+                  boxShadow: '0px 8px 10px 5px #fff',
+                  filter: 'blur(2px)',
+                }}
+              />
+            ) : null}
             12
           </span>
 
