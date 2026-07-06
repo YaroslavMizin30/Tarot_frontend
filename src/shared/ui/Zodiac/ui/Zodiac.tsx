@@ -20,7 +20,7 @@ import type { ZodiacProps } from './Zodiac.props';
 import styles from './Zodiac.module.css';
 
 export const Zodiac: FC<ZodiacProps> = (props) => {
-  const { sign, className = '', type = 'big' } = props;
+  const { sign, className = '', type = 'big', isHighlighted } = props;
 
   const getImage = () => {
     if (!sign) {
@@ -74,7 +74,9 @@ export const Zodiac: FC<ZodiacProps> = (props) => {
     >
       {type === 'small' && (
         <div className={styles['light-container']}>
-          <div className={`${styles.light} ${styles[sign ?? '']}`}></div>
+          <div
+            className={`${styles.light} ${styles[sign ?? '']} ${isHighlighted ? styles[`${sign}-highlighted`] : ''}`}
+          />
 
           <div className={`${styles['light2']} ${styles[`light2-${sign}`]}`} />
         </div>
