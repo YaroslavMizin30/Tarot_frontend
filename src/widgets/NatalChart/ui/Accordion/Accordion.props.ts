@@ -1,3 +1,5 @@
+import type { PlanetId, ZodiacSign } from '@/entities/Horoscope';
+
 interface Item {
   title: string;
   body: string;
@@ -13,6 +15,10 @@ export interface AccordionProps {
     love_relating: Item[];
     karmic_healing: Item[];
   };
+  onHighLight: (
+    isHighLighter: boolean,
+    body: PlanetId | ZodiacSign | null | string,
+  ) => void;
 }
 
 export interface SectionProps {
@@ -20,4 +26,9 @@ export interface SectionProps {
   items: Item[];
   name: string;
   isOpened: boolean;
+  className?: string;
+  onHighLight: (
+    isHighLighter: boolean,
+    body: PlanetId | ZodiacSign | null | string,
+  ) => void;
 }

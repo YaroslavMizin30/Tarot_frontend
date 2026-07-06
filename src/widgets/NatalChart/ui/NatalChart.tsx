@@ -183,7 +183,49 @@ export const NatalChart = (props: NatalChartProps) => {
       timeKnown,
       lang: locales[locale],
     });
+
+    setIsEditing(false);
   };
+
+  const [highlightedBodies, setHighlightedBodies] = useState({
+    moon: false,
+    sun: false,
+    jupiter: false,
+    saturn: false,
+    uranus: false,
+    neptune: false,
+    pluto: false,
+    mars: false,
+    venus: false,
+    mercury: false,
+    lilith: false,
+    north_node: false,
+    chiron: false,
+    taurus: false,
+    gemini: false,
+    cancer: false,
+    leo: false,
+    virgo: false,
+    libra: false,
+    scorpio: false,
+    sagittarius: false,
+    capricorn: false,
+    aquarius: false,
+    pisces: false,
+    aries: false,
+    house_1: false,
+    house_2: false,
+    house_3: false,
+    house_4: false,
+    house_5: false,
+    house_6: false,
+    house_7: false,
+    house_8: false,
+    house_9: false,
+    house_10: false,
+    house_11: false,
+    house_12: false,
+  });
 
   if (isUpdating) {
     return (
@@ -335,13 +377,26 @@ export const NatalChart = (props: NatalChartProps) => {
 
   const bodies = getBodies(planets);
 
+  const handleBodyHighlight = (isHighlited: boolean, body: string | null) => {
+    if (body) {
+      setHighlightedBodies((prev) => ({ ...prev, [body]: isHighlited }));
+    }
+  };
+
   return (
     <div className={styles.chart}>
       <h3 className={styles.name}>{user.userName}</h3>
 
-      <Circle bodies={bodies} firstHouseSignDegree={houses[0].abs_pos} />
+      <Circle
+        bodies={bodies}
+        firstHouseSignDegree={houses[0].abs_pos}
+        highlightedBodies={highlightedBodies}
+      />
 
-      <Accordion sections={interpretation.sections} />
+      <Accordion
+        sections={interpretation.sections}
+        onHighLight={handleBodyHighlight}
+      />
 
       <Button onClick={handleChangeButtonClick}>{i18n('Change')}</Button>
     </div>
