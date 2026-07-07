@@ -15,11 +15,25 @@ const TRANSLATIONS_RU = {
   'Aquarius': 'Водолей',
   'Pisces': 'Рыбы',
 
+  'aries': 'Овне',
+  'taurus': 'Тельце',
+  'gemini': 'Близнецах',
+  'cancer': 'Раке',
+  'leo': 'Льве',
+  'virgo': 'Деве',
+  'libra': 'Весах',
+  'scorpio': 'Скорпионе',
+  'sagittarius': 'Стрельце',
+  'capricorn': 'Козероге',
+  'aquarius': 'Водолее',
+  'pisces': 'Рыбах',
+
   'Ingresses': 'Движения планет',
 
   'leaving_sign': 'покидает знак',
   'entering_sign': 'входит в знак',
 
+  'Moon': 'Луна',
   'Planets': 'Планеты',
   'Mercury': 'Меркурий',
   'Sun': 'Солнце',
@@ -38,6 +52,20 @@ const TRANSLATIONS_RU = {
   'Station bodies': 'Стационарность',
 
   'at': 'на',
+  'in': 'в',
+
+  'Absolute position': 'Абсолютная позиция',
+  'Sign': 'Знак',
+  'Motion state': 'Тип движения',
+  'Speed': 'Скорость',
+  'a day': 'в день',
+
+  'direct': 'прямо',
+  'slowing_direct': 'прямо с замедлением',
+  'stationary_direct': 'прямо без движения',
+  'retrograde': 'ретроградное',
+  'slowing_retrograde': 'ретроградно с замедлением',
+  'stationary_retrograde': 'ретроградно без движения',
 };
 
 export default TRANSLATIONS_RU;

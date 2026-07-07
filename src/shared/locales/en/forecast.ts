@@ -14,12 +14,25 @@ const TRANSLATIONS_EN = {
   'Capricorn': 'Capricorn',
   'Aquarius': 'Aquarius',
   'Pisces': 'Pisces',
+  'aries': 'Aries',
+  'taurus': 'Taurus',
+  'gemini': 'Gemini',
+  'cancer': 'Cancer',
+  'leo': 'Leo',
+  'virgo': 'Virgo',
+  'libra': 'Libra',
+  'scorpio': 'Scorpio',
+  'sagittarius': 'Sagittarius',
+  'capricorn': 'Capricorn',
+  'aquarius': 'Aquarius',
+  'pisces': 'Pisces',
 
   'Ingresses': 'Ingresses',
 
   'leaving_sign': 'leaving_sign',
   'entering_sign': 'entering_sign',
 
+  'Moon': 'Moon',
   'Planets': 'Planets',
   'Mercury': 'Mercury',
   'Sun': 'Sun',
@@ -38,6 +51,20 @@ const TRANSLATIONS_EN = {
   'Station bodies': 'Station bodies',
 
   'at': 'at',
+  'in': 'in',
+
+  'Absolute position': 'Absolute position',
+  'Sign': 'Sign',
+  'Motion state': 'Motion state',
+  'Speed': 'Speed',
+  'a day': 'a day',
+
+  'direct': 'direct',
+  'slowing_direct': 'slowing direct',
+  'retrograde': 'retrograde',
+  'slowing_retrograde': 'slowing retrograde',
+  'stationary_direct': 'stationary direct',
+  'stationary_retrograde': 'stationary retrograde',
 };
 
 export default TRANSLATIONS_EN;

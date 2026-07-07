@@ -1,7 +1,9 @@
-import { useEffect, useRef, useState, type FC } from 'react';
+import { useState, type FC } from 'react';
 
 import useLocales from '@/shared/hooks/useLocales';
 import Zodiac from '@/shared/ui/Zodiac';
+
+import { useHighlights } from '@/features/Circle';
 
 import { findPlanets } from '../../lib/bodies';
 import { findSign } from '../../lib/signs';
@@ -16,30 +18,7 @@ const Section = (props: SectionProps) => {
 
   const { i18n } = useLocales();
 
-  const rootRef = useRef(null);
-  const elementsRef = useRef<Array<HTMLDivElement>>([]);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          onHighLight(
-            entry.isIntersecting,
-            entry.target.getAttribute('data-planet') ??
-              entry.target.getAttribute('data-zodiac') ??
-              entry.target.getAttribute('data-house'),
-          );
-        });
-      },
-      { root: rootRef.current, threshold: 1.0 },
-    );
-
-    if (elementsRef.current) {
-      elementsRef.current.forEach((el) => {
-        observer.observe(el);
-      });
-    }
-  }, []);
+  const { rootRef, addElement } = useHighlights({ onHighLight });
 
   return (
     <div
@@ -78,11 +57,7 @@ const Section = (props: SectionProps) => {
                       height={20}
                       style={{ marginRight: '5px' }}
                       src={`/assets/images/horoscope/${planets[0]}.png`}
-                      ref={(el) => {
-                        if (el) {
-                          elementsRef.current?.push(el);
-                        }
-                      }}
+                      ref={addElement}
                       data-planet={planets?.[0]}
                     />
                   )}
@@ -90,14 +65,7 @@ const Section = (props: SectionProps) => {
                   <h4 className={styles.title}>{title}</h4>
 
                   {sign && (
-                    <div
-                      ref={(el) => {
-                        if (el) {
-                          elementsRef.current?.push(el);
-                        }
-                      }}
-                      data-zodiac={sign.toLowerCase()}
-                    >
+                    <div ref={addElement} data-zodiac={sign.toLowerCase()}>
                       <Zodiac
                         type={'small'}
                         //@ts-expect-error no type
@@ -117,25 +85,12 @@ const Section = (props: SectionProps) => {
                       height={20}
                       style={{ marginLeft: '5px' }}
                       src={`/assets/images/horoscope/${planets[1]}.png`}
-                      ref={(el) => {
-                        if (el) {
-                          elementsRef.current?.push(el);
-                        }
-                      }}
+                      ref={addElement}
                       data-planet={planets?.[1]}
                     />
                   )}
 
-                  {house && (
-                    <div
-                      data-house={house}
-                      ref={(el) => {
-                        if (el) {
-                          elementsRef.current?.push(el);
-                        }
-                      }}
-                    />
-                  )}
+                  {house && <div data-house={house} ref={addElement} />}
                 </div>
 
                 <span className={styles.text}>{body}</span>

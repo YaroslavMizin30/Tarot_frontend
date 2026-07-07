@@ -17,14 +17,6 @@
   animation: fadeIn 4s ease;
 }
 
-.data {
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  width: 100%;
-  z-index: 1;
-}
-
 .circle {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -75,4 +67,92 @@
   justify-content: flex-end;
   height: 100%;
   padding-bottom: 10px;
+}
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+  width: 240px;
+  max-height: 250px;
+  overflow: hidden;
+  overflow-y: auto;
+  margin-top: 20px;
+  padding-right: 5px;
+  z-index: 1;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  text-align: center;
+  border-radius: 5px;
+  width: fit-content;
+}
+
+.sign {
+  position: relative;
+  margin-left: 10px;
+}
+
+.planet {
+  margin-right: 5px;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  width: 100%;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.item + .item {
+  margin-top: 5px;
+}
+
+.sun {
+  color: #f8f800;
+}
+
+.mars {
+  color: #b00000;
+}
+
+.mercury {
+  color: #707070;
+}
+
+.venus {
+  color: #a7ac78;
+}
+
+.moon {
+  color: #ffffff;
+}
+
+.neptune {
+  color: #3859ff;
+}
+
+.uranus {
+  color: #38d7ff;
+}
+
+.saturn {
+  color: #a06823;
+}
+
+.jupiter {
+  color: #e09943;
+}
+
+.pluto {
+  color: #7f7a74;
 }

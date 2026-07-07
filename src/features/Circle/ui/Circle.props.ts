@@ -23,5 +23,5 @@ export interface CircleProps {
   bodies: Partial<Record<BodyName | PlanetId, AstroBody>>;
   firstHouseSignDegree?: number;
   className?: string;
-  highlightedBodies?: Record<PlanetId | ZodiacSignId | House, boolean>;
+  highlightedBodies?: Partial<Record<PlanetId | ZodiacSignId | House, boolean>>;
 }
