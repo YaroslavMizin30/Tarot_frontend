@@ -21,7 +21,7 @@ export const CalendarPage = () => {
 
   const { moonPhases, getMoonDescription, phaseName, zodiac } = useCalendar();
 
-  const { bodies, isMoonVoidOfCourse } = useDailyEphemeris();
+  const { bodies, isMoonVoidOfCourse, dateTime } = useDailyEphemeris();
 
   useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
@@ -40,7 +40,7 @@ export const CalendarPage = () => {
           />
         ) : null}
 
-        <h4 className={styles.title}>{`${i18n('Moon')}`}</h4>
+        <h4 className={styles.title}>{dateTime}</h4>
 
         <div className={styles.current}>
           {phaseName ? <span>{`${i18n(phaseName)}`}</span> : null}&nbsp;
