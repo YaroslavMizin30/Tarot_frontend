@@ -45,6 +45,8 @@ export const Horoscopes = () => {
     isAdding,
     addHoroscope,
     setUserMessage,
+    tags,
+    addTag,
     message,
     findExistingHoroscopeInPeriod,
   } = useHoroscopes({
@@ -210,6 +212,19 @@ export const Horoscopes = () => {
             onChange={(e) => setUserMessage(e.target.value)}
             placeholder={i18n('Additional thoughts (optional)...')}
           />
+
+          <div className={`${styles.tags}`}>
+            <div className={`${styles['tags-inner']} custom-scrollbar`}>
+              {tags[selectedType].map((tag) => {
+                return (
+                  <span onClick={() => addTag(tag)} className={styles.tag}>
+                    {i18n(tag)}
+                  </span>
+                );
+              })}
+            </div>
+          </div>
+
           <div className={styles.composeActions}>
             <Button type={'submit'} disabled={isAdding} isLoading={isAdding}>
               {isAdding ? i18n('Generating...') : i18n('Compose')}

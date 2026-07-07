@@ -54,6 +54,7 @@
 }
 
 .composeForm {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -175,6 +176,36 @@
   justify-content: flex-end;
   height: 100%;
   padding-bottom: 10px;
+}
+
+.tags {
+  position: absolute;
+  width: 100%;
+  top: 60px;
+
+  padding: 0px 10px;
+}
+
+.tags-inner {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 4px;
+}
+
+.tags-inner::-webkit-scrollbar {
+  height: 4px;
+}
+
+.tag {
+  background-color: var(--background-primary);
+  border-radius: 5px;
+  padding: 0 5px;
+  white-space: nowrap;
+}
+
+.tag + .tag {
+  margin-left: 5px;
 }
 
 @keyframes fadeIn {

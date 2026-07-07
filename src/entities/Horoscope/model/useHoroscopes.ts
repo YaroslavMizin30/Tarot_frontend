@@ -12,6 +12,7 @@ import useLocales from '@/shared/hooks/useLocales';
 import requestAi, { type Prompt } from '@/shared/api/AI';
 
 import type { EphemerisByRangeResponse, Horoscope } from '../types';
+import { dailyTags, weeklyTags } from '../config/tags';
 
 /**
  * Check whether a horoscope's date falls within the current period of its type.
@@ -115,6 +116,10 @@ export const useHoroscopes = (options?: UseHoroscopesOptions) => {
   };
 
   const [message, setMessage] = useState('');
+
+  const addTag = (tag: string) => {
+    setMessage((msg) => msg + ` ${tag}`);
+  };
 
   const DEVELOPER_MESSAGE =
     `${i18n('Make horoscope as a professional astrologist.')} ` +
@@ -242,6 +247,8 @@ export const useHoroscopes = (options?: UseHoroscopesOptions) => {
     hasDaily,
     hasWeekly,
     hasMonthly,
+    tags: { daily: dailyTags, weekly: weeklyTags, monthly: [] },
+    addTag,
     findExistingHoroscopeInPeriod,
   };
 };
