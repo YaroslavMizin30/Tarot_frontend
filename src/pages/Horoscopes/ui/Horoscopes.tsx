@@ -217,7 +217,11 @@ export const Horoscopes = () => {
             <div className={`${styles['tags-inner']} custom-scrollbar`}>
               {tags[selectedType].map((tag) => {
                 return (
-                  <span onClick={() => addTag(tag)} className={styles.tag}>
+                  <span
+                    key={tag}
+                    onClick={() => addTag(tag)}
+                    className={styles.tag}
+                  >
                     {i18n(tag)}
                   </span>
                 );
