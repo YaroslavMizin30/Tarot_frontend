@@ -132,6 +132,16 @@ const routes: RouteObject[] = [
           },
         },
       },
+      {
+        path: '/calendar',
+        lazy: {
+          async Component() {
+            const { default: CalendarPage } = await import('@/pages/Calendar');
+
+            return CalendarPage;
+          },
+        },
+      },
     ],
   },
 ];

@@ -1,4 +1,8 @@
-export type Subsection = '/natal-chart' | '/horoscopes' | '/forecast';
+export type Subsection =
+  | '/natal-chart'
+  | '/horoscopes'
+  | '/forecast'
+  | '/calendar';
 
 export interface SubsectionConfig {
   key: Subsection;
@@ -9,4 +13,5 @@ export const SUBSECTIONS: SubsectionConfig[] = [
   { key: '/horoscopes', label: 'Horoscopes' },
   { key: '/natal-chart', label: 'Natal chart' },
   { key: '/forecast', label: 'Common forecast' },
+  { key: '/calendar', label: 'Moon calendar' },
 ];
