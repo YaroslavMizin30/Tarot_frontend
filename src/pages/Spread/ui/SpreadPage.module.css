@@ -23,7 +23,7 @@
   z-index: 1;
 }
 
-.cards-small {
+.cards {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,19 +36,8 @@
   min-width: 80px;
 }
 
-.card-small {
-  height: 120px;
-  min-height: 120px;
-  width: 60px;
-  min-width: 60px;
-}
-
-.card-small + .card-small {
+.card + .card {
   margin-top: 10px;
-}
-
-.card-small * {
-  font-size: 7px;
 }
 
 .interpretation {

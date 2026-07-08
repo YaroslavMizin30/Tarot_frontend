@@ -5,7 +5,7 @@ import type { TarotCardProps } from './Card.props';
 
 import GlassLoader from '@/shared/ui/GlassLoader';
 
-import { isShortSingleWord } from '../lib/isShortSingleWord';
+// import { isShortSingleWord } from '../lib/isShortSingleWord';
 
 import styles from './Card.module.css';
 
@@ -22,6 +22,7 @@ export const TarotCard: FC<TarotCardProps> = (props) => {
     isInverted,
     isReversed,
     hasLoadingState = false,
+    size = 'l',
   } = props;
 
   const [isCardReversed, setIsReversed] = useState(isReversed);
@@ -48,7 +49,7 @@ export const TarotCard: FC<TarotCardProps> = (props) => {
 
   return (
     <div
-      className={`${styles.container} ${canTurnOver ? styles.clickable : ''} ${className} ${isInverted ? styles.inverted : ''}`}
+      className={`${styles.container} ${canTurnOver ? styles.clickable : ''} ${className} ${isInverted ? styles.inverted : ''} ${styles[`container-${size}`]}`}
       onClick={handleCardClick}
       style={style}
     >
@@ -60,21 +61,21 @@ export const TarotCard: FC<TarotCardProps> = (props) => {
         }}
       >
         <div
-          className={cx('back', {
+          className={cx('back', size, {
             ['back-gray']: theme === 'gray',
             ['back-bronze']: theme === 'bronze',
           })}
         />
 
         <div
-          className={cx('front', {
+          className={cx('front', size, {
             ['front-gray']: theme === 'gray',
             ['front-bronze']: theme === 'bronze',
           })}
         >
           <div className={styles['image-wrapper']}>
             <img
-              className={`${styles.image} ${isInverted && !isCardReversed ? styles.reversed : ''}`}
+              className={`${styles.image} ${isInverted && !isCardReversed ? styles.reversed : ''} ${styles[`image-${size}`]}`}
               src={`/assets/images/card/${name}.png`}
               onLoad={handleImageLoad}
             />
@@ -88,7 +89,7 @@ export const TarotCard: FC<TarotCardProps> = (props) => {
             })}
           >
             <h2
-              className={`${styles.name} ${isShortSingleWord(localizedName) ? styles.short : ''}`}
+              className={`${styles.name} ${styles[`name-${size}`]}`}
             >
               {localizedName}
             </h2>

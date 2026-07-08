@@ -172,6 +172,7 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
                 key={name}
                 name={name}
                 localizedName={i18n(name)}
+                size={'l'}
                 className={`${styles.card} ${count === activeCard && styles['active-card']}`}
                 style={{
                   animationDelay: `${count}s`,

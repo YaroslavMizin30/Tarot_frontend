@@ -63,18 +63,8 @@
   align-items: flex-start;
 }
 
-.card {
-  width: 50px;
-  min-width: 50px;
-  height: 100px;
-}
-
 .card + .card {
   margin-left: 10px;
-}
-
-.card * {
-  font-size: 5px;
 }
 
 .zodiac {

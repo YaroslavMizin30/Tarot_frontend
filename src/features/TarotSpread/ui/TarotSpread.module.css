@@ -42,49 +42,8 @@
   animation: fadeIn 1s ease-in-out;
 }
 
-.cards-small {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: 100%;
-  padding-right: 5px;
-  max-height: 526px;
-  margin-right: 10px;
-  min-width: 80px;
-}
-
-.card-small {
-  height: 120px;
-  min-height: 120px;
-  width: 60px;
-  min-width: 60px;
-}
-
-.card-small + .card-small {
-  margin-top: 10px;
-}
-
-.card-small * {
-  font-size: 7px;
-}
-
 .active-card {
   box-shadow: 0 0px 30px 5px var(--shadow-primary);
-}
-
-.interpretation-container {
-  display: flex;
-  justify-content: space-between;
-  max-height: 80%;
-  overflow: hidden;
-  padding-top: 20px;
-  z-index: 1;
-}
-
-.interpretation {
-  background-color: #544e4e89;
 }
 
 .loading {
@@ -111,6 +70,7 @@
 }
 
 .modal {
+  z-index: 10;
   text-align: center;
 }
 
@@ -120,10 +80,12 @@
 
 @keyframes fadeIn {
   0% {
+    pointer-events: none;
     opacity: 0;
   }
 
   100% {
+    pointer-events: all;
     opacity: 1;
   }
 }

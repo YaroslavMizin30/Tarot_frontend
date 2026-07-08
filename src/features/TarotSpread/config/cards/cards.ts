@@ -87,5 +87,5 @@ export const ALL_TAROT_CARDS_ARRAY = [
   CardName.PAGE_OF_COINS,
   CardName.KNIGHT_OF_COINS,
   CardName.QUEEN_OF_COINS,
-  CardName.KING_OF_COINS
+  CardName.KING_OF_COINS,
 ] as const;

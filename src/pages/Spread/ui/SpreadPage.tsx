@@ -45,17 +45,18 @@ export const SpreadPage = () => {
       <h3 className={styles.title}>{title}</h3>
 
       <div className={styles['interpretation-container']}>
-        <div className={`${styles['cards-small']} custom-scrollbar`}>
+        <div className={`${styles['cards']} custom-scrollbar`}>
           {cards.map((card) => {
             const { name, isInverted } = card;
 
             return (
               <TarotCard
+                size={'m'}
                 name={name}
                 key={name}
                 localizedName={i18n(name)}
                 isInverted={isInverted}
-                className={styles['card-small']}
+                className={styles['card']}
                 hasLoadingState
               />
             );

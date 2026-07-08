@@ -39,4 +39,8 @@ export interface TarotCardProps {
    * Flag if card has loading state
    */
   hasLoadingState?: boolean;
+  /**
+   * Card size
+   */
+  size?: 'xs' | 's' | 'm' | 'l';
 }
