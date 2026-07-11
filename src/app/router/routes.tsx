@@ -142,6 +142,16 @@ const routes: RouteObject[] = [
           },
         },
       },
+      {
+        path: '/roulette',
+        lazy: {
+          async Component() {
+            const { default: RoulettePage } = await import('@/pages/Roulette');
+
+            return RoulettePage;
+          },
+        },
+      },
     ],
   },
 ];

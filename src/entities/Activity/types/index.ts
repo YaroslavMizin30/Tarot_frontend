@@ -17,9 +17,10 @@ export interface PlayingCard {
 }
 
 export interface Roulette {
-  lastSpin: string; // timestamp
-  lastWin: string;
+  lastSpin?: string | null; // timestamp
+  lastWin?: string | null;
   cards: PlayingCard[];
+  lastShuffle: string | null;
 }
 
 export interface Activity {

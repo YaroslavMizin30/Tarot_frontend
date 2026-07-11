@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="60" height="60">
+  <path d="M32 6 L46 28 Q32 38 32 58 Q32 38 18 28 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="arcs"/>
+  
+  <path d="M32 9 L44 28 Q32 38 32 48 Q32 38 20 28 Z" fill="none" stroke="#ac00af" stroke-width="1" stroke-linejoin="arcs"/>
+  
+  <path d="M35 22C31 22 28 24 28 27C28 30 31 32 35 32C33 32 31 31 31 27C31 23 33 22 35 22Z" fill="#ac00af"/>
+</svg>

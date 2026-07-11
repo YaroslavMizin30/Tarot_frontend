@@ -18,8 +18,15 @@ const Footer = (props: { isLoading?: boolean }) => {
 
   const TAROT_PAGES = ['/', '/reading', '/about', '/daily', '/history'];
   const SETTING_PAGES = ['/settings'];
-  const ASTROLOGY_PAGES = ['/astrology', '/natal-chart', '/horoscopes', '/forecast', '/calendar'];
+  const ASTROLOGY_PAGES = [
+    '/astrology',
+    '/natal-chart',
+    '/horoscopes',
+    '/forecast',
+    '/calendar',
+  ];
   const BILLING_PAGES = ['/billing'];
+  const ROULETTE_PAGES = ['/roulette'];
 
   const { i18n } = useLocales();
 
@@ -49,7 +56,10 @@ const Footer = (props: { isLoading?: boolean }) => {
           <span>{i18n('Astrology')}</span>
         </div>
 
-        <div className={styles.section}>
+        <div
+          className={`${styles.section} ${ROULETTE_PAGES.includes(pathname) ? styles.active : ''}`}
+          onClick={() => navigate('/roulette')}
+        >
           <RoulettePage />
 
           <span>{i18n('Roulette')}</span>
