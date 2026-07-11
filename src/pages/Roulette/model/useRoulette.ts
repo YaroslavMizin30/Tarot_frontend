@@ -38,11 +38,15 @@ export const useRoulette = () => {
   const roulette = activity?.roulette;
 
   const shouldUpdate = () => {
+    const daysLeft = getDaysLeft(roulette?.lastWin ?? '');
+
+    const isWinValid = !isNaN(daysLeft) && daysLeft > 7;
+
     return (
       roulette &&
       !isToday(roulette.lastShuffle ?? '') &&
       !isToday(roulette.lastSpin ?? '') &&
-      getDaysLeft(roulette.lastWin ?? '') <= 0
+      !isWinValid
     );
   };
 
