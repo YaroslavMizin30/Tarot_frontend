@@ -11,10 +11,14 @@ export const updateActivity = async (
   const userActivity = await getActivity(userId);
 
   if (userActivity) {
-    await updateRaw('activity', { ...activity }, {
-      key: 'userId',
-      value: userId,
-    });
+    await updateRaw(
+      'activity',
+      { ...activity },
+      {
+        key: 'userId',
+        value: userId,
+      },
+    );
   } else {
     await insertRaw('activity', {
       ...activity,
