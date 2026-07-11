@@ -1,4 +1,4 @@
-import { useState, type FC } from 'react';
+import { forwardRef, useState } from 'react';
 import classNames from 'classnames/bind';
 
 import type { TarotCardProps } from './Card.props';
@@ -11,93 +11,94 @@ import styles from './Card.module.css';
 
 const cx = classNames.bind(styles);
 
-export const TarotCard: FC<TarotCardProps> = (props) => {
-  const {
-    name,
-    canTurnOver = false,
-    onClick = () => undefined,
-    localizedName = '',
-    className = '',
-    style = {},
-    isInverted,
-    isReversed,
-    hasLoadingState = false,
-    size = 'l',
-  } = props;
+export const TarotCard = forwardRef<HTMLDivElement, TarotCardProps>(
+  (props, ref) => {
+    const {
+      name,
+      canTurnOver = false,
+      onClick = () => undefined,
+      localizedName = '',
+      className = '',
+      style = {},
+      isInverted,
+      isReversed,
+      hasLoadingState = false,
+      size = 'l',
+    } = props;
 
-  const [isCardReversed, setIsReversed] = useState(isReversed);
-  const [isLoaded, setIsLoaded] = useState(!hasLoadingState);
+    const [isCardReversed, setIsReversed] = useState(isReversed);
+    const [isLoaded, setIsLoaded] = useState(!hasLoadingState);
 
-  const handleImageLoad = () => {
-    if (hasLoadingState) {
-      setIsLoaded(true);
-    }
-  };
+    const handleImageLoad = () => {
+      if (hasLoadingState) {
+        setIsLoaded(true);
+      }
+    };
 
-  const handleCardClick = () => {
-    if (canTurnOver && isCardReversed) {
-      setIsReversed(!isCardReversed);
+    const handleCardClick = () => {
+      if (canTurnOver && isCardReversed) {
+        setIsReversed(!isCardReversed);
 
-      onClick();
-    }
-  };
+        onClick();
+      }
+    };
 
-  const theme = document.documentElement.getAttribute('data-theme') as
-    | 'standard'
-    | 'gray'
-    | 'bronze';
+    const theme = document.documentElement.getAttribute('data-theme') as
+      | 'standard'
+      | 'gray'
+      | 'bronze';
 
-  return (
-    <div
-      className={`${styles.container} ${canTurnOver ? styles.clickable : ''} ${className} ${isInverted ? styles.inverted : ''} ${styles[`container-${size}`]}`}
-      onClick={handleCardClick}
-      style={style}
-    >
+    return (
       <div
-        className={`${styles.inner} ${isCardReversed ? styles.reversed : ''}`}
-        style={{
-          width: isLoaded ? undefined : '0px',
-          height: isLoaded ? undefined : '0px',
-        }}
+        className={`${styles.container} ${canTurnOver ? styles.clickable : ''} ${className} ${isInverted ? styles.inverted : ''} ${styles[`container-${size}`]}`}
+        onClick={handleCardClick}
+        style={style}
+        ref={ref}
       >
         <div
-          className={cx('back', size, {
-            ['back-gray']: theme === 'gray',
-            ['back-bronze']: theme === 'bronze',
-          })}
-        />
-
-        <div
-          className={cx('front', size, {
-            ['front-gray']: theme === 'gray',
-            ['front-bronze']: theme === 'bronze',
-          })}
+          className={`${styles.inner} ${isCardReversed ? styles.reversed : ''}`}
+          style={{
+            width: isLoaded ? undefined : '0px',
+            height: isLoaded ? undefined : '0px',
+          }}
         >
-          <div className={styles['image-wrapper']}>
-            <img
-              className={`${styles.image} ${isInverted && !isCardReversed ? styles.reversed : ''} ${styles[`image-${size}`]}`}
-              src={`/assets/images/card/${name}.png`}
-              onLoad={handleImageLoad}
-            />
-          </div>
+          <div
+            className={cx('back', size, {
+              ['back-gray']: theme === 'gray',
+              ['back-bronze']: theme === 'bronze',
+            })}
+          />
 
           <div
-            className={cx('footer', {
-              reversed: isInverted && !isCardReversed,
-              ['footer-gray']: theme === 'gray',
-              ['footer-bronze']: theme === 'bronze',
+            className={cx('front', size, {
+              ['front-gray']: theme === 'gray',
+              ['front-bronze']: theme === 'bronze',
             })}
           >
-            <h2
-              className={`${styles.name} ${styles[`name-${size}`]}`}
+            <div className={styles['image-wrapper']}>
+              <img
+                className={`${styles.image} ${isInverted && !isCardReversed ? styles.reversed : ''} ${styles[`image-${size}`]}`}
+                src={`/assets/images/card/${name}.png`}
+                onLoad={handleImageLoad}
+              />
+            </div>
+
+            <div
+              className={cx('footer', {
+                reversed: isInverted && !isCardReversed,
+                ['footer-gray']: theme === 'gray',
+                ['footer-bronze']: theme === 'bronze',
+              })}
             >
-              {localizedName}
-            </h2>
+              <h2 className={`${styles.name} ${styles[`name-${size}`]}`}>
+                {localizedName}
+              </h2>
+            </div>
           </div>
         </div>
-      </div>
 
-      {!isLoaded && <GlassLoader />}
-    </div>
-  );
-};
+        {!isLoaded && <GlassLoader />}
+      </div>
+    );
+  },
+);

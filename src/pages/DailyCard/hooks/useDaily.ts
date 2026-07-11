@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { updateActivity, getActivity } from '@/entities/Spread';
+import { updateActivity, getActivity } from '@/entities/Activity';
 import { useUser } from '@/entities/User';
 import { queryKeys } from '@/shared/api/queryKeys';
 
