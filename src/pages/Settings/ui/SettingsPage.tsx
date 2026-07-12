@@ -1,8 +1,6 @@
 import { useEffect, useState, type MouseEvent } from 'react';
-import { useNavigate } from 'react-router';
 
 import Button from '@/shared/ui/Button';
-import ArrowButton from '@/shared/ui/ArrowButton';
 import { useUser } from '@/entities/User';
 
 import useLocales from '@/shared/hooks/useLocales';
@@ -10,7 +8,6 @@ import TRANSLATIONS_EN from '@/shared/locales/en/settings';
 import TRANSLATIONS_RU from '@/shared/locales/ru/settings';
 
 import UserSettings from './UserSettings';
-import SubscriptionSettings from './SubscriptionSettings';
 import RatingSettings from './RatingSettings';
 import UserAgreement from './UserAgreement';
 
@@ -22,8 +19,6 @@ export const SettingsPage = () => {
   const { i18n, addTranslations, locale } = useLocales();
 
   const [settings, setSettings] = useState('');
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
@@ -43,10 +38,6 @@ export const SettingsPage = () => {
 
   const getContent = () => {
     switch (settings) {
-      case 'subscription':
-        return (
-          <SubscriptionSettings onBackButtonClick={handleBackButtonClick} />
-        );
       case 'profile':
         return <UserSettings onBackButtonClick={handleBackButtonClick} />;
       case 'rate the app':
@@ -55,24 +46,19 @@ export const SettingsPage = () => {
         return <UserAgreement onBackButtonClick={handleBackButtonClick} />;
       default:
         return (
-          <>
-            <Button
-              onClick={handleSettingsButtonClick}
-              value={'subscription'}
-            >
-              {i18n('Subscription')}
-            </Button>
-
+          <div className={styles.menu}>
             <Button
               onClick={handleSettingsButtonClick}
               value={'profile'}
+              className={styles.button}
             >
-              {i18n('Profile')}
+              {i18n('Natal chart')}
             </Button>
 
             <Button
               onClick={handleSettingsButtonClick}
               value={'rate the app'}
+              className={styles.button}
             >
               {i18n('Rate the app')}
             </Button>
@@ -80,12 +66,11 @@ export const SettingsPage = () => {
             <Button
               onClick={handleSettingsButtonClick}
               value={'user agreement'}
+              className={styles.button}
             >
               {i18n('User agreement')}
             </Button>
-
-            <ArrowButton onClick={() => navigate('/')} className={styles.arrow} />
-          </>
+          </div>
         );
     }
   };
