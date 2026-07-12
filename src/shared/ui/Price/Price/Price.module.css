@@ -6,6 +6,7 @@
 
 .cost {
   color: var(--text-secondary);
+  text-shadow: var(--text-secondary) 1px 1px 5px;
 }
 
 .pentacle {
