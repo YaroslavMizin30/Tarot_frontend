@@ -57,6 +57,7 @@ const Accordion: FC<AccordionProps> = (props) => {
                   onSubItemClick?.(item.id, subItem.id);
                 }}
                 disabled={subItem.disabled}
+                iconRight={subItem.iconRight}
               >
                 {subItem.label}
               </Button>

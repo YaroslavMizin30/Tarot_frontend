@@ -3,6 +3,7 @@ import { type FC } from 'react';
 import useLocales from '@/shared/hooks/useLocales';
 import Accordion from '@/shared/ui/Accordion';
 import type { AccordionItem } from '@/shared/ui/Accordion';
+import Price from '@/shared/ui/Price';
 
 import type { ThemeProps } from './Themes.props';
 
@@ -54,6 +55,7 @@ const Themes: FC<ThemeProps> = (props) => {
       id: question.label,
       label: i18n(question.label),
       description: i18n(question.text),
+      iconRight: <Price cost={question.spreadNumber} />,
     })),
   }));
 

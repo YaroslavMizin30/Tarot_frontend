@@ -5,6 +5,7 @@ import PointerIcon from '@/shared/assets/svg/roulette/pointer.svg';
 import Button from '@/shared/ui/Button';
 import Spinner from '@/shared/ui/Spinner';
 import { getPluralForm } from '@/shared/utils';
+import Price from '@/shared/ui/Price';
 
 import Card from '@/entities/TarotCard';
 
@@ -332,6 +333,7 @@ export const Roulette = (props: RouletteProps) => {
           onClick={handleShuffleButtonClick}
           isLoading={animationState === 'shuffling'}
           disabled={isShuffleDisabled}
+          iconRight={<Price cost={2} />}
         >
           {i18n('Shuffle')}
         </Button>

@@ -9,6 +9,7 @@ export interface AccordionSubItem {
   description?: string;
   /** Disabled state for the sub-item Button */
   disabled?: boolean;
+  iconRight?: ReactNode;
 }
 
 export interface AccordionItem {

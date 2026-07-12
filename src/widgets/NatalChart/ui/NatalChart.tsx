@@ -10,6 +10,7 @@ import Input from '@/shared/ui/Input';
 import Select from '@/shared/ui/Select';
 import Button from '@/shared/ui/Button';
 import Spinner from '@/shared/ui/Spinner';
+import Price from '@/shared/ui/Price';
 
 import useLocales from '@/shared/hooks/useLocales';
 import TRANSLATIONS_EN from '@/shared/locales/en/natalchart';
@@ -346,14 +347,11 @@ export const NatalChart = (props: NatalChartProps) => {
                   className={styles.actionButton}
                   onClick={handleSave}
                   disabled={isEqual}
+                  iconRight={<Price cost={10} />}
                 >
                   {i18n('Edit')}
                 </Button>
-                <Button
-                  className={styles.actionButton}
-                  onClick={handleCancel}
-                  style={{ marginLeft: '10px' }}
-                >
+                <Button className={styles.actionButton} onClick={handleCancel}>
                   {i18n('Cancel')}
                 </Button>
               </>
@@ -362,6 +360,7 @@ export const NatalChart = (props: NatalChartProps) => {
                 type={'submit'}
                 className={styles.actionButton}
                 onClick={handleSave}
+                iconRight={<Price cost={10} />}
               >
                 {i18n('Compose')}
               </Button>

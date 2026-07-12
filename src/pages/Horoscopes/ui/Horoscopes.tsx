@@ -15,6 +15,9 @@ import TRANSLATIONS_RU from '@/shared/locales/ru/horoscopes';
 import Button from '@/shared/ui/Button';
 import ArrowButton from '@/shared/ui/ArrowButton';
 import Zodiac from '@/shared/ui/Zodiac';
+import Price from '@/shared/ui/Price';
+
+import { PRICES } from '@/entities/Horoscope';
 
 import styles from './Horoscopes.module.css';
 
@@ -230,7 +233,12 @@ export const Horoscopes = () => {
           </div>
 
           <div className={styles.composeActions}>
-            <Button type={'submit'} disabled={isAdding} isLoading={isAdding}>
+            <Button
+              type={'submit'}
+              disabled={isAdding}
+              isLoading={isAdding}
+              iconRight={<Price cost={PRICES[selectedType]} />}
+            > 
               {isAdding ? i18n('Generating...') : i18n('Compose')}
             </Button>
           </div>

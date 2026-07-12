@@ -2,6 +2,7 @@ import { useEffect, useState, type FC } from 'react';
 
 import Button from '@/shared/ui/Button';
 import useLocales from '@/shared/hooks/useLocales';
+import Price from '@/shared/ui/Price';
 
 import TarotDeck from '@/entities/TarotDeck';
 import { SPREADS } from '@/features/TarotSpread';
@@ -133,6 +134,7 @@ const Spread: FC<SpreadProps> = (props) => {
             disabled={!title}
             onClick={handleSpreadButtonClick}
             isLoading={isReading}
+            iconRight={<Price cost={spread.cardsCount} />}
           >
             {i18n('Click')}
           </Button>
