@@ -34,7 +34,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         style={{ pointerEvents: disabled ? 'none' : 'all' }}
         {...rest}
       >
-        <span className={cx({ 'btn__content--loading': isLoading })}>
+        <span
+          className={cx('btn__content', {
+            'btn__content--loading': isLoading,
+            'btn__content--with-icon': iconRight,
+          })}
+        >
           {children}
         </span>
 

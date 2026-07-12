@@ -23,6 +23,15 @@
   font-family: 'Monomakh' !important;
 }
 
+.btn__content {
+  display: inline-flex;
+  justify-content: center;
+}
+
+.btn__content--with-icon {
+  max-width: 80%;
+}
+
 .btn__content--loading {
   animation: blink 1s infinite;
 }
