@@ -40,7 +40,7 @@ export const Rules = () => {
                 localizedName={i18n(id)}
               />
 
-              <span className={styles.description}>{prize}</span>
+              <span className={styles.description}>{i18n(prize)}</span>
             </div>
           );
         })}

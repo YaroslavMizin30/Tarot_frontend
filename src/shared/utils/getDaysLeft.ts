@@ -26,7 +26,7 @@ export const getDaysLeft = (date: Date | string): number => {
     target.getDate(),
   );
 
-  const diffInMs = targetNormalized.getTime() - nowNormalized.getTime();
+  const diffInMs = nowNormalized.getTime() - targetNormalized.getTime();
   const msInDay = 1000 * 60 * 60 * 24;
 
   return Math.round(diffInMs / msInDay);

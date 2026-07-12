@@ -115,15 +115,16 @@ export const useRoulette = () => {
     });
   }, []);
 
-  const winDaysPast = getDaysLeft(roulette?.lastWin ?? '');
+  const daysAfterWin = getDaysLeft(roulette?.lastWin ?? '');
 
   return {
     prepareCards,
     playingCards: roulette?.cards ?? [],
-    winDaysPast,
+    daysAfterWin,
     isLoading: isLoading && !activity,
-    isSpinDisabled: isToday(roulette?.lastSpin ?? ''),
-    isShuffleDisabled: winDaysPast < DAYS_AFTER_WIN,
+    isSpinDisabled:
+      isToday(roulette?.lastSpin ?? '') || daysAfterWin < DAYS_AFTER_WIN,
+    isShuffleDisabled: daysAfterWin < DAYS_AFTER_WIN,
     updateRoulette,
   };
 };

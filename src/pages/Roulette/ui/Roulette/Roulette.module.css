@@ -24,7 +24,9 @@
   justify-content: center;
   align-items: center;
   width: 280px;
+  min-width: 280px;
   height: 280px;
+  min-height: 280px;
   border-radius: 50%;
   border: 0.5px solid var(--border-secondary);
   transform: rotate(15deg);

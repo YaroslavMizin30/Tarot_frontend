@@ -4,6 +4,7 @@ import useLocales from '@/shared/hooks/useLocales';
 import PointerIcon from '@/shared/assets/svg/roulette/pointer.svg';
 import Button from '@/shared/ui/Button';
 import Spinner from '@/shared/ui/Spinner';
+import { getPluralForm } from '@/shared/utils';
 
 import Card from '@/entities/TarotCard';
 
@@ -45,7 +46,7 @@ export const Roulette = (props: RouletteProps) => {
   const {
     playingCards,
     prepareCards,
-    winDaysPast,
+    daysAfterWin,
     isLoading,
     isSpinDisabled,
     isShuffleDisabled,
@@ -111,10 +112,14 @@ export const Roulette = (props: RouletteProps) => {
       await reverseCard();
 
       if (rouletteRef.current) {
-        await animateShuffle(rouletteRef.current, async () => {
-          await prepareCards();
-          await waitForNextFrame();
-        }, lastSpinDegree.current);
+        await animateShuffle(
+          rouletteRef.current,
+          async () => {
+            await prepareCards();
+            await waitForNextFrame();
+          },
+          lastSpinDegree.current,
+        );
 
         lastSpinDegree.current = 0;
       }
@@ -156,8 +161,7 @@ export const Roulette = (props: RouletteProps) => {
           const n = Math.ceil(
             (lastSpinDegree.current + cardDegree) / FULL_ROTATION,
           );
-          const targetRotation =
-            1080 + FULL_ROTATION * n - cardDegree + 180;
+          const targetRotation = 1080 + FULL_ROTATION * n - cardDegree + 180;
 
           await animateSpin(
             rouletteRef.current,
@@ -199,18 +203,33 @@ export const Roulette = (props: RouletteProps) => {
   };
 
   const getFreePhraze = () => {
+    const daysAgo = getPluralForm(daysAfterWin, [
+      'days (1)',
+      'days (2-4)',
+      'days (5-0)',
+    ]);
+    const daysLeft = getPluralForm(7 - daysAfterWin, [
+      'days (1)',
+      'days (2-4)',
+      'days (5-0)',
+    ]);
+
     const term =
-      winDaysPast === 0 ? i18n('today') : `${winDaysPast} ${i18n('days ago')}`;
+      daysAfterWin === 0
+        ? i18n('today')
+        : `${daysAfterWin} ${i18n(daysAgo)} ${i18n('days ago')}`;
 
     switch (true) {
-      case winDaysPast < 7:
-        return `${i18n('You won')} ${term}. ${i18n('Next game is available in')} ${7 - winDaysPast}`;
+      case daysAfterWin < 7:
+        return `${i18n('You won')} ${term}. ${i18n('Next game is available in')} ${7 - daysAfterWin} ${i18n(daysLeft)}`;
       case isSpinDisabled:
         return i18n(
           "You've spined the wheel today. You can shuffle to spin again.",
         );
       default:
-        return null;
+        return i18n(
+          'For those who like excitement. Reading rules is highly recommended',
+        );
     }
   };
 
@@ -288,12 +307,6 @@ export const Roulette = (props: RouletteProps) => {
             style={{ transform: 'rotate(165deg)' }}
           />
         </div>
-      </div>
-
-      <div className={styles.description}>
-        {i18n(
-          'For those who like excitement. Reading rules is highly recommended - effect may be unexpected',
-        )}
       </div>
 
       <div className={styles.pointer}>
