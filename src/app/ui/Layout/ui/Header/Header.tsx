@@ -6,6 +6,7 @@ import AudioOn from '@/shared/assets/svg/common/audio_on.svg';
 import AudioOff from '@/shared/assets/svg/common/audio_off.svg';
 import useOutsideClick from '@/shared/hooks/useOutsideClick';
 import useLocales, { type Locale } from '@/shared/hooks/useLocales';
+import Pentacle from '@/shared/ui/Pentacle';
 
 import { useUser } from '@/entities/User';
 
@@ -57,6 +58,11 @@ const Header = (props: { isLoading?: boolean }) => {
 
   return (
     <header className={`${styles.header} ${isLoading ? styles.loading : ''}`}>
+      <div className={styles.leftSection}>
+        <span className={styles.balance}>{user?.balance}</span>
+
+        <Pentacle className={styles.pentacle} />
+      </div>
       <div
         className={`${styles.rightSection} ${isLoading ? styles['rightSection-loading'] : ''}`}
       >

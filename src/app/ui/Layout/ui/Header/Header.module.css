@@ -3,7 +3,7 @@
   z-index: 1000;
 
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   padding: 8px;
   width: 100%;
@@ -67,6 +67,23 @@
 
   cursor: default;
   pointer-events: none;
+}
+
+.leftSection {
+  display: flex;
+  align-items: center;
+  color: var(--text-primary);
+  padding-left: 10px;
+}
+
+.pentacle {
+  margin-left: 5px;
+}
+
+.balance {
+  height: fit-content;
+  font-size: 18px;
+  text-shadow: #ffffff 1px 1px 10px;
 }
 
 .rightSection {

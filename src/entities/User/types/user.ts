@@ -16,4 +16,5 @@ export interface User {
   expirationDate: string;
   theme: 'standard' | 'gray' | 'bronze';
   audio: boolean;
+  balance: number;
 }
