@@ -49,6 +49,11 @@
   animation: loading 1s infinite;
 }
 
+.icon-right {
+  position: absolute;
+  right: 10px;
+}
+
 @keyframes loading {
   from {
     box-shadow:

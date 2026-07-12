@@ -15,6 +15,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       isLoading = false,
       disabled,
       className = '',
+      iconRight = null,
       ...rest
     } = props;
 
@@ -36,6 +37,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         <span className={cx({ 'btn__content--loading': isLoading })}>
           {children}
         </span>
+
+        <div className={styles['icon-right']}>{iconRight}</div>
       </button>
     );
   },
