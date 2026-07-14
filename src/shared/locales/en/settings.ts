@@ -98,6 +98,24 @@ const TRANSLATIONS_EN = {
 
   'Profile': 'Profile',
   'Subscription': 'Subscription',
+
+  'Most frequent card': 'Most frequent card',
+  'Natal chart': 'Natal chart',
+
+  'Loyalty tier': 'Loyalty tier',
+  'Seeker': 'Seeker',
+  'Initiate': 'Initiate',
+  'Adept': 'Adept',
+  'Oracle': 'Oracle',
+  'Magician': 'Magician',
+  'Acquired after': 'Acquired after',
+  'spreads in a row each day': 'spreads in a row each day',
+  'spreads in a month': 'spreads in a month',
+  'OR': 'OR',
+  'coins at once': 'coins at once',
+  'permanent discount': 'permanent discount',
+  'early access to all updates': 'early access to all updates',
+
   'Your tariff': 'Your tariff',
   'Trial': 'Trial',
   "You've got": "You've got",

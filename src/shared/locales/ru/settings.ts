@@ -99,6 +99,23 @@ const TRANSLATIONS_RU = {
   'Profile': 'Профиль',
   'Subscription': 'Подписка',
 
+  'Most frequent card': 'Самая частая карта',
+  'Natal chart': 'Натальная карта',
+
+  'Loyalty tier': 'Уровень лояльности',
+  'Seeker': 'Искатель',
+  'Initiate': 'Посвящённый',
+  'Adept': 'Адепт',
+  'Oracle': 'Оракул',
+  'Magician': 'Маг',
+  'Acquired after': 'Получается после',
+  'spreads in a row each day': 'раскладов подряд каждый день',
+  'spreads in a month': 'раскладов в месяц',
+  'OR': 'ИЛИ',
+  'coins at once': 'монет единоразово',
+  'permanent discount': 'постоянная скидка',
+  'early access to all updates': 'ранний доступ ко всем обновлениям',
+
   'Your tariff': 'Ваша подписка',
   'Trial': 'Пробная',
   "You've got": 'Вам доступно',
