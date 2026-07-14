@@ -88,6 +88,38 @@
   text-align: center;
 }
 
+.card-info {
+  display: flex;
+  flex-direction: column;
+  max-width: 150px;
+  max-height: 178px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.card-meanings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 240px;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.card-meanings-label {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.card-description {
+  margin-top: 10px;
+  text-align: center;
+  max-width: 240px;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
 .info {
   display: flex;
   flex-direction: column;

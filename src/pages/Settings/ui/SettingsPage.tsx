@@ -4,6 +4,8 @@ import Button from '@/shared/ui/Button';
 import useLocales from '@/shared/hooks/useLocales';
 import TRANSLATIONS_EN from '@/shared/locales/en/settings';
 import TRANSLATIONS_RU from '@/shared/locales/ru/settings';
+import TRANSLATIONS_EN_CARDS from '@/shared/locales/en/cards';
+import TRANSLATIONS_RU_CARDS from '@/shared/locales/ru/cards';
 import Spinner from '@/shared/ui/Spinner';
 import Zodiac from '@/shared/ui/Zodiac';
 
@@ -13,7 +15,7 @@ import UserAgreement from './UserAgreement/UserAgreement';
 
 import { useUser } from '@/entities/User';
 import { useSpreads } from '@/entities/Spread';
-import TarotCard from '@/entities/TarotCard';
+import TarotCard, { getCardInfoI18n } from '@/entities/TarotCard';
 
 import { combineAllCards } from '../lib/combineAllCard';
 import { findMostFrequentCard } from '../lib/findMostFrequentCard';
@@ -33,8 +35,15 @@ export const SettingsPage = () => {
   const cards = combineAllCards(spreads);
   const card = findMostFrequentCard(cards);
 
+  const mostFrequentCardInfo = card
+    ? getCardInfoI18n(card.name, i18n)
+    : undefined;
+
   useEffect(() => {
-    addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
+    addTranslations({
+      en: { ...TRANSLATIONS_EN, ...TRANSLATIONS_EN_CARDS },
+      ru: { ...TRANSLATIONS_RU, ...TRANSLATIONS_RU_CARDS },
+    });
   }, [locale]);
 
   const handleSettingsButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
@@ -75,13 +84,30 @@ export const SettingsPage = () => {
                     {i18n('Most frequent card')}
                   </span>
 
-                  {card && (
-                    <TarotCard
-                      name={card.name}
-                      localizedName={i18n(card.name)}
-                    />
+                  {card && mostFrequentCardInfo && (
+                    <>
+                      <TarotCard
+                        name={card.name}
+                        localizedName={mostFrequentCardInfo.name}
+                      />
+                    </>
                   )}
                 </div>
+
+                {card && mostFrequentCardInfo && (
+                  <div className={`${styles['card-info']} custom-scrollbar`}>
+                    <p className={styles['card-meanings']}>
+                      <span className={styles['card-meanings-label']}>
+                        {i18n('Meanings')}
+                      </span>
+                      <span>{mostFrequentCardInfo.meanings}</span>
+                    </p>
+
+                    <p className={styles['card-description']}>
+                      {mostFrequentCardInfo.description}
+                    </p>
+                  </div>
+                )}
               </div>
 
               <Loyalty />
