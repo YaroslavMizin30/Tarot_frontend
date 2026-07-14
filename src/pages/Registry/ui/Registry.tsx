@@ -61,6 +61,7 @@ const NatalChartWidgetForm = (props: NatalChartWidgetFormProps) => {
     month: formData.month,
     year: formData.year,
     day: formData.day,
+    name: '',
   });
 
   const [timeUnknown, setTimeUnknown] = useState(false);
@@ -191,9 +192,7 @@ const NatalChartWidgetForm = (props: NatalChartWidgetFormProps) => {
           />
 
           <div className={styles.birth}>
-            <span className={styles.subtitle}>
-              {i18n("I don't remember")}
-            </span>
+            <span className={styles.subtitle}>{i18n("I don't remember")}</span>
 
             <Input
               type={'checkbox'}
