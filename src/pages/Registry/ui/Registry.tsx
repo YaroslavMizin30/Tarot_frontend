@@ -7,9 +7,8 @@ import Select from '@/shared/ui/Select';
 import Modal from '@/shared/ui/Modal';
 import TextContainer from '@/shared/ui/TextContainer';
 import Spinner from '@/shared/ui/Spinner';
+import Price from '@/shared/ui/Price';
 import Error from '@/shared/ui/Error/index.ts';
-
-import NatalChart from '@/widgets/NatalChart';
 
 import useLocales from '@/shared/hooks/useLocales';
 import TRANSLATIONS_RU from '../../../shared/locales/ru/registry.ts';
@@ -23,28 +22,48 @@ import { useCreateUser } from '../model/useCreateUser/useCreateUser';
 
 import styles from './Registry.module.css';
 
-export const Registry = () => {
-  const { i18n, locale, addTranslations } = useLocales();
+type Locale = 'ru' | 'en';
 
-  const [isAgreed, setIsAgreed] = useState(false);
+interface BasicFormData {
+  name: string;
+  month: string;
+  year: string;
+  day: string;
+}
 
-  const [formData, setFormData] = useState({
-    name: '',
+interface ChartFormData extends BasicFormData {
+  country: string;
+  city: string;
+  time: string;
+}
+
+interface NatalChartWidgetFormProps {
+  formData: BasicFormData;
+  setError: (value: string) => void;
+  errorText: string;
+  onClose: () => void;
+  onSubmit: (
+    e: React.FormEvent<HTMLFormElement>,
+    withNatalChart: boolean,
+  ) => void;
+  i18n: (id: string) => string;
+  locale: Locale;
+}
+
+const NatalChartWidgetForm = (props: NatalChartWidgetFormProps) => {
+  const { formData, setError, errorText, onClose, onSubmit, i18n, locale } =
+    props;
+
+  const [chartData, setChartData] = useState<ChartFormData>({
     country: 'RU',
     city: '',
     time: '',
-    month: '',
-    year: '',
-    day: '',
+    month: formData.month,
+    year: formData.year,
+    day: formData.day,
   });
 
-  const [showUserAgreement, setShowUserAgreement] = useState(false);
-
-  const { createUser, isLoading, user, error: creationError } = useCreateUser();
-
-  const [error, setError] = useState('');
-
-  const navigate = useNavigate();
+  const [timeUnknown, setTimeUnknown] = useState(false);
 
   const translatedCountries = useMemo(() => {
     return COUNTRIES.map(({ value, label }) => {
@@ -52,14 +71,183 @@ export const Registry = () => {
     });
   }, [locale, i18n]);
 
+  const handleChartFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setError('');
+    setChartData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleCountrySelectChange = (value: string) => {
+    setChartData((prev) => ({ ...prev, country: value }));
+  };
+
+  const handleYearChange = (value: string) => {
+    setChartData((prev) => ({ ...prev, year: value }));
+  };
+
+  const handleMonthChange = (value: string) => {
+    setChartData((prev) => ({ ...prev, month: value }));
+  };
+
+  const handleDayChange = (value: string) => {
+    setChartData((prev) => ({ ...prev, day: value }));
+  };
+
+  const handleTimeCheckboxClick = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const isChecked = e.currentTarget.checked;
+
+    setTimeUnknown(isChecked);
+
+    if (isChecked) {
+      setChartData((prev) => ({ ...prev, time: '' }));
+    }
+  };
+
+  const handleWidgetSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError('');
+
+    const { name } = formData;
+    const { country, city, day, month, year } = chartData;
+
+    if (!name || !country || !city || !day || !month || !year) {
+      setError(i18n('All necessary fields must be filled'));
+      return;
+    }
+
+    onSubmit(e, true);
+  };
+
+  return (
+    <form onSubmit={handleWidgetSubmit} className={styles.widgetForm}>
+      <h3 className={styles.title}>{i18n('Natal chart')}</h3>
+
+      <div className={styles.item}>
+        <span className={styles.subtitle}>{i18n('Name')}*</span>
+
+        <Input type={'text'} name={'name'} value={formData.name} disabled />
+      </div>
+
+      <div className={styles.item}>
+        <span className={styles.subtitle}>{i18n('Country of birth')}*</span>
+
+        <Select
+          onChange={handleCountrySelectChange}
+          options={translatedCountries}
+          value={chartData.country}
+          hasSearch
+        />
+      </div>
+
+      <div className={styles.item}>
+        <span className={styles.subtitle}>{i18n('City of birth')}*</span>
+
+        <Input
+          onChange={handleChartFieldChange}
+          type={'text'}
+          name={'city'}
+          value={chartData.city}
+        />
+      </div>
+
+      <div className={styles.item}>
+        <span className={styles.subtitle}>{i18n('Birth date')}*</span>
+
+        <div className={styles.date}>
+          <Select
+            options={MONTHS[locale]}
+            onChange={handleMonthChange}
+            value={chartData.month}
+            placeholder={i18n('month')}
+          />
+
+          <Select
+            options={getDaysInMonth(chartData.month, Number(chartData.year))}
+            onChange={handleDayChange}
+            value={chartData.day}
+            placeholder={i18n('day')}
+            emptyPhrase={i18n('choose month')}
+          />
+
+          <Select
+            options={YEARS}
+            onChange={handleYearChange}
+            value={chartData.year}
+            placeholder={i18n('year')}
+            hasSearch
+          />
+        </div>
+      </div>
+
+      <div className={styles.item}>
+        <span className={styles.subtitle}>{i18n('Birth time')}</span>
+
+        <div className={styles['birth-item']}>
+          <Input
+            onChange={handleChartFieldChange}
+            type={'time'}
+            name={'time'}
+            value={chartData.time}
+            disabled={timeUnknown}
+          />
+
+          <div className={styles.birth}>
+            <span className={styles.subtitle}>
+              {i18n("I don't remember")}
+            </span>
+
+            <Input
+              type={'checkbox'}
+              checked={timeUnknown}
+              onChange={handleTimeCheckboxClick}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className={styles.widgetActions}>
+        <Button type={'button'} className={styles.button} onClick={onClose}>
+          {i18n('Cancel')}
+        </Button>
+
+        <Button
+          type={'submit'}
+          className={styles.button}
+          iconRight={<Price cost={10} />}
+        >
+          {i18n('Create')}
+        </Button>
+      </div>
+
+      {errorText && <span className={styles.error}>{errorText}</span>}
+    </form>
+  );
+};
+
+export const Registry = () => {
+  const { i18n, locale, addTranslations } = useLocales();
+
+  const [isAgreed, setIsAgreed] = useState(false);
+
+  const [formData, setFormData] = useState<BasicFormData>({
+    name: '',
+    month: '',
+    year: '',
+    day: '',
+  });
+
+  const [showUserAgreement, setShowUserAgreement] = useState(false);
+  const [showNatalChartWidget, setShowNatalChartWidget] = useState(false);
+
+  const { createUser, isLoading, user, error: creationError } = useCreateUser();
+
+  const [error, setError] = useState('');
+
+  const navigate = useNavigate();
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setError('');
 
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleCountrySelectChange = (value: string) => {
-    setFormData((prev) => ({ ...prev, country: value }));
   };
 
   const handleYearChange = (value: string) => {
@@ -86,68 +274,54 @@ export const Registry = () => {
     setShowUserAgreement(false);
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleCloseNatalChartWidget = () => {
+    setShowNatalChartWidget(false);
+  };
+
+  const handleCreateNatalChartClick = () => {
+    setShowNatalChartWidget(true);
+  };
+
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>,
+    withNatalChart: boolean,
+  ) => {
     e.preventDefault();
 
     setError('');
 
-    const { name, country, city, day, month, year } = formData;
+    const { name, day, month, year } = formData;
 
-    if (!name || !country || !city || !day || !month || !year) {
+    if (!name || !day || !month || !year) {
       setError(i18n('All necessary fields must be filled'));
 
       return;
     }
 
-    await createUser(formData);
-  };
+    if (withNatalChart) {
+      setShowNatalChartWidget(false);
+    }
 
-  const handleTimeCheckboxClick = () => {
-    setFormData((data) => {
-      return { ...data, time: '' };
-    });
-  };
-
-  const handleBotButtonClick = () => {
-    window.Telegram?.WebApp?.close();
-  };
-
-  const handleContinueButtonClick = () => {
-    navigate('/');
+    await createUser({ ...formData, withNatalChart });
   };
 
   useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
   }, [locale]);
 
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
+
   if (isLoading) {
     return (
       <div className={styles.loader}>
-        <span>{i18n('Creating your natal chart')}...</span>
+        <span>{i18n('Creating account')}...</span>
 
         <Spinner size={'l'} />
       </div>
-    );
-  }
-
-  if (user) {
-    return (
-      <>
-        <NatalChart user={user} />
-
-        <div className={styles.bottom}>
-          <Button className={styles.botButton} onClick={handleBotButtonClick}>
-            {i18n('Continue in bot')}
-          </Button>
-          &nbsp;{i18n('or')}&nbsp;
-          <Button
-            className={styles.botButton}
-            onClick={handleContinueButtonClick}
-          >
-            {i18n('Start reading')}
-          </Button>
-        </div>
-      </>
     );
   }
 
@@ -155,43 +329,27 @@ export const Registry = () => {
     return (
       <Error
         error={i18n('Error during request, please try again')}
-        onRetryButtonClick={() => createUser(formData)}
+        onRetryButtonClick={() =>
+          createUser({ ...formData, withNatalChart: false })
+        }
       />
     );
   }
 
   return (
     <>
-      {' '}
       <div className={styles.container}>
-        <form className={styles.form} onSubmit={handleSubmit}>
-          <h3 className={styles.title}>{i18n('Natal chart')}</h3>
+        <form className={styles.form} onSubmit={(e) => handleSubmit(e, false)}>
+          <h3 className={styles.title}>{i18n('Registration')}</h3>
 
           <div className={styles.item}>
             <span className={styles.subtitle}>{i18n('Name')}*</span>
 
-            <Input onChange={handleChange} type={'text'} name={'name'} />
-          </div>
-
-          <div className={styles.item}>
-            <span className={styles.subtitle}>{i18n('Country of birth')}*</span>
-
-            <Select
-              onChange={handleCountrySelectChange}
-              options={translatedCountries}
-              value={formData.country}
-              hasSearch
-            />
-          </div>
-
-          <div className={styles.item}>
-            <span className={styles.subtitle}>{i18n('City of birth')}*</span>
-
             <Input
               onChange={handleChange}
               type={'text'}
-              name={'city'}
-              value={formData.city}
+              name={'name'}
+              value={formData.name}
             />
           </div>
 
@@ -224,27 +382,6 @@ export const Registry = () => {
             </div>
           </div>
 
-          <div className={styles.item}>
-            <span className={styles.subtitle}>{i18n('Birth time')}</span>
-
-            <div className={styles['birth-item']}>
-              <Input
-                onChange={handleChange}
-                type={'time'}
-                name={'time'}
-                value={formData.time}
-              />
-
-              <div className={styles.birth}>
-                <span className={styles.subtitle}>
-                  {i18n("I don't remember")}
-                </span>
-
-                <Input type={'checkbox'} onChange={handleTimeCheckboxClick} />
-              </div>
-            </div>
-          </div>
-
           <div className={styles.terms}>
             <span className={styles.subtitle}>
               {i18n('I agree with the')}{' '}
@@ -260,17 +397,47 @@ export const Registry = () => {
             />
           </div>
 
-          <Button
-            disabled={!isAgreed}
-            className={styles.button}
-            type={'submit'}
-          >
-            {i18n('Submit')}
-          </Button>
+          <div className={styles.actions}>
+            <Button
+              disabled={!isAgreed}
+              className={styles.button}
+              type={'submit'}
+            >
+              {i18n('Submit')}
+            </Button>
+
+            <Button
+              disabled={!isAgreed}
+              className={styles.button}
+              type={'button'}
+              onClick={handleCreateNatalChartClick}
+              iconRight={<Price cost={10} />}
+            >
+              {i18n('Create natal chart')}
+            </Button>
+          </div>
 
           {error && <span className={styles.error}>{error}</span>}
         </form>
       </div>
+
+      <Modal
+        isOpen={showNatalChartWidget}
+        onClose={handleCloseNatalChartWidget}
+        className={styles.modal}
+        contentClassName={styles.modalContent}
+      >
+        <NatalChartWidgetForm
+          formData={formData}
+          setError={setError}
+          errorText={error}
+          onClose={handleCloseNatalChartWidget}
+          onSubmit={handleSubmit}
+          i18n={i18n}
+          locale={locale}
+        />
+      </Modal>
+
       <Modal
         isOpen={showUserAgreement}
         onClose={handleModalClose}

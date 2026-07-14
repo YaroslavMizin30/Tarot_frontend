@@ -23,6 +23,7 @@ export const useUser = () => {
     queryKey: queryKeys.user.byId(telegramId ?? 'no-user'),
     queryFn: async () => {
       await ensureSupabase();
+
       return getUser(telegramId!);
     },
     enabled: !!telegramId,

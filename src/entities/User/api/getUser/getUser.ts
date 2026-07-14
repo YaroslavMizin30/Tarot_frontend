@@ -18,5 +18,8 @@ export const getUser = async (id: string | number): Promise<User | null> => {
 
   const user = data[0];
 
-  return { ...user, natalChart: JSON.parse(user.natalChart ?? '') };
+  return {
+    ...user,
+    natalChart: user.natalChart ? JSON.parse(user.natalChart) : null,
+  };
 };
