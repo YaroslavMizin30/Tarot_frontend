@@ -84,14 +84,16 @@ export const SettingsPage = () => {
                     {i18n('Most frequent card')}
                   </span>
 
-                  {card && mostFrequentCardInfo && (
-                    <>
+                  <div className={styles['card-wrapper']}>
+                    {card && mostFrequentCardInfo ? (
                       <TarotCard
                         name={card.name}
                         localizedName={mostFrequentCardInfo.name}
                       />
-                    </>
-                  )}
+                    ) : (
+                      <span>{i18n('No card yet')}</span>
+                    )}
+                  </div>
                 </div>
 
                 {card && mostFrequentCardInfo && (

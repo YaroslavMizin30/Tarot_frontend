@@ -82,6 +82,17 @@
   margin-top: 15px;
 }
 
+.card-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 85px;
+  height: 158px;
+  border-radius: 10px;
+  border: 1px solid var(--border-secondary);
+  color: var(--text-primary);
+}
+
 .card-title {
   font-size: 12px;
   margin-bottom: 5px;

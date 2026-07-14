@@ -158,6 +158,8 @@ const TRANSLATIONS_EN = {
   'Failed to submit rating': 'Failed to submit rating',
   'Thanks for your rating!': 'Thanks for your rating!',
 
+  'No card yet': 'No card yet',
+
   'User agreement': 'User agreement',
   ...TERMS,
 };

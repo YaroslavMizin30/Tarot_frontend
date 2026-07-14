@@ -158,6 +158,8 @@ const TRANSLATIONS_RU = {
   'Failed to submit rating': 'Не удалось отправить оценку',
   'Thanks for your rating!': 'Спасибо за вашу оценку!',
 
+  'No card yet': 'Карты пока нет',
+
   'User agreement': 'Пользовательское соглашение',
   ...TERMS,
 };
