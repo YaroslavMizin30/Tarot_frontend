@@ -61,7 +61,7 @@ const Header = (props: { isLoading?: boolean }) => {
       <div className={styles.leftSection}>
         <span className={styles.balance}>{user?.balance}</span>
 
-        <Pentacle className={styles.pentacle} />
+        {user && <Pentacle className={styles.pentacle} />}
       </div>
       <div
         className={`${styles.rightSection} ${isLoading ? styles['rightSection-loading'] : ''}`}

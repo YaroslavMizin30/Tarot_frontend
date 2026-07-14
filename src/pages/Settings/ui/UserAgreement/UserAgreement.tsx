@@ -1,7 +1,7 @@
 import TextContainer from '@/shared/ui/TextContainer';
 import ArrowButton from '@/shared/ui/ArrowButton';
 
-import { TERMS_OF_SERVICE_LINES } from '../config/terms';
+import { TERMS_OF_SERVICE_LINES } from '../../config/terms';
 
 import styles from './UserAgreement.module.css';
 import useLocales from '@/shared/hooks/useLocales';

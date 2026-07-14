@@ -11,7 +11,7 @@ import Spinner from '@/shared/ui/Spinner';
 import TextArea from '@/shared/ui/TextArea';
 
 import styles from './RatingSettings.module.css';
-import pageStyles from './SettingsPage.module.css';
+import pageStyles from '../SettingsPage.module.css';
 
 type RatingField = Exclude<keyof RatingPayload, 'feedback'>;
 

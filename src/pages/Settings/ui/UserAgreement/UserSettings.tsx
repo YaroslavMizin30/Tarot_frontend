@@ -4,24 +4,19 @@ import { useUser } from '@/entities/User';
 import NatalChart from '@/widgets/NatalChart';
 
 import ArrowButton from '@/shared/ui/ArrowButton';
-import useLocales from '@/shared/hooks/useLocales';
 
-import styles from './SettingsPage.module.css';
+import styles from '../SettingsPage.module.css';
 
 const UserSettings = (props: { onBackButtonClick: () => void }) => {
   const { onBackButtonClick } = props;
 
   const { user } = useUser();
-  const { i18n } = useLocales();
 
   const [options, setOptions] = useState<string[]>([]);
-  const [title, setTitle] = useState<string>(i18n('Profile'));
 
   const handleBackButtonClick = () => {
     if (options.length) {
       setOptions([]);
-
-      setTitle(i18n('Profile'));
 
       return;
     }
@@ -35,8 +30,6 @@ const UserSettings = (props: { onBackButtonClick: () => void }) => {
 
   return (
     <>
-      <h3 className={styles.title}>{title}</h3>
-
       <NatalChart user={user} className={styles.chart} />
 
       <ArrowButton className={styles.arrow} onClick={handleBackButtonClick} />
