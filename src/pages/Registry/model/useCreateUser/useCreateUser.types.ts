@@ -1,4 +1,4 @@
-e ort interface CreateUserOptions {
+export interface CreateUserOptions {
   name: string;
   year: string;
   month: string;
