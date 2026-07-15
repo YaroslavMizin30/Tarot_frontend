@@ -2,14 +2,19 @@ import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 
 import { useUser } from '@/entities/User';
+import { useBalance } from '@/features/Billing';
 
 import { getZodiacSign } from '../../../../pages/Registry/lib/getZodiacSign';
 import { createChart, type CreateChartParams } from '../../api/createChart';
+
+/** Стоимость создания/изменения натальной карты в пентаклях. */
+const NATAL_CHART_COST = 10;
 
 export const useUpdateNatalChart = () => {
   const [error, setError] = useState<string | null | unknown>(null);
 
   const { updateUser, refetchUser, user } = useUser();
+  const { requireBalance, charge } = useBalance();
 
   const updateMutation = useMutation({
     mutationFn: async (options: CreateChartParams): Promise<void> => {
@@ -26,6 +31,12 @@ export const useUpdateNatalChart = () => {
         country,
         lang,
       } = options;
+
+      // Проверяем баланс перед действием: если пентаклей не хватает,
+      // useBalance сам редиректит пользователя на /billing.
+      if (!requireBalance(NATAL_CHART_COST)) {
+        throw new Error('INSUFFICIENT_BALANCE');
+      }
 
       const zodiac = getZodiacSign(Number(day), Number(month));
 
@@ -50,6 +61,9 @@ export const useUpdateNatalChart = () => {
         birthTime: `${hour}:${minute}`,
         birthPlace: `${country}, ${city}`,
       });
+
+      // Действие успешно выполнено — списываем пентакли.
+      await charge(NATAL_CHART_COST);
 
       await refetchUser();
     },

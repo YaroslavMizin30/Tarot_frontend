@@ -28,6 +28,11 @@ const TRANSLATIONS_RU: Record<string, string> = {
   'payment_error': 'Не удалось начать оплату. Проверьте интернет.',
   'payment_unsupported': 'Этот способ оплаты недоступен.',
 
+  // Insufficient balance redirect
+  'insufficient_balance_title': 'Недостаточно пентаклей',
+  'insufficient_balance_message':
+    'Для этого действия нужно {required} пентаклей, а у вас только {current}. Пополните баланс, чтобы продолжить.',
+
   'Top up': 'Приобрести',
 };
 

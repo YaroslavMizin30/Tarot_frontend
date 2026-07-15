@@ -28,6 +28,11 @@ const TRANSLATIONS_EN: Record<string, string> = {
   'payment_error': 'Unable to start payment. Check your internet.',
   'payment_unsupported': 'This payment method is not supported.',
 
+  // Insufficient balance redirect
+  'insufficient_balance_title': 'Not enough pentacles',
+  'insufficient_balance_message':
+    'This action requires {required} pentacles, but you have only {current}. Top up your balance to continue.',
+
   'Top up': 'Top up',
 };
 

@@ -1,6 +1,7 @@
 import { useEffect, startTransition } from 'react';
 
 import { useActivity } from '@/entities/Activity';
+import { useBalance } from '@/features/Billing';
 
 import { isToday, getDaysLeft } from '@/shared/utils';
 
@@ -14,6 +15,9 @@ import {
 
 const MAX_CARDS = 12;
 const DAYS_AFTER_WIN = 7;
+
+/** Стоимость шафла колоды (повторного спина) в пентаклях. */
+const SHUFFLE_COST = 2;
 
 const getRandomCard = (cards: PlayingCard[], array: PlayingCard[]) => {
   let newIndex = Math.ceil(Math.random() * cards.length - 1);
@@ -35,6 +39,8 @@ export const useRoulette = () => {
   const { activity, updateActivity, isLoading, refetchActivity } =
     useActivity();
 
+  const { requireBalance, charge } = useBalance();
+
   const roulette = activity?.roulette;
 
   const shouldUpdate = () => {
@@ -51,6 +57,12 @@ export const useRoulette = () => {
   };
 
   const prepareCards = async () => {
+    // Проверяем баланс перед действием: если пентаклей не хватает,
+    // useBalance сам редиректит пользователя на /billing.
+    if (!requireBalance(SHUFFLE_COST)) {
+      return;
+    }
+
     const cards: PlayingCard[] = new Array(MAX_CARDS).fill(null);
 
     const REST_CARDS = REST.map((card) => {
@@ -86,6 +98,9 @@ export const useRoulette = () => {
     });
 
     await refetchActivity();
+
+    // Шафл успешно сохранён — списываем пентакли.
+    await charge(SHUFFLE_COST);
   };
 
   const updateRoulette = async (

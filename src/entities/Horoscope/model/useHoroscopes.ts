@@ -7,6 +7,8 @@ import { useDailyEphemeris } from './useDailyEphemeris';
 import { getHoroscopes } from '../api/getHoroscopes';
 import { addHoroscope as addHoroscopeApi } from '../api/addHoroscope';
 import { useUser } from '@/entities/User';
+import { useBalance } from '@/features/Billing';
+import { PRICES } from '../config/price';
 import { queryKeys } from '@/shared/api/queryKeys';
 import useLocales from '@/shared/hooks/useLocales';
 import requestAi, { type Prompt } from '@/shared/api/AI';
@@ -62,6 +64,8 @@ interface UseHoroscopesOptions {
 export const useHoroscopes = (options?: UseHoroscopesOptions) => {
   const { user } = useUser() ?? {};
   const queryClient = useQueryClient();
+
+  const { requireBalance, charge } = useBalance();
 
   const { bodies } = useDailyEphemeris();
   const { ephemeris: monthlyEphemeris } = useEphemerisByRange('month');
@@ -200,6 +204,12 @@ export const useHoroscopes = (options?: UseHoroscopesOptions) => {
 
   const { mutate: addHoroscope, isPending: isAdding } = useMutation({
     mutationFn: async (type: 'daily' | 'weekly' | 'monthly') => {
+      // Проверяем баланс перед действием: если пентаклей не хватает,
+      // useBalance сам редиректит пользователя на /billing.
+      if (!requireBalance(PRICES[type])) {
+        throw new Error('INSUFFICIENT_BALANCE');
+      }
+
       const prompt = MESSAGES[type];
 
       if (message) {
@@ -216,7 +226,7 @@ export const useHoroscopes = (options?: UseHoroscopesOptions) => {
 
       const content = await requestAi(prompt);
 
-      return addHoroscopeApi({
+      await addHoroscopeApi({
         id: v4(),
         content,
         type,
@@ -224,6 +234,11 @@ export const useHoroscopes = (options?: UseHoroscopesOptions) => {
         userId: user!.id,
         date: new Date().toISOString(),
       } as Horoscope);
+
+      // Действие успешно выполнено — списываем пентакли.
+      await charge(PRICES[type]);
+
+      return content;
     },
 
     onSuccess: () => {

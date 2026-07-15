@@ -6,3 +6,32 @@
   padding-bottom: 100px;
   padding-top: 20px;
 }
+
+.notice {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 16px 20px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  background: linear-gradient(
+    135deg,
+    rgba(196, 75, 75, 0.18),
+    rgba(196, 75, 75, 0.08)
+  );
+  border: 1px solid rgba(196, 75, 75, 0.45);
+  color: var(--text-primary, #fff);
+  text-align: center;
+}
+
+.noticeTitle {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffb3b3;
+}
+
+.noticeMessage {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+}

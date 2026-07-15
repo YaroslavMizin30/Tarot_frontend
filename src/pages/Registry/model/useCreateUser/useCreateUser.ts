@@ -6,11 +6,15 @@ import useLocales from '@/shared/hooks/useLocales';
 
 import getTelegramUser from '@/entities/TelegramUser/index.ts';
 import { useUser } from '@/entities/User/index.ts';
+import { useBalance } from '@/features/Billing';
 import { sendAnalytics } from '@/entities/Analytics';
 
 import { getZodiacSign } from '../../lib/getZodiacSign.ts';
 
 import type { CreateUserOptions } from './useCreateUser.types.ts';
+
+/** Стоимость создания натальной карты при регистрации в пентаклях. */
+const NATAL_CHART_COST = 10;
 
 export const useCreateUser = () => {
   const tgUser = getTelegramUser();
@@ -18,6 +22,7 @@ export const useCreateUser = () => {
   const { i18n } = useLocales();
   const [isLoading, setIsLoading] = useState(false);
   const { user, refetchUser, isLoading: isUserLoading } = useUser();
+  const { requireBalance, charge } = useBalance();
 
   const [error, setError] = useState<string | null | unknown>(null);
 
@@ -32,6 +37,14 @@ export const useCreateUser = () => {
       time,
       withNatalChart = false,
     } = options;
+
+    // Если регистрация идёт вместе с натальной картой — это платное действие.
+    // Проверяем баланс до того, как начнём создавать пользователя/карту:
+    // useBalance сам редиректит на /billing при нехватке пентаклей.
+    if (withNatalChart && !requireBalance(NATAL_CHART_COST)) {
+      setError(new Error('INSUFFICIENT_BALANCE'));
+      return;
+    }
 
     const date = `${day}.${month}.${year}`;
     const place = country && city ? `${country}, ${city}` : '';
@@ -84,6 +97,11 @@ export const useCreateUser = () => {
         lastActionAt: new Date().toISOString(),
         tarotSpreadsCount: 0,
       });
+
+      // Списываем пентакли только после того, как все данные успешно сохранены.
+      if (withNatalChart) {
+        await charge(NATAL_CHART_COST);
+      }
     } catch (e) {
       setError(e);
     } finally {

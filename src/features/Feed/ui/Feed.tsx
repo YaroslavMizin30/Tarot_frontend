@@ -111,7 +111,7 @@ export const Feed: FC<FeedProps> = (props) => {
 
   const feedRef = useRef<HTMLDivElement>(null);
 
-  /* eslint-disable */
+   
   // Scroll to the bottom when new messages arrive or loading state changes
   useEffect(() => {
     if (!feedRef.current) {
@@ -120,7 +120,7 @@ export const Feed: FC<FeedProps> = (props) => {
 
     feedRef.current.scrollTop = feedRef.current.scrollHeight;
   }, [messages.length, isLoading]);
-  /* eslint-enable */
+   
 
   // Scroll to the target message when scrollToMessageId changes
   useEffect(() => {

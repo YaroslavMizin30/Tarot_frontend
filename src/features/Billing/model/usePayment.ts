@@ -4,6 +4,8 @@ import { createInvoiceLink } from '@/shared/api/telegram';
 import type { PaymentMethodCode } from '@/shared/api/telegram';
 import useLocales from '@/shared/hooks/useLocales';
 
+import { useBalance } from './useBalance';
+
 export type PaymentStatus =
   | 'paid'
   | 'cancelled'
@@ -63,6 +65,8 @@ export const usePayment = ({
 
   const { i18n } = useLocales();
 
+  const { topUp, refresh: refreshBalance } = useBalance();
+
   // Ref для отслеживания попапа СБП, чтобы корректно чистить интервал
   // при размонтировании компонента / новом запуске оплаты.
   const sbpPopupRef = useRef<Window | null>(null);
@@ -106,9 +110,12 @@ export const usePayment = ({
         sbpPopupRef.current = null;
 
         // Если пользователь закрыл попап — считаем оплату завершённой.
-        // Бэкенд сам разберётся, прошла она или нет, и пришлёт апдейт баланса.
+        // Баланс обновляется на бэкенде, поэтому здесь подтягиваем его.
         setIsLoading(false);
         setStatus('paid');
+        // СБП: баланс зачисляется на бэкенде — рефетчим пользователя,
+        // чтобы UI сразу отобразил актуальное значение.
+        refreshBalance().catch(() => undefined);
         onSuccess?.();
       }
     }, 500);
@@ -152,6 +159,9 @@ export const usePayment = ({
             setIsLoading(false);
 
             if (nextStatus === 'paid') {
+              // Telegram Stars: пополнение происходит на клиенте,
+              // т.к. мы точно знаем, что инвойс был оплачен.
+              topUp(amount).catch(() => undefined);
               onSuccess?.();
             } else {
               onError?.(nextStatus);
