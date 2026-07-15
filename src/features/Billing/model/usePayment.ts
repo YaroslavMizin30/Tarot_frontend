@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { createInvoiceLink } from '@/shared/api/telegram';
 import type { PaymentMethodCode } from '@/shared/api/telegram';
+import useLocales from '@/shared/hooks/useLocales';
 
 export type PaymentStatus =
   | 'paid'
@@ -47,6 +48,8 @@ export const usePayment = ({
 
   const { code, amount, price, currency } = method;
 
+  const { i18n } = useLocales();
+
   const pay = async () => {
     if (!window.Telegram?.WebApp) {
       const next: Exclude<PaymentStatus, null> = 'network_error';
@@ -64,8 +67,8 @@ export const usePayment = ({
         amount,
         price,
         currency,
-        title: `${amount} pentacles`,
-        description: `Top up ${amount} pentacles`,
+        title: `${amount} ${i18n('coins')}`,
+        description: `${i18n('Top up')} ${amount} ${i18n('coins')}`,
         payload: `${code}:${amount}:${Date.now()}`,
       });
 
