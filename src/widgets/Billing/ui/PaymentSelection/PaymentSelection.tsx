@@ -33,7 +33,12 @@ const PaymentSelection = (props: PaymentSelectionProps) => {
           const { code } = method;
 
           return (
-            <PaymentButton onClick={() => undefined} key={code} {...method} />
+            <PaymentButton
+              onClick={() => undefined}
+              key={code}
+              amount={amount}
+              {...method}
+            />
           );
         })}
       </div>

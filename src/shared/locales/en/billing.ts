@@ -19,6 +19,14 @@ const TRANSLATIONS_EN: Record<string, string> = {
   // Tariff additions
   tariff_addition_10: '+ 10 horoscopes',
   tariff_addition_30: '+ 30 horoscopes',
+
+  // Generic payment notifications
+  payment_success: 'Payment successful! Pentacles credited.',
+  payment_cancelled: 'Payment cancelled.',
+  payment_failed: 'Payment failed. Please try again.',
+  payment_pending: 'Payment is being processed.',
+  payment_error: 'Unable to start payment. Check your internet.',
+  payment_unsupported: 'This payment method is not supported.',
 };
 
 export default TRANSLATIONS_EN;

@@ -19,6 +19,14 @@ const TRANSLATIONS_RU: Record<string, string> = {
   // Tariff additions
   tariff_addition_10: '+ 10 гороскопов',
   tariff_addition_30: '+ 30 гороскопов',
+
+  // Generic payment notifications
+  payment_success: 'Оплата прошла! Пентакли зачислены.',
+  payment_cancelled: 'Оплата отменена.',
+  payment_failed: 'Не удалось оплатить. Попробуйте снова.',
+  payment_pending: 'Платёж обрабатывается.',
+  payment_error: 'Не удалось начать оплату. Проверьте интернет.',
+  payment_unsupported: 'Этот способ оплаты недоступен.',
 };
 
 export default TRANSLATIONS_RU;
