@@ -54,6 +54,8 @@ const TRANSLATIONS_RU = {
   'waningGibbous': 'Убывающая луна',
   'lastQuarter': 'Последняя четверть',
   'waningCrescent': 'Убывающий серп',
+
+  'at': 'на',
 };
 
 export default TRANSLATIONS_RU;

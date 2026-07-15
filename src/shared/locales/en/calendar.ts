@@ -54,6 +54,8 @@ const TRANSLATIONS_EN = {
   'waningGibbous': 'Waning Gibbous',
   'lastQuarter': 'Last Quarter',
   'waningCrescent': 'Waning Crescent',
+
+  'at': 'at',
 };
 
 export default TRANSLATIONS_EN;
