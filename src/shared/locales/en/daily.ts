@@ -12,12 +12,19 @@ const TRANSLATIONS_EN = {
   'Interpretation': 'Interpretation',
   "You've already had your card today": "You've already had your card today",
   'To spreads history': 'To spreads history',
+  'Next card available in': 'Next card available in',
+  'h': 'h',
+  'm': 'm',
+  's': 's',
   'Your spread is not ready yet. Are you sure?':
     'Your spread is not ready yet. Are you sure?',
   'Yes': 'Yes',
   'No': 'No',
   'Interpreting': 'Interpreting',
   'Unfold the card': 'Unfold the card',
+
+  'inverted': 'inverted',
+  'upright': 'upright',
 };
 
 export default TRANSLATIONS_EN;

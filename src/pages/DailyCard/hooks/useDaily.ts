@@ -3,7 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateActivity, getActivity } from '@/entities/Activity';
 import { useUser } from '@/entities/User';
 import { queryKeys } from '@/shared/api/queryKeys';
-
+import { getNextMidnight } from '@/shared/utils/getNextMidnight';
 import { isToday } from '@/shared/utils/isToday';
 
 export const useDaily = () => {
@@ -33,7 +33,9 @@ export const useDaily = () => {
     },
   });
 
-  const isAvailable = activity ? !isToday(activity.dailyCardLastDate) : true;
+  const lastDate = activity?.dailyCardLastDate ?? null;
+  const isAvailable = activity ? !isToday(lastDate!) : true;
+  const nextAvailableAt = isAvailable ? null : getNextMidnight(lastDate ?? undefined);
 
   return {
     isAvailable,
@@ -43,5 +45,7 @@ export const useDaily = () => {
     checkDaily: refetch,
     id: user?.id,
     error: null,
+    nextAvailableAt,
+    lastDate,
   };
 };

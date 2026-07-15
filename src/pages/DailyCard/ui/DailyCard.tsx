@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Link } from 'react-router';
 
 import TarotSpread from '@/features/TarotSpread';
@@ -11,6 +11,7 @@ import Error from '@/shared/ui/Error';
 import Button from '@/shared/ui/Button';
 
 import { useDaily } from '../hooks/useDaily';
+import { DailyCardTimer } from './DailyCardTimer';
 
 import styles from './DailyCard.module.css';
 
@@ -24,6 +25,7 @@ export const DailyCard = () => {
     isAvailable,
     error,
     checkDaily,
+    nextAvailableAt,
   } = useDaily();
 
   const handleInterpretationsFinish = () => {
@@ -34,8 +36,13 @@ export const DailyCard = () => {
     checkDaily();
   };
 
+  const handleTimerFinish = useCallback(() => {
+    checkDaily();
+  }, [checkDaily]);
+
   useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [locale]);
 
   if (isLoading) {
@@ -52,6 +59,11 @@ export const DailyCard = () => {
     return (
       <div className={styles.empty}>
         <span>{i18n("You've already had your card today")}</span>
+
+        <DailyCardTimer
+          targetDate={nextAvailableAt}
+          onFinish={handleTimerFinish}
+        />
 
         <Link className={styles.link} to={'/history'}>
           <Button>{i18n('To spreads history')}</Button>

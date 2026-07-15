@@ -12,12 +12,19 @@ const TRANSLATIONS_RU = {
   'Interpretation': 'К интерпретации',
   "You've already had your card today": 'Карта дня уже была сегодня',
   'To spreads history': 'К истории раскладов',
+  'Next card available in': 'Следующая карта будет доступна через',
+  'h': 'ч',
+  'm': 'м',
+  's': 'с',
   'Your spread is not ready yet. Are you sure?':
     'Расклад еще не готов. Вы уверены?',
   'Yes': 'Да',
   'No': 'Нет',
   'Interpreting': 'Интерпретация',
   'Unfold the card': 'Переверните карту',
+
+  'inverted': 'перевернута',
+  'upright': 'в прямом положении',
 };
 
 export default TRANSLATIONS_RU;
