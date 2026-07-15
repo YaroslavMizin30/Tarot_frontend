@@ -13,7 +13,9 @@ import { addSpread } from '@/entities/Spread';
 import { useUser, incrementFreeSpreads } from '@/entities/User';
 import { sendAnalytics, getAnalytics } from '@/entities/Analytics';
 
-export const useInterpretation = (options: { onFinish?: (interpretation?: string) => void }) => {
+export const useInterpretation = (options: {
+  onFinish?: (interpretation?: string) => void;
+}) => {
   const [interpretation, setInterpretation] = useState<string[] | null>(null);
   const [spreadId, setSpreadId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -35,7 +37,7 @@ export const useInterpretation = (options: { onFinish?: (interpretation?: string
 
       const cardInfo = cards.reduce((acc, card, index) => {
         //eslint-disable-next-line
-        acc += `${i18n(card.name)}${card.isInverted ? '(перевернута)' : ''}${index === cards.length - 1 ? '.' : ', '} `;
+        acc += `${i18n(card.name)}${`(${card.isInverted ? i18n('inverted') : i18n('upright')})`}${index === cards.length - 1 ? '.' : ', '} `;
 
         return acc;
       }, '');
