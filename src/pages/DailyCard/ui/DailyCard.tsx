@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react';
-import { Link } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import TarotSpread from '@/features/TarotSpread';
 
@@ -8,7 +8,7 @@ import TRANSLATIONS_EN from '@/shared/locales/en/daily';
 import TRANSLATIONS_RU from '@/shared/locales/ru/daily';
 import Spinner from '@/shared/ui/Spinner';
 import Error from '@/shared/ui/Error';
-import Button from '@/shared/ui/Button';
+import ArrowButton from '@/shared/ui/ArrowButton';
 
 import { useDaily } from '../hooks/useDaily';
 import { DailyCardTimer } from './DailyCardTimer';
@@ -17,6 +17,8 @@ import styles from './DailyCard.module.css';
 
 export const DailyCard = () => {
   const { i18n, addTranslations, locale } = useLocales();
+
+  const navigate = useNavigate();
 
   const {
     isLoading,
@@ -65,9 +67,9 @@ export const DailyCard = () => {
           onFinish={handleTimerFinish}
         />
 
-        <Link className={styles.link} to={'/history'}>
-          <Button>{i18n('To spreads history')}</Button>
-        </Link>
+        <div className={styles.action}>
+          <ArrowButton onClick={() => navigate('/')} />
+        </div>
       </div>
     );
   }
