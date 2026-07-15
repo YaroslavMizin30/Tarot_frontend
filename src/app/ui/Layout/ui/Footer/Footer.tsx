@@ -17,7 +17,7 @@ const Footer = (props: { isLoading?: boolean }) => {
   const navigate = useNavigate();
 
   const TAROT_PAGES = ['/', '/reading', '/about', '/daily', '/history'];
-  const SETTING_PAGES = ['/settings'];
+  const SETTING_PAGES = ['/settings', '/about-app'];
   const ASTROLOGY_PAGES = [
     '/astrology',
     '/natal-chart',

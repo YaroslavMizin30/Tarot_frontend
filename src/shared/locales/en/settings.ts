@@ -161,6 +161,7 @@ const TRANSLATIONS_EN = {
   'No card yet': 'No card yet',
 
   'User agreement': 'User agreement',
+  'About App': 'About App',
   ...TERMS,
 };
 

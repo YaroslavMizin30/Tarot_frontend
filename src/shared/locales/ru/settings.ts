@@ -161,6 +161,7 @@ const TRANSLATIONS_RU = {
   'No card yet': 'Карты пока нет',
 
   'User agreement': 'Пользовательское соглашение',
+  'About App': 'О приложении',
   ...TERMS,
 };
 

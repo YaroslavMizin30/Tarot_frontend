@@ -1,4 +1,5 @@
 import { useEffect, useState, type MouseEvent } from 'react';
+import { useNavigate } from 'react-router';
 
 import Button from '@/shared/ui/Button';
 import useLocales from '@/shared/hooks/useLocales';
@@ -10,8 +11,6 @@ import Spinner from '@/shared/ui/Spinner';
 import Zodiac from '@/shared/ui/Zodiac';
 
 import UserSettings from './UserAgreement/UserSettings';
-import RatingSettings from './RatingSettings/RatingSettings';
-import UserAgreement from './UserAgreement/UserAgreement';
 
 import { useUser } from '@/entities/User';
 import { useSpreads } from '@/entities/Spread';
@@ -29,6 +28,8 @@ export const SettingsPage = () => {
   const { i18n, addTranslations, locale } = useLocales();
 
   const [settings, setSettings] = useState('');
+
+  const navigate = useNavigate();
 
   const { spreads, isLoading } = useSpreads();
 
@@ -50,6 +51,10 @@ export const SettingsPage = () => {
     setSettings(e.currentTarget.value);
   };
 
+  const handleAboutAppButtonClick = () => {
+    navigate('/about-app');
+  };
+
   const handleBackButtonClick = () => {
     setSettings('');
   };
@@ -62,10 +67,6 @@ export const SettingsPage = () => {
     switch (settings) {
       case 'profile':
         return <UserSettings onBackButtonClick={handleBackButtonClick} />;
-      case 'rate the app':
-        return <RatingSettings onBackButtonClick={handleBackButtonClick} />;
-      case 'user agreement':
-        return <UserAgreement onBackButtonClick={handleBackButtonClick} />;
       default:
         return (
           <>
@@ -125,19 +126,10 @@ export const SettingsPage = () => {
               </Button>
 
               <Button
-                onClick={handleSettingsButtonClick}
-                value={'rate the app'}
+                onClick={handleAboutAppButtonClick}
                 className={styles.button}
               >
-                {i18n('Rate the app')}
-              </Button>
-
-              <Button
-                onClick={handleSettingsButtonClick}
-                value={'user agreement'}
-                className={styles.button}
-              >
-                {i18n('User agreement')}
+                {i18n('About App')}
               </Button>
             </div>
           </>

@@ -50,6 +50,16 @@ const routes: RouteObject[] = [
         },
       },
       {
+        path: '/about-app',
+        lazy: {
+          async Component() {
+            const { default: AboutAppPage } = await import('@/pages/AboutApp');
+
+            return AboutAppPage;
+          },
+        },
+      },
+      {
         path: '/history',
         lazy: {
           async Component() {
