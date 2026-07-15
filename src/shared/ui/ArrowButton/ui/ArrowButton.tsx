@@ -11,7 +11,7 @@ export const ArrowButton: FC<ButtonHTMLAttributes<HTMLButtonElement>> = (
 
   return (
     <button {...props} className={`${styles.button} ${className}`}>
-      <Arrow width={30} height={30} />
+      <Arrow width={30} height={30} className={styles.arrow} />
     </button>
   );
 };
