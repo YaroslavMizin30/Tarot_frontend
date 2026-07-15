@@ -21,7 +21,7 @@ import { type TarotSpreadProps } from './TartotSpread.props';
 import styles from './TarotSpread.module.css';
 
 export const TarotSpread: FC<TarotSpreadProps> = (props) => {
-  const { spread, onSpreadFinish } = props;
+  const { spread, onSpreadFinish, onInterpretationFinish } = props;
 
   const { title, id, cardsCount } = spread;
 
@@ -36,7 +36,7 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
     resetSpread,
   } = useReading();
   const { getInterpretation, interpretation, isLoading, spreadId, error } =
-    useInterpretation({});
+    useInterpretation({ onFinish: onInterpretationFinish });
 
   const { i18n } = useLocales();
 
