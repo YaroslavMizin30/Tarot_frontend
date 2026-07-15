@@ -12,8 +12,7 @@ interface UseSbpPaymentParams {
 
 /**
  * Удобная обёртка над usePayment для оплаты через СБП.
- * Цена передаётся в рублях, конвертация в копейки выполняется
- * внутри usePayment при code === 'sbp'.
+ * Цена передаётся в рублях, конвертацию в копейки делает бэкенд.
  */
 export const useSbpPayment = ({
   amount,
@@ -21,13 +20,9 @@ export const useSbpPayment = ({
   onSuccess,
   onError,
 }: UseSbpPaymentParams) => {
-  console.log(amount);
-
   const method: PaymentMethodConfig = {
     code: 'sbp',
     amount,
-    // В usePayment эта сумма будет автоматически умножена на 100
-    // и передана в бэкенд в копейках
     price: rubles,
     currency: 'RUB',
   };

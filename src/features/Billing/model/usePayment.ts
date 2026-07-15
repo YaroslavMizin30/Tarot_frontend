@@ -18,12 +18,12 @@ export interface PaymentMethodConfig {
   /** Кол-во пентаклей к зачислению */
   amount: number;
   /**
-   * Сумма платежа в минимальных единицах валюты.
+   * Сумма платежа в единицах валюты.
    * Для XTR (Stars) — это кол-во звёзд.
-   * Для RUB (СБП) — это копейки.
+   * Для RUB (СБП) — это рубли. Конвертацию в копейки выполняет бэкенд.
    */
   price: number;
-  /** Валюта для title/description. Используется для расчёта суммы в копейках для RUB */
+  /** Код валюты (XTR для Stars, RUB для СБП) */
   currency: 'XTR' | 'RUB' | string;
 }
 
@@ -85,21 +85,6 @@ export const usePayment = ({
   };
 
   /**
-   * Конвертирует цену тарифа (в рублях, как она приходит из конфига)
-   * в копейки для передачи в бэкенд СБП.
-   * Для всех остальных валют цена не меняется.
-   */
-  const toMinorUnits = (rawPrice: number): number => {
-    if (code === 'sbp') {
-      // В конфиге тарифов цена указана в рублях (например, 150), а бэкенду
-      // нужны копейки (15000). Это решает проблему дробных значений.
-      return Math.round(rawPrice * 100);
-    }
-
-    return rawPrice;
-  };
-
-  /**
    * Запускает polling закрытия попапа СБП.
    * После закрытия попапа вызываем onSuccess — окончательный статус
    * платежа определяется на бэкенде (он пришлёт push/webhook и обновит
@@ -147,7 +132,7 @@ export const usePayment = ({
       const invoice = await createInvoiceLink({
         code,
         amount,
-        price: toMinorUnits(price),
+        price,
         currency,
         title: `${amount} ${i18n('coins')}`,
         description: `${i18n('Top up')} ${amount} ${i18n('coins')}`,
