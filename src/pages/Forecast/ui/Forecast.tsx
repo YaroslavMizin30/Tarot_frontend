@@ -12,8 +12,6 @@ import { useDailyEphemeris } from '@/entities/Horoscope';
 
 import Circle, { useHighlights } from '@/features/Circle';
 
-import StarsComposition from '@/pages/ui/StarsComposition';
-
 import styles from './Forecast.module.css';
 import Zodiac from '@/shared/ui/Zodiac';
 
@@ -37,8 +35,6 @@ export const Forecast = () => {
 
   return (
     <div className={styles.container}>
-      <StarsComposition />
-
       <h4 className={styles.title}>{dateTime}</h4>
 
       <div className={styles.positions}>

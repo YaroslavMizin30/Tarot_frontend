@@ -8,6 +8,8 @@ import RoulettePage from '@/shared/assets/svg/common/roulette_page.svg';
 import BillingPage from '@/shared/assets/svg/common/billing_page.svg';
 import ProfilePage from '@/shared/assets/svg/common/profile_page.svg';
 
+import { getPageAttachment } from '../../config/pages';
+
 import styles from './Footer.module.css';
 
 const Footer = (props: { isLoading?: boolean }) => {
@@ -15,18 +17,6 @@ const Footer = (props: { isLoading?: boolean }) => {
 
   const { pathname } = useLocation();
   const navigate = useNavigate();
-
-  const TAROT_PAGES = ['/', '/reading', '/about', '/daily', '/history'];
-  const SETTING_PAGES = ['/settings', '/about-app'];
-  const ASTROLOGY_PAGES = [
-    '/astrology',
-    '/natal-chart',
-    '/horoscopes',
-    '/forecast',
-    '/calendar',
-  ];
-  const BILLING_PAGES = ['/billing'];
-  const ROULETTE_PAGES = ['/roulette'];
 
   const { i18n } = useLocales();
 
@@ -39,7 +29,7 @@ const Footer = (props: { isLoading?: boolean }) => {
       >
         <div className={styles.cover}></div>
         <div
-          className={`${styles.section} ${TAROT_PAGES.includes(pathname) ? styles.active : ''}`}
+          className={`${styles.section} ${getPageAttachment('tarot', pathname) ? styles.active : ''}`}
           onClick={() => navigate('/')}
         >
           <TarotPage />
@@ -48,7 +38,7 @@ const Footer = (props: { isLoading?: boolean }) => {
         </div>
 
         <div
-          className={`${styles.section} ${ASTROLOGY_PAGES.includes(pathname) ? styles.active : ''}`}
+          className={`${styles.section} ${getPageAttachment('astrology', pathname) ? styles.active : ''}`}
           onClick={() => navigate('/astrology')}
         >
           <AstrologyPage />
@@ -57,7 +47,7 @@ const Footer = (props: { isLoading?: boolean }) => {
         </div>
 
         <div
-          className={`${styles.section} ${ROULETTE_PAGES.includes(pathname) ? styles.active : ''}`}
+          className={`${styles.section} ${getPageAttachment('roulette', pathname) ? styles.active : ''}`}
           onClick={() => navigate('/roulette')}
         >
           <RoulettePage />
@@ -66,7 +56,7 @@ const Footer = (props: { isLoading?: boolean }) => {
         </div>
 
         <div
-          className={`${styles.section} ${BILLING_PAGES.includes(pathname) ? styles.active : ''}`}
+          className={`${styles.section} ${getPageAttachment('billing', pathname) ? styles.active : ''}`}
           onClick={() => navigate('/billing')}
         >
           <BillingPage />
@@ -75,7 +65,7 @@ const Footer = (props: { isLoading?: boolean }) => {
         </div>
 
         <div
-          className={`${styles.section} ${SETTING_PAGES.includes(pathname) ? styles.active : ''}`}
+          className={`${styles.section} ${getPageAttachment('profile', pathname) ? styles.active : ''}`}
           onClick={() => navigate('/settings')}
         >
           <ProfilePage />

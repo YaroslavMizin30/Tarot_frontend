@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router';
 
 import Button from '@/shared/ui/Button';
 
-import StarsComposition from '@/pages/ui/StarsComposition';
 import { SUBSECTIONS } from '../../config/subsections';
 import type { Subsection } from '../../config/subsections';
 
@@ -27,8 +26,6 @@ export const AstrologyPage = () => {
 
   return (
     <div className={styles.container}>
-      <StarsComposition />
-
       <div className={styles.menu}>
         {SUBSECTIONS.map(({ key, label }) => (
           <Button

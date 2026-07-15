@@ -4,8 +4,6 @@ import { useNavigate } from 'react-router';
 import Feed from '@/features/Feed';
 import type { Message } from '@/features/Feed/ui/Feed.props';
 
-import StarsComposition from '@/pages/ui/StarsComposition';
-
 import { useDailyEphemeris, useHoroscopes } from '@/entities/Horoscope';
 import { useUser } from '@/entities/User';
 
@@ -179,8 +177,6 @@ export const Horoscopes = () => {
 
   return (
     <div className={styles.container}>
-      <StarsComposition />
-
       <div className={styles.content}>
         <div className={styles['content-header']}>
           {TYPES.map((type) => {

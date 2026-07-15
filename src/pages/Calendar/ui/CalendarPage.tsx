@@ -6,8 +6,6 @@ import ArrowButton from '@/shared/ui/ArrowButton';
 import TRANSLATIONS_EN from '@/shared/locales/en/calendar';
 import TRANSLATIONS_RU from '@/shared/locales/ru/calendar';
 
-import StarsComposition from '@/pages/ui/StarsComposition';
-
 import { useCalendar, useDailyEphemeris } from '@/entities/Horoscope';
 
 import Moon from './Moon/Moon';
@@ -29,8 +27,6 @@ export const CalendarPage = () => {
 
   return (
     <div className={styles.container}>
-      <StarsComposition />
-
       <div className={styles.calendar}>
         {phaseName ? (
           <Moon

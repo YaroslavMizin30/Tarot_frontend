@@ -12,7 +12,6 @@ import ArrowButton from '@/shared/ui/ArrowButton';
 
 import { type Spread, updateSpread } from '@/entities/Spread';
 import TarotCard from '@/entities/TarotCard';
-import TorchComposition from '@/features/TarotSpread/ui/TorchComposition/TorchComposition';
 
 import styles from './SpreadPage.module.css';
 
@@ -40,8 +39,6 @@ export const SpreadPage = () => {
 
   return (
     <div className={styles.tarotSpread}>
-      <TorchComposition className={styles.torchComposition} />
-
       <h3 className={styles.title}>{title}</h3>
 
       <div className={styles['interpretation-container']}>

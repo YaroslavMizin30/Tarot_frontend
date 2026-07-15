@@ -1,4 +1,4 @@
-import { Outlet, useNavigation } from 'react-router';
+import { Outlet, useNavigation, useLocation } from 'react-router';
 
 import Spinner from '@/shared/ui/Spinner';
 import Zodiac from '@/shared/ui/Zodiac';
@@ -12,11 +12,17 @@ import useLocales from '@/shared/hooks/useLocales';
 import TRANSLATIONS_EN from '@/shared/locales/en/common';
 import TRANSLATIONS_RU from '@/shared/locales/ru/common';
 
+import StarsComposition from '@/app/ui/Layout/ui/StarsComposition';
+import TorchComposition from '@/app/ui/Layout/ui/TorchComposition/TorchComposition';
+
+import { getPageAttachment } from '../../config/pages';
+
 import styles from './Layout.module.css';
 import { useEffect } from 'react';
 
 export const Layout = () => {
   const { state } = useNavigation();
+  const { pathname } = useLocation();
 
   const { addTranslations, locale } = useLocales();
 
@@ -66,6 +72,12 @@ export const Layout = () => {
         <div className={styles.background}>
           <div className={styles.cloud}></div>
           <div className={styles.couldBottom}></div>
+
+          {getPageAttachment('astrology', pathname) && <StarsComposition />}
+          {getPageAttachment('tarot', pathname) && pathname !== '/' && (
+            <TorchComposition />
+          )}
+
           <Zodiac sign={user?.sign} className={styles.zodiac} />
         </div>
 

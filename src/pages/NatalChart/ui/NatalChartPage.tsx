@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router';
 
 import { useUser } from '@/entities/User';
 import ArrowButton from '@/shared/ui/ArrowButton';
-import StarsComposition from '@/pages/ui/StarsComposition';
 import NatalChart from '@/widgets/NatalChart';
 
 import styles from './NatalChartPage.module.css';
@@ -13,8 +12,6 @@ export const NatalChartPage = () => {
 
   return (
     <div className={styles.container}>
-      <StarsComposition />
-
       <div className={styles.content}>
         {user && <NatalChart user={user} onUpdated={refetchUser} />}
 

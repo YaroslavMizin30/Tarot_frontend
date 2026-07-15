@@ -16,7 +16,6 @@ import { useReading } from '../model/hooks/useReading/useReading';
 import { useInterpretation } from '../model/hooks/useInterpretation/useInterpretation';
 
 import Placeholder from './Placeholder/Placeholder';
-import TorchComposition from './TorchComposition/TorchComposition';
 import { type TarotSpreadProps } from './TartotSpread.props';
 import styles from './TarotSpread.module.css';
 
@@ -137,8 +136,6 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
 
   return (
     <div className={styles.tarotSpread}>
-      <TorchComposition className={styles.torchComposition} />
-
       <h3 className={styles.title}>{title}</h3>
 
       <div className={styles.cards}>
