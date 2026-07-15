@@ -37,7 +37,11 @@ interface UsePaymentParams {
  *   2) добавить ветку в Edge Function;
  *   3) при необходимости — отдельный флоу запуска.
  */
-export const usePayment = ({ method, onSuccess, onError }: UsePaymentParams) => {
+export const usePayment = ({
+  method,
+  onSuccess,
+  onError,
+}: UsePaymentParams) => {
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState<PaymentStatus>(null);
 
@@ -55,7 +59,7 @@ export const usePayment = ({ method, onSuccess, onError }: UsePaymentParams) => 
     setStatus(null);
 
     try {
-      const { invoiceLink } = await createInvoiceLink({
+      const invoice = await createInvoiceLink({
         code,
         amount,
         price,
@@ -65,16 +69,21 @@ export const usePayment = ({ method, onSuccess, onError }: UsePaymentParams) => 
         payload: `${code}:${amount}:${Date.now()}`,
       });
 
-      window.Telegram.WebApp.openInvoice(invoiceLink, (nextStatus) => {
-        setStatus(nextStatus);
-        setIsLoading(false);
+      if (code === 'stars' && invoice) {
+        window.Telegram.WebApp.openInvoice(
+          invoice.invoiceLink,
+          (nextStatus) => {
+            setStatus(nextStatus);
+            setIsLoading(false);
 
-        if (nextStatus === 'paid') {
-          onSuccess?.();
-        } else {
-          onError?.(nextStatus);
-        }
-      });
+            if (nextStatus === 'paid') {
+              onSuccess?.();
+            } else {
+              onError?.(nextStatus);
+            }
+          },
+        );
+      }
     } catch {
       setIsLoading(false);
       const next: Exclude<PaymentStatus, null> = 'network_error';
