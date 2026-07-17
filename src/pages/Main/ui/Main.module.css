@@ -35,8 +35,16 @@
   border: 1px solid
     color-mix(in srgb, var(--border-primary) 34%, transparent);
   border-radius: 14px;
-  background: color-mix(in srgb, var(--surface-panel) 84%, transparent);
-  box-shadow: 0 5px 18px rgb(61 41 69 / 7%);
+  background:
+    linear-gradient(
+      180deg,
+      var(--panel-gloss-highlight) 0%,
+      transparent 48%
+    ),
+    color-mix(in srgb, var(--surface-panel) 84%, transparent);
+  box-shadow:
+    inset 0 1px 0 var(--panel-gloss-highlight),
+    0 5px 18px rgb(61 41 69 / 9%);
   cursor: pointer;
 }
 
@@ -44,7 +52,13 @@
   width: 100%;
   height: 56px;
   min-height: 56px;
-  background: color-mix(in srgb, var(--surface-control) 14%, var(--surface-panel));
+  background:
+    linear-gradient(
+      180deg,
+      var(--panel-gloss-highlight),
+      transparent 52%
+    ),
+    color-mix(in srgb, var(--surface-control) 14%, var(--surface-panel));
   border-color: var(--border-interactive);
 }
 
@@ -64,7 +78,16 @@
   margin-right: 11px;
   color: var(--text-on-control);
   border-radius: 50%;
-  background: var(--surface-control);
+  background:
+    linear-gradient(
+      180deg,
+      var(--control-gloss-highlight),
+      transparent 52%
+    ),
+    var(--surface-control);
+  box-shadow:
+    inset 0 1px 0 var(--control-gloss-highlight),
+    0 3px 9px var(--control-gloss-shadow);
 }
 
 .bonusIcon svg {

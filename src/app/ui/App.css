@@ -37,6 +37,12 @@ body {
   --navigation-background: #35245c;
   --navigation-text: #fff0c9;
   --border-interactive: #795286;
+  --control-gloss-highlight: rgb(255 248 232 / 24%);
+  --control-gloss-sheen: rgb(255 224 246 / 10%);
+  --control-gloss-border: rgb(255 248 232 / 22%);
+  --control-gloss-shadow: rgb(61 41 69 / 18%);
+  --control-gloss-pressed: rgb(43 26 52 / 18%);
+  --panel-gloss-highlight: rgb(255 255 255 / 24%);
   --card-cover-image: url('/assets/images/card/cover/back_v2.png');
   --card-label-text: #fff8e8;
 }
@@ -65,6 +71,12 @@ body {
   --navigation-background: #2d3348;
   --navigation-text: #f7f4ec;
   --border-interactive: #596077;
+  --control-gloss-highlight: rgb(255 255 255 / 20%);
+  --control-gloss-sheen: rgb(218 228 255 / 9%);
+  --control-gloss-border: rgb(255 255 255 / 20%);
+  --control-gloss-shadow: rgb(33 38 55 / 18%);
+  --control-gloss-pressed: rgb(24 29 44 / 20%);
+  --panel-gloss-highlight: rgb(255 255 255 / 21%);
   --card-cover-image: url('/assets/images/card/cover/back_gray_v2.png');
   --card-label-text: #ffffff;
 }
@@ -93,6 +105,12 @@ body {
   --navigation-background: #552b18;
   --navigation-text: #fff0d2;
   --border-interactive: #77462b;
+  --control-gloss-highlight: rgb(255 239 210 / 20%);
+  --control-gloss-sheen: rgb(255 196 136 / 9%);
+  --control-gloss-border: rgb(255 235 204 / 20%);
+  --control-gloss-shadow: rgb(71 39 22 / 20%);
+  --control-gloss-pressed: rgb(55 29 16 / 22%);
+  --panel-gloss-highlight: rgb(255 248 232 / 22%);
   --card-cover-image: url('/assets/images/card/cover/back_bronze_v2.png');
   --card-label-text: #fff4df;
 }

@@ -81,8 +81,17 @@
 
 .active {
   color: var(--text-on-control);
-  background: var(--surface-control);
-  box-shadow: 0 5px 14px rgba(61, 41, 69, 0.2);
+  background:
+    linear-gradient(
+      180deg,
+      var(--control-gloss-highlight),
+      transparent 55%
+    ),
+    var(--surface-control);
+  border-color: var(--control-gloss-border);
+  box-shadow:
+    inset 0 1px 0 var(--control-gloss-highlight),
+    0 5px 14px var(--control-gloss-shadow);
   font-weight: 700;
 }
 
