@@ -6,6 +6,8 @@ import svgr from 'vite-plugin-svgr';
 import dts from 'vite-plugin-dts';
 import { analyzer } from 'vite-bundle-analyzer';
 
+import { cloudflare } from "@cloudflare/vite-plugin";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -16,6 +18,7 @@ export default defineConfig({
     svgr({ include: '**/*.svg' }),
     dts(),
     analyzer({ analyzerMode: 'server' }),
+    cloudflare()
   ],
   resolve: {
     alias: {
