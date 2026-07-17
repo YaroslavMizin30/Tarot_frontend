@@ -10,6 +10,16 @@ const routes: RouteObject[] = [
     children: [
       { path: '/', Component: MainPage },
       {
+        path: '/tarot',
+        lazy: {
+          async Component() {
+            const { default: ReadingPage } = await import('@/pages/Reading');
+
+            return ReadingPage;
+          },
+        },
+      },
+      {
         path: '/reading',
         lazy: {
           async Component() {

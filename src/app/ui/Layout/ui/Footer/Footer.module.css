@@ -17,17 +17,18 @@
 
 .wrapper {
   position: relative;
-  padding: 5px;
-  width: 95%;
+  padding: 3px;
+  width: 94%;
 
   display: grid;
-  gap: 6px;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 8px;
+  grid-template-columns: repeat(4, 1fr);
 
-  font-size: 12px;
+  font-size: 11px;
   color: var(--navigation-text);
 
   transition: opacity 1s ease;
+  transform: translateY(-6px);
 }
 
 .wrapper-loading {
@@ -51,16 +52,43 @@
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  padding: 3px;
+  min-height: 42px;
+  padding: 2px 3px;
   opacity: 0.8;
+  color: inherit;
+  font: inherit;
+  background: transparent;
+  cursor: pointer;
 
   border: 1.5px solid var(--navigation-text);
   border-bottom: none;
-  border-radius: 10px;
+  border-radius: 8px;
   z-index: 500;
+}
+
+.section svg {
+  display: block;
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  max-width: 20px;
+  max-height: 20px;
+}
+
+.section .homeIcon {
+  width: 15px;
+  height: 15px;
+  max-width: 15px;
+  max-height: 15px;
+  margin-bottom: 2px;
 }
 
 .active {
   box-shadow: inset 0px 5px 20px 0px var(--navigation-text);
   opacity: 1;
+}
+
+.section:focus-visible {
+  outline: 2px solid var(--navigation-text);
+  outline-offset: 2px;
 }

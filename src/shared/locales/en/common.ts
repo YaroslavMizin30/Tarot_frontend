@@ -22,6 +22,7 @@ const TRANSLATIONS_EN = {
   'Gray': 'Gray',
   'Bronze': 'Bronze',
   'Tarot': 'Tarot',
+  'Home': 'Home',
   'Astrology': 'Astrology',
   'Roulette': 'Roulette',
   'Purchase': 'Purchase',

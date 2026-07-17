@@ -7,6 +7,11 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  background-color: var(--gradient-primary);
+}
+
 :root {
   --background-primary: #f6e1ad;
   --background-secondary: #ead6c0;

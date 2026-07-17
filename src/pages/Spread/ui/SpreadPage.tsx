@@ -81,7 +81,7 @@ export const SpreadPage = () => {
       </div>
 
       <div className={styles.bottom}>
-        <ArrowButton onClick={() => navigate('/')} />
+        <ArrowButton onClick={() => navigate('/tarot')} />
 
         <Link className={styles.link} to={'/history'}>
           <Button>{i18n('To spreads history')}</Button>

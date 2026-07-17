@@ -116,7 +116,7 @@ export const HistoryPage = () => {
 
       <ArrowButton
         className={styles['back-button']}
-        onClick={() => navigate('/')}
+        onClick={() => navigate('/tarot')}
       />
     </div>
   );

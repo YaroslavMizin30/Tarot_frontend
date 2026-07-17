@@ -22,6 +22,7 @@ const TRANSLATIONS_RU = {
   'Gray': 'Серая',
   'Bronze': 'Бронза',
   'Tarot': 'Таро',
+  'Home': 'Главная',
   'Astrology': 'Астрология',
   'Roulette': 'Рулетка',
   'Purchase': 'Покупки',

@@ -54,7 +54,7 @@ export const Questions: FC<QuestionProps> = (props) => {
   const handleBackButtonClick = () => {
     const values: Array<keyof SpreadParams> = [];
     if (step === 'theme') {
-      navigate('/');
+      navigate('/tarot');
     }
 
     if (step === 'question') {

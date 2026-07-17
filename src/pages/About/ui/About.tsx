@@ -68,7 +68,7 @@ export const AboutPage = () => {
           })}
 
           <ArrowButton
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/tarot')}
             className={styles.arrow}
           />
         </div>
