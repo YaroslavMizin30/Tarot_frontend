@@ -13,6 +13,8 @@ type SpreadRow = {
   cards?: Spread['cards'] | string | null;
   interpretation?: string | null;
   date?: string | null;
+  status?: Spread['status'] | null;
+  updated_at?: string | null;
 };
 
 const parseCards = (cards: SpreadRow['cards']): Spread['cards'] => {
@@ -40,6 +42,8 @@ export const spreadFromRow = (row: SpreadRow): Spread => ({
   cards: parseCards(row.cards),
   interpretation: row.interpretation ?? '',
   date: row.date ?? '',
+  status: row.status ?? undefined,
+  updatedAt: row.updated_at ?? undefined,
 });
 
 export const spreadParamsFromRow = (row: SpreadRow): SpreadParams => {
@@ -79,6 +83,8 @@ export const spreadToRow = (
     row.interpretation = spread.interpretation;
   }
   if (spread.date !== undefined) row.date = spread.date;
+  if (spread.status !== undefined) row.status = spread.status;
+  if (spread.updatedAt !== undefined) row.updated_at = spread.updatedAt;
 
   return row;
 };

@@ -44,4 +44,6 @@ export type Spread = SpreadParams & {
   date: string;
   spreadId: string;
   rating?: number;
+  status?: 'draft' | 'charged' | 'processing' | 'completed' | 'failed';
+  updatedAt?: string;
 };

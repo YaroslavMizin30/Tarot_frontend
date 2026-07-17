@@ -12,5 +12,6 @@ export { updateSpread } from './api/updateSpread';
 export {
   startSpreadDraft,
   resumeSpreadDraft,
+  isSpreadDraftId,
 } from './api/startSpreadDraft';
 export { DAILY_CARD_SPREAD_MARKER } from './model/constants';

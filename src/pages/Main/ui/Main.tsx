@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router';
 
-import Button from '@/shared/ui/Button';
 import useLocales from '@/shared/hooks/useLocales';
+import { isSpreadDraftId, useSpreads } from '@/entities/Spread';
 import DailyCardWidget from '@/widgets/DailyCard';
 import DailyGuidanceWidget from '@/widgets/DailyGuidance';
 import RouletteIcon from '@/shared/assets/svg/common/roulette_page.svg';
@@ -12,6 +12,18 @@ export const MainPage = () => {
   const navigate = useNavigate();
 
   const { i18n } = useLocales();
+  const { spreads } = useSpreads();
+
+  const resumableSpread = spreads
+    ?.filter(({ spreadId, status }) =>
+      isSpreadDraftId(spreadId) &&
+      (status === 'draft' || status === 'charged' || status === 'failed')
+    )
+    .sort((first, second) =>
+      (second.updatedAt ?? second.date).localeCompare(
+        first.updatedAt ?? first.date,
+      )
+    )[0];
 
   return (
     <div className={styles.container}>
@@ -37,12 +49,27 @@ export const MainPage = () => {
           <span className={styles.arrow} aria-hidden={'true'}>→</span>
         </button>
 
-        <Button
-          className={styles.primaryAction}
-          onClick={() => navigate('/tarot')}
-        >
-          {i18n('Go to Tarot')}
-        </Button>
+        <div className={styles.resumeSlot}>
+          {resumableSpread && (
+            <button
+              className={styles.resume}
+              onClick={() =>
+                navigate(`/tarot?draft=${resumableSpread.spreadId}`)
+              }
+              type={'button'}
+            >
+              <span className={styles.resumeText}>
+                <strong>{i18n('Continue spread')}</strong>
+                <span>
+                  {resumableSpread.title ||
+                    resumableSpread.question ||
+                    i18n('Your unfinished spread')}
+                </span>
+              </span>
+              <span className={styles.arrow} aria-hidden={'true'}>→</span>
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -7,6 +7,8 @@ const TRANSLATIONS_EN = {
   'Daily roulette': 'Daily roulette',
   'Bonuses and surprises': 'Bonuses and surprises',
   'Go to Tarot': 'Go to Tarot',
+  'Continue spread': 'Continue spread',
+  'Your unfinished spread': 'Your unfinished spread',
   'Astrological background': 'Astrological background',
 
   'Already here': 'Already here',
