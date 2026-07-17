@@ -12,11 +12,6 @@ export const THEMES: Theme[] = [
         spreadTitle: 'Life horizon',
         spreadNumber: 7,
         spreadId: SpreadType.SEVEN,
-        tariffs: {
-          trial: false,
-          standard: false,
-          extended: true,
-        },
       },
       {
         label: 'Fear of the unknown',
@@ -24,11 +19,6 @@ export const THEMES: Theme[] = [
         spreadTitle: 'The fog is clearing',
         spreadNumber: 5,
         spreadId: SpreadType.FIVE,
-        tariffs: {
-          trial: false,
-          standard: true,
-          extended: true,
-        },
       },
       {
         label: 'Uncertainty in life',
@@ -36,11 +26,6 @@ export const THEMES: Theme[] = [
         spreadTitle: 'Support in chaos',
         spreadNumber: 5,
         spreadId: SpreadType.FIVE,
-        tariffs: {
-          trial: false,
-          standard: true,
-          extended: true,
-        },
       },
     ],
     isTemplate: true,
@@ -57,11 +42,6 @@ export const THEMES: Theme[] = [
         detailsQuestion: 'What are your options?',
         detailsAnswer: 'Your options',
         spreadId: SpreadType.NINE,
-        tariffs: {
-          trial: false,
-          standard: false,
-          extended: true,
-        },
       },
       {
         label: 'Fear of making a mistake in decision',
@@ -72,11 +52,6 @@ export const THEMES: Theme[] = [
         detailsQuestion: 'What is the decision about?',
         detailsAnswer: 'The decision',
         spreadId: SpreadType.FOUR,
-        tariffs: {
-          trial: false,
-          standard: true,
-          extended: true,
-        },
       },
       {
         label: 'Passing the buck',
@@ -87,11 +62,6 @@ export const THEMES: Theme[] = [
         detailsQuestion: 'What is the situation?',
         detailsAnswer: 'The situation',
         spreadId: SpreadType.THREE,
-        tariffs: {
-          trial: false,
-          standard: false,
-          extended: true,
-        },
       },
     ],
     isTemplate: true,
@@ -105,11 +75,6 @@ export const THEMES: Theme[] = [
         spreadTitle: 'Relationship triangle',
         spreadNumber: 3,
         spreadId: SpreadType.THREE,
-        tariffs: {
-          trial: false,
-          standard: true,
-          extended: true,
-        },
       },
       {
         label: "The couple's future",
@@ -117,11 +82,6 @@ export const THEMES: Theme[] = [
         spreadTitle: 'The path of love',
         spreadNumber: 7,
         spreadId: SpreadType.SEVEN,
-        tariffs: {
-          trial: false,
-          standard: false,
-          extended: true,
-        },
       },
       {
         label: 'Returning to an ex',
@@ -129,11 +89,6 @@ export const THEMES: Theme[] = [
         spreadTitle: 'Bridge back',
         spreadNumber: 5,
         spreadId: SpreadType.FIVE,
-        tariffs: {
-          trial: false,
-          standard: true,
-          extended: true,
-        },
       },
       {
         label: 'Dating a new person',
@@ -141,11 +96,6 @@ export const THEMES: Theme[] = [
         spreadTitle: 'Chemistry at the start',
         spreadNumber: 4,
         spreadId: SpreadType.FOUR,
-        tariffs: {
-          trial: false,
-          standard: true,
-          extended: true,
-        },
       },
       {
         label: 'Scenarios in love',
@@ -156,11 +106,6 @@ export const THEMES: Theme[] = [
         detailsQuestion: 'What are the mistakes you want to fix?',
         detailsAnswer: 'Mistakes I want to fix',
         spreadId: SpreadType.FIVE,
-        tariffs: {
-          trial: false,
-          standard: true,
-          extended: true,
-        },
       },
       {
         label: 'Compatibility',
@@ -168,11 +113,6 @@ export const THEMES: Theme[] = [
         spreadTitle: 'Two decks',
         spreadNumber: 6,
         spreadId: SpreadType.TWO_DECKS,
-        tariffs: {
-          trial: false,
-          standard: false,
-          extended: true,
-        },
       },
       {
         label: 'Breakup',
@@ -180,11 +120,6 @@ export const THEMES: Theme[] = [
         spreadTitle: 'The door is closed',
         spreadNumber: 6,
         spreadId: SpreadType.SIX,
-        tariffs: {
-          trial: false,
-          standard: false,
-          extended: true,
-        },
       },
       {
         label: 'Loneliness and "the one"',
@@ -192,11 +127,6 @@ export const THEMES: Theme[] = [
         spreadTitle: 'Star of love',
         spreadNumber: 7,
         spreadId: SpreadType.SEVEN,
-        tariffs: {
-          trial: false,
-          standard: false,
-          extended: true,
-        },
       },
       {
         label: 'Cheating and betrayal"',
@@ -204,11 +134,6 @@ export const THEMES: Theme[] = [
         spreadTitle: 'Mystery revealed',
         spreadNumber: 6,
         spreadId: SpreadType.SIX,
-        tariffs: {
-          trial: false,
-          standard: false,
-          extended: true,
-        },
       },
       {
         label: 'Crisis in a couple',
@@ -216,11 +141,6 @@ export const THEMES: Theme[] = [
         spreadTitle: 'Storm in a relationship',
         spreadNumber: 7,
         spreadId: SpreadType.SEVEN,
-        tariffs: {
-          trial: false,
-          standard: false,
-          extended: true,
-        },
       },
       {
         label: 'Self-esteem in love',
@@ -231,11 +151,6 @@ export const THEMES: Theme[] = [
         detailsQuestion: 'Why do you think you choose the "wrong ones"?',
         detailsAnswer: 'I choose the "wrong ones because',
         spreadId: SpreadType.SEVEN,
-        tariffs: {
-          trial: false,
-          standard: false,
-          extended: true,
-        },
       },
     ],
     isTemplate: true,
@@ -252,11 +167,6 @@ export const THEMES: Theme[] = [
         detailsQuestion: 'What is your current profession?',
         detailsAnswer: 'My current profession',
         spreadId: SpreadType.SEVEN,
-        tariffs: {
-          trial: false,
-          standard: false,
-          extended: true,
-        },
       },
       {
         label: 'Finding your "thing"',
@@ -264,11 +174,6 @@ export const THEMES: Theme[] = [
         spreadTitle: 'Call of Destiny',
         spreadNumber: 6,
         spreadId: SpreadType.SIX,
-        tariffs: {
-          trial: false,
-          standard: false,
-          extended: true,
-        },
       },
       {
         label: 'Doubts about offers',
@@ -279,11 +184,6 @@ export const THEMES: Theme[] = [
         detailsQuestion: 'What are the offers you are considering?',
         detailsAnswer: 'The offers I am considering are',
         spreadId: SpreadType.FIVE,
-        tariffs: {
-          trial: false,
-          standard: true,
-          extended: true,
-        },
       },
     ],
     isTemplate: true,
@@ -300,11 +200,6 @@ export const THEMES: Theme[] = [
         detailsQuestion: 'What is your current business?',
         detailsAnswer: 'My current business',
         spreadId: SpreadType.SEVEN,
-        tariffs: {
-          trial: false,
-          standard: false,
-          extended: true,
-        },
       },
       {
         label: 'Blind spots in the project',
@@ -312,11 +207,6 @@ export const THEMES: Theme[] = [
         spreadTitle: 'Business diagnosis',
         spreadNumber: 9,
         spreadId: SpreadType.NINE,
-        tariffs: {
-          trial: false,
-          standard: false,
-          extended: true,
-        },
       },
       {
         label: 'Risk assessment',
@@ -324,11 +214,6 @@ export const THEMES: Theme[] = [
         spreadTitle: 'Weighing the odds',
         spreadNumber: 5,
         spreadId: SpreadType.FIVE,
-        tariffs: {
-          trial: false,
-          standard: true,
-          extended: true,
-        },
       },
     ],
     isTemplate: true,
@@ -342,11 +227,6 @@ export const THEMES: Theme[] = [
         spreadTitle: 'Awakening',
         spreadNumber: 6,
         spreadId: SpreadType.SIX,
-        tariffs: {
-          trial: false,
-          standard: false,
-          extended: true,
-        },
       },
       {
         label: 'Search for wishes',
@@ -354,11 +234,6 @@ export const THEMES: Theme[] = [
         spreadTitle: 'The heart speaks',
         spreadNumber: 4,
         spreadId: SpreadType.FOUR,
-        tariffs: {
-          trial: false,
-          standard: true,
-          extended: true,
-        },
       },
       {
         label: 'Crises of meaning/age',
@@ -366,11 +241,6 @@ export const THEMES: Theme[] = [
         spreadTitle: 'Puzzle of life',
         spreadNumber: 7,
         spreadId: SpreadType.SEVEN,
-        tariffs: {
-          trial: false,
-          standard: false,
-          extended: true,
-        },
       },
     ],
     isTemplate: true,
@@ -384,11 +254,6 @@ export const THEMES: Theme[] = [
         spreadTitle: 'A heart-to-heart talk',
         spreadNumber: 5,
         spreadId: SpreadType.FIVE,
-        tariffs: {
-          trial: false,
-          standard: false,
-          extended: true,
-        },
       },
       {
         label: 'Name feelings',
@@ -396,11 +261,6 @@ export const THEMES: Theme[] = [
         spreadTitle: 'Emotions in the open',
         spreadNumber: 3,
         spreadId: SpreadType.THREE,
-        tariffs: {
-          trial: false,
-          standard: true,
-          extended: true,
-        },
       },
     ],
     isTemplate: true,
@@ -414,11 +274,6 @@ export const THEMES: Theme[] = [
         spreadTitle: 'Spiritual compass',
         spreadNumber: 5,
         spreadId: SpreadType.FIVE,
-        tariffs: {
-          trial: false,
-          standard: true,
-          extended: true,
-        },
       },
       {
         label: 'Meanings of events',
@@ -426,11 +281,6 @@ export const THEMES: Theme[] = [
         spreadTitle: 'Lesson of fate',
         spreadNumber: 6,
         spreadId: SpreadType.SIX,
-        tariffs: {
-          trial: false,
-          standard: false,
-          extended: true,
-        },
       },
     ],
     isTemplate: true,
@@ -444,11 +294,6 @@ export const THEMES: Theme[] = [
         spreadTitle: 'New moon',
         spreadNumber: 7,
         spreadId: SpreadType.SEVEN,
-        tariffs: {
-          trial: false,
-          standard: false,
-          extended: true,
-        },
       },
       {
         label: 'Completing the cycle',
@@ -456,11 +301,6 @@ export const THEMES: Theme[] = [
         spreadTitle: 'Liberation',
         spreadNumber: 4,
         spreadId: SpreadType.FOUR,
-        tariffs: {
-          trial: false,
-          standard: true,
-          extended: true,
-        },
       },
     ],
     isTemplate: true,
@@ -474,11 +314,6 @@ export const THEMES: Theme[] = [
         spreadTitle: 'The voice of intuition',
         spreadNumber: 3,
         spreadId: SpreadType.THREE,
-        tariffs: {
-          trial: false,
-          standard: true,
-          extended: true,
-        },
       },
       {
         label: 'Figurative language',
@@ -486,11 +321,6 @@ export const THEMES: Theme[] = [
         spreadTitle: 'Tale of cards',
         spreadNumber: 5,
         spreadId: SpreadType.FIVE,
-        tariffs: {
-          trial: false,
-          standard: true,
-          extended: true,
-        },
       },
     ],
     isTemplate: true,

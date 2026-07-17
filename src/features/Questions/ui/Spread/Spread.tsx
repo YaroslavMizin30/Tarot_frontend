@@ -1,145 +1,166 @@
-import { useEffect, useState, type FC } from 'react';
+import { useState, type ChangeEvent, type FC } from 'react';
 
 import Button from '@/shared/ui/Button';
 import useLocales from '@/shared/hooks/useLocales';
 import Price from '@/shared/ui/Price';
+import TextArea from '@/shared/ui/TextArea/TextArea';
 
-import TarotDeck from '@/entities/TarotDeck';
-import { SPREADS } from '@/features/TarotSpread';
-import { useUser } from '@/entities/User';
+import { SPREADS, type Spread as SpreadOption } from '@/features/TarotSpread';
 
 import type { SpreadProps } from './Spread.props';
 
 import styles from './Spread.module.css';
 
 const Spread: FC<SpreadProps> = (props) => {
-  const { spread, onSpreadChange, onSpreadSelect } = props;
-
-  const { title, cardsCount, question, detailsAnswer, userAnswer } = spread;
+  const {
+    spread,
+    onQuestionInput,
+    onSpreadChange,
+    onSpreadPrepare,
+    onSpreadSelect,
+  } = props;
+  const { title, cardsCount, question, details, userAnswer } = spread;
 
   const { i18n } = useLocales();
 
-  const [isReading, setIsReading] = useState(false);
+  const [isPreparing, setIsPreparing] = useState(false);
+  const [prepareError, setPrepareError] = useState<string | null>(null);
+  const [recommendedSpread] = useState(() =>
+    spread.title
+      ? {
+        id: spread.id,
+        label: spread.title,
+        cardCount: spread.cardsCount,
+      }
+      : null,
+  );
 
-  const { user } = useUser();
+  const needsAnswer = !question || Boolean(details);
+  const canStart =
+    Boolean(title) && (!needsAnswer || Boolean(userAnswer?.trim()));
 
-  const handleReadEnd = () => {
-    setIsReading(false);
+  const spreadOptions: SpreadOption[] = [
+    ...(recommendedSpread ? [recommendedSpread] : []),
+    ...SPREADS,
+  ].filter(
+    (option, index, options) =>
+      options.findIndex((item) => item.id === option.id) === index,
+  );
+  const selectedSpread = spreadOptions.find(({ id }) => id === spread.id);
 
-    onSpreadSelect(spread);
-  };
+  const handleStartClick = async () => {
+    if (!canStart || isPreparing) return;
 
-  const audio = new Audio('/assets/sfx/gong.mp3');
+    setIsPreparing(true);
+    setPrepareError(null);
 
-  const handleSpreadButtonClick = () => {
-    setIsReading(true);
+    try {
+      const preparedSpread = await onSpreadPrepare(spread);
 
-    if (user?.audio) {
-      audio.volume = 0.1;
-      audio.play();
+      if (!preparedSpread) return;
+
+      onSpreadChange(preparedSpread);
+      onSpreadSelect(preparedSpread);
+    } catch {
+      setPrepareError(i18n('Unable to prepare spread'));
+    } finally {
+      setIsPreparing(false);
     }
   };
 
-  const getQuestion = () => {
-    if (question) {
-      return (
-        <>
-          <h3>{`${i18n('Question')}: ${question}`}</h3>
-          {detailsAnswer && userAnswer ? (
-            <h3>{`${detailsAnswer}: ${userAnswer}`}</h3>
-          ) : null}
-        </>
-      );
-    }
-
-    return <h3>{`${i18n('Question')}: ${userAnswer}`}</h3>;
+  const handleAnswerChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    onQuestionInput(event.target.value);
   };
-
-  const getCardWithCase = (count: number) => {
-    switch (true) {
-      case count === 1:
-        return i18n('card');
-      case count > 1 && count < 5:
-        return i18n('cards(nominative)');
-      default:
-        return i18n('cards(accusative)');
-    }
-  };
-
-  const getSpread = () => {
-    if (title && cardsCount) {
-      return (
-        <h3>{`${i18n('Spread')}: "${i18n(title)}" (${cardsCount} ${getCardWithCase(cardsCount)})`}</h3>
-      );
-    }
-
-    return (
-      <>
-        <h3>{i18n('Select spread')}:</h3>
-
-        {SPREADS.map((spreadTemplate) => {
-          const { label, cardCount, id } = spreadTemplate;
-
-          const handleSpreadButtonClick = () => {
-            onSpreadChange({
-              ...spread,
-              cardsCount: cardCount,
-              title: i18n(label),
-              id,
-            });
-          };
-
-          return (
-            <Button key={id} onClick={handleSpreadButtonClick}>
-              {`${i18n(label)} (${cardCount} ${getCardWithCase(cardCount)})`}
-            </Button>
-          );
-        })}
-      </>
-    );
-  };
-
-  useEffect(() => {
-    return () => audio.pause();
-  }, []);
 
   return (
     <div className={styles.container}>
-      <div className={styles.list}>
-        {getQuestion()}
+      <header className={styles.header}>
+        <span>{i18n('Question')}</span>
+        <h2>{question || i18n('My own question')}</h2>
+      </header>
 
-        {getSpread()}
+      {needsAnswer && (
+        <label className={styles.answer}>
+          <span>{details || i18n('What would you like to ask?')}</span>
+          <TextArea
+            className={styles.input}
+            maxLength={500}
+            onChange={handleAnswerChange}
+            placeholder={i18n('Type here...')}
+            value={userAnswer ?? ''}
+          />
+        </label>
+      )}
 
-        <TarotDeck
-          isReady={true}
-          isReading={isReading}
-          onReadEnd={handleReadEnd}
-          className={styles.deck}
-        />
-
-        <span
-          className={styles.loadingMessage}
-          style={{
-            visibility: isReading ? 'visible' : 'hidden',
-          }}
-        >
-          {i18n('Shuffling the deck')}
-        </span>
-
-        <div className={styles.finish}>
-          <h3>{i18n('Ready?')}</h3>
-
-          <Button
-            className={styles.button}
-            disabled={!title}
-            onClick={handleSpreadButtonClick}
-            isLoading={isReading}
-            iconRight={<Price cost={spread.cardsCount} />}
-          >
-            {i18n('Click')}
-          </Button>
+      <section className={styles.spreadSection}>
+        <div className={styles.sectionTitle}>
+          <h3>{i18n('Choose spread')}</h3>
+          {cardsCount > 0 && <Price cost={cardsCount} />}
         </div>
+
+        <div className={styles.spreads}>
+          {spreadOptions.map((option) => {
+            const isSelected = option.id === spread.id && Boolean(title);
+            const isRecommended = option.id === recommendedSpread?.id;
+
+            return (
+              <button
+                aria-pressed={isSelected}
+                className={`${styles.spreadOption} ${isSelected ? styles.selected : ''}`}
+                key={option.id}
+                onClick={() =>
+                  onSpreadChange({
+                    ...spread,
+                    cardsCount: option.cardCount,
+                    title: i18n(option.label),
+                    id: option.id,
+                  })
+                }
+                type={'button'}
+              >
+                {isRecommended && (
+                  <span className={styles.recommended}>
+                    {i18n('Recommended')}
+                  </span>
+                )}
+                <strong>{i18n(option.label)}</strong>
+                <span>{`${option.cardCount} · ${i18n('cards')}`}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {selectedSpread && title && (
+          <div className={styles.selectedInfo}>
+            <strong>{i18n(selectedSpread.label)}</strong>
+            <span>
+              {selectedSpread.description
+                ? i18n(selectedSpread.description)
+                : i18n('Recommended for this question')}
+            </span>
+          </div>
+        )}
+      </section>
+
+      <div className={styles.action}>
+        <Button
+          className={styles.button}
+          disabled={!canStart}
+          iconRight={cardsCount ? <Price cost={cardsCount} /> : null}
+          isLoading={isPreparing}
+          onClick={handleStartClick}
+        >
+          {isPreparing
+            ? i18n('Checking balance')
+            : i18n('Go to cards')}
+        </Button>
       </div>
+
+      {prepareError && (
+        <p className={styles.prepareError} role={'alert'}>
+          {prepareError}
+        </p>
+      )}
     </div>
   );
 };

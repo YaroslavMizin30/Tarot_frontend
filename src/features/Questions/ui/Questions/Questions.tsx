@@ -1,4 +1,4 @@
-import { useState, type FC } from 'react';
+import { type FC } from 'react';
 import { useNavigate } from 'react-router';
 
 import { useQuestion } from '../../model/hooks/useQuestion';
@@ -6,10 +6,13 @@ import type { Question } from '../../model/types/questions';
 import { THEMES } from '../../config/questions';
 
 import Themes from '../Themes/Themes';
-import Input from '../Input/QuestionInput';
 import Spread from '../Spread/Spread';
 
-import type { SpreadParams } from '@/entities/Spread';
+import {
+  startSpreadDraft,
+  type SpreadParams,
+} from '@/entities/Spread';
+import { BILLING_REDIRECT_STATE_KEY } from '@/features/Billing/model/useBalance';
 
 import ArrowButton from '@/shared/ui/ArrowButton';
 
@@ -24,13 +27,10 @@ export const Questions: FC<QuestionProps> = (props) => {
 
   const navigate = useNavigate();
 
-  const [isSelected, setIsSelected] = useState(false);
-
   const handleQuestionChoose = (q: Question) => {
     const {
       spreadNumber,
       spreadTitle,
-      areDetailsNeeded,
       detailsQuestion,
       detailsAnswer,
       spreadId,
@@ -48,26 +48,24 @@ export const Questions: FC<QuestionProps> = (props) => {
       userId: 0,
     });
 
-    changeStep({ isBack: false, value: areDetailsNeeded ? 'input' : 'spread' });
+    changeStep({ isBack: false, value: 'setup' });
   };
 
   const handleBackButtonClick = () => {
     const values: Array<keyof SpreadParams> = [];
     if (step === 'theme') {
       navigate('/tarot');
+      return;
     }
 
-    if (step === 'question') {
+    if (step === 'setup') {
       values.push('detailsAnswer');
       values.push('cardsCount');
       values.push('title');
       values.push('details');
       values.push('userAnswer');
       values.push('question');
-    }
-
-    if (step === 'input') {
-      values.push('userAnswer');
+      values.push('id');
     }
 
     clearSpread(values);
@@ -78,21 +76,40 @@ export const Questions: FC<QuestionProps> = (props) => {
     changeSpread({ ...spread, userAnswer });
   };
 
-  const handleQuestionSet = () => {
-    if (spread.userAnswer) {
-      changeStep({ isBack: false, value: 'spread' });
-    }
-  };
-
   const handleSpreadChange = (spread: SpreadParams) => {
     changeSpread(spread);
   };
 
-  const handleSpreadSelect = () => {
-    setIsSelected(true);
-    setTimeout(() => {
-      onSpreadSelect(spread);
-    }, 1000);
+  const handleSpreadPrepare = async (params: SpreadParams) => {
+    const result = await startSpreadDraft(params);
+
+    if (result.status === 'insufficient_balance') {
+      navigate('/billing', {
+        state: {
+          [BILLING_REDIRECT_STATE_KEY]: {
+            current: result.current,
+            draftId: result.draftId,
+            required: result.required,
+            returnTo: `/tarot?draft=${result.draftId}`,
+          },
+        },
+      });
+
+      return null;
+    }
+
+    const preparedSpread = {
+      ...result.spread,
+      spreadId: result.draftId,
+    };
+
+    changeSpread(preparedSpread);
+
+    return preparedSpread;
+  };
+
+  const handleSpreadSelect = (selectedSpread: SpreadParams) => {
+    onSpreadSelect(selectedSpread);
   };
 
   const Content = () => {
@@ -101,19 +118,13 @@ export const Questions: FC<QuestionProps> = (props) => {
         return (
           <Themes themes={THEMES} onQuestionChoose={handleQuestionChoose} />
         );
-      case 'input':
-        return (
-          <Input
-            spread={spread}
-            onQuestionInput={handleQuestionInput}
-            onQuestionSet={handleQuestionSet}
-          />
-        );
-      case 'spread':
+      case 'setup':
         return (
           <Spread
             spread={spread}
+            onQuestionInput={handleQuestionInput}
             onSpreadChange={handleSpreadChange}
+            onSpreadPrepare={handleSpreadPrepare}
             onSpreadSelect={handleSpreadSelect}
           />
         );
@@ -125,13 +136,12 @@ export const Questions: FC<QuestionProps> = (props) => {
   };
 
   return (
-    <div
-      className={`${styles.questions}`}
-      style={{ opacity: isSelected ? 0 : 1 }}
-    >
-      {Content()}
+    <div className={`${styles.questions}`}>
+      <div className={styles.content}>{Content()}</div>
 
-      <ArrowButton className={styles.back} onClick={handleBackButtonClick} />
+      {step !== 'theme' && (
+        <ArrowButton className={styles.back} onClick={handleBackButtonClick} />
+      )}
     </div>
   );
 };

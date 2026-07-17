@@ -100,7 +100,7 @@ export const usePayment = ({
       clearInterval(sbpPollRef.current);
     }
 
-    sbpPollRef.current = setInterval(() => {
+    sbpPollRef.current = setInterval(async () => {
       if (popup.closed) {
         if (sbpPollRef.current !== null) {
           clearInterval(sbpPollRef.current);
@@ -115,7 +115,7 @@ export const usePayment = ({
         setStatus('paid');
         // СБП: баланс зачисляется на бэкенде — рефетчим пользователя,
         // чтобы UI сразу отобразил актуальное значение.
-        refreshBalance().catch(() => undefined);
+        await refreshBalance().catch(() => undefined);
         onSuccess?.();
       }
     }, 500);
@@ -154,14 +154,14 @@ export const usePayment = ({
       if (code === 'stars') {
         window.Telegram.WebApp.openInvoice(
           invoice.invoiceLink,
-          (nextStatus) => {
+          async (nextStatus) => {
             setStatus(nextStatus);
             setIsLoading(false);
 
             if (nextStatus === 'paid') {
               // Telegram Stars: пополнение происходит на клиенте,
               // т.к. мы точно знаем, что инвойс был оплачен.
-              topUp(amount).catch(() => undefined);
+              await topUp(amount).catch(() => false);
               onSuccess?.();
             } else {
               onError?.(nextStatus);

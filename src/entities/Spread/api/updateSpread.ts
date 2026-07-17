@@ -1,16 +1,21 @@
 import type { Spread } from '../types';
 
 import { updateRaw } from '@/shared/api/supabase';
+import {
+  spreadFromRow,
+  spreadToRow,
+  type SpreadRow,
+} from './spreadMapper';
 
 export const updateSpread = async (
   spreadId: string,
   spreadData: Partial<Spread>,
 ) => {
-  const updatedSpread = await updateRaw<Spread>(
+  const updatedSpread = await updateRaw<SpreadRow>(
     'spreads',
-    { ...spreadData },
+    spreadToRow(spreadData),
     {
-      key: 'spreadId',
+      key: 'spread_id',
       value: spreadId,
     },
   );
@@ -19,5 +24,5 @@ export const updateSpread = async (
     throw new Error('Failed to update spread');
   }
 
-  return updatedSpread[0];
+  return spreadFromRow(updatedSpread[0]);
 };

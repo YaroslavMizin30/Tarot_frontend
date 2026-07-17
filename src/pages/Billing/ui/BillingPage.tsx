@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 import useLocales from '@/shared/hooks/useLocales';
 import Billing from '@/widgets/Billing';
@@ -27,12 +27,19 @@ export const BillingPage = () => {
   const { addTranslations, locale, i18n } = useLocales();
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   const redirectState = isBillingRedirectState(location.state)
     ? location.state
     : null;
 
   const insufficient = redirectState?.[BILLING_REDIRECT_STATE_KEY] ?? null;
+
+  const handlePaymentSuccess = () => {
+    if (insufficient?.returnTo) {
+      navigate(insufficient.returnTo, { replace: true });
+    }
+  };
 
   useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
@@ -54,7 +61,7 @@ export const BillingPage = () => {
         </div>
       )}
 
-      <Billing />
+      <Billing onPaymentSuccess={handlePaymentSuccess} />
     </div>
   );
 };

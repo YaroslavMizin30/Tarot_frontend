@@ -14,6 +14,10 @@ export interface UseReadingResult {
    */
   changeActiveCard: () => void;
   /**
+   * Turns over all remaining cards at once
+   */
+  revealAllCards: () => void;
+  /**
    * Array of cards to display
    */
   cards: Card[];

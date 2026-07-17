@@ -17,6 +17,25 @@ const TRANSLATIONS_RU: Record<string, string> = {
   'Rituals of transformation': 'Ритуалы перехода',
   'Intuition vs. rationality': 'Интуиция vs рациональность',
   'My own question': 'Свой вопрос',
+  'Show all questions': 'Показать все вопросы',
+  'All questions': 'Все вопросы',
+  'Back': 'Назад',
+  'What would you like to ask?': 'О чём вы хотите спросить?',
+  'Your question': 'Ваш вопрос',
+  'Choose spread': 'Выберите расклад',
+  'Recommended': 'Рекомендуем',
+  'Go to cards': 'Перейти к картам',
+  'cards': 'карт',
+  'Recommended for this question': 'Рекомендуется для этого вопроса',
+  'Checking balance': 'Проверяем баланс',
+  'Unable to prepare spread': 'Не удалось подготовить расклад. Попробуйте ещё раз.',
+  'Unable to resume spread': 'Не удалось восстановить расклад. Попробуйте ещё раз.',
+  'This spread is suitable for quick assessment':
+    'Краткий ответ для быстрой оценки ситуации.',
+  "This simple Tarot spread will help you get answers to any questions you're interested in":
+    'Три перспективы для взвешенного взгляда на вопрос.',
+  'This spread breaks down the situation into components and analyzes it by parts — its fiery aspect, watery aspect, and so on.':
+    'Подробный анализ разных сторон ситуации.',
 
   // Вопросы
   'General anxiety about the future': 'Общая тревога о будущем',
@@ -198,6 +217,8 @@ const TRANSLATIONS_RU: Record<string, string> = {
   'Interpreting': 'Интерпретация',
   'To spread': 'К раскладу',
   'Unfold cards one by one': 'Переверните карты по очереди',
+  'Reveal all cards': 'Открыть все карты',
+  'Reveal card': 'Открыть карту',
   'Unfold the card': 'Переверните карту',
   'Shuffling the deck': 'Тасую колоду',
 

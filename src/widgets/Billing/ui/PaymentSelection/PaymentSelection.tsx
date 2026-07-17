@@ -11,7 +11,7 @@ import type { PaymentSelectionProps } from './PaymentSelection.props';
 import styles from './PaymentSelection.module.css';
 
 const PaymentSelection = (props: PaymentSelectionProps) => {
-  const { tariff, onBackButtonClick } = props;
+  const { tariff, onBackButtonClick, onPaymentSuccess } = props;
 
   const { prices, amount } = tariff;
 
@@ -34,7 +34,7 @@ const PaymentSelection = (props: PaymentSelectionProps) => {
 
           return (
             <PaymentButton
-              onClick={() => undefined}
+              onClick={() => onPaymentSuccess?.()}
               key={code}
               amount={amount}
               {...method}

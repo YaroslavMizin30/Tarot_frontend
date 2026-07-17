@@ -33,14 +33,6 @@ export interface Question {
    * Spread id;
    */
   spreadId: `${SpreadType}`;
-  /**
-   * Тарифы, по которым доступен расклад
-   */
-  tariffs: {
-    trial: boolean;
-    standard: boolean;
-    extended: boolean;
-  };
 }
 
 export interface Theme {

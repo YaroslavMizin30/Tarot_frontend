@@ -37,6 +37,11 @@ export const useReading = (): UseReadingResult => {
     }
   };
 
+  const revealAllCards = () => {
+    setActiveCard(cards.length + 1);
+    setIsFinished(true);
+  };
+
   const resetSpread = () => {
     setIsFinished(false);
 
@@ -49,6 +54,7 @@ export const useReading = (): UseReadingResult => {
     prepareCards,
     activeCard,
     changeActiveCard,
+    revealAllCards,
     resetSpread,
   };
 };

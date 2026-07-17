@@ -58,6 +58,10 @@ export interface BillingRedirectState {
     required: number;
     /** Текущий (недостаточный) баланс пользователя */
     current: number;
+    /** Серверный черновик действия, которое нужно продолжить после оплаты */
+    draftId?: string;
+    /** Маршрут возврата после успешного пополнения */
+    returnTo?: string;
   };
 }
 

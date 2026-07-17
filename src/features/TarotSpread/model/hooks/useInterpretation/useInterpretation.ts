@@ -49,7 +49,8 @@ export const useInterpretation = (options: UseInterpretationOptions = {}) => {
     }) => {
       const { title, userAnswer, question, detailsAnswer, cardsCount } = spread;
 
-      const isPaidSpread = !options.isFree && user?.tariff !== 'trial';
+      const isPreparedDraft = Boolean(spread.spreadId);
+      const isPaidSpread = !options.isFree && !isPreparedDraft;
 
       // Для платных тарифов — проверяем баланс до выполнения.
       // useBalance сам редиректит на /billing при нехватке пентаклей.
@@ -57,7 +58,8 @@ export const useInterpretation = (options: UseInterpretationOptions = {}) => {
         throw new Error('INSUFFICIENT_BALANCE');
       }
 
-      const persistedSpreadId = requestOptions?.spreadId ?? v4();
+      const persistedSpreadId =
+        requestOptions?.spreadId ?? spread.spreadId ?? v4();
 
       if (user && requestOptions?.persistBeforeRequest) {
         const draftSpread: Spread = {
@@ -136,6 +138,8 @@ export const useInterpretation = (options: UseInterpretationOptions = {}) => {
 
         if (requestOptions?.spreadId || requestOptions?.persistBeforeRequest) {
           await updateSpread(persistedSpreadId, {
+            cards,
+            date: getTodayString(),
             interpretation: interpretationText,
           });
         } else {
@@ -163,7 +167,7 @@ export const useInterpretation = (options: UseInterpretationOptions = {}) => {
         );
 
         // Списываем пентакли только после того, как спред успешно сохранён.
-        if (!options.isFree) {
+        if (!options.isFree && !isPreparedDraft) {
           await charge(cardsCount);
         }
 

@@ -32,6 +32,7 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
     isFinished,
     prepareCards,
     changeActiveCard,
+    revealAllCards,
     resetSpread,
   } = useReading();
   const { getInterpretation, interpretation, isLoading, spreadId, error } =
@@ -112,7 +113,11 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
     resetSpread();
 
     if (cards.length) {
-      getInterpretation(cards, spread);
+      getInterpretation(
+        cards,
+        spread,
+        spread.spreadId ? { spreadId: spread.spreadId } : undefined,
+      );
     }
   };
 
@@ -126,7 +131,11 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
 
   useEffect(() => {
     if (cards.length) {
-      getInterpretation(cards, spread);
+      getInterpretation(
+        cards,
+        spread,
+        spread.spreadId ? { spreadId: spread.spreadId } : undefined,
+      );
     }
   }, [cards.length]);
 
@@ -177,8 +186,8 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
                 }}
                 isInverted={isInverted}
                 onClick={handleCardClick}
-                canTurnOver={count === activeCard}
-                isReversed={true}
+                canTurnOver={!isFinished && count === activeCard}
+                isReversed={!isFinished}
               />
             </Placeholder>
           );
@@ -193,18 +202,17 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
             {i18n('Interpretation')}
           </Button>
         ) : (
-          <span
-            className={styles.instruction}
+          <Button
+            className={styles.button}
+            onClick={revealAllCards}
             style={{
               ...SpreadConfig[id].button,
-              right: 'calc(50% - 100px)',
-              position: 'absolute',
             }}
           >
             {SpreadConfig[id].cards.length > 1
-              ? i18n('Unfold cards one by one')
-              : i18n('Unfold the card')}
-          </span>
+              ? i18n('Reveal all cards')
+              : i18n('Reveal card')}
+          </Button>
         )}
       </div>
 

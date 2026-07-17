@@ -1,16 +1,18 @@
 .questions {
   position: relative;
-  margin-top: 20px;
 
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: space-between;
-  width: 300px;
-  height: 100%;
-  max-height: 100vh;
+  width: 100%;
+  min-height: 100%;
+  padding: 22px 18px 24px;
 
-  transition: opacity 1s ease;
+}
+
+.content {
+  width: min(100%, 420px);
 }
 
 .container > button + button, .container > h3 + button, .container > div + div, .container > h3 + div {

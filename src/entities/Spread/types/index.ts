@@ -1,6 +1,7 @@
 import { type Card } from '@/entities/TarotCard';
 
 export interface SpreadParams {
+  spreadId?: string;
   title?: string;
   userAnswer?: string;
   question: string;
@@ -10,6 +11,19 @@ export interface SpreadParams {
   id: `${SpreadType}`;
   userId: number;
 }
+
+export type SpreadDraftResult =
+  | {
+      status: 'ready';
+      draftId: string;
+      spread: SpreadParams;
+    }
+  | {
+      status: 'insufficient_balance';
+      draftId: string;
+      required: number;
+      current: number;
+    };
 
 export const enum SpreadType {
   SINGLE = 'single',

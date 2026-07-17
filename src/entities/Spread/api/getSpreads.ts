@@ -1,10 +1,11 @@
 import { getDataFromDB } from '@/shared/api/supabase';
 
 import type { Spread } from '../types';
+import { spreadFromRow, type SpreadRow } from './spreadMapper';
 
 export const getSpreads = async (id: string): Promise<Spread[] | null> => {
-  const data = await getDataFromDB<Spread>('spreads', {
-    key: 'userId',
+  const data = await getDataFromDB<SpreadRow>('spreads', {
+    key: 'user_id',
     value: id,
   }, { throwOnError: true });
 
@@ -12,8 +13,5 @@ export const getSpreads = async (id: string): Promise<Spread[] | null> => {
     return null;
   }
 
-  return data.map((spread) => ({
-    ...spread,
-    cards: JSON.parse(spread.cards as unknown as string),
-  }));
+  return data.map(spreadFromRow);
 };

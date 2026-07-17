@@ -17,6 +17,25 @@ const TRANSLATIONS_EN: Record<string, string> = {
   'Rituals of transformation': 'Rituals of transformation',
   'Intuition vs. rationality': 'Intuition vs. rationality',
   'My own question': 'My own question',
+  'Show all questions': 'Show all questions',
+  'All questions': 'All questions',
+  'Back': 'Back',
+  'What would you like to ask?': 'What would you like to ask?',
+  'Your question': 'Your question',
+  'Choose spread': 'Choose a spread',
+  'Recommended': 'Recommended',
+  'Go to cards': 'Go to cards',
+  'cards': 'cards',
+  'Recommended for this question': 'Recommended for this question',
+  'Checking balance': 'Checking balance',
+  'Unable to prepare spread': 'Unable to prepare the spread. Try again.',
+  'Unable to resume spread': 'Unable to resume the spread. Try again.',
+  'This spread is suitable for quick assessment':
+    'A concise answer for a quick assessment of the situation.',
+  "This simple Tarot spread will help you get answers to any questions you're interested in":
+    'Three perspectives for a balanced view of the question.',
+  'This spread breaks down the situation into components and analyzes it by parts — its fiery aspect, watery aspect, and so on.':
+    'A detailed analysis of the different sides of the situation.',
 
   // Вопросы
   'General anxiety about the future': 'General anxiety about the future',
@@ -201,6 +220,8 @@ const TRANSLATIONS_EN: Record<string, string> = {
   'Interpreting': 'Interpreting',
   'To spread': 'To spread',
   'Unfold cards one by one': 'Unfold cards one by one',
+  'Reveal all cards': 'Reveal all cards',
+  'Reveal card': 'Reveal card',
   'Unfold the card': 'Unfold the card',
   'Shuffling the deck': 'Shuffling the deck',
 

@@ -36,7 +36,7 @@
   flex-direction: column;
 
   background-image: var(--card-cover-image);
-  background-size: cover;
+  background-size: 100% 100%;
   padding: 6px 6px 0px 6px;
 }
 
@@ -44,7 +44,7 @@
   transform: rotateY(180deg);
 
   background-image: var(--card-cover-image);
-  background-size: cover;
+  background-size: 100% 100%;
 }
 
 .image-wrapper {
@@ -127,33 +127,33 @@
 }
 
 .container-xs {
-  width: 30px;
+  width: 35px;
   height: 60px;
-  min-width: 30px;
+  min-width: 35px;
   min-height: 60px;
   border-radius: 1px;
 }
 
 .container-s {
-  width: 50px;
+  width: 58px;
   height: 100px;
-  min-width: 50px;
+  min-width: 58px;
   min-height: 100px;
   border-radius: 2px;
 }
 
 .container-m {
-  width: 60px;
+  width: 69px;
   height: 120px;
-  min-width: 60px;
+  min-width: 69px;
   min-height: 120px;
   border-radius: 2px;
 }
 
 .container-l {
-  width: 85px;
+  width: 91px;
   height: 158px;
-  min-width: 85px;
+  min-width: 91px;
   min-height: 158px;
   border-radius: 3px;
 }

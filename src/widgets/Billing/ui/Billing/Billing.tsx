@@ -9,7 +9,8 @@ import PaymentSelection from '../PaymentSelection/PaymentSelection';
 
 import styles from './Billing.module.css';
 
-export const Billing = () => {
+export const Billing = (props: { onPaymentSuccess?: () => void }) => {
+  const { onPaymentSuccess } = props;
   const [tariff, setTariff] = useState<Tariff | null>(null);
   const { i18n } = useLocales();
 
@@ -22,6 +23,7 @@ export const Billing = () => {
       return (
         <PaymentSelection
           onBackButtonClick={() => setTariff(null)}
+          onPaymentSuccess={onPaymentSuccess}
           tariff={tariff}
         />
       );
