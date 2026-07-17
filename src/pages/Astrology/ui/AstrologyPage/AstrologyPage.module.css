@@ -9,6 +9,18 @@
   align-items: center;
   padding: 8px 0 12px;
   overflow: hidden;
+  isolation: isolate;
+}
+
+.zodiacBackground {
+  position: absolute;
+  top: 50%;
+  right: -55px;
+  z-index: -1;
+  opacity: 0.12;
+  pointer-events: none;
+  transform: translateY(-50%) scale(1.15);
+  filter: saturate(0.7) blur(0.4px);
 }
 
 .menu {
@@ -25,6 +37,16 @@
 
 .menuButton {
   width: 100%;
+  color: var(--text-primary);
+  border-color: color-mix(in srgb, var(--border-primary) 45%, transparent);
+  background: color-mix(in srgb, var(--surface-panel) 72%, transparent);
+  box-shadow: 0 4px 14px rgb(61 41 69 / 8%);
+  backdrop-filter: blur(8px);
+}
+
+.menuButton:hover {
+  border-color: color-mix(in srgb, var(--border-primary) 65%, transparent);
+  background: color-mix(in srgb, var(--surface-panel) 88%, transparent);
 }
 
 .menuButton + .menuButton {
