@@ -2,11 +2,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 24px;
+  justify-content: flex-start;
+  gap: 18px;
   width: 100%;
   min-height: 100%;
-  padding: 20px 16px 28px;
+  padding: 22px 18px 24px;
+  box-sizing: border-box;
 }
 
 .menu {
@@ -15,15 +16,37 @@
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 20px;
-  width: min(240px, 100%);
+  width: min(100%, 420px);
 
   animation: fadeIn 1s ease;
 }
 
-.menuButton {
+.primaryAction {
   width: 100%;
+  min-height: 44px;
+  border-radius: 12px;
+}
+
+.secondaryAction {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 42px;
+  padding: 8px 4px;
+  color: var(--text-primary);
+  font-size: 14px;
+  text-align: left;
+  border: 0;
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--border-primary) 24%, transparent);
+  background: transparent;
+  cursor: pointer;
+}
+
+.secondaryAction span:last-child {
+  font-size: 19px;
+  opacity: 0.58;
 }
 
 @keyframes fadeIn {

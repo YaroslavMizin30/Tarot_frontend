@@ -18,6 +18,10 @@ export interface ModalProps {
    */
   className?: string;
   /**
+   * Custom class for the overlay container
+   */
+  overlayClassName?: string;
+  /**
    * Custom class for modal content
    */
   contentClassName?: string;

@@ -24,6 +24,13 @@ const TRANSLATIONS_EN = {
   'No': 'No',
   'Interpreting': 'Interpreting',
   'Unfold the card': 'Unfold the card',
+  'Reveal card': 'Reveal card',
+  'Your message for today is hidden': 'Your message for today is hidden',
+  'About this card': 'About this card',
+  'Card meaning': 'Card meaning',
+  'Daily interpretation': 'Your message for today',
+  'Reversed card': 'Reversed card',
+  'Back': 'Back',
 
   'inverted': 'inverted',
   'upright': 'upright',

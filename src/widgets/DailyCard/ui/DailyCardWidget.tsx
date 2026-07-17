@@ -1,35 +1,29 @@
-import {
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { useEffect, useState } from 'react';
 
-import TarotCard from '@/entities/TarotCard';
+import TarotCard, { getCardInfoI18n } from '@/entities/TarotCard';
 import useLocales from '@/shared/hooks/useLocales';
 import TRANSLATIONS_EN from '@/shared/locales/en/daily';
 import TRANSLATIONS_RU from '@/shared/locales/ru/daily';
 import Button from '@/shared/ui/Button';
 import GlassLoader from '@/shared/ui/GlassLoader';
+import Modal from '@/shared/ui/Modal';
 import { getTodayString } from '@/shared/utils/getTodayString';
 import { getNextMidnight } from '@/shared/utils/getNextMidnight';
 
 import { useDailyCard } from '../model/useDailyCard';
-import { DailyCardTimer } from './DailyCardTimer';
-
 import styles from './DailyCardWidget.module.css';
 
 interface DailyCardContentProps {
   areTranslationsReady: boolean;
   dayKey: string;
-  onTimerFinish: () => void;
 }
 
 const DailyCardContent = ({
   areTranslationsReady,
   dayKey,
-  onTimerFinish,
 }: DailyCardContentProps) => {
   const { i18n } = useLocales();
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const {
     card,
     hasDataError,
@@ -38,23 +32,80 @@ const DailyCardContent = ({
     interpretationError,
     isBooting,
     isRevealed,
-    nextAvailableAt,
     retryInterpretation,
     retryData,
     retryRevealSave,
     revealCard,
   } = useDailyCard(dayKey, areTranslationsReady);
 
+  const cardInfo = card ? getCardInfoI18n(card.name, i18n) : undefined;
   const isInterpretationPending =
     isRevealed && interpretation.length === 0 && !interpretationError;
+  const canShowDetails =
+    isRevealed && interpretation.length > 0 && Boolean(cardInfo);
 
   return (
     <section className={styles.widget} aria-labelledby={'daily-card-title'}>
-      <h2 id={'daily-card-title'} className={styles.title}>
-        {i18n('Card of the day')}
-      </h2>
+      <div className={styles.hero}>
+        <div className={styles.summary}>
+          <span className={styles.eyebrow}>{i18n('Card of the day')}</span>
 
-      <div className={styles.content}>
+          <h1 id={'daily-card-title'} className={styles.title}>
+            {isRevealed && cardInfo
+              ? cardInfo.name
+              : i18n('Your message for today is hidden')}
+          </h1>
+
+          {isRevealed && cardInfo ? (
+            <>
+              <p className={styles.meaning}>{cardInfo.meanings}</p>
+
+              {card?.isInverted && (
+                <span className={styles.orientation}>
+                  {i18n('Reversed card')}
+                </span>
+              )}
+            </>
+          ) : (
+            <p className={styles.hiddenHint}>{i18n('Unfold the card')}</p>
+          )}
+
+          <div className={styles.actions}>
+            {hasDataError ? (
+              <Button className={styles.actionButton} onClick={retryData}>
+                {i18n('Try again')}
+              </Button>
+            ) : !isBooting && hasRevealSaveError ? (
+              <Button
+                className={styles.actionButton}
+                onClick={retryRevealSave}
+              >
+                {i18n('Try again')}
+              </Button>
+            ) : !isBooting && !isRevealed ? (
+              <Button className={styles.actionButton} onClick={revealCard}>
+                {i18n('Reveal card')}
+              </Button>
+            ) : isInterpretationPending ? (
+              <span className={styles.pending}>{i18n('Interpreting')}…</span>
+            ) : interpretationError ? (
+              <Button
+                className={styles.actionButton}
+                onClick={retryInterpretation}
+              >
+                {i18n('Try again')}
+              </Button>
+            ) : canShowDetails ? (
+              <Button
+                className={styles.detailsButton}
+                onClick={() => setIsDetailsOpen(true)}
+              >
+                {i18n('About this card')}
+              </Button>
+            ) : null}
+          </div>
+        </div>
+
         <div className={styles.cardColumn}>
           {isBooting || !card ? (
             <div className={styles.cardPlaceholder}>
@@ -74,74 +125,62 @@ const DailyCardContent = ({
             />
           )}
 
-          <div className={styles.timerSlot}>
-            {hasDataError ? (
-              <Button
-                className={styles.timerRetryButton}
-                onClick={retryData}
-              >
-                {i18n('Try again')}
-              </Button>
-            ) : !isBooting && hasRevealSaveError ? (
-              <Button
-                className={styles.timerRetryButton}
-                onClick={retryRevealSave}
-              >
-                {i18n('Try again')}
-              </Button>
-            ) : !isBooting && isRevealed && nextAvailableAt ? (
-              <DailyCardTimer
-                targetDate={nextAvailableAt}
-                onFinish={onTimerFinish}
-              />
-            ) : !isBooting && !isRevealed ? (
-              <span className={styles.revealHint}>
-                {i18n('Unfold the card')}
-              </span>
-            ) : null}
-          </div>
         </div>
+      </div>
 
-        <div
-          className={`${styles.interpretationPanel} ${isRevealed && !isBooting ? styles.interpretationPanelVisible : ''}`}
-          aria-busy={isInterpretationPending}
-          aria-hidden={!isRevealed}
+      {cardInfo && canShowDetails && (
+        <Modal
+          isOpen={isDetailsOpen}
+          onClose={() => setIsDetailsOpen(false)}
+          isClosable={false}
+          overlayClassName={styles.detailsOverlay}
+          className={styles.detailsScreen}
+          contentClassName={`${styles.detailsContent} custom-scrollbar`}
         >
-          {!isBooting && isInterpretationPending && <GlassLoader />}
-
-          {!isBooting && isRevealed && interpretation.length > 0 && (
-            <div
-              className={`${styles.interpretationText} custom-scrollbar`}
+          <header className={styles.detailsHeader}>
+            <button
+              type={'button'}
+              className={styles.backButton}
+              onClick={() => setIsDetailsOpen(false)}
             >
+              <span aria-hidden={'true'}>←</span>
+              {i18n('Back')}
+            </button>
+          </header>
+
+          <div className={styles.detailsBody}>
+            <span className={styles.sheetEyebrow}>
+              {i18n('Card of the day')}
+            </span>
+            <h2 className={styles.sheetTitle}>{cardInfo.name}</h2>
+
+            {card?.isInverted && (
+              <span className={styles.sheetOrientation}>
+                {i18n('Reversed card')}
+              </span>
+            )}
+
+            <section className={styles.detailsSection}>
+              <h3>{i18n('Daily interpretation')}</h3>
               {interpretation.map((paragraph, index) => (
                 <p key={`${paragraph}-${index}`}>{paragraph}</p>
               ))}
-            </div>
-          )}
+            </section>
 
-          {!isBooting && isRevealed && interpretationError && (
-            <div className={styles.interpretationError}>
-              <span>{interpretationError}</span>
-              <Button
-                className={styles.retryButton}
-                onClick={retryInterpretation}
-              >
-                {i18n('Try again')}
-              </Button>
-            </div>
-          )}
-        </div>
-      </div>
+            <section className={styles.detailsSection}>
+              <h3>{i18n('Card meaning')}</h3>
+              <p>{cardInfo.meanings}</p>
+              <p>{cardInfo.description}</p>
+            </section>
+          </div>
+        </Modal>
+      )}
     </section>
   );
 };
 
 export const DailyCardWidget = () => {
-  const {
-    addTranslations,
-    locale,
-    translations,
-  } = useLocales();
+  const { addTranslations, locale, translations } = useLocales();
   const [dayKey, setDayKey] = useState(getTodayString);
 
   const translationsForLocale =
@@ -154,10 +193,6 @@ export const DailyCardWidget = () => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
   }, [addTranslations]);
 
-  const handleTimerFinish = useCallback(() => {
-    setDayKey(getTodayString());
-  }, []);
-
   useEffect(() => {
     const nextMidnight = getNextMidnight(new Date());
 
@@ -165,10 +200,7 @@ export const DailyCardWidget = () => {
       return;
     }
 
-    const delay = Math.max(
-      nextMidnight.getTime() - Date.now() + 250,
-      250,
-    );
+    const delay = Math.max(nextMidnight.getTime() - Date.now() + 250, 250);
     const timeoutId = window.setTimeout(() => {
       setDayKey(getTodayString());
     }, delay);
@@ -181,7 +213,6 @@ export const DailyCardWidget = () => {
       key={dayKey}
       areTranslationsReady={areTranslationsReady}
       dayKey={dayKey}
-      onTimerFinish={handleTimerFinish}
     />
   );
 };

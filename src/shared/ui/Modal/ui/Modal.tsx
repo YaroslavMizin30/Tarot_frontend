@@ -8,6 +8,7 @@ export const Modal: FC<ModalProps> = (props) => {
   const {
     className = '',
     contentClassName = '',
+    overlayClassName = '',
     children,
     isOpen,
     onClose,
@@ -16,17 +17,25 @@ export const Modal: FC<ModalProps> = (props) => {
 
   return (
     <div
-      className={styles.overlay}
+      className={`${styles.overlay} ${overlayClassName}`}
       style={{ display: isOpen ? 'flex' : 'none' }}
+      role={'presentation'}
     >
       <div
         className={`${styles.modal} ${className}`}
         style={{ display: isOpen ? 'flex' : 'none' }}
+        role={'dialog'}
+        aria-modal={'true'}
       >
         {isClosable && (
-          <div className={styles['icon-wrapper']} onClick={onClose}>
+          <button
+            type={'button'}
+            className={styles['icon-wrapper']}
+            onClick={onClose}
+            aria-label={'Close'}
+          >
             <div className={styles['close-icon']}></div>
-          </div>
+          </button>
         )}
 
         <div className={`${styles.content} ${contentClassName}`}>

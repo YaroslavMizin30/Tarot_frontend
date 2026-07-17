@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 
 import type { TarotCardProps } from './Card.props';
@@ -28,6 +28,10 @@ export const TarotCard = forwardRef<HTMLDivElement, TarotCardProps>(
 
     const [isCardReversed, setIsReversed] = useState(isReversed);
     const [isLoaded, setIsLoaded] = useState(!hasLoadingState);
+
+    useEffect(() => {
+      setIsReversed(isReversed);
+    }, [isReversed]);
 
     const handleImageLoad = () => {
       if (hasLoadingState) {

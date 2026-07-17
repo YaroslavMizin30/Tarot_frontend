@@ -24,6 +24,13 @@ const TRANSLATIONS_RU = {
   'No': 'Нет',
   'Interpreting': 'Интерпретация',
   'Unfold the card': 'Переверните карту',
+  'Reveal card': 'Открыть карту',
+  'Your message for today is hidden': 'Ваше послание на сегодня пока скрыто',
+  'About this card': 'Подробнее о карте',
+  'Card meaning': 'Значение карты',
+  'Daily interpretation': 'Послание на сегодня',
+  'Reversed card': 'Перевёрнутая карта',
+  'Back': 'Назад',
 
   'inverted': 'перевернута',
   'upright': 'в прямом положении',
