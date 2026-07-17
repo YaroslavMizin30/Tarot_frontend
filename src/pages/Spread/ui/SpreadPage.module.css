@@ -41,7 +41,7 @@
 }
 
 .interpretation {
-  background-color: #544e4e89;
+  background-color: var(--surface-panel);
 }
 
 .torchComposition {

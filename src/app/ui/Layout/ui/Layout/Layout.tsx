@@ -1,7 +1,6 @@
 import { Outlet, useNavigation, useLocation } from 'react-router';
 
 import Spinner from '@/shared/ui/Spinner';
-import Zodiac from '@/shared/ui/Zodiac';
 
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -34,16 +33,16 @@ export const Layout = () => {
 
   const themeConfig = {
     standard: {
-      header: '#001d73',
-      footer: '#8b3f85',
+      header: '#35245c',
+      footer: '#f0d6e5',
     },
     gray: {
-      header: '#282e51',
-      footer: '#565b70',
+      header: '#2d3348',
+      footer: '#e2e4e9',
     },
     bronze: {
-      header: '#6b2700',
-      footer: '#7a3f36',
+      header: '#552b18',
+      footer: '#f0dcc4',
     },
   };
 
@@ -78,7 +77,6 @@ export const Layout = () => {
             <TorchComposition />
           )}
 
-          <Zodiac sign={user?.sign} className={styles.zodiac} />
         </div>
 
         {isLoading || isAuthenticating ? (

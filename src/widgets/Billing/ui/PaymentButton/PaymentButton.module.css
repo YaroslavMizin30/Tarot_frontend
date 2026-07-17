@@ -8,7 +8,7 @@
   border-radius: 12px;
   font-size: 14px;
   padding: 15px;
-  background-color: #544e4e89;
+  background-color: var(--surface-panel);
   box-shadow: inset 0px 0px 25px -5px #f3ed7e;
 }
 

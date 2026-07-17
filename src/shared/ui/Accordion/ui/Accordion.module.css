@@ -33,7 +33,7 @@
   transition: transform 0.3s ease;
   transform: rotate(-90deg);
 
-  color: var(--text-secondary);
+  color: inherit;
 }
 
 .arrow--open {

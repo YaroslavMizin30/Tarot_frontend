@@ -5,15 +5,15 @@
 }
 
 .cost {
-  color: var(--text-secondary);
-  text-shadow: var(--text-secondary) 1px 1px 5px;
+  color: inherit;
+  text-shadow: currentColor 1px 1px 5px;
 }
 
 .pentacle {
   margin-left: 3px;
   width: 16px;
   height: 16px;
-  color: var(--text-secondary);
+  color: inherit;
 }
 
 .svg {

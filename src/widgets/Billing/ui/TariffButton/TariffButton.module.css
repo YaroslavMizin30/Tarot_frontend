@@ -8,7 +8,7 @@
   border: 1px solid var(--border-secondary);
   border-radius: 10px;
   color: var(--text-primary);
-  background-color: #544e4e89;
+  background-color: var(--surface-panel);
 }
 
 .pentacle {

@@ -41,7 +41,7 @@
 }
 
 .feed {
-  background-color: #544e4e89;
+  background-color: var(--surface-panel);
   height: 100%;
   width: 100%;
   border-top-left-radius: 0 !important;
