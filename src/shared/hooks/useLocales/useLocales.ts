@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import {
   useAppDispatch,
   useAppSelector,
@@ -19,11 +21,12 @@ export const useLocales = (): UseLocalesResult => {
     (state: RootState) => state.locales.value.locale,
   );
 
-  const addTranslations = (
-    translations: Record<`${Locale}`, Record<string, string>>,
-  ) => {
-    dispatch(preloadTranslations(translations[locale]));
-  };
+  const addTranslations = useCallback(
+    (translations: Record<`${Locale}`, Record<string, string>>) => {
+      dispatch(preloadTranslations(translations[locale]));
+    },
+    [dispatch, locale],
+  );
 
   const changeLanguage = (id: Locale) => {
     if (id === locale) {

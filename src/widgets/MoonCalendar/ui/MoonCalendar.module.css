@@ -1,0 +1,84 @@
+.widget {
+  width: 100%;
+  color: var(--text-primary);
+}
+
+.title {
+  margin: 0 0 12px;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+  width: 100%;
+}
+
+.weekday {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 24px;
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.cell,
+.placeholder {
+  min-width: 0;
+  min-height: 50px;
+}
+
+.cell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 0;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--text-primary);
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.cell:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.cell:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 1px;
+}
+
+.cell:disabled {
+  cursor: default;
+  opacity: 0.35;
+}
+
+.cellToday {
+  border-color: rgba(255, 255, 255, 0.55);
+}
+
+.cellSelected {
+  border-color: var(--accent-primary, #8a7cff);
+  background-color: rgba(138, 124, 255, 0.22);
+}
+
+.moonPlaceholder {
+  width: 30px;
+  height: 30px;
+}
+
+.dayLabel {
+  margin-top: 3px;
+  font-size: 11px;
+  line-height: 1;
+}

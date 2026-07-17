@@ -21,7 +21,7 @@ export const useInterpretation = (options: {
   const [spreadId, setSpreadId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const { user, refetchUser } = useUser();
+  const { user } = useUser();
   const { requireBalance, charge } = useBalance();
   const queryClient = useQueryClient();
 

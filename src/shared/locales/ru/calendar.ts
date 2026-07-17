@@ -35,6 +35,10 @@ const TRANSLATIONS_RU = {
 
   'Phase': 'Фаза',
   'Next phases': 'Следующие фазы',
+  'Loading moon calendar...': 'Загружаем лунный календарь...',
+  'Unable to load the moon calendar.':
+    'Не удалось загрузить лунный календарь.',
+  'Moon calendar data is unavailable.': 'Данные лунного календаря недоступны.',
 
   'Moon': 'Луна',
   'New Moon': 'Новая луна',

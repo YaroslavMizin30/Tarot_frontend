@@ -35,6 +35,9 @@ const TRANSLATIONS_EN = {
 
   'Phase': 'Phase',
   'Next phases': 'Next phases',
+  'Loading moon calendar...': 'Loading moon calendar...',
+  'Unable to load the moon calendar.': 'Unable to load the moon calendar.',
+  'Moon calendar data is unavailable.': 'Moon calendar data is unavailable.',
 
   'Moon': 'Moon',
   'New Moon': 'New Moon',

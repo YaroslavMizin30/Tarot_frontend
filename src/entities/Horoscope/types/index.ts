@@ -84,35 +84,55 @@ export type MoonPhaseName =
   | 'Last Quarter'
   | 'Waning Crescent';
 
-export interface CalendarResponse {
+export type MoonCalendarZodiacSign = ZodiacSign | ZodiacSignId;
+
+export interface MoonCalendarPhase {
+  name: MoonPhaseName;
+  phaseAngleDeg: number;
+  illumination: number;
+  ageDays: number;
+  distanceKm: number;
+  isWaxing: boolean;
+}
+
+export interface MoonCalendarNextPhases {
+  newMoon: string;
+  firstQuarter: string;
+  fullMoon: string;
+  lastQuarter: string;
+}
+
+export interface MoonCalendarZodiac {
+  sign: MoonCalendarZodiacSign;
+  signId: MoonCalendarZodiacSign;
+  degree: number;
+  zodiacType: string;
+}
+
+/** Astronomical data stored in the `data` JSON column. */
+export interface MoonCalendarData {
   timestamp: string;
-  phase: {
-    name: MoonPhaseName;
-    phase_angle_deg: number;
-    illumination: number;
-    age_days: number;
-    distance_km: number;
-    is_waxing: false;
-  };
-  next_phases: {
-    new_moon: string;
-    first_quarter: string;
-    full_moon: string;
-    last_quarter: string;
-  };
-  zodiac: {
-    sign: ZodiacSign;
-    sign_id: ZodiacSign;
-    degree: number;
-    zodiac_type: string;
-  };
-  interpretation: {
-    key: string;
-    title: string;
-    body: string;
-    tone: string;
-    tags: string[];
-  };
+  phase: MoonCalendarPhase;
+  nextPhases: MoonCalendarNextPhases;
+  zodiac: MoonCalendarZodiac;
+}
+
+/** Localized interpretation stored in the `en` or `ru` JSON column. */
+export interface MoonCalendarLocalization {
+  key: string;
+  title: string;
+  body: string;
+  tone: string;
+  tags: string[];
+}
+
+/** A normalized API row representing one calendar day. */
+export interface MoonCalendarEntry {
+  /** Calendar date normalized to `yyyy-mm-dd`. */
+  date: string;
+  data: MoonCalendarData;
+  en: MoonCalendarLocalization | null;
+  ru: MoonCalendarLocalization | null;
 }
 
 export type ZodiacType = 'tropical' | 'sidereal' | 'Tropical' | 'Sidereal';
