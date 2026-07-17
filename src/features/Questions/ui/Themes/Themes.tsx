@@ -11,6 +11,7 @@ import { SPREADS } from '@/features/TarotSpread';
 import type { ThemeProps } from './Themes.props';
 import type { Question } from '../../model/types/questions';
 import { ThemeIcon, type ThemeIconName } from './ThemeIcon';
+import { QuestionCardFan } from './QuestionCardFan';
 
 import styles from './Themes.module.css';
 
@@ -84,6 +85,7 @@ const Themes: FC<ThemeProps> = (props) => {
         )}`}
         <Pentacle className={styles.priceIcon} />
       </span>
+      <QuestionCardFan className={styles.cardFan} />
     </button>
   );
 
