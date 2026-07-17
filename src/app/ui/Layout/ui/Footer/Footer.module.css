@@ -25,7 +25,7 @@
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 
   font-size: 12px;
-  color: var(--text-primary);
+  color: var(--navigation-text);
 
   transition: opacity 1s ease;
 }
@@ -41,8 +41,8 @@
   opacity: 0.85;
 
   border-radius: 10px;
-  background-color: var(--gradient-secondary);
-  box-shadow: 0px -9px 20px -6px var(--gradient-secondary);
+  background-color: var(--navigation-background);
+  box-shadow: 0px -9px 20px -6px var(--navigation-background);
   filter: blur(3px);
 }
 
@@ -54,13 +54,13 @@
   padding: 3px;
   opacity: 0.8;
 
-  border: 1.5px solid var(--text-primary);
+  border: 1.5px solid var(--navigation-text);
   border-bottom: none;
   border-radius: 10px;
   z-index: 500;
 }
 
 .active {
-  box-shadow: inset 0px 5px 20px 0px var(--text-primary);
+  box-shadow: inset 0px 5px 20px 0px var(--navigation-text);
   opacity: 1;
 }

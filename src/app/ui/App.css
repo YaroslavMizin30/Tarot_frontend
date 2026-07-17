@@ -11,7 +11,7 @@
   --background-primary: #ffdb88;
   --background-secondary: #703f00;
 
-  --gradient-primary: #ff91f0;
+  --gradient-primary: #8b3f85;
   --gradient-secondary: #001d73;
 
   --border-primary: #703f00;
@@ -22,40 +22,65 @@
   --text-primary: #ffdb88;
   --text-secondary: #703f00;
   --text-default: #703f00;
+
+  /* Semantic roles keep component contrast stable between themes. */
+  --surface-control: #ffdb88;
+  --text-on-control: #703f00;
+  --surface-selected: #703f00;
+  --text-on-selected: #ffdb88;
+  --navigation-background: #001d73;
+  --navigation-text: #ffdb88;
+  --border-interactive: #ffdb88;
 }
 
 :root[data-theme='gray'] {
   --background-primary: #4e378b;
-  --background-secondary: #8f8f8f;
+  --background-secondary: #444858;
 
-  --gradient-primary: #dadada;
+  --gradient-primary: #565b70;
   --gradient-secondary: #282e51;
 
-  --border-primary: #707070;
-  --border-secondary: #9b9b9b;
+  --border-primary: #b8acd8;
+  --border-secondary: #d3c8e8;
 
   --shadow-primary: #e55bfb;
 
-  --text-primary: #e0cc9e;
-  --text-secondary: #e0cc9e;
+  --text-primary: #f1e6cc;
+  --text-secondary: #f1e6cc;
   --text-default: #703f00;
+
+  --surface-control: #4e378b;
+  --text-on-control: #f1e6cc;
+  --surface-selected: #f1e6cc;
+  --text-on-selected: #282e51;
+  --navigation-background: #282e51;
+  --navigation-text: #f1e6cc;
+  --border-interactive: #d3c8e8;
 }
 
 :root[data-theme='bronze'] {
   --background-primary: #311600;
-  --background-secondary: #d7973f;
+  --background-secondary: #77401e;
 
-  --gradient-primary: #db9d9d;
+  --gradient-primary: #7a3f36;
   --gradient-secondary: #6b2700;
 
-  --border-primary: #8d6767;
-  --border-secondary: #d9b5b5;
+  --border-primary: #c9976b;
+  --border-secondary: #e0bc91;
 
   --shadow-primary: #fb5b5b;
 
-  --text-primary: #e0cc9e;
-  --text-secondary: #e0cc9e;
+  --text-primary: #f4e5cc;
+  --text-secondary: #f4e5cc;
   --text-default: #703f00;
+
+  --surface-control: #311600;
+  --text-on-control: #f4e5cc;
+  --surface-selected: #f4e5cc;
+  --text-on-selected: #311600;
+  --navigation-background: #6b2700;
+  --navigation-text: #f4e5cc;
+  --border-interactive: #e0bc91;
 }
 
 .custom-scrollbar::-webkit-scrollbar {

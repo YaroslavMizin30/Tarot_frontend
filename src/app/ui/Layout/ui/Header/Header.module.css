@@ -9,9 +9,9 @@
   width: 100%;
   height: 30px;
 
-  color: var(--border-primary);
+  color: var(--navigation-text);
 
-  background-color: var(--gradient-secondary);
+  background-color: var(--navigation-background);
 }
 
 .header-mobile {
@@ -27,7 +27,7 @@
   width: 30px;
   height: 30px;
 
-  color: var(--text-primary);
+  color: var(--navigation-text);
 
   cursor: pointer;
 }
@@ -58,7 +58,7 @@
 .leftSection {
   display: flex;
   align-items: center;
-  color: var(--text-primary);
+  color: var(--navigation-text);
   padding-left: 10px;
 }
 
@@ -93,6 +93,7 @@
   flex-direction: column;
 
   background-color: var(--background-primary);
+  color: var(--text-on-control);
   border: 1px solid var(--border-primary);
   border-radius: 10px;
 }
@@ -125,8 +126,8 @@
 }
 
 .selected {
-  background-color: var(--background-secondary);
-  color: var(--text-primary);
+  background-color: var(--surface-selected);
+  color: var(--text-on-selected);
 }
 
 .tooltip {

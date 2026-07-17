@@ -35,15 +35,15 @@ export const Layout = () => {
   const themeConfig = {
     standard: {
       header: '#001d73',
-      footer: '#ff91f0',
+      footer: '#8b3f85',
     },
     gray: {
       header: '#282e51',
-      footer: '#dadada',
+      footer: '#565b70',
     },
     bronze: {
       header: '#6b2700',
-      footer: '#db9d9d',
+      footer: '#7a3f36',
     },
   };
 

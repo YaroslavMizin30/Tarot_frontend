@@ -12,9 +12,9 @@
 
   cursor: pointer;
   transition: all 0.2s ease;
-  background-color: var(--background-primary);
-  color: var(--text-secondary);
-  border: 1px solid var(--border-primary);
+  background-color: var(--surface-control);
+  color: var(--text-on-control);
+  border: 1px solid var(--border-interactive);
   border-radius: 8px;
   white-space: nowrap;
 }
