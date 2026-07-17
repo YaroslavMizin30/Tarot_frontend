@@ -25,6 +25,10 @@ export type SpreadDraftResult =
       current: number;
     };
 
+export type PendingSpreadDraftResult =
+  | { status: 'empty' }
+  | { status: 'found'; draftId: string; spread: SpreadParams };
+
 export const enum SpreadType {
   SINGLE = 'single',
   THREE = 'three',

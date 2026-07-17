@@ -24,6 +24,8 @@ export const queryKeys = {
   spreads: {
     all: ['spreads'] as const,
     byUserId: (userId: string | number) => ['spreads', String(userId)] as const,
+    pending: (userId: string | number) =>
+      ['spreads', 'pending', String(userId)] as const,
   },
   rating: {
     all: ['rating'] as const,

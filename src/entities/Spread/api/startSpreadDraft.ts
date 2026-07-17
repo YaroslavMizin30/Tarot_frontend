@@ -2,7 +2,11 @@ import { v4 } from 'uuid';
 
 import { ensureSupabase } from '@/shared/api/supabase';
 
-import type { SpreadDraftResult, SpreadParams } from '../types';
+import type {
+  PendingSpreadDraftResult,
+  SpreadDraftResult,
+  SpreadParams,
+} from '../types';
 import { spreadParamsFromRow, type SpreadRow } from './spreadMapper';
 
 export const isSpreadDraftId = (value: unknown): value is string =>
@@ -85,4 +89,25 @@ export const resumeSpreadDraft = async (
   if (error) throw error;
 
   return parseDraftResult(data);
+};
+
+export const getPendingSpreadDraft = async (): Promise<PendingSpreadDraftResult> => {
+  await ensureSupabase();
+
+  const { data, error } = await window.supabase.functions.invoke(
+    'tarot-reading',
+    { body: { action: 'pending' } },
+  );
+
+  if (error) throw error;
+  if (!data || data.status === 'empty') return { status: 'empty' };
+  if (data.status !== 'found' || !isSpreadDraftId(data.draftId) || !data.spread) {
+    throw new Error('Invalid pending spread response');
+  }
+
+  return {
+    status: 'found',
+    draftId: data.draftId,
+    spread: spreadParamsFromRow(data.spread as SpreadRow),
+  };
 };

@@ -1,7 +1,10 @@
 import { useNavigate } from 'react-router';
+import { useQuery } from '@tanstack/react-query';
 
 import useLocales from '@/shared/hooks/useLocales';
-import { isSpreadDraftId, useSpreads } from '@/entities/Spread';
+import { getPendingSpreadDraft } from '@/entities/Spread';
+import { useUser } from '@/entities/User';
+import { queryKeys } from '@/shared/api/queryKeys';
 import DailyCardWidget from '@/widgets/DailyCard';
 import DailyGuidanceWidget from '@/widgets/DailyGuidance';
 import DailyReflection from '@/widgets/DailyReflection';
@@ -13,18 +16,16 @@ export const MainPage = () => {
   const navigate = useNavigate();
 
   const { i18n } = useLocales();
-  const { spreads } = useSpreads();
-
-  const resumableSpread = spreads
-    ?.filter(({ spreadId, status }) =>
-      isSpreadDraftId(spreadId) &&
-      (status === 'draft' || status === 'charged' || status === 'failed')
-    )
-    .sort((first, second) =>
-      (second.updatedAt ?? second.date).localeCompare(
-        first.updatedAt ?? first.date,
-      )
-    )[0];
+  const { user } = useUser();
+  const { data: pendingDraft } = useQuery({
+    queryKey: queryKeys.spreads.pending(user?.id ?? 'no-user'),
+    queryFn: getPendingSpreadDraft,
+    enabled: Boolean(user),
+    staleTime: 0,
+  });
+  const resumableSpread = pendingDraft?.status === 'found'
+    ? pendingDraft.spread
+    : null;
 
   return (
     <div className={styles.container}>
