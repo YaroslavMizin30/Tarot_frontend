@@ -35,6 +35,7 @@ const TRANSLATIONS_RU = {
 
   'Phase': 'Фаза',
   'Next phases': 'Следующие фазы',
+  'Moon day': 'Лунный день',
   'Loading moon calendar...': 'Загружаем лунный календарь...',
   'Unable to load the moon calendar.':
     'Не удалось загрузить лунный календарь.',

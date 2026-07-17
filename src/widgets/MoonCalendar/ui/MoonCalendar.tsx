@@ -2,10 +2,12 @@ import { useMemo } from 'react';
 
 import {
   createMoonCalendarIndex,
+  getZodiacTranslationKey,
   Moon,
   parseIsoDate,
   todayIsoString,
 } from '@/entities/Horoscope';
+import Zodiac from '@/shared/ui/Zodiac';
 
 import { WEEKDAYS_BY_LOCALE } from '../config/constants';
 import { buildMonthCells } from '../lib/calendar';
@@ -98,6 +100,7 @@ export const MoonCalendar = (props: MoonCalendarProps) => {
             ? dateFormatter.format(parsedDate)
             : cell.date;
           const phaseName = item?.data.phase.name;
+          const zodiac = item?.data.zodiac.sign;
 
           return (
             <button
@@ -107,13 +110,27 @@ export const MoonCalendar = (props: MoonCalendarProps) => {
               disabled={!item}
               onClick={() => item && onDaySelect(item)}
               aria-label={
-                phaseName ? `${accessibleDate}: ${phaseName}` : accessibleDate
+                phaseName
+                  ? `${accessibleDate}: ${phaseName}${
+                    zodiac ? `, ${getZodiacTranslationKey(zodiac)}` : ''
+                  }`
+                  : accessibleDate
               }
               aria-current={isToday ? 'date' : undefined}
               aria-pressed={isSelected}
             >
               {phaseName ? (
-                <Moon phase={phaseName} size={'s'} />
+                <div className={styles.moonWithZodiac} aria-hidden={'true'}>
+                  <Moon phase={phaseName} size={'s'} />
+
+                  {zodiac ? (
+                    <Zodiac
+                      sign={getZodiacTranslationKey(zodiac)}
+                      type={'small'}
+                      className={styles.zodiac}
+                    />
+                  ) : null}
+                </div>
               ) : (
                 <span className={styles.moonPlaceholder} aria-hidden={'true'} />
               )}

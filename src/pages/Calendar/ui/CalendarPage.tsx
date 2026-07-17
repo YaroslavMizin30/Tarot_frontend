@@ -13,6 +13,7 @@ import TRANSLATIONS_EN from '@/shared/locales/en/calendar';
 import TRANSLATIONS_RU from '@/shared/locales/ru/calendar';
 import useLocales from '@/shared/hooks/useLocales';
 import ArrowButton from '@/shared/ui/ArrowButton';
+import Zodiac from '@/shared/ui/Zodiac';
 import MoonCalendar from '@/widgets/MoonCalendar';
 
 import styles from './CalendarPage.module.css';
@@ -44,6 +45,11 @@ export const CalendarPage = () => {
   const effectiveSelectedDate = selectedItem?.date ?? null;
   const selectedDateValue = parseIsoDate(effectiveSelectedDate);
   const phase = selectedItem?.data.phase.name;
+  const moonAge = selectedItem?.data.phase.ageDays;
+  const moonDay =
+    typeof moonAge === 'number' && Number.isFinite(moonAge)
+      ? Math.min(30, Math.max(1, Math.floor(moonAge) + 1))
+      : null;
   const zodiac = selectedItem?.data.zodiac.sign;
   const localization = selectedItem
     ? getMoonCalendarLocalization(selectedItem, locale)
@@ -87,23 +93,37 @@ export const CalendarPage = () => {
                   <span>{i18n(phase)}</span>
 
                   {zodiac ? (
-                    <span>
-                      {` ${i18n('is in sign')} ${i18n(
-                        getZodiacTranslationKey(zodiac),
-                      )}.`}
-                    </span>
+                    <>
+                      <span>
+                        {`${i18n('is in sign')} ${i18n(
+                          getZodiacTranslationKey(zodiac),
+                        )}.`}
+                      </span>
+
+                      <div
+                        className={styles.currentZodiac}
+                        aria-hidden={'true'}
+                      >
+                        <Zodiac
+                          sign={getZodiacTranslationKey(zodiac)}
+                          type={'small'}
+                        />
+                      </div>
+                    </>
                   ) : null}
                 </div>
+
+                {moonDay ? (
+                  <div className={styles.moonDay}>
+                    {`${i18n('Moon day')}: ${moonDay}`}
+                  </div>
+                ) : null}
               </div>
 
-              {localization?.title ? (
-                <h2 className={styles.interpretationTitle}>
-                  {localization.title}
-                </h2>
-              ) : null}
-
               {localization?.body ? (
-                <p className={styles.interpretation}>{localization.body}</p>
+                <p className={`${styles.interpretation} custom-scrollbar`}>
+                  {localization.body}
+                </p>
               ) : null}
             </section>
 
