@@ -16,6 +16,11 @@ export const queryKeys = {
     month: ['ephemeris', 'week'] as const,
     week: ['ephemeris', 'month'] as const,
   },
+  dailyReflection: {
+    all: ['daily-reflection'] as const,
+    byUserDate: (userId: string | number, date: string) =>
+      ['daily-reflection', String(userId), date] as const,
+  },
   spreads: {
     all: ['spreads'] as const,
     byUserId: (userId: string | number) => ['spreads', String(userId)] as const,

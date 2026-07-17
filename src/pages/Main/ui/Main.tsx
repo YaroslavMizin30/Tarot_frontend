@@ -4,6 +4,7 @@ import useLocales from '@/shared/hooks/useLocales';
 import { isSpreadDraftId, useSpreads } from '@/entities/Spread';
 import DailyCardWidget from '@/widgets/DailyCard';
 import DailyGuidanceWidget from '@/widgets/DailyGuidance';
+import DailyReflection from '@/widgets/DailyReflection';
 import RouletteIcon from '@/shared/assets/svg/common/roulette_page.svg';
 
 import styles from './Main.module.css';
@@ -30,6 +31,8 @@ export const MainPage = () => {
       <DailyCardWidget />
 
       <DailyGuidanceWidget />
+
+      <DailyReflection />
 
       <div className={styles.actions}>
         <button

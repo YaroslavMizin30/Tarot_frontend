@@ -4,11 +4,40 @@
 }
 
 .hero {
+  position: relative;
+  isolation: isolate;
   display: grid;
   grid-template-columns: minmax(0, 1fr) 85px;
   align-items: center;
   gap: 18px;
   min-height: 190px;
+  overflow: hidden;
+  border-radius: 18px;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 1px;
+  right: 62px;
+  width: 188px;
+  height: 188px;
+  pointer-events: none;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--surface-control) 34%, transparent);
+  opacity: 0.24;
+  filter: blur(16px);
+  -webkit-mask: radial-gradient(
+    circle at 66% 43%,
+    transparent 0 49%,
+    #000 50%
+  );
+  mask: radial-gradient(
+    circle at 66% 43%,
+    transparent 0 49%,
+    #000 50%
+  );
 }
 
 .summary {

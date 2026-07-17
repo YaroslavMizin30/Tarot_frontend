@@ -82,7 +82,7 @@ export const Moon = (props: MoonProps) => {
               width={'124%'}
               height={'124%'}
             >
-              <feGaussianBlur stdDeviation={'3'} />
+              <feGaussianBlur stdDeviation={'4'} />
             </filter>
             <mask id={maskId}>
               <rect width={'100'} height={'100'} fill={'white'} />
@@ -98,7 +98,7 @@ export const Moon = (props: MoonProps) => {
             cy={'50'}
             r={'50'}
             fill={'#24242a'}
-            fillOpacity={'0.92'}
+            fillOpacity={'0.68'}
             mask={`url(#${maskId})`}
           />
         </svg>

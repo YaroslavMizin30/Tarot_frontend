@@ -92,7 +92,9 @@
 }
 
 .moon {
-  box-shadow: 0 0 12px 2px rgb(255 255 255 / 45%);
+  box-shadow:
+    0 5px 12px rgb(28 20 36 / 20%),
+    0 0 20px 3px rgb(255 255 255 / 24%);
 }
 
 .widget:focus-visible {

@@ -10,6 +10,7 @@ const TRANSLATIONS_EN = {
   'Continue spread': 'Continue spread',
   'Your unfinished spread': 'Your unfinished spread',
   'Astrological background': 'Astrological background',
+  'A question for yourself': 'A question for yourself',
 
   'Already here': 'Already here',
 

@@ -10,6 +10,7 @@ const TRANSLATIONS_RU = {
   'Continue spread': 'Продолжить расклад',
   'Your unfinished spread': 'Ваш незавершённый расклад',
   'Astrological background': 'Астрологический фон',
+  'A question for yourself': 'Вопрос для себя',
 
   'Already here': 'Уже тут',
 
