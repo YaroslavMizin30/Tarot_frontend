@@ -37,6 +37,8 @@ body {
   --navigation-background: #35245c;
   --navigation-text: #fff0c9;
   --border-interactive: #795286;
+  --card-cover-image: url('/assets/images/card/cover/back_v2.png');
+  --card-label-text: #fff8e8;
 }
 
 :root[data-theme='gray'] {
@@ -63,6 +65,8 @@ body {
   --navigation-background: #2d3348;
   --navigation-text: #f7f4ec;
   --border-interactive: #596077;
+  --card-cover-image: url('/assets/images/card/cover/back_gray_v2.png');
+  --card-label-text: #ffffff;
 }
 
 :root[data-theme='bronze'] {
@@ -89,6 +93,8 @@ body {
   --navigation-background: #552b18;
   --navigation-text: #fff0d2;
   --border-interactive: #77462b;
+  --card-cover-image: url('/assets/images/card/cover/back_bronze_v2.png');
+  --card-label-text: #fff4df;
 }
 
 .custom-scrollbar::-webkit-scrollbar {

@@ -47,11 +47,6 @@ export const TarotCard = forwardRef<HTMLDivElement, TarotCardProps>(
       }
     };
 
-    const theme = document.documentElement.getAttribute('data-theme') as
-      | 'standard'
-      | 'gray'
-      | 'bronze';
-
     return (
       <div
         className={`${styles.container} ${canTurnOver ? styles.clickable : ''} ${className} ${isInverted ? styles.inverted : ''} ${styles[`container-${size}`]}`}
@@ -66,19 +61,9 @@ export const TarotCard = forwardRef<HTMLDivElement, TarotCardProps>(
             height: isLoaded ? undefined : '0px',
           }}
         >
-          <div
-            className={cx('back', size, {
-              ['back-gray']: theme === 'gray',
-              ['back-bronze']: theme === 'bronze',
-            })}
-          />
+          <div className={cx('back', size)} />
 
-          <div
-            className={cx('front', size, {
-              ['front-gray']: theme === 'gray',
-              ['front-bronze']: theme === 'bronze',
-            })}
-          >
+          <div className={cx('front', size)}>
             <div className={styles['image-wrapper']}>
               <img
                 className={`${styles.image} ${isInverted && !isCardReversed ? styles.reversed : ''} ${styles[`image-${size}`]}`}
@@ -90,8 +75,6 @@ export const TarotCard = forwardRef<HTMLDivElement, TarotCardProps>(
             <div
               className={cx('footer', {
                 reversed: isInverted && !isCardReversed,
-                ['footer-gray']: theme === 'gray',
-                ['footer-bronze']: theme === 'bronze',
               })}
             >
               <h2 className={`${styles.name} ${styles[`name-${size}`]}`}>

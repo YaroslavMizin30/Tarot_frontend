@@ -35,7 +35,7 @@
   display: flex;
   flex-direction: column;
 
-  background-image: url('/assets/images/card/cover/back.jpeg');
+  background-image: var(--card-cover-image);
   background-size: cover;
   padding: 6px 6px 0px 6px;
 }
@@ -43,24 +43,8 @@
 .back {
   transform: rotateY(180deg);
 
-  background-image: url('/assets/images/card/cover/back.jpeg');
+  background-image: var(--card-cover-image);
   background-size: cover;
-}
-
-.front-gray {
-  background-image: url('/assets/images/card/cover/back_gray.png');
-}
-
-.front-bronze {
-  background-image: url('/assets/images/card/cover/back_bronze.png');
-}
-
-.back-gray {
-  background-image: url('/assets/images/card/cover/back_gray.png');
-}
-
-.back-bronze {
-  background-image: url('/assets/images/card/cover/back_bronze.png');
 }
 
 .image-wrapper {
@@ -71,28 +55,29 @@
 }
 
 .image {
+  display: block;
   height: 100%;
   width: auto;
 
-  border-radius: 10px;
+  border-radius: 2px;
 }
 
 .image-xs {
-  border-radius: 3px;
+  border-radius: 1px;
 }
 
 .image-s {
   height: 95%;
-  border-radius: 4px;
+  border-radius: 1px;
 }
 
 .image-m {
   height: 90%;
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 .image-l {
-  border-radius: 10px;
+  border-radius: 2px;
 }
 
 .footer {
@@ -104,15 +89,8 @@
   font-family: 'Monomakh';
   font-weight: 700;
   text-align: center;
-  color: #3e3e3e;
-}
-
-.footer-gray {
-  color: #fffb8d;
-}
-
-.footer-bronze {
-  color: #fffb8d;
+  color: var(--card-label-text);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
 }
 
 .name {
@@ -153,7 +131,7 @@
   height: 60px;
   min-width: 30px;
   min-height: 60px;
-  border-radius: 3px;
+  border-radius: 1px;
 }
 
 .container-s {
@@ -161,7 +139,7 @@
   height: 100px;
   min-width: 50px;
   min-height: 100px;
-  border-radius: 7px;
+  border-radius: 2px;
 }
 
 .container-m {
@@ -169,7 +147,7 @@
   height: 120px;
   min-width: 60px;
   min-height: 120px;
-  border-radius: 7px;
+  border-radius: 2px;
 }
 
 .container-l {
@@ -177,5 +155,5 @@
   height: 158px;
   min-width: 85px;
   min-height: 158px;
-  border-radius: 10px;
+  border-radius: 3px;
 }
