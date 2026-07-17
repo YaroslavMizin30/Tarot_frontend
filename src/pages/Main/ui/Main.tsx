@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import Button from '@/shared/ui/Button';
 import useLocales from '@/shared/hooks/useLocales';
 import DailyCardWidget from '@/widgets/DailyCard';
+import DailyGuidanceWidget from '@/widgets/DailyGuidance';
 import RouletteIcon from '@/shared/assets/svg/common/roulette_page.svg';
 
 import styles from './Main.module.css';
@@ -15,6 +16,8 @@ export const MainPage = () => {
   return (
     <div className={styles.container}>
       <DailyCardWidget />
+
+      <DailyGuidanceWidget />
 
       <div className={styles.actions}>
         <button

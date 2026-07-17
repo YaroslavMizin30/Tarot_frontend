@@ -4,7 +4,9 @@ import type { MoonPhaseName } from '../../types';
 
 export interface MoonProps {
   phase: MoonPhaseName;
-  size: 's' | 'l';
+  size: 's' | 'm' | 'l';
+  phaseAngleDeg?: number;
+  isWaxing?: boolean;
   className?: string;
   style?: CSSProperties;
 }

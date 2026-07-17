@@ -31,5 +31,9 @@ export {
   getZodiacTranslationKey,
 } from './lib/calendar';
 export { parseIsoDate, todayIsoString, toIsoDate } from './lib/date';
+export {
+  getDailyGuidance,
+  type DailyGuidance,
+} from './lib/dailyGuidance';
 export { Moon } from './ui/Moon/Moon';
 export { PRICES } from './config/price';

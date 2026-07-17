@@ -72,6 +72,8 @@ export const CalendarPage = () => {
               <div className={styles.summaryHeader}>
                 <Moon
                   phase={phase}
+                  phaseAngleDeg={selectedItem.data.phase.phaseAngleDeg}
+                  isWaxing={selectedItem.data.phase.isWaxing}
                   size={'l'}
                   className={styles.currentMoon}
                 />

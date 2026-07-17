@@ -7,6 +7,7 @@ const TRANSLATIONS_RU = {
   'Daily roulette': 'Ежедневная рулетка',
   'Bonuses and surprises': 'Бонусы и сюрпризы',
   'Go to Tarot': 'Перейти к Таро',
+  'Astrological background': 'Астрологический фон',
 
   'Already here': 'Уже тут',
 

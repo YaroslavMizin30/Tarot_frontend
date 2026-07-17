@@ -1,0 +1,117 @@
+.widget,
+.placeholder {
+  width: min(100%, 420px);
+  min-height: 122px;
+  border-radius: 16px;
+}
+
+.widget {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 60px;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 14px;
+  color: var(--text-primary);
+  text-align: left;
+  border: 1px solid
+    color-mix(in srgb, var(--border-primary) 30%, transparent);
+  background: color-mix(in srgb, var(--surface-panel) 84%, transparent);
+  box-shadow: 0 5px 18px rgb(61 41 69 / 7%);
+  cursor: pointer;
+}
+
+.placeholder {
+  position: relative;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--surface-panel) 68%, transparent);
+}
+
+.placeholder::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 25%,
+    rgb(255 255 255 / 32%) 45%,
+    transparent 65%
+  );
+  animation: shimmer 1.4s infinite linear;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.eyebrow {
+  margin-bottom: 4px;
+  font-size: 10px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  opacity: 0.62;
+}
+
+.contextRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.context {
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.signIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  transform: scale(0.85);
+}
+
+.summary {
+  display: -webkit-box;
+  margin-top: 6px;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 1.35;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+.moon {
+  box-shadow: 0 0 12px 2px rgb(255 255 255 / 45%);
+}
+
+.widget:focus-visible {
+  outline: 2px solid var(--border-primary);
+  outline-offset: 2px;
+}
+
+@keyframes shimmer {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .placeholder::after {
+    animation: none;
+  }
+}

@@ -121,7 +121,12 @@ export const MoonCalendar = (props: MoonCalendarProps) => {
             >
               {phaseName ? (
                 <div className={styles.moonWithZodiac} aria-hidden={'true'}>
-                  <Moon phase={phaseName} size={'s'} />
+                  <Moon
+                    phase={phaseName}
+                    phaseAngleDeg={item?.data.phase.phaseAngleDeg}
+                    isWaxing={item?.data.phase.isWaxing}
+                    size={'s'}
+                  />
 
                   {zodiac ? (
                     <Zodiac
