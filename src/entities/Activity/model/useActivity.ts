@@ -12,6 +12,8 @@ export const useActivity = () => {
 
   const {
     data: activity,
+    error,
+    isFetching,
     isLoading,
     refetch,
   } = useQuery({
@@ -28,6 +30,34 @@ export const useActivity = () => {
 
       return updateActivityApi(user.id, activity);
     },
+    onMutate: async (nextActivity) => {
+      const activityQueryKey = queryKeys.activity.byUserId(
+        user?.id ?? 'no-user',
+      );
+
+      await queryClient.cancelQueries({ queryKey: activityQueryKey });
+
+      const previousActivity = queryClient.getQueryData<Activity | null>(
+        activityQueryKey,
+      );
+
+      if (previousActivity) {
+        queryClient.setQueryData<Activity>(activityQueryKey, {
+          ...previousActivity,
+          ...nextActivity,
+        });
+      }
+
+      return { activityQueryKey, previousActivity };
+    },
+    onError: (_error, _activity, context) => {
+      if (context) {
+        queryClient.setQueryData(
+          context.activityQueryKey,
+          context.previousActivity,
+        );
+      }
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.activity.all });
     },
@@ -39,6 +69,8 @@ export const useActivity = () => {
 
   return {
     isLoading,
+    isFetching,
+    error,
     activity: activity ?? null,
     updateActivity,
     refetchActivity: refetch,

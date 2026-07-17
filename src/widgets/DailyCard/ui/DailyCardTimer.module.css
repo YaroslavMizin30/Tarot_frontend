@@ -1,0 +1,28 @@
+.timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  width: 85px;
+  height: 100%;
+
+  color: var(--text-primary);
+  text-align: center;
+}
+
+.label {
+  max-width: 85px;
+
+  font-size: 9px;
+  line-height: 1;
+  opacity: 0.78;
+}
+
+.digits {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  font-variant-numeric: tabular-nums;
+}

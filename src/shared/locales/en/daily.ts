@@ -9,10 +9,12 @@ const TRANSLATIONS_EN = {
   'Do not talk about user as a third person':
     'Do not talk about user as a third person',
   'Card of the day': 'Card of the day',
+  'daily-card': 'Card of the day',
   'Interpretation': 'Interpretation',
   "You've already had your card today": "You've already had your card today",
   'To spreads history': 'To spreads history',
   'Next card available in': 'Next card available in',
+  'Next card in': 'Next card in',
   'h': 'h',
   'm': 'm',
   's': 's',

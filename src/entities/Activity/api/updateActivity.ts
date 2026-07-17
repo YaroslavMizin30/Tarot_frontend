@@ -11,7 +11,7 @@ export const updateActivity = async (
   const userActivity = await getActivity(userId);
 
   if (userActivity) {
-    await updateRaw(
+    const updatedActivity = await updateRaw<Activity>(
       'activity',
       { ...activity },
       {
@@ -19,10 +19,18 @@ export const updateActivity = async (
         value: userId,
       },
     );
+
+    if (!updatedActivity?.length) {
+      throw new Error('Failed to update activity');
+    }
   } else {
-    await insertRaw('activity', {
+    const insertedActivity = await insertRaw<Activity>('activity', {
       ...activity,
       userId,
     });
+
+    if (!insertedActivity?.length) {
+      throw new Error('Failed to create activity');
+    }
   }
 };

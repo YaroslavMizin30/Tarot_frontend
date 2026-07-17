@@ -11,6 +11,8 @@ export const useSpreads = () => {
 
   const {
     data: spreads,
+    error,
+    isFetching,
     isLoading,
     refetch,
   } = useQuery({
@@ -29,6 +31,8 @@ export const useSpreads = () => {
 
   return {
     isLoading,
+    isFetching,
+    error,
     spreads,
     todaysSpreadsCount: todaysSpreads?.length ?? 0,
     fetchSpreads: refetch,

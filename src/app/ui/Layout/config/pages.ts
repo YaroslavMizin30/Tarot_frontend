@@ -1,10 +1,9 @@
-const TAROT_PAGES = ['/', '/reading', '/about', '/daily', '/history'];
+const TAROT_PAGES = ['/', '/reading', '/about', '/history'];
 const SETTING_PAGES = ['/settings', '/about-app'];
 const ASTROLOGY_PAGES = [
   '/astrology',
   '/natal-chart',
   '/horoscopes',
-  '/forecast',
   '/calendar',
 ];
 const BILLING_PAGES = ['/billing'];

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 
 import Button from '@/shared/ui/Button';
 import useLocales from '@/shared/hooks/useLocales';
+import DailyCardWidget from '@/widgets/DailyCard';
 
 import styles from './Main.module.css';
 
@@ -19,15 +20,9 @@ export const MainPage = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.menu}>
-        <Button
-          className={styles.menuButton}
-          value={'/daily'}
-          onClick={handleNavigationButtonClick}
-        >
-          {i18n('Card of the day')}
-        </Button>
+      <DailyCardWidget />
 
+      <div className={styles.menu}>
         <Button
           className={styles.menuButton}
           value={'/reading'}

@@ -1,7 +1,11 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
-import { useSpreads } from '@/entities/Spread';
+import {
+  DAILY_CARD_SPREAD_MARKER,
+  useSpreads,
+} from '@/entities/Spread';
+import { useActivity } from '@/entities/Activity';
 import TarotCard from '@/entities/TarotCard';
 
 import ArrowButton from '@/shared/ui/ArrowButton';
@@ -10,21 +14,40 @@ import TRANSLATIONS_EN from '@/shared/locales/en/history';
 import TRANSLATIONS_RU from '@/shared/locales/ru/history';
 import Button from '@/shared/ui/Button';
 import Spinner from '@/shared/ui/Spinner';
+import { getTodayString } from '@/shared/utils/getTodayString';
+import { isToday } from '@/shared/utils/isToday';
 
 import styles from './HistoryPage.module.css';
 
 export const HistoryPage = () => {
   const { spreads, isLoading: areSpreadsLoading } = useSpreads();
+  const { activity, isLoading: isActivityLoading } = useActivity();
 
   const navigate = useNavigate();
 
-  const { i18n, addTranslations, locale } = useLocales();
+  const { i18n, addTranslations } = useLocales();
+  const today = getTodayString();
+  const hasRevealedDailyCard = activity?.dailyCardLastDate
+    ? isToday(activity.dailyCardLastDate)
+    : false;
+
+  const visibleSpreads = spreads?.filter((spread) => {
+    if (spread.title !== DAILY_CARD_SPREAD_MARKER) {
+      return true;
+    }
+
+    if (!spread.interpretation.trim()) {
+      return false;
+    }
+
+    return spread.date !== today || hasRevealedDailyCard;
+  });
 
   useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
-  }, [locale]);
+  }, [addTranslations]);
 
-  if (areSpreadsLoading) {
+  if (areSpreadsLoading || isActivityLoading) {
     return <Spinner size={'l'} />;
   }
 
@@ -32,13 +55,18 @@ export const HistoryPage = () => {
     <div className={styles.container}>
       <h3 className={styles.title}>{i18n('Spreads history')}</h3>
 
-      {spreads && spreads.length > 0 ? (
+      {visibleSpreads && visibleSpreads.length > 0 ? (
         <div className={`${styles.spreads} custom-scrollbar`}>
-          {spreads.map((spread) => (
+          {visibleSpreads.map((spread) => (
             <div className={styles.spread} key={spread.spreadId}>
               <div className={styles.info}>
                 {spread.title ? (
-                  <span>{`${i18n('Title')}: ${spread.title}`}</span>
+                  <span>
+                    {`${i18n('Title')}: `}
+                    {spread.title === DAILY_CARD_SPREAD_MARKER
+                      ? i18n(spread.title)
+                      : spread.title}
+                  </span>
                 ) : (
                   <span>{`${i18n('Title')}: ${spread.question}`}</span>
                 )}

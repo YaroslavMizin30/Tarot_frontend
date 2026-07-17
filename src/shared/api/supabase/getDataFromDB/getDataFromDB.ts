@@ -19,6 +19,9 @@ export const getDataFromDB = async <T>(
     key: string;
     value: string;
   },
+  options: {
+    throwOnError?: boolean;
+  } = {},
 ): Promise<T[] | null> => {
   try {
     const headers = await getAuthHeaders();
@@ -37,7 +40,11 @@ export const getDataFromDB = async <T>(
       },
     );
     return data;
-  } catch {
+  } catch (error) {
+    if (options.throwOnError) {
+      throw error;
+    }
+
     return null;
   }
 };

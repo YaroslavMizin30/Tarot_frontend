@@ -1,0 +1,95 @@
+.forecast {
+  display: flex;
+  min-height: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text-primary);
+  font-size: 14px;
+  text-shadow: 1px 1px 2px #353535;
+  animation: fadeIn 1s ease;
+}
+
+.loading {
+  display: flex;
+  min-height: 0;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  margin: 0 0 4px;
+  color: var(--text-primary);
+  font-size: 18px;
+  text-align: center;
+}
+
+.circle {
+  flex: 0 0 auto;
+  transform: scale(0.88);
+  transform-origin: top center;
+  margin-bottom: -24px;
+}
+
+.planets {
+  display: flex;
+  min-height: 90px;
+  width: 260px;
+  flex: 1 1 auto;
+  flex-direction: column;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.planetItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.planetItem + .planetItem {
+  margin-top: 4px;
+}
+
+.planetHeading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  padding: 3px;
+  border-radius: 5px;
+}
+
+.planetIcon {
+  object-fit: contain;
+  margin-right: 5px;
+}
+
+.sign {
+  position: relative;
+  margin-left: 10px;
+}
+
+.description {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  padding: 5px 10px 8px;
+}
+
+.sun { color: #f8f800; }
+.mars { color: #b00000; }
+.mercury { color: #707070; }
+.venus { color: #a7ac78; }
+.moon { color: #ffffff; }
+.neptune { color: #3859ff; }
+.uranus { color: #38d7ff; }
+.saturn { color: #a06823; }
+.jupiter { color: #e09943; }
+.pluto { color: #7f7a74; }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

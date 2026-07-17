@@ -2,6 +2,7 @@ const TRANSLATIONS_RU = {
   'Make spread': 'Сделать расклад',
   'Spreads history': 'История раскладов',
   'Card of the day': 'Карта дня',
+  'daily-card': 'Карта дня',
   'About Tarot': 'О Таро',
 
   'Already here': 'Уже тут',

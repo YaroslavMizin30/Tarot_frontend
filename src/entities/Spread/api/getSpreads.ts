@@ -6,7 +6,7 @@ export const getSpreads = async (id: string): Promise<Spread[] | null> => {
   const data = await getDataFromDB<Spread>('spreads', {
     key: 'userId',
     value: id,
-  });
+  }, { throwOnError: true });
 
   if (!data) {
     return null;

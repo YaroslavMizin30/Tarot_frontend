@@ -11,6 +11,7 @@ import TRANSLATIONS_EN from '@/shared/locales/en/astrology';
 import TRANSLATIONS_RU from '@/shared/locales/ru/astrology';
 
 import styles from './AstrologyPage.module.css';
+import { DailyForecast } from '../DailyForecast/DailyForecast';
 
 export const AstrologyPage = () => {
   const { i18n, addTranslations, locale } = useLocales();
@@ -26,6 +27,8 @@ export const AstrologyPage = () => {
 
   return (
     <div className={styles.container}>
+      <DailyForecast />
+
       <div className={styles.menu}>
         {SUBSECTIONS.map(({ key, label }) => (
           <Button

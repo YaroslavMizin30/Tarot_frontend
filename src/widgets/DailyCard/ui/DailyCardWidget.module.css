@@ -1,0 +1,151 @@
+.widget {
+  --daily-card-width: 85px;
+  --daily-card-height: 158px;
+
+  width: min(100%, 360px);
+  color: var(--text-primary);
+}
+
+.title {
+  margin: 0 0 12px;
+
+  font-size: 20px;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: var(--daily-card-width) minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+}
+
+.cardColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: var(--daily-card-width);
+}
+
+.cardPlaceholder {
+  width: var(--daily-card-width);
+  height: var(--daily-card-height);
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.timerSlot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--daily-card-width);
+  height: 42px;
+  margin-top: 6px;
+}
+
+.revealHint {
+  font-size: 10px;
+  line-height: 1.1;
+  text-align: center;
+  opacity: 0.8;
+}
+
+.timerRetryButton {
+  width: 85px;
+  padding: 4px;
+
+  font-size: 10px;
+  white-space: normal;
+}
+
+.interpretationPanel {
+  position: relative;
+
+  min-width: 0;
+  height: var(--daily-card-height);
+  max-height: var(--daily-card-height);
+  overflow: hidden;
+
+  border-radius: 10px;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.interpretationPanelVisible {
+  opacity: 1;
+}
+
+.interpretationText,
+.interpretationError {
+  width: 100%;
+  height: 100%;
+
+  color: var(--text-primary);
+  border: 1px solid var(--border-secondary);
+  border-radius: 10px;
+}
+
+.interpretationText {
+  padding: 10px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  font-size: 13px;
+  line-height: 1.35;
+  opacity: 0;
+  animation: show-description 0.45s ease forwards;
+}
+
+.interpretationText p {
+  margin: 0;
+}
+
+.interpretationText p + p {
+  margin-top: 7px;
+}
+
+.interpretationError {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+
+  font-size: 12px;
+  text-align: center;
+}
+
+.retryButton {
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+@keyframes show-description {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 360px) {
+  .content {
+    gap: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .interpretationPanel {
+    transition: none;
+  }
+
+  .interpretationText {
+    opacity: 1;
+    animation: none;
+  }
+}

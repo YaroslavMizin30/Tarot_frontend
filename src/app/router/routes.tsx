@@ -20,16 +20,6 @@ const routes: RouteObject[] = [
         },
       },
       {
-        path: '/daily',
-        lazy: {
-          async Component() {
-            const { default: DailyCard } = await import('@/pages/DailyCard');
-
-            return DailyCard;
-          },
-        },
-      },
-      {
         path: '/about',
         lazy: {
           async Component() {
@@ -129,16 +119,6 @@ const routes: RouteObject[] = [
             const { default: BillingPage } = await import('@/pages/Billing');
 
             return BillingPage;
-          },
-        },
-      },
-      {
-        path: '/forecast',
-        lazy: {
-          async Component() {
-            const { default: ForecastPage } = await import('@/pages/Forecast');
-
-            return ForecastPage;
           },
         },
       },

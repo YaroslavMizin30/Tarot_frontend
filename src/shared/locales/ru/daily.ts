@@ -9,10 +9,12 @@ const TRANSLATIONS_RU = {
   'Do not talk about user as a third person':
     'Не указывать в ответе ссылки на самого пользователя в третьем лице',
   'Card of the day': 'Карта дня',
+  'daily-card': 'Карта дня',
   'Interpretation': 'К интерпретации',
   "You've already had your card today": 'Карта дня уже была сегодня',
   'To spreads history': 'К истории раскладов',
   'Next card available in': 'Следующая карта будет доступна через',
+  'Next card in': 'Новая карта через',
   'h': 'ч',
   'm': 'м',
   's': 'с',

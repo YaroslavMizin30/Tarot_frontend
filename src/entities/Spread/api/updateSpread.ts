@@ -6,8 +6,18 @@ export const updateSpread = async (
   spreadId: string,
   spreadData: Partial<Spread>,
 ) => {
-  await updateRaw('spreads', { ...spreadData }, {
-    key: 'spreadId',
-    value: spreadId,
-  });
+  const updatedSpread = await updateRaw<Spread>(
+    'spreads',
+    { ...spreadData },
+    {
+      key: 'spreadId',
+      value: spreadId,
+    },
+  );
+
+  if (!updatedSpread?.length) {
+    throw new Error('Failed to update spread');
+  }
+
+  return updatedSpread[0];
 };

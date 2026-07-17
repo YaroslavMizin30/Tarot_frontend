@@ -10,14 +10,18 @@ import TRANSLATIONS_HISTORY_RU from '@/shared/locales/ru/history';
 import RatingInput from '@/shared/ui/RatingInput';
 import ArrowButton from '@/shared/ui/ArrowButton';
 
-import { type Spread, updateSpread } from '@/entities/Spread';
+import {
+  DAILY_CARD_SPREAD_MARKER,
+  type Spread,
+  updateSpread,
+} from '@/entities/Spread';
 import TarotCard from '@/entities/TarotCard';
 
 import styles from './SpreadPage.module.css';
 
 export const SpreadPage = () => {
   const { state } = useLocation();
-  const { i18n, addTranslations, locale } = useLocales();
+  const { i18n, addTranslations } = useLocales();
   const navigate = useNavigate();
 
   const { interpretation, title, cards, spreadId, rating } = state as Spread;
@@ -35,11 +39,13 @@ export const SpreadPage = () => {
       en: { ...TRANSLATIONS_HISTORY_EN },
       ru: { ...TRANSLATIONS_HISTORY_RU },
     });
-  }, [locale]);
+  }, [addTranslations]);
 
   return (
     <div className={styles.tarotSpread}>
-      <h3 className={styles.title}>{title}</h3>
+      <h3 className={styles.title}>
+        {title === DAILY_CARD_SPREAD_MARKER ? i18n(title) : title}
+      </h3>
 
       <div className={styles['interpretation-container']}>
         <div className={`${styles['cards']} custom-scrollbar`}>
