@@ -4,6 +4,9 @@ const TRANSLATIONS_EN = {
   'Card of the day': 'Card of the day',
   'daily-card': 'Card of the day',
   'About Tarot': 'About Tarot',
+  'Daily roulette': 'Daily roulette',
+  'Bonuses and surprises': 'Bonuses and surprises',
+  'Go to Tarot': 'Go to Tarot',
 
   'Already here': 'Already here',
 

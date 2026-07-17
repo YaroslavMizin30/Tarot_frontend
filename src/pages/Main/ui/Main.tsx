@@ -1,20 +1,14 @@
-import { type SyntheticEvent } from 'react';
 import { useNavigate } from 'react-router';
 
 import Button from '@/shared/ui/Button';
 import useLocales from '@/shared/hooks/useLocales';
 import DailyCardWidget from '@/widgets/DailyCard';
+import RouletteIcon from '@/shared/assets/svg/common/roulette_page.svg';
 
 import styles from './Main.module.css';
 
 export const MainPage = () => {
   const navigate = useNavigate();
-
-  const handleNavigationButtonClick = (
-    e: SyntheticEvent<HTMLButtonElement>,
-  ) => {
-    navigate(e.currentTarget.value);
-  };
 
   const { i18n } = useLocales();
 
@@ -22,32 +16,30 @@ export const MainPage = () => {
     <div className={styles.container}>
       <DailyCardWidget />
 
-      <div className={styles.menu}>
+      <div className={styles.actions}>
+        <button
+          type={'button'}
+          className={styles.bonus}
+          onClick={() => navigate('/roulette')}
+        >
+          <span className={styles.bonusIcon} aria-hidden={'true'}>
+            <RouletteIcon />
+          </span>
+
+          <span className={styles.bonusText}>
+            <strong>{i18n('Daily roulette')}</strong>
+            <span>{i18n('Bonuses and surprises')}</span>
+          </span>
+
+          <span className={styles.arrow} aria-hidden={'true'}>→</span>
+        </button>
+
         <Button
           className={styles.primaryAction}
-          value={'/reading'}
-          onClick={handleNavigationButtonClick}
+          onClick={() => navigate('/tarot')}
         >
-          {i18n('Make spread')}
+          {i18n('Go to Tarot')}
         </Button>
-
-        <button
-          className={styles.secondaryAction}
-          value={'/history'}
-          onClick={handleNavigationButtonClick}
-        >
-          <span>{i18n('Spreads history')}</span>
-          <span aria-hidden={'true'}>→</span>
-        </button>
-
-        <button
-          className={styles.secondaryAction}
-          value={'/about'}
-          onClick={handleNavigationButtonClick}
-        >
-          <span>{i18n('About Tarot')}</span>
-          <span aria-hidden={'true'}>→</span>
-        </button>
       </div>
     </div>
   );

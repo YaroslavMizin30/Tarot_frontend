@@ -4,6 +4,9 @@ const TRANSLATIONS_RU = {
   'Card of the day': 'Карта дня',
   'daily-card': 'Карта дня',
   'About Tarot': 'О Таро',
+  'Daily roulette': 'Ежедневная рулетка',
+  'Bonuses and surprises': 'Бонусы и сюрпризы',
+  'Go to Tarot': 'Перейти к Таро',
 
   'Already here': 'Уже тут',
 
