@@ -122,6 +122,7 @@ const DailyCardContent = ({
               onClick={revealCard}
               size={'l'}
               hasLoadingState
+              hasBackShimmer={!isRevealed}
             />
           )}
 

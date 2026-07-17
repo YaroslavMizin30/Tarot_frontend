@@ -18,6 +18,10 @@
   opacity: 0.58;
 }
 
+.content {
+  animation: reflectionAppear 0.9s ease-out both;
+}
+
 .root p {
   display: -webkit-box;
   overflow: hidden;
@@ -27,4 +31,22 @@
   line-height: 1.35;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+}
+
+@keyframes reflectionAppear {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .content {
+    animation: none;
+  }
 }

@@ -23,6 +23,7 @@ export const TarotCard = forwardRef<HTMLDivElement, TarotCardProps>(
       isInverted,
       isReversed,
       hasLoadingState = false,
+      hasBackShimmer = false,
       size = 'l',
     } = props;
 
@@ -61,7 +62,7 @@ export const TarotCard = forwardRef<HTMLDivElement, TarotCardProps>(
             height: isLoaded ? undefined : '0px',
           }}
         >
-          <div className={cx('back', size)} />
+          <div className={cx('back', size, { backShimmer: hasBackShimmer })} />
 
           <div className={cx('front', size)}>
             <div className={styles['image-wrapper']}>

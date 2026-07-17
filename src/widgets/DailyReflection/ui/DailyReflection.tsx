@@ -39,10 +39,10 @@ export const DailyReflection = () => {
   return (
     <section className={styles.root} aria-live={'polite'}>
       {question && (
-        <>
+        <div className={styles.content}>
           <span className={styles.eyebrow}>{i18n('A question for yourself')}</span>
           <p>{question}</p>
-        </>
+        </div>
       )}
     </section>
   );

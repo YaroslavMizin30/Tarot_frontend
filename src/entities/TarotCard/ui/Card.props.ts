@@ -39,6 +39,8 @@ export interface TarotCardProps {
    * Flag if card has loading state
    */
   hasLoadingState?: boolean;
+  /** Adds a subtle light sweep to the card back. */
+  hasBackShimmer?: boolean;
   /**
    * Card size
    */
