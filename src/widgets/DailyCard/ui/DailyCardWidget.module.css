@@ -7,7 +7,7 @@
   position: relative;
   isolation: isolate;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 85px;
+  grid-template-columns: minmax(0, 1fr) 91px;
   align-items: center;
   gap: 18px;
   min-height: 190px;
@@ -121,11 +121,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 85px;
+  width: 91px;
 }
 
 .cardPlaceholder {
-  width: 85px;
+  width: 91px;
   height: 158px;
   overflow: hidden;
   border-radius: 10px;
