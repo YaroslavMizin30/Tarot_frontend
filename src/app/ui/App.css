@@ -45,6 +45,24 @@ body {
   --panel-gloss-highlight: rgb(255 255 255 / 24%);
   --card-cover-image: url('/assets/images/card/cover/back_v2.png');
   --card-label-text: #fff8e8;
+  --tarot-scene-center: rgb(34 27 38 / 74%);
+  --tarot-scene-mid: rgb(57 39 61 / 43%);
+  --tarot-table-center: rgb(67 36 72 / 67%);
+  --tarot-table-edge: rgb(38 22 45 / 52%);
+  --tarot-table-light: rgb(191 116 176 / 15%);
+  --tarot-table-rim: rgb(255 218 186 / 12%);
+  --tarot-horizon-shadow: rgb(37 18 43 / 27%);
+  --candle-table-glow: rgb(255 175 79 / 14%);
+  --candle-wax: #d8bca6;
+  --candle-wax-dark: #82625f;
+  --candle-wax-light: #f2d8b9;
+  --candle-flame-core: #fff4b0;
+  --candle-flame-mid: #ffb247;
+  --candle-flame-edge: #d96835;
+  --tarot-scene-haze: rgb(220 207 231 / 38%);
+  --tarot-scene-haze-soft: rgb(224 210 232 / 19%);
+  --tarot-table-spot: rgb(28 22 31 / 68%);
+  --tarot-table-spot-mid: rgb(55 35 58 / 38%);
 }
 
 :root[data-theme='gray'] {
@@ -79,6 +97,24 @@ body {
   --panel-gloss-highlight: rgb(255 255 255 / 21%);
   --card-cover-image: url('/assets/images/card/cover/back_gray_v2.png');
   --card-label-text: #ffffff;
+  --tarot-scene-center: rgb(27 30 38 / 75%);
+  --tarot-scene-mid: rgb(44 49 63 / 44%);
+  --tarot-table-center: rgb(42 47 65 / 68%);
+  --tarot-table-edge: rgb(23 27 39 / 53%);
+  --tarot-table-light: rgb(120 137 181 / 13%);
+  --tarot-table-rim: rgb(224 231 255 / 11%);
+  --tarot-horizon-shadow: rgb(18 21 32 / 28%);
+  --candle-table-glow: rgb(255 180 92 / 13%);
+  --candle-wax: #c6c1b8;
+  --candle-wax-dark: #666774;
+  --candle-wax-light: #eee5d2;
+  --candle-flame-core: #fff4b0;
+  --candle-flame-mid: #ffb247;
+  --candle-flame-edge: #c96038;
+  --tarot-scene-haze: rgb(198 202 215 / 39%);
+  --tarot-scene-haze-soft: rgb(202 206 220 / 20%);
+  --tarot-table-spot: rgb(23 25 32 / 69%);
+  --tarot-table-spot-mid: rgb(42 46 58 / 39%);
 }
 
 :root[data-theme='bronze'] {
@@ -113,6 +149,24 @@ body {
   --panel-gloss-highlight: rgb(255 248 232 / 22%);
   --card-cover-image: url('/assets/images/card/cover/back_bronze_v2.png');
   --card-label-text: #fff4df;
+  --tarot-scene-center: rgb(43 29 22 / 75%);
+  --tarot-scene-mid: rgb(71 44 29 / 44%);
+  --tarot-table-center: rgb(77 42 24 / 69%);
+  --tarot-table-edge: rgb(47 26 16 / 55%);
+  --tarot-table-light: rgb(196 112 54 / 14%);
+  --tarot-table-rim: rgb(255 210 160 / 12%);
+  --tarot-horizon-shadow: rgb(45 22 12 / 30%);
+  --candle-table-glow: rgb(255 157 61 / 15%);
+  --candle-wax: #c89c77;
+  --candle-wax-dark: #70472f;
+  --candle-wax-light: #edc99d;
+  --candle-flame-core: #fff0a5;
+  --candle-flame-mid: #ff9d35;
+  --candle-flame-edge: #b94b27;
+  --tarot-scene-haze: rgb(218 181 145 / 40%);
+  --tarot-scene-haze-soft: rgb(220 184 149 / 20%);
+  --tarot-table-spot: rgb(35 24 19 / 70%);
+  --tarot-table-spot-mid: rgb(66 40 26 / 40%);
 }
 
 .custom-scrollbar::-webkit-scrollbar {

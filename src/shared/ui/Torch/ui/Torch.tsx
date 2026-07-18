@@ -16,7 +16,10 @@ const Torch: FC<TorchProps> = (props) => {
         <div className={styles.blue}></div>
         <div className={styles.wick}></div>
       </div>
-      <div className={styles.stick}></div>
+      <div className={styles.stick}>
+        <span className={styles.waxUpper} />
+        <span className={styles.waxLower} />
+      </div>
       <div className={styles.bottom}></div>
     </div>
   );

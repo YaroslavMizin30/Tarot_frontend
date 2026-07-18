@@ -2,4 +2,198 @@
   position: relative;
   width: 100%;
   height: 100%;
+  pointer-events: none;
+  isolation: isolate;
+  -webkit-mask-image: radial-gradient(
+    ellipse 72% 62% at 50% 52%,
+    #000 0%,
+    #000 42%,
+    rgb(0 0 0 / 82%) 55%,
+    rgb(0 0 0 / 42%) 74%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 72% 62% at 50% 52%,
+    #000 0%,
+    #000 42%,
+    rgb(0 0 0 / 82%) 55%,
+    rgb(0 0 0 / 42%) 74%,
+    transparent 100%
+  );
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.composition::after {
+  content: '';
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      transparent 42%,
+      var(--tarot-scene-haze-soft) 57%,
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse at 50% 58%,
+      transparent 24%,
+      var(--tarot-scene-haze-soft) 68%,
+      var(--tarot-scene-haze) 100%
+    );
+}
+
+.vignette {
+  position: absolute;
+  inset: 2% -32% -8%;
+  background: radial-gradient(
+    ellipse at 50% 35%,
+    var(--tarot-scene-center) 0%,
+    var(--tarot-scene-mid) 44%,
+    transparent 72%
+  );
+}
+
+.tableSpot {
+  position: absolute;
+  z-index: 0;
+  top: 30%;
+  left: 50%;
+  width: min(760px, 155%);
+  height: 62%;
+  background: radial-gradient(
+    ellipse at 50% 52%,
+    var(--tarot-table-spot) 0%,
+    var(--tarot-table-spot-mid) 44%,
+    transparent 74%
+  );
+  transform: translateX(-50%);
+}
+
+.tableScene {
+  z-index: 1;
+  position: absolute;
+  inset: 53% -68% -42%;
+  perspective: 410px;
+  perspective-origin: 50% -9%;
+}
+
+.tablePlane {
+  position: absolute;
+  inset: 0;
+  transform: rotateX(69deg) scale(1.24);
+  transform-origin: 50% 0;
+  background:
+    radial-gradient(ellipse at 50% 8%, var(--tarot-table-light), transparent 38%),
+    radial-gradient(ellipse at 50% 24%, var(--tarot-table-center), var(--tarot-table-edge) 78%);
+  border-top: 0;
+  box-shadow:
+    0 -18px 72px 12px var(--tarot-horizon-shadow),
+    inset 0 38px 82px var(--tarot-table-rim);
+  backface-visibility: hidden;
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgb(0 0 0 / 48%) 11%,
+    #000 27%
+  );
+  mask-image: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgb(0 0 0 / 48%) 11%,
+    #000 27%
+  );
+}
+
+.tableLight {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 18% 7%, var(--candle-table-glow), transparent 19%),
+    radial-gradient(circle at 80% 9%, var(--candle-table-glow), transparent 20%);
+}
+
+.card {
+  --card-rotation: 0deg;
+  position: absolute;
+  display: block;
+  width: clamp(54px, 15vw, 82px);
+  aspect-ratio: 784 / 1360;
+  background-image: var(--card-cover-image);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  border-radius: 3px;
+  box-shadow:
+    0 7px 12px rgb(15 8 20 / 38%),
+    0 1px 2px rgb(255 245 224 / 18%);
+  opacity: 0.56;
+  transform: rotate(var(--card-rotation));
+  backface-visibility: hidden;
+}
+
+.cardLeft { top: 18%; left: 31%; }
+.cardLeftBack { top: 5%; left: 40%; width: clamp(45px, 12vw, 68px); opacity: 0.4; filter: blur(0.7px); }
+.cardRightBack { top: 8%; right: 40%; width: clamp(46px, 12vw, 70px); opacity: 0.42; filter: blur(0.7px); }
+.cardCenter { top: 27%; left: 50%; width: clamp(52px, 14vw, 78px); opacity: 0.52; transform: translateX(-50%) rotate(var(--card-rotation)); }
+.cardRight { top: 20%; right: 31%; }
+.cardNear { top: 45%; right: 43%; width: clamp(58px, 17vw, 92px); opacity: 0.5; }
+
+.candles {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+}
+
+.candles > * {
+  position: absolute;
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    #000 0%,
+    #000 78%,
+    rgb(0 0 0 / 82%) 86%,
+    rgb(0 0 0 / 38%) 95%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    180deg,
+    #000 0%,
+    #000 78%,
+    rgb(0 0 0 / 82%) 86%,
+    rgb(0 0 0 / 38%) 95%,
+    transparent 100%
+  );
+}
+
+.candleFarLeft { bottom: 42%; left: 4%; width: 34px; height: 104px; opacity: 0.58; filter: blur(2.8px); }
+.candleLeft { bottom: 16%; left: 16%; width: 48px; height: 145px; }
+.candleCenter { bottom: 40%; left: 50%; width: 30px; height: 91px; opacity: 0.68; filter: blur(0.8px); transform: translateX(-50%); }
+.candleFarRight { right: 5%; bottom: 42%; width: 31px; height: 100px; opacity: 0.58; filter: blur(2.8px); }
+.candleRight { right: 15%; bottom: 16%; width: 47px; height: 148px; }
+.candleNearRight { right: 4%; bottom: 10%; width: 58px; height: 168px; opacity: 0.76; }
+
+@media (max-width: 360px) {
+  .cardLeftBack,
+  .cardRightBack,
+  .candleCenter {
+    display: none;
+  }
+
+  .tableScene {
+    inset-inline: -82%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .candles * {
+    animation: none !important;
+  }
+}
+
+@supports not (perspective: 1px) {
+  .tablePlane {
+    transform: scaleY(0.72);
+    transform-origin: 50% 0;
+  }
 }
