@@ -7,50 +7,103 @@
   flex-direction: column;
   position: relative;
   align-items: center;
-  padding: 8px 0 12px;
+  gap: 12px;
+  padding: 18px 16px 14px;
   overflow: hidden;
   isolation: isolate;
 }
 
 .zodiacBackground {
   position: absolute;
-  top: 50%;
-  right: -55px;
+  left: 50%;
+  bottom: 0;
   z-index: -1;
   opacity: 0.12;
   pointer-events: none;
-  transform: translateY(-50%) scale(1.15);
+  transform: translateX(-50%) scale(1.08);
+  transform-origin: center bottom;
   filter: saturate(0.7) blur(0.4px);
 }
 
 .menu {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   flex: 0 0 auto;
-  flex-direction: column;
-  justify-content: center;
   position: relative;
   z-index: 1;
-  width: 240px;
+  width: min(100%, 420px);
+  gap: 8px;
   animation: fadeIn 1s ease;
-  padding-top: 12px;
 }
 
 .menuButton {
-  width: 100%;
+  display: flex;
+  min-width: 0;
+  min-height: 70px;
+  padding: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  font: inherit;
   color: var(--text-primary);
+  text-align: left;
   border-color: color-mix(in srgb, var(--border-primary) 45%, transparent);
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 12px;
   background: color-mix(in srgb, var(--surface-panel) 72%, transparent);
   box-shadow: 0 4px 14px rgb(61 41 69 / 8%);
   backdrop-filter: blur(8px);
+  cursor: pointer;
+}
+
+.menuButton:nth-child(1) {
+  border-color: color-mix(in srgb, #9c75bd 38%, var(--border-primary));
+  background:
+    radial-gradient(
+      ellipse at 12% 0%,
+      rgb(210 177 232 / 24%),
+      transparent 62%
+    ),
+    color-mix(in srgb, #c5a1dc 20%, var(--surface-panel));
+}
+
+.menuButton:nth-child(2) {
+  border-color: color-mix(in srgb, #b78447 38%, var(--border-primary));
+  background:
+    radial-gradient(
+      ellipse at 12% 0%,
+      rgb(246 205 142 / 24%),
+      transparent 62%
+    ),
+    color-mix(in srgb, #dfb676 20%, var(--surface-panel));
+}
+
+.menuButton:nth-child(3) {
+  border-color: color-mix(in srgb, #668ead 38%, var(--border-primary));
+  background:
+    radial-gradient(
+      ellipse at 12% 0%,
+      rgb(170 213 235 / 24%),
+      transparent 62%
+    ),
+    color-mix(in srgb, #86b5ce 20%, var(--surface-panel));
+}
+
+.menuButton strong {
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.menuButton span {
+  margin-top: 6px;
+  font-size: 9px;
+  line-height: 1.25;
+  opacity: 0.64;
 }
 
 .menuButton:hover {
-  border-color: color-mix(in srgb, var(--border-primary) 65%, transparent);
-  background: color-mix(in srgb, var(--surface-panel) 88%, transparent);
-}
-
-.menuButton + .menuButton {
-  margin-top: 10px;
+  filter: brightness(1.04) saturate(1.05);
 }
 
 @keyframes fadeIn {

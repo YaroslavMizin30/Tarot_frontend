@@ -1,0 +1,166 @@
+.overview,
+.status {
+  width: min(100%, 420px);
+}
+
+.overview {
+  position: relative;
+  z-index: 1;
+  color: var(--text-primary);
+}
+
+.status {
+  display: flex;
+  min-height: 250px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.header {
+  padding: 16px;
+  border: 1px solid color-mix(in srgb, var(--border-primary) 28%, transparent);
+  border-radius: 18px;
+  background:
+    radial-gradient(
+      ellipse at 90% 0%,
+      color-mix(in srgb, var(--surface-control) 20%, transparent),
+      transparent 58%
+    ),
+    color-mix(in srgb, var(--surface-panel) 74%, transparent);
+  box-shadow: 0 6px 20px rgb(36 26 44 / 8%);
+}
+
+.eyebrow {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 10px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  opacity: 0.64;
+}
+
+.title {
+  margin: 0;
+  font-family: 'Monomakh', serif !important;
+  font-size: clamp(23px, 7vw, 31px);
+  line-height: 1.08;
+}
+
+.description {
+  margin: 8px 0 0;
+  font-size: 13px;
+  line-height: 1.35;
+  opacity: 0.76;
+}
+
+.profile {
+  display: flex;
+  min-height: 34px;
+  margin: 8px 4px 0;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  line-height: 1.3;
+  opacity: 0.72;
+}
+
+.profileSign {
+  display: flex;
+  flex: 0 0 22px;
+  width: 22px;
+  height: 22px;
+  align-items: center;
+  justify-content: center;
+}
+
+.focus {
+  display: flex;
+  margin-top: 8px;
+  padding: 10px 12px;
+  flex-direction: column;
+  border-left: 2px solid
+    color-mix(in srgb, var(--surface-control) 72%, transparent);
+  border-radius: 0 10px 10px 0;
+  background: color-mix(in srgb, var(--surface-panel) 54%, transparent);
+}
+
+.focus > span {
+  font-size: 9px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  opacity: 0.58;
+}
+
+.focus strong {
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.focus small {
+  margin-top: 5px;
+  font-size: 9px;
+  line-height: 1.3;
+  opacity: 0.58;
+}
+
+.signals {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.signal {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 104px;
+  padding: 10px;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--border-primary) 24%, transparent);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--surface-panel) 70%, transparent);
+}
+
+.planet {
+  position: absolute;
+  right: -10px;
+  bottom: -8px;
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  opacity: 0.42;
+  filter: grayscale(0.12) saturate(0.92) contrast(0.94);
+}
+
+.signalLabel {
+  min-height: 28px;
+  font-size: 9px;
+  line-height: 1.25;
+  opacity: 0.62;
+}
+
+.signal strong {
+  margin-top: 5px;
+  font-size: 12px;
+}
+
+.position {
+  position: relative;
+  z-index: 1;
+  margin-top: 4px;
+  overflow: hidden;
+  font-size: 10px;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+}
+
+.source {
+  margin: 7px 4px 0;
+  font-size: 8px;
+  line-height: 1.3;
+  opacity: 0.5;
+}
