@@ -7,6 +7,74 @@ const TRANSLATIONS_RU = {
   'Spin': 'Крутить',
   'Shuffle': 'Перемешать',
   'Rules': 'Правила',
+  'Daily card': 'Карта дня',
+  'Try your luck': 'Испытать удачу',
+  'Open card': 'Открыть карту',
+  'Try for 1 pentacle': 'Испытать удачу за 1',
+  'Open your daily card first': 'Сначала откройте ежедневную карту',
+  'You need 1 bonus pentacle': 'Нужен 1 бонусный пентакль',
+  'You have already tried your luck today':
+    'Сегодня вы уже испытали удачу',
+  'Stake 1 bonus pentacle. Possible payout: 0–4':
+    'Ставка — 1 бонусный пентакль. Возможная выплата: 0–4',
+  'Purchased balance is never used':
+    'Приобретённый баланс не используется',
+  'The stake was not returned': 'Ставка не вернулась',
+  'Your stake was returned': 'Ваша ставка вернулась',
+  'You receive 2 bonus pentacles, including your stake':
+    'Вы получаете 2 бонусных пентакля с учётом ставки',
+  'You receive 4 bonus pentacles, including your stake':
+    'Вы получаете 4 бонусных пентакля с учётом ставки',
+  'Your daily card is ready': 'Ваша карта удачи готова',
+  'Your daily card has already been opened':
+    'Сегодня вы уже открывали карту удачи',
+  'Bonus balance': 'Бонусный баланс',
+  'Guaranteed reward': 'Гарантированная награда',
+  'Pentacles may add currency to your bonus balance':
+    'Пентакли могут пополнить бонусный баланс',
+  'Wands may give credit toward a tarot reading':
+    'Жезлы могут дать бонус для расклада',
+  'Cups advance your guaranteed reward meter':
+    'Кубки заполняют шкалу гарантированной награды',
+  'Swords advance your guaranteed reward meter':
+    'Мечи заполняют шкалу гарантированной награды',
+  'Major arcana may bring a rare reward':
+    'Старшие арканы могут принести редкую награду',
+  'The reward meter is complete. You receive 1 bonus pentacle':
+    'Шкала заполнена: вы получаете 1 бонусный пентакль',
+  'The card advances your guaranteed reward meter':
+    'Карта продвигает вас к гарантированной награде',
+  'You receive 1 bonus pentacle for a tarot reading':
+    'Вы получаете 1 бонусный пентакль для расклада',
+  'Jackpot: you receive 5 bonus pentacles':
+    'Джекпот: вы получаете 5 бонусных пентаклей',
+  'You receive 1 bonus pentacle': 'Вы получаете 1 бонусный пентакль',
+  'You receive 2 bonus pentacles': 'Вы получаете 2 бонусных пентакля',
+  'You receive 3 bonus pentacles': 'Вы получаете 3 бонусных пентакля',
+  'Pentacles add currency to your bonus balance':
+    'Пентакли пополняют бонусный баланс',
+  'Wands give credit toward your next tarot reading':
+    'Жезлы дают бонус для следующего расклада',
+  'Cups advance the guaranteed reward meter':
+    'Кубки заполняют шкалу гарантированной награды',
+  'Swords advance the guaranteed reward meter':
+    'Мечи заполняют шкалу гарантированной награды',
+  'Major arcana bring rare and more valuable rewards':
+    'Старшие арканы приносят редкие и более ценные награды',
+  'One free card is available every day. The result is securely selected on the server.':
+    'Каждый день доступна одна бесплатная карта. Результат безопасно определяется на сервере.',
+  'The game never takes pentacles from your purchased balance.':
+    'Игра никогда не списывает пентакли с приобретённого баланса.',
+  'Pentacles add bonus currency. Wands help with tarot readings. Cups and swords fill the guaranteed reward meter.':
+    'Пентакли дают бонусную валюту, жезлы помогают с раскладами, а кубки и мечи заполняют шкалу гарантированной награды.',
+  'Major arcana are rare and bring more valuable rewards. A jackpot can appear no more than once every seven days.':
+    'Старшие арканы выпадают редко и дают более ценные награды. Джекпот доступен не чаще одного раза в семь дней.',
+  'Bonus pentacles are stored separately from purchased pentacles.':
+    'Бонусные пентакли хранятся отдельно от приобретённых.',
+  'After opening the daily card, you can risk 1 bonus pentacle once per day.':
+    'После ежедневной карты один раз в день можно рискнуть 1 бонусным пентаклем.',
+  'The risk game can return 0, 1, 2 or 4 bonus pentacles. Purchased balance is never used.':
+    'Рискованная игра может вернуть 0, 1, 2 или 4 бонусных пентакля. Приобретённый баланс не используется.',
 
   // Time-related
   'today': 'сегодня',

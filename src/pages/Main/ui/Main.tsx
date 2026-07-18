@@ -9,6 +9,7 @@ import DailyCardWidget from '@/widgets/DailyCard';
 import DailyGuidanceWidget from '@/widgets/DailyGuidance';
 import DailyReflection from '@/widgets/DailyReflection';
 import RouletteIcon from '@/shared/assets/svg/common/roulette_page.svg';
+import { getDailyBonusStatus } from '@/entities/BonusGame';
 
 import styles from './Main.module.css';
 
@@ -22,6 +23,11 @@ export const MainPage = () => {
     queryFn: getPendingSpreadDraft,
     enabled: Boolean(user),
     staleTime: 0,
+  });
+  const { data: dailyBonus } = useQuery({
+    queryKey: queryKeys.dailyBonus.all,
+    queryFn: getDailyBonusStatus,
+    enabled: Boolean(user),
   });
   const resumableSpread = pendingDraft?.status === 'found'
     ? pendingDraft.spread
@@ -47,7 +53,15 @@ export const MainPage = () => {
 
           <span className={styles.bonusText}>
             <strong>{i18n('Daily roulette')}</strong>
-            <span>{i18n('Bonuses and surprises')}</span>
+            <span>
+              {i18n(
+                dailyBonus?.status === 'already_played'
+                  ? 'Daily card opened'
+                  : 'Daily card available',
+              )}
+              {' · '}
+              {i18n('Bonus balance')}: {dailyBonus?.bonusBalance ?? 0}
+            </span>
           </span>
 
           <span className={styles.arrow} aria-hidden={'true'}>→</span>

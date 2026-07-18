@@ -4,6 +4,7 @@ import type { User } from '../../types/user';
 
 interface UserResponse extends Omit<User, 'natalChart'> {
   natalChart: string;
+  bonus_balance?: number;
 }
 
 export const getUser = async (id: string | number): Promise<User | null> => {
@@ -21,5 +22,6 @@ export const getUser = async (id: string | number): Promise<User | null> => {
   return {
     ...user,
     natalChart: user.natalChart ? JSON.parse(user.natalChart) : null,
+    bonusBalance: Number(user.bonus_balance ?? user.bonusBalance ?? 0),
   };
 };

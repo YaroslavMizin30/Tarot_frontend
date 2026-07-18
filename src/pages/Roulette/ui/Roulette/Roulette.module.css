@@ -1,6 +1,6 @@
 .container {
   position: relative;
-  margin-top: 100px;
+  margin-top: 145px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -10,12 +10,53 @@
   animation: fadeIn 2s ease;
 }
 
+.switcher {
+  position: absolute;
+  top: -132px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 280px;
+  padding: 3px;
+  border: 1px solid color-mix(in srgb, var(--border-primary) 30%, transparent);
+  border-radius: 13px;
+  background: color-mix(in srgb, var(--surface-panel) 82%, transparent);
+}
+
+.switcherButton {
+  min-height: 32px;
+  padding: 5px 8px;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 12px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.switcherButtonActive {
+  color: var(--text-on-control);
+  background:
+    linear-gradient(180deg, var(--control-gloss-highlight), transparent 55%),
+    var(--surface-control);
+  box-shadow: 0 3px 10px var(--control-gloss-shadow);
+}
+
 .message {
   position: absolute;
-  top: -80px;
+  top: -82px;
   color: var(--text-primary);
-  width: 200px;
+  width: 260px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.balance,
+.progress {
+  font-size: 12px;
+  color: var(--text-secondary);
 }
 
 .roulette {
@@ -283,7 +324,7 @@
   position: relative;
   z-index: 1;
   width: 240px;
-  padding-bottom: 100px;
+  padding-bottom: 40px;
 }
 
 .button + .button {

@@ -1,145 +1,93 @@
-import { useEffect, startTransition } from 'react';
+import { useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { useActivity } from '@/entities/Activity';
-import { useBalance } from '@/features/Billing';
-
-import { isToday, getDaysLeft } from '@/shared/utils';
+import { queryKeys } from '@/shared/api/queryKeys';
+import {
+  getDailyBonusStatus,
+  playDailyBonus,
+  playRiskBonus,
+  type BonusGameMode,
+  type DailyBonusResult,
+  type DailyBonusStatus,
+  type RiskBonusUnavailable,
+} from '@/entities/BonusGame';
 
 import type { PlayingCard } from '../types';
-import {
-  HIGH_CARDS,
-  MIDDLE_CARDS,
-  NEGATIVE_CARDS,
-  REST,
-} from '../config/cards';
-
-const MAX_CARDS = 12;
-const DAYS_AFTER_WIN = 7;
-
-/** Стоимость шафла колоды (повторного спина) в пентаклях. */
-const SHUFFLE_COST = 2;
-
-const getRandomCard = (cards: PlayingCard[], array: PlayingCard[]) => {
-  let newIndex = Math.ceil(Math.random() * cards.length - 1);
-
-  for (let i = newIndex; i < cards.length; i++) {
-    if (cards[newIndex]) {
-      newIndex = Math.ceil(Math.random() * cards.length - 1);
-
-      continue;
-    }
-
-    cards[newIndex] = array[Math.ceil(Math.random() * array.length - 1)];
-
-    break;
-  }
-};
+import { createPlayingCard, DISPLAY_CARDS } from '../config/cards';
 
 export const useRoulette = () => {
-  const { activity, updateActivity, isLoading, refetchActivity } =
-    useActivity();
+  const queryClient = useQueryClient();
+  const [playingCards, setPlayingCards] = useState<PlayingCard[]>(DISPLAY_CARDS);
 
-  const { requireBalance, charge } = useBalance();
+  const statusQuery = useQuery({
+    queryKey: queryKeys.dailyBonus.all,
+    queryFn: getDailyBonusStatus,
+  });
 
-  const roulette = activity?.roulette;
+  const playMutation = useMutation<
+    DailyBonusResult | DailyBonusStatus | RiskBonusUnavailable,
+    Error,
+    BonusGameMode
+  >({
+    mutationFn: (mode: BonusGameMode) =>
+      mode === 'risk' ? playRiskBonus() : playDailyBonus(),
+  });
 
-  const shouldUpdate = () => {
-    const daysLeft = getDaysLeft(roulette?.lastWin ?? '');
+  const play = async (
+    mode: BonusGameMode,
+  ): Promise<DailyBonusResult | null> => {
+    const result = await playMutation.mutateAsync(mode);
+    if (result.status !== 'played') return null;
 
-    const isWinValid = !isNaN(daysLeft) && daysLeft > 7;
-
-    return (
-      roulette &&
-      !isToday(roulette.lastShuffle ?? '') &&
-      !isToday(roulette.lastSpin ?? '') &&
-      !isWinValid
+    setPlayingCards(
+      result.cards.map((id, index) =>
+        createPlayingCard(
+          id,
+          index === result.selectedIndex
+            ? { type: result.rewardType, bonusDelta: result.bonusDelta }
+            : undefined,
+        ),
+      ),
     );
+    return result;
   };
 
-  const prepareCards = async () => {
-    // Проверяем баланс перед действием: если пентаклей не хватает,
-    // useBalance сам редиректит пользователя на /billing.
-    if (!requireBalance(SHUFFLE_COST)) {
-      return;
-    }
-
-    const cards: PlayingCard[] = new Array(MAX_CARDS).fill(null);
-
-    const REST_CARDS = REST.map((card) => {
-      const { id } = card;
-
-      return { id };
-    });
-
-    getRandomCard(cards, HIGH_CARDS);
-
-    getRandomCard(cards, MIDDLE_CARDS);
-
-    getRandomCard(cards, NEGATIVE_CARDS);
-
-    const randomCards = cards.map((card) => {
-      if (card) {
-        return card;
-      }
-
-      return REST_CARDS.splice(
-        Math.round(Math.random() * REST_CARDS.length - 1),
-        1,
-      )[0];
-    });
-
-    await updateActivity({
-      roulette: {
-        cards: randomCards,
-        lastSpin: null,
-        lastWin: roulette?.lastWin,
-        lastShuffle: new Date().toISOString(),
-      },
-    });
-
-    await refetchActivity();
-
-    // Шафл успешно сохранён — списываем пентакли.
-    await charge(SHUFFLE_COST);
-  };
-
-  const updateRoulette = async (
-    cards: PlayingCard[],
-    isWin?: boolean,
-    isShuffle?: boolean,
+  const revealResult = async (
+    result: DailyBonusResult,
+    mode: BonusGameMode,
   ) => {
-    const date = new Date().toISOString();
-
-    await updateActivity({
-      roulette: {
-        lastSpin: isShuffle ? null : date,
-        lastWin: isWin ? date : '',
-        cards,
-        lastShuffle: date,
-      },
-    });
-
-    await refetchActivity();
+    queryClient.setQueryData<DailyBonusStatus>(
+      queryKeys.dailyBonus.all,
+      () => ({
+        status: 'already_played',
+        bonusBalance: result.bonusBalance,
+        progress: result.progress,
+        nextAvailableAt: result.nextAvailableAt,
+        riskStatus: mode === 'risk'
+          ? 'already_played'
+          : result.bonusBalance > 0
+            ? 'available'
+            : 'insufficient_bonus',
+      }),
+    );
+    await Promise.all([
+      queryClient.invalidateQueries({ queryKey: queryKeys.dailyBonus.all }),
+      queryClient.invalidateQueries({ queryKey: queryKeys.user.all }),
+    ]);
   };
 
-  useEffect(() => {
-    startTransition(() => {
-      if (shouldUpdate()) {
-        prepareCards();
-      }
-    });
-  }, []);
-
-  const daysAfterWin = getDaysLeft(roulette?.lastWin ?? '');
+  const status = statusQuery.data;
 
   return {
-    prepareCards,
-    playingCards: roulette?.cards ?? [],
-    daysAfterWin,
-    isLoading: isLoading && !activity,
-    isSpinDisabled:
-      isToday(roulette?.lastSpin ?? '') || daysAfterWin < DAYS_AFTER_WIN,
-    isShuffleDisabled: daysAfterWin < DAYS_AFTER_WIN,
-    updateRoulette,
+    playingCards,
+    play,
+    revealResult,
+    progress: status?.progress ?? 0,
+    bonusBalance: status?.bonusBalance ?? 0,
+    nextAvailableAt: status?.nextAvailableAt,
+    isLoading: statusQuery.isLoading,
+    isPlaying: playMutation.isPending,
+    dailyStatus: status?.status,
+    riskStatus: status?.riskStatus,
   };
 };

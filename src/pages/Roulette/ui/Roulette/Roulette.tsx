@@ -4,16 +4,14 @@ import useLocales from '@/shared/hooks/useLocales';
 import PointerIcon from '@/shared/assets/svg/roulette/pointer.svg';
 import Button from '@/shared/ui/Button';
 import Spinner from '@/shared/ui/Spinner';
-import { getPluralForm } from '@/shared/utils';
-import Price from '@/shared/ui/Price';
 
 import Card from '@/entities/TarotCard';
+import type { BonusGameMode } from '@/entities/BonusGame';
 
 import { useRoulette } from '../../model/useRoulette';
 import {
   animateCard,
   animateSpin,
-  animateShuffle,
   reverseCardAnimation,
 } from '../../lib/animations';
 
@@ -23,7 +21,6 @@ import type { RouletteProps } from './Roulette.props';
 
 import styles from './Roulette.module.css';
 
-const CARD_COUNT = 12;
 const DEGREES_PER_CARD = 30;
 const FULL_ROTATION = 360;
 
@@ -41,18 +38,24 @@ export const Roulette = (props: RouletteProps) => {
   const isAnimating = useRef(false);
 
   const [animationState, setAnimationState] = useState<
-    'idle' | 'spinning' | 'shuffling'
+    'idle' | 'spinning' | 'switching'
   >('idle');
+  const [mode, setMode] = useState<BonusGameMode>('daily');
 
   const {
     playingCards,
-    prepareCards,
-    daysAfterWin,
+    play,
+    revealResult,
+    progress,
+    bonusBalance,
     isLoading,
-    isSpinDisabled,
-    isShuffleDisabled,
-    updateRoulette,
+    dailyStatus,
+    riskStatus,
   } = useRoulette();
+
+  const isSpinDisabled = mode === 'daily'
+    ? dailyStatus !== 'available'
+    : riskStatus !== 'available';
 
   const { i18n } = useLocales();
 
@@ -103,27 +106,14 @@ export const Roulette = (props: RouletteProps) => {
     }
   };
 
-  const handleShuffleButtonClick = async () => {
-    if (isAnimating.current) return;
+  const handleModeChange = async (nextMode: BonusGameMode) => {
+    if (nextMode === mode || isAnimating.current) return;
 
     isAnimating.current = true;
-    setAnimationState('shuffling');
-
+    setAnimationState('switching');
     try {
       await reverseCard();
-
-      if (rouletteRef.current) {
-        await animateShuffle(
-          rouletteRef.current,
-          async () => {
-            await prepareCards();
-            await waitForNextFrame();
-          },
-          lastSpinDegree.current,
-        );
-
-        lastSpinDegree.current = 0;
-      }
+      setMode(nextMode);
     } finally {
       isAnimating.current = false;
       setAnimationState('idle');
@@ -139,7 +129,10 @@ export const Roulette = (props: RouletteProps) => {
     try {
       await reverseCard();
 
-      const randomIndex = Math.floor(Math.random() * CARD_COUNT);
+      const result = await play(mode);
+      if (!result) return;
+
+      const randomIndex = result.selectedIndex;
       drawnCardIndex.current = randomIndex;
 
       await waitForNextFrame();
@@ -186,51 +179,13 @@ export const Roulette = (props: RouletteProps) => {
           }
 
           await animateCard(card);
-
-          // Win only if card has a positive effect (not undefined, not negative, not retry)
-          const currentCard = playingCards?.[randomIndex];
-          const hasWon =
-            !!currentCard?.effect &&
-            currentCard.effect !== 'negative' &&
-            currentCard.effect !== 'retry';
-
-          await updateRoulette(playingCards, hasWon);
         }
       }
+
+      await revealResult(result, mode);
     } finally {
       isAnimating.current = false;
       setAnimationState('idle');
-    }
-  };
-
-  const getFreePhraze = () => {
-    const daysAgo = getPluralForm(daysAfterWin, [
-      'days (1)',
-      'days (2-4)',
-      'days (5-0)',
-    ]);
-    const daysLeft = getPluralForm(7 - daysAfterWin, [
-      'days (1)',
-      'days (2-4)',
-      'days (5-0)',
-    ]);
-
-    const term =
-      daysAfterWin === 0
-        ? i18n('today')
-        : `${daysAfterWin} ${i18n(daysAgo)} ${i18n('days ago')}`;
-
-    switch (true) {
-      case daysAfterWin < 7:
-        return `${i18n('You won')} ${term}. ${i18n('Next game is available in')} ${7 - daysAfterWin} ${i18n(daysLeft)}`;
-      case isSpinDisabled:
-        return i18n(
-          "You've spined the wheel today. You can shuffle to spin again.",
-        );
-      default:
-        return i18n(
-          'For those who like excitement. Reading rules is highly recommended',
-        );
     }
   };
 
@@ -240,7 +195,56 @@ export const Roulette = (props: RouletteProps) => {
 
   return (
     <div className={styles.container}>
-      <span className={styles.message}>{getFreePhraze()}</span>
+      <div className={styles.switcher} role={'tablist'}>
+        <button
+          type={'button'}
+          role={'tab'}
+          aria-selected={mode === 'daily'}
+          className={`${styles.switcherButton} ${
+            mode === 'daily' ? styles.switcherButtonActive : ''
+          }`}
+          onClick={() => handleModeChange('daily')}
+          disabled={animationState !== 'idle'}
+        >
+          {i18n('Daily card')}
+        </button>
+        <button
+          type={'button'}
+          role={'tab'}
+          aria-selected={mode === 'risk'}
+          className={`${styles.switcherButton} ${
+            mode === 'risk' ? styles.switcherButtonActive : ''
+          }`}
+          onClick={() => handleModeChange('risk')}
+          disabled={animationState !== 'idle'}
+        >
+          {i18n('Try your luck')}
+        </button>
+      </div>
+
+      <div className={styles.message}>
+        <span>
+          {i18n(mode === 'daily'
+            ? dailyStatus === 'available'
+              ? 'Your daily card is ready'
+              : 'Your daily card has already been opened'
+            : riskStatus === 'daily_card_required'
+              ? 'Open your daily card first'
+              : riskStatus === 'insufficient_bonus'
+                ? 'You need 1 bonus pentacle'
+                : riskStatus === 'already_played'
+                  ? 'You have already tried your luck today'
+                  : 'Stake 1 bonus pentacle. Possible payout: 0–4')}
+        </span>
+        <span className={styles.balance}>
+          {i18n('Bonus balance')}: {bonusBalance}
+        </span>
+        <span className={styles.progress}>
+          {mode === 'daily'
+            ? `${i18n('Guaranteed reward')}: ${progress}/4`
+            : i18n('Purchased balance is never used')}
+        </span>
+      </div>
 
       <div className={styles.roulette} ref={rouletteRef}>
         <div className={styles.line}></div>
@@ -320,22 +324,12 @@ export const Roulette = (props: RouletteProps) => {
 
       <div className={styles.menu}>
         <Button
-          className={`${styles.button} ${animationState === 'shuffling' ? styles.disabled : ''}`}
+          className={styles.button}
           onClick={handleSpinButtonClick}
           isLoading={animationState === 'spinning'}
           disabled={isSpinDisabled}
         >
-          {i18n('Spin')}
-        </Button>
-
-        <Button
-          className={`${styles.button} ${animationState === 'spinning' ? styles.disabled : ''}`}
-          onClick={handleShuffleButtonClick}
-          isLoading={animationState === 'shuffling'}
-          disabled={isShuffleDisabled}
-          iconRight={<Price cost={2} />}
-        >
-          {i18n('Shuffle')}
+          {i18n(mode === 'daily' ? 'Open card' : 'Try for 1 pentacle')}
         </Button>
 
         <Button className={styles.button} onClick={onRulesButtonClick}>

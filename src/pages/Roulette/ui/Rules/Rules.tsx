@@ -27,7 +27,7 @@ export const Rules = () => {
       <div className={`${styles.rules} custom-scrollbar`}>
         {CARDS_DESCRIPTION.map(({ id, prize, effect }) => {
           return (
-            <div className={`${styles.rule} ${styles[id]}`}>
+            <div className={`${styles.rule} ${styles[id]}`} key={id}>
               <Effect
                 effect={effect}
                 className={`${styles.effect} ${styles[`effect-${effect}`]}`}

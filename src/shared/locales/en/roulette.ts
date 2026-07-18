@@ -8,6 +8,73 @@ const TRANSLATIONS_EN = {
   'Spin': 'Spin',
   'Shuffle': 'Shuffle',
   'Rules': 'Rules',
+  'Daily card': 'Daily card',
+  'Try your luck': 'Try your luck',
+  'Open card': 'Open card',
+  'Try for 1 pentacle': 'Try for 1 pentacle',
+  'Open your daily card first': 'Open your daily card first',
+  'You need 1 bonus pentacle': 'You need 1 bonus pentacle',
+  'You have already tried your luck today':
+    'You have already tried your luck today',
+  'Stake 1 bonus pentacle. Possible payout: 0–4':
+    'Stake 1 bonus pentacle. Possible payout: 0–4',
+  'Purchased balance is never used': 'Purchased balance is never used',
+  'The stake was not returned': 'The stake was not returned',
+  'Your stake was returned': 'Your stake was returned',
+  'You receive 2 bonus pentacles, including your stake':
+    'You receive 2 bonus pentacles, including your stake',
+  'You receive 4 bonus pentacles, including your stake':
+    'You receive 4 bonus pentacles, including your stake',
+  'Your daily card is ready': 'Your daily card is ready',
+  'Your daily card has already been opened':
+    'Your daily card has already been opened',
+  'Bonus balance': 'Bonus balance',
+  'Guaranteed reward': 'Guaranteed reward',
+  'Pentacles may add currency to your bonus balance':
+    'Pentacles may add currency to your bonus balance',
+  'Wands may give credit toward a tarot reading':
+    'Wands may give credit toward a tarot reading',
+  'Cups advance your guaranteed reward meter':
+    'Cups advance your guaranteed reward meter',
+  'Swords advance your guaranteed reward meter':
+    'Swords advance your guaranteed reward meter',
+  'Major arcana may bring a rare reward':
+    'Major arcana may bring a rare reward',
+  'The reward meter is complete. You receive 1 bonus pentacle':
+    'The reward meter is complete. You receive 1 bonus pentacle',
+  'The card advances your guaranteed reward meter':
+    'The card advances your guaranteed reward meter',
+  'You receive 1 bonus pentacle for a tarot reading':
+    'You receive 1 bonus pentacle for a tarot reading',
+  'Jackpot: you receive 5 bonus pentacles':
+    'Jackpot: you receive 5 bonus pentacles',
+  'You receive 1 bonus pentacle': 'You receive 1 bonus pentacle',
+  'You receive 2 bonus pentacles': 'You receive 2 bonus pentacles',
+  'You receive 3 bonus pentacles': 'You receive 3 bonus pentacles',
+  'Pentacles add currency to your bonus balance':
+    'Pentacles add currency to your bonus balance',
+  'Wands give credit toward your next tarot reading':
+    'Wands give credit toward your next tarot reading',
+  'Cups advance the guaranteed reward meter':
+    'Cups advance the guaranteed reward meter',
+  'Swords advance the guaranteed reward meter':
+    'Swords advance the guaranteed reward meter',
+  'Major arcana bring rare and more valuable rewards':
+    'Major arcana bring rare and more valuable rewards',
+  'One free card is available every day. The result is securely selected on the server.':
+    'One free card is available every day. The result is securely selected on the server.',
+  'The game never takes pentacles from your purchased balance.':
+    'The game never takes pentacles from your purchased balance.',
+  'Pentacles add bonus currency. Wands help with tarot readings. Cups and swords fill the guaranteed reward meter.':
+    'Pentacles add bonus currency. Wands help with tarot readings. Cups and swords fill the guaranteed reward meter.',
+  'Major arcana are rare and bring more valuable rewards. A jackpot can appear no more than once every seven days.':
+    'Major arcana are rare and bring more valuable rewards. A jackpot can appear no more than once every seven days.',
+  'Bonus pentacles are stored separately from purchased pentacles.':
+    'Bonus pentacles are stored separately from purchased pentacles.',
+  'After opening the daily card, you can risk 1 bonus pentacle once per day.':
+    'After opening the daily card, you can risk 1 bonus pentacle once per day.',
+  'The risk game can return 0, 1, 2 or 4 bonus pentacles. Purchased balance is never used.':
+    'The risk game can return 0, 1, 2 or 4 bonus pentacles. Purchased balance is never used.',
 
   // Time-related
   'today': 'today',

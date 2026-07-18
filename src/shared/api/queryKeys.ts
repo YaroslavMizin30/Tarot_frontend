@@ -21,6 +21,9 @@ export const queryKeys = {
     byUserDate: (userId: string | number, date: string) =>
       ['daily-reflection', String(userId), date] as const,
   },
+  dailyBonus: {
+    all: ['daily-bonus'] as const,
+  },
   spreads: {
     all: ['spreads'] as const,
     byUserId: (userId: string | number) => ['spreads', String(userId)] as const,

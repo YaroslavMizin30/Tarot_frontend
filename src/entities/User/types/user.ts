@@ -42,5 +42,6 @@ export interface User {
   theme: 'standard' | 'gray' | 'bronze';
   audio: boolean;
   balance: number;
+  bonusBalance?: number;
   tarotProfile?: TarotProfile;
 }
