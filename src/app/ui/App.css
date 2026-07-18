@@ -169,27 +169,31 @@ body {
   --tarot-table-spot-mid: rgb(66 40 26 / 40%);
 }
 
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color:
+    color-mix(in srgb, var(--border-primary) 58%, transparent)
+    color-mix(in srgb, var(--surface-panel) 24%, transparent);
+}
+
 .custom-scrollbar::-webkit-scrollbar {
-  width: 10px; /* thickness of the vertical scrollbar */
-  height: 10px; /* thickness of the horizontal scrollbar */
-  scroll-padding-right: 20px;
-  scroll-margin-left: 20px;
+  width: 5px;
+  height: 5px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: #999;
-  border-radius: 10px;
+  background: color-mix(in srgb, var(--surface-panel) 24%, transparent);
+  border-radius: 999px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: var(--background-primary);
-
-  border: 0.5px solid var(--border-primary);
-  border-radius: 10px;
+  background: color-mix(in srgb, var(--border-primary) 58%, transparent);
+  border: 0;
+  border-radius: 999px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: color-mix(in srgb, var(--surface-control) 76%, transparent);
 }
 
 #root * {
