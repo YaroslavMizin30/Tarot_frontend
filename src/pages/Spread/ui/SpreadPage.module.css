@@ -132,8 +132,8 @@
   z-index: 2;
   border-radius: 50%;
   font-size: 10px;
-  color: var(--button-text);
-  background: var(--button-primary);
+  color: var(--text-on-control);
+  background: var(--surface-control);
   box-shadow: 0 3px 8px rgb(34 19 42 / 24%);
 }
 

@@ -15,6 +15,7 @@ type SpreadRow = {
   cards_count: number;
   cards?: Spread['cards'] | string | null;
   interpretation?: string | null;
+  rating?: number | null;
   date?: string | null;
   status?: Spread['status'] | null;
   updated_at?: string | null;
@@ -44,6 +45,7 @@ export const spreadFromRow = (row: SpreadRow): Spread => ({
   cardsCount: row.cards_count,
   cards: parseCards(row.cards),
   interpretation: row.interpretation ?? '',
+  rating: row.rating ?? undefined,
   date: row.date ?? '',
   status: row.status ?? undefined,
   updatedAt: row.updated_at ?? undefined,

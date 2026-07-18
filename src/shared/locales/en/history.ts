@@ -28,6 +28,11 @@ const TRANSLATIONS_EN = {
   'Back': 'Back',
   'Upright position': 'Upright',
   'Reversed position': 'Reversed',
+  'Today': 'Today',
+  'This week': 'This week',
+  'Earlier': 'Earlier',
+  'Daily card': 'Daily card',
+  'Rating': 'Rating',
 };
 
 export default TRANSLATIONS_EN;

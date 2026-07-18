@@ -28,6 +28,11 @@ const TRANSLATIONS_RU = {
   'Back': 'Назад',
   'Upright position': 'Прямое положение',
   'Reversed position': 'Перевёрнутое положение',
+  'Today': 'Сегодня',
+  'This week': 'На этой неделе',
+  'Earlier': 'Ранее',
+  'Daily card': 'Карта дня',
+  'Rating': 'Оценка',
 };
 
 export default TRANSLATIONS_RU;
