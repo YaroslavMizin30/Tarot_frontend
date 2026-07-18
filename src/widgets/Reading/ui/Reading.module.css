@@ -9,14 +9,14 @@
   position: relative;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  width: calc(100% - 28px);
+  width: min(calc(100% - 56px), 220px);
   margin: 8px auto 3px;
 }
 
 .progress::before {
   content: '';
   position: absolute;
-  top: 7px;
+  top: 29px;
   right: calc(100% / 6);
   left: calc(100% / 6);
   height: 0;
@@ -26,17 +26,19 @@
 .step {
   position: relative;
   display: flex;
-  padding-top: 14px;
+  padding-bottom: 28px;
   justify-content: center;
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1;
   color: var(--text-secondary);
+  text-shadow: 0 1px 5px
+    color-mix(in srgb, var(--tarot-scene-center) 34%, transparent);
 }
 
 .step::before {
   content: '';
   position: absolute;
-  top: 7px;
+  top: 29px;
   left: 0;
   width: 100%;
   height: 0;
@@ -58,7 +60,7 @@
   content: '';
   position: absolute;
   z-index: 1;
-  top: 0;
+  top: 22px;
   left: 50%;
   width: 10px;
   height: 10px;
