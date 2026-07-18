@@ -58,8 +58,8 @@ export const useUpdateNatalChart = () => {
       await updateUser(String(user!.id), {
         sign: zodiac !== 'Unknown' ? zodiac : undefined,
         birthDate: `${day}.${month}.${year}`,
-        birthTime: `${hour}:${minute}`,
-        birthPlace: `${country}, ${city}`,
+        birthTime: timeKnown ? `${hour}:${minute}` : '',
+        birthPlace: country ? `${country}, ${city}` : city,
       });
 
       // Действие успешно выполнено — списываем пентакли.

@@ -1,6 +1,5 @@
 import {
   useEffect,
-  useMemo,
   useState,
   type ChangeEvent,
   type SyntheticEvent,
@@ -18,13 +17,13 @@ import TRANSLATIONS_EN from '@/shared/locales/en/natalchart';
 import TRANSLATIONS_RU from '@/shared/locales/ru/natalchart';
 import { compareObjects } from '@/shared/utils/compareObjects';
 
-import { COUNTRIES } from '@/pages/Registry/config/countries';
 import { YEARS, MONTHS, getDaysInMonth } from '@/pages/Registry/config/date';
 import { useUpdateNatalChart } from '../model/useNatalChart/useNatalChart';
 
 import Accordion from './Accordion/Accordion';
 import DetailedNatalChart from './DetailedNatalChart/DetailedNatalChart';
 import CelestialNatalOverview from './CelestialNatalOverview/CelestialNatalOverview';
+import BirthPlaceAutocomplete from './BirthPlaceAutocomplete/BirthPlaceAutocomplete';
 import {
   getNatalAspectKey,
   getNatalAspectType,
@@ -63,6 +62,10 @@ const parseBirthDate = (
 const parseBirthPlace = (
   birthPlace: string,
 ): { country: string; city: string } => {
+  if (!birthPlace.includes(',')) {
+    return { country: '', city: birthPlace.trim() };
+  }
+
   const [country, ...rest] = birthPlace.split(',');
 
   return {
@@ -118,6 +121,7 @@ export const NatalChart = (props: NatalChartProps) => {
   const { updateNatalChart, isLoading: isUpdating } = useUpdateNatalChart();
 
   const [isEditing, setIsEditing] = useState(false);
+  const [formStep, setFormStep] = useState(0);
   const [chartMode, setChartMode] = useState<'overview' | 'detailed'>('overview');
   const [selectedPlanet, setSelectedPlanet] = useState<PlanetId | null>(null);
   const [selectedAspectKey, setSelectedAspectKey] = useState<string | null>(null);
@@ -128,6 +132,12 @@ export const NatalChart = (props: NatalChartProps) => {
     const { day, month, year } = parseBirthDate(user.birthDate);
     const { country, city } = parseBirthPlace(user.birthPlace);
     const { hour, minute } = parseBirthTime(user?.birthTime);
+    const timeKnown = Boolean(
+      user.birthTime &&
+      !user.birthTime.includes('undefined') &&
+      hour &&
+      minute,
+    );
 
     return {
       name: user.userName,
@@ -138,7 +148,7 @@ export const NatalChart = (props: NatalChartProps) => {
       year,
       hour,
       minute,
-      timeKnown: true,
+      timeKnown,
     };
   })();
 
@@ -153,14 +163,10 @@ export const NatalChart = (props: NatalChartProps) => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
   }, [locale]);
 
-  const translatedCountries = useMemo(() => {
-    return COUNTRIES.map(({ value, label }) => {
-      return { value, label: i18n(label) };
-    });
-  }, [locale, i18n]);
-
   const handleCancel = () => {
     setIsEditing(false);
+    setFormStep(0);
+    setEditValues(initialValues);
     setError('');
   };
 
@@ -172,13 +178,60 @@ export const NatalChart = (props: NatalChartProps) => {
   };
 
   const handleTimeChange = (value: string) => {
-    const [minute, hour] = value.split(':');
+    const [hour, minute] = value.split(':');
 
     setEditValues((prev) => ({ ...prev, minute, hour }));
   };
 
   const handleChangeButtonClick = () => {
     setIsEditing(true);
+    setFormStep(0);
+    setError('');
+  };
+
+  const handleFormExit = () => {
+    if (isEditing) {
+      handleCancel();
+      return;
+    }
+
+    onBack?.();
+  };
+
+  const validateFormStep = (step: number) => {
+    const { name, city, day, month, year, minute, hour, timeKnown } =
+      editValues;
+
+    if (step === 0 && (!name || !day || !month || !year)) {
+      return i18n('Fill in your name and birth date');
+    }
+
+    if (step === 1 && !city) {
+      return i18n('Fill in your place of birth');
+    }
+
+    if (step === 2 && timeKnown && (!hour || !minute)) {
+      return i18n('Enter the exact birth time or mark it as unknown');
+    }
+
+    return '';
+  };
+
+  const handleNextStep = () => {
+    const validationError = validateFormStep(formStep);
+
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    setError('');
+    setFormStep((step) => Math.min(step + 1, 3));
+  };
+
+  const handlePreviousStep = () => {
+    setError('');
+    setFormStep((step) => Math.max(step - 1, 0));
   };
 
   const handleTimeCheckboxClick = (event: ChangeEvent<HTMLInputElement>) => {
@@ -227,6 +280,7 @@ export const NatalChart = (props: NatalChartProps) => {
     });
 
     setIsEditing(false);
+    setFormStep(0);
   };
 
   const [highlightedBodies, setHighlightedBodies] = useState({
@@ -284,131 +338,170 @@ export const NatalChart = (props: NatalChartProps) => {
       <div
         className={`${styles.edit} ${isEditing ? styles.chartEdit : ''} ${className}`}
       >
-        <form>
-          <h3 className={styles.title}>
-            {isEditing ? i18n('Edit chart') : i18n('Compose chart')}
-          </h3>
-
-          <div className={styles.formItem}>
-            <span className={styles.subtitle}>{i18n('Name')}</span>
-
-            <Input
-              type={'text'}
-              name={'name'}
-              value={editValues.name}
-              onChange={(e) => handleFieldChange('name', e.currentTarget.value)}
-            />
+        <form onSubmit={(event) => event.preventDefault()}>
+          <div className={styles.formHeader}>
+            {(isEditing || onBack) && (
+              <button
+                type={'button'}
+                className={styles.formBack}
+                aria-label={i18n('Back')}
+                onClick={handleFormExit}
+              >
+                <span aria-hidden={'true'}>←</span>
+                {i18n('Back')}
+              </button>
+            )}
+            <h3 className={styles.title}>
+              {isEditing ? i18n('Edit chart') : i18n('Compose chart')}
+            </h3>
           </div>
 
-          <div className={styles.formItem}>
-            <span className={styles.subtitle}>{i18n('Country of birth')}</span>
-
-            <Select
-              options={translatedCountries}
-              value={editValues.country}
-              onChange={(value) => handleFieldChange('country', value)}
-              hasSearch
-            />
-          </div>
-
-          <div className={styles.formItem}>
-            <span className={styles.subtitle}>{i18n('City of birth')}</span>
-
-            <Input
-              type={'text'}
-              name={'city'}
-              value={editValues.city}
-              onChange={(e) => handleFieldChange('city', e.currentTarget.value)}
-            />
-          </div>
-
-          <div className={styles.formItem}>
-            <span className={styles.subtitle}>{i18n('Birth date')}</span>
-
-            <div className={styles.date}>
-              <Select
-                options={MONTHS[locale]}
-                onChange={(value) => handleFieldChange('month', value)}
-                value={editValues.month}
-                placeholder={i18n('month')}
+          <div className={styles.formProgress} aria-label={i18n('Form progress')}>
+            {[0, 1, 2, 3].map((step) => (
+              <span
+                key={step}
+                className={step <= formStep ? styles.completedFormStep : ''}
               />
-
-              <Select
-                options={getDaysInMonth(
-                  editValues.month,
-                  Number(editValues.year),
-                )}
-                onChange={(value) => handleFieldChange('day', value)}
-                value={editValues.day}
-                placeholder={i18n('day')}
-                emptyPhrase={i18n('choose month')}
-              />
-
-              <Select
-                options={YEARS}
-                onChange={(value) => handleFieldChange('year', value)}
-                value={editValues.year}
-                placeholder={i18n('year')}
-                hasSearch
-              />
-            </div>
+            ))}
           </div>
 
-          <div className={styles.formItem}>
-            <span className={styles.subtitle}>{i18n('Birth time')}</span>
-
-            <div className={styles.birthItem}>
-              <Input
-                type={'time'}
-                name={'time'}
-                value={`${editValues.hour}:${editValues.minute}`}
-                onChange={(e) => handleTimeChange(e.currentTarget.value)}
-              />
-
-              <div className={styles.birth}>
-                <span className={styles.subtitle}>
-                  {i18n("I don't remember")}
-                </span>
-
-                <Input
-                  type={'checkbox'}
-                  checked={!editValues.timeKnown}
-                  onChange={handleTimeCheckboxClick}
-                  style={{ marginLeft: '5px' }}
-                />
-              </div>
-            </div>
+          <div className={styles.stepHeading}>
+            <span>{i18n('Step')} {formStep + 1} {i18n('of')} 4</span>
+            <strong>
+              {i18n([
+                'Birth date and name',
+                'Place of birth',
+                'Exact birth time',
+                'Check the data',
+              ][formStep])}
+            </strong>
           </div>
 
-          <div className={styles.action}>
-            {isEditing ? (
+          <div className={styles.formStep}>
+            {formStep === 0 && (
               <>
-                <Button
-                  type={'submit'}
-                  className={styles.actionButton}
-                  onClick={handleSave}
-                  disabled={isEqual}
-                  iconRight={<Price cost={10} />}
-                >
-                  {i18n('Edit')}
-                </Button>
-                <Button className={styles.actionButton} onClick={handleCancel}>
-                  {i18n('Cancel')}
-                </Button>
+                <div className={styles.formItem}>
+                  <span className={styles.subtitle}>{i18n('Name')}</span>
+                  <Input
+                    type={'text'}
+                    name={'name'}
+                    value={editValues.name}
+                    onChange={(e) => handleFieldChange('name', e.currentTarget.value)}
+                  />
+                </div>
+
+                <div className={styles.formItem}>
+                  <span className={styles.subtitle}>{i18n('Birth date')}</span>
+                  <div className={styles.date}>
+                    <Select
+                      options={MONTHS[locale]}
+                      onChange={(value) => handleFieldChange('month', value)}
+                      value={editValues.month}
+                      placeholder={i18n('month')}
+                    />
+                    <Select
+                      options={getDaysInMonth(editValues.month, Number(editValues.year))}
+                      onChange={(value) => handleFieldChange('day', value)}
+                      value={editValues.day}
+                      placeholder={i18n('day')}
+                      emptyPhrase={i18n('choose month')}
+                    />
+                    <Select
+                      options={YEARS}
+                      onChange={(value) => handleFieldChange('year', value)}
+                      value={editValues.year}
+                      placeholder={i18n('year')}
+                      hasSearch
+                    />
+                  </div>
+                </div>
               </>
+            )}
+
+            {formStep === 1 && (
+              <>
+                <div className={styles.formItem}>
+                  <span className={styles.subtitle}>{i18n('City of birth')}</span>
+                  <BirthPlaceAutocomplete
+                    value={editValues.city}
+                    onChange={(value) => handleFieldChange('city', value)}
+                    onSelect={(place) => {
+                      handleFieldChange('city', place.city);
+                      handleFieldChange('country', place.countryCode);
+                    }}
+                  />
+                </div>
+                <p className={styles.stepHint}>{i18n('Place is used to calculate houses and chart angles')}</p>
+              </>
+            )}
+
+            {formStep === 2 && (
+              <>
+                <p className={styles.accuracyNotice}>
+                  <strong>{i18n('Why exact time matters')}</strong>
+                  {i18n('Birth time affects the Ascendant, houses and chart angles')}
+                </p>
+                <div className={styles.formItem}>
+                  <span className={styles.subtitle}>{i18n('Birth time')}</span>
+                  <Input
+                    type={'time'}
+                    name={'time'}
+                    disabled={!editValues.timeKnown}
+                    value={`${editValues.hour ?? ''}:${editValues.minute ?? ''}`}
+                    onChange={(e) => handleTimeChange(e.currentTarget.value)}
+                  />
+                </div>
+                <label className={styles.unknownTime}>
+                  <Input
+                    type={'checkbox'}
+                    checked={!editValues.timeKnown}
+                    onChange={handleTimeCheckboxClick}
+                  />
+                  <span>{i18n('Exact birth time is unknown')}</span>
+                </label>
+                {!editValues.timeKnown && (
+                  <p className={styles.stepHint}>{i18n('The chart will be created with reduced accuracy')}</p>
+                )}
+              </>
+            )}
+
+            {formStep === 3 && (
+              <div className={styles.review}>
+                <div><span>{i18n('Name')}</span><strong>{editValues.name}</strong></div>
+                <div><span>{i18n('Birth date')}</span><strong>{editValues.day}.{editValues.month}.{editValues.year}</strong></div>
+                <div><span>{i18n('Place of birth')}</span><strong>{editValues.city}</strong></div>
+                <div>
+                  <span>{i18n('Birth time')}</span>
+                  <strong>{editValues.timeKnown ? `${editValues.hour}:${editValues.minute}` : i18n('Unknown time')}</strong>
+                </div>
+                <p className={styles.reviewAccuracy}>
+                  {i18n('Expected accuracy')}: {i18n(editValues.timeKnown ? 'high' : 'low')}
+                </p>
+              </div>
+            )}
+          </div>
+
+          {error && <span className={styles.formError}>{error}</span>}
+
+          <div className={styles.wizardActions}>
+            {formStep > 0 ? (
+              <Button type={'button'} onClick={handlePreviousStep}>{i18n('Back')}</Button>
+            ) : <span />}
+
+            {formStep < 3 ? (
+              <Button type={'button'} onClick={handleNextStep}>{i18n('Continue')}</Button>
             ) : (
               <Button
                 type={'submit'}
-                className={styles.actionButton}
                 onClick={handleSave}
+                disabled={isEditing && isEqual}
                 iconRight={<Price cost={10} />}
               >
-                {i18n('Compose')}
+                {i18n(isEditing ? 'Recalculate chart' : 'Compose')}
               </Button>
             )}
           </div>
 
-          {error && i18n(error)}
         </form>
       </div>
     );
