@@ -3,7 +3,6 @@ import camelize from 'camelize';
 import type {
   MoonCalendarData,
   MoonCalendarEntry,
-  MoonCalendarLocalization,
 } from '../types';
 import { toIsoDate } from '../lib/date';
 
@@ -12,8 +11,6 @@ import { getDataFromDB } from '@/shared/api/supabase';
 interface CalendarRow {
   date: string;
   data: unknown;
-  en: unknown;
-  ru: unknown;
 }
 
 const parseJsonObject = <T extends object>(value: unknown): T | null => {
@@ -47,8 +44,6 @@ const normalizeCalendarRow = (
   return {
     date,
     data,
-    en: parseJsonObject<MoonCalendarLocalization>(row.en),
-    ru: parseJsonObject<MoonCalendarLocalization>(row.ru),
   };
 };
 

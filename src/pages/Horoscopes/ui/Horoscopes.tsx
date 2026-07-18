@@ -140,29 +140,33 @@ export const Horoscopes = () => {
       </header>
 
       <nav className={styles.tabs} aria-label={i18n('Forecast period')}>
-        {TYPES.map((type) => (
-          <button
-            type={'button'}
-            key={type.value}
-            className={type.value === selectedType ? styles.activeTab : ''}
-            onClick={() => {
-              setSelectedType(type.value);
-              setShowBasis(false);
-            }}
-          >
-            <span>{i18n(type.name)}</span>
-            {forecasts[type.value]?.forecast && (
-              <small>
-                {formatPeriodRange(
-                  forecasts[type.value].forecast.period_start,
-                  forecasts[type.value].forecast.period_end,
-                  locale,
-                  true,
-                )}
-              </small>
-            )}
-          </button>
-        ))}
+        {TYPES.map((type) => {
+          const periodForecast = forecasts[type.value]?.forecast;
+
+          return (
+            <button
+              type={'button'}
+              key={type.value}
+              className={type.value === selectedType ? styles.activeTab : ''}
+              onClick={() => {
+                setSelectedType(type.value);
+                setShowBasis(false);
+              }}
+            >
+              <span>{i18n(type.name)}</span>
+              {periodForecast && (
+                <small>
+                  {formatPeriodRange(
+                    periodForecast.period_start,
+                    periodForecast.period_end,
+                    locale,
+                    true,
+                  )}
+                </small>
+              )}
+            </button>
+          );
+        })}
       </nav>
 
       <main className={styles.forecast}>

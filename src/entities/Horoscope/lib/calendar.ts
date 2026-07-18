@@ -1,6 +1,5 @@
 import type {
   MoonCalendarEntry,
-  MoonCalendarLocalization,
   MoonCalendarZodiacSign,
   ZodiacSign,
 } from '../types';
@@ -15,13 +14,6 @@ export const createMoonCalendarIndex = (items: MoonCalendarEntry[]) => {
   });
 
   return index;
-};
-
-export const getMoonCalendarLocalization = (
-  item: MoonCalendarEntry,
-  locale: 'en' | 'ru',
-): MoonCalendarLocalization | null => {
-  return item[locale] ?? item.en ?? item.ru;
 };
 
 export const getZodiacTranslationKey = (

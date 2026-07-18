@@ -8,11 +8,12 @@ export type {
   EphemerisByRangeResponse,
   MoonCalendarEntry,
   MoonCalendarData,
-  MoonCalendarLocalization,
   MoonCalendarPhase,
   MoonCalendarNextPhases,
   MoonCalendarZodiac,
   MoonCalendarZodiacSign,
+  MoonCalendarSpecialMoon,
+  MoonCalendarEclipse,
   GeneralHoroscope,
   GeneralHoroscopeContent,
   GeneralHoroscopeFacts,
@@ -32,7 +33,6 @@ export { useEphemerisByRange } from './model/useEphemerisByRange';
 export { useGeneralHoroscopes } from './model/useGeneralHoroscopes';
 export {
   createMoonCalendarIndex,
-  getMoonCalendarLocalization,
   getZodiacTranslationKey,
 } from './lib/calendar';
 export { parseIsoDate, todayIsoString, toIsoDate } from './lib/date';

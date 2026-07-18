@@ -158,21 +158,33 @@ export interface MoonCalendarZodiac {
   zodiacType: string;
 }
 
+export interface MoonCalendarSpecialMoon {
+  isSupermoon: boolean;
+  isMicromoon: boolean;
+  isBlueMoon: boolean;
+  isBlackMoon: boolean;
+  isHarvestMoon: boolean;
+  isHunterMoon: boolean;
+  labels: string[];
+}
+
+export interface MoonCalendarEclipse {
+  isEclipse: boolean;
+  isBloodMoon: boolean;
+  type: string | null;
+  date: string | null;
+  visibility: string | null;
+  daysFromQuery: number | null;
+}
+
 /** Astronomical data stored in the `data` JSON column. */
 export interface MoonCalendarData {
   timestamp: string;
   phase: MoonCalendarPhase;
   nextPhases: MoonCalendarNextPhases;
   zodiac: MoonCalendarZodiac;
-}
-
-/** Localized interpretation stored in the `en` or `ru` JSON column. */
-export interface MoonCalendarLocalization {
-  key: string;
-  title: string;
-  body: string;
-  tone: string;
-  tags: string[];
+  specialMoon?: MoonCalendarSpecialMoon;
+  eclipse?: MoonCalendarEclipse;
 }
 
 /** A normalized API row representing one calendar day. */
@@ -180,8 +192,6 @@ export interface MoonCalendarEntry {
   /** Calendar date normalized to `yyyy-mm-dd`. */
   date: string;
   data: MoonCalendarData;
-  en: MoonCalendarLocalization | null;
-  ru: MoonCalendarLocalization | null;
 }
 
 export type ZodiacType = 'tropical' | 'sidereal' | 'Tropical' | 'Sidereal';

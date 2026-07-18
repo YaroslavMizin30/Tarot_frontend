@@ -16,6 +16,11 @@ export const queryKeys = {
   calendar: {
     all: ['calendar'] as const,
   },
+  moonPlans: {
+    all: ['moon-plans'] as const,
+    byUserDate: (userId: string | number, date: string) =>
+      ['moon-plans', String(userId), date] as const,
+  },
   ephemeris: {
     all: ['ephemeris'] as const,
     month: ['ephemeris', 'week'] as const,
