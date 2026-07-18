@@ -1,6 +1,6 @@
 import type { SVGProps } from 'react';
 
-type AstrologySectionIconName = 'horoscopes' | 'natal-chart' | 'calendar';
+type AstrologySectionIconName = 'horoscopes' | 'natal-chart' | 'calendar' | 'transits';
 
 interface AstrologySectionIconProps extends SVGProps<SVGSVGElement> {
   name: AstrologySectionIconName;
@@ -24,6 +24,12 @@ export const AstrologySectionIcon = ({
       <>
         <circle cx={'12'} cy={'12'} r={'3.5'} />
         <path d={'M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1'} />
+      </>
+    ) : name === 'transits' ? (
+      <>
+        <circle cx={'7'} cy={'15'} r={'2.4'} />
+        <circle cx={'16.5'} cy={'8'} r={'2.8'} />
+        <path d={'M8.9 13.6 14.2 9.7M4.5 7.5h4M6.5 5.5v4M15.8 15.5h4'} />
       </>
     ) : name === 'natal-chart' ? (
       <>

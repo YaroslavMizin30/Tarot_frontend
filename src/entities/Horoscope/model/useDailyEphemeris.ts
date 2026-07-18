@@ -55,6 +55,7 @@ export const useDailyEphemeris = () => {
 
   return {
     isLoading,
+    ephemeris,
     bodies: ephemeris?.bodies ?? {},
     astrology: ephemeris?.astrology,
     timestamp: ephemeris?.timestamp,

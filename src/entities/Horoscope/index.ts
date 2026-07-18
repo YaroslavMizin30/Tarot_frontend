@@ -20,6 +20,16 @@ export type {
   GeneralHoroscopePeriod,
 } from './types';
 export type { NatalChart, House } from './types/chart';
+export type {
+  PersonalTransit,
+  PersonalTransitSummary,
+  TransitTargetId,
+} from './types/transit';
+export type {
+  PersonalTransitReport,
+  TransitHistoryItem,
+  TransitReadingContent,
+} from './types/transitReport';
 
 export { getHoroscopes } from './api/getHoroscopes';
 export { addHoroscope } from './api/addHoroscope';
@@ -40,5 +50,19 @@ export {
   getDailyGuidance,
   type DailyGuidance,
 } from './lib/dailyGuidance';
+export {
+  calculatePersonalTransits,
+  getAngularDistance,
+  getNatalHouse,
+  isPlanetTransitTarget,
+} from './lib/personalTransits';
 export { Moon } from './ui/Moon/Moon';
 export { PRICES } from './config/price';
+export {
+  getPersonalTransitHistory,
+  getPersonalTransitPreview,
+  getPersonalTransitReport,
+  purchasePersonalTransitReport,
+  quotePersonalTransitReport,
+  savePersonalTransitReflection,
+} from './api/personalTransitReports';

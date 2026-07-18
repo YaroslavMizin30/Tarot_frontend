@@ -37,7 +37,17 @@ const Section = (props: SectionProps) => {
 
   const { i18n } = useLocales();
 
-  const { rootRef, addElement } = useHighlights({ onHighLight });
+  const { rootRef, addElement } = useHighlights({
+    onHighLight,
+    threshold: 0.65,
+    onElementVisibility: (isVisible, element) => {
+      if (!isVisible || element.getAttribute('data-highlight-item') !== 'true') {
+        return;
+      }
+
+      onSelectAspect?.(element.getAttribute('data-aspect-key'));
+    },
+  });
 
   return (
     <div
@@ -106,7 +116,12 @@ const Section = (props: SectionProps) => {
                   }
                 }}
               >
-                <div className={styles.header}>
+                <div
+                  className={styles.header}
+                  ref={addElement}
+                  data-highlight-item={'true'}
+                  data-aspect-key={aspectKey ?? undefined}
+                >
                   {planets?.[0] && (
                     <img
                       width={

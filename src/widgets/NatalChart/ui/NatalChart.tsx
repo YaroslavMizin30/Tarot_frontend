@@ -31,6 +31,7 @@ import {
 } from '../lib/aspects';
 
 import type { PlanetId, ZodiacSignId } from '@/entities/Horoscope/types';
+import type { PersonalTransit } from '@/entities/Horoscope/types/transit';
 
 import type { NatalChartProps } from './NatalChart.props';
 
@@ -114,7 +115,13 @@ const getFirstSentence = (value?: string) => {
 };
 
 export const NatalChart = (props: NatalChartProps) => {
-  const { user, className = '', onBack } = props;
+  const {
+    user,
+    className = '',
+    onBack,
+    onTransits,
+    initialTransit = null,
+  } = props;
 
   const { i18n, addTranslations, locale } = useLocales();
 
@@ -122,8 +129,13 @@ export const NatalChart = (props: NatalChartProps) => {
 
   const [isEditing, setIsEditing] = useState(false);
   const [formStep, setFormStep] = useState(0);
-  const [chartMode, setChartMode] = useState<'overview' | 'detailed'>('overview');
-  const [selectedPlanet, setSelectedPlanet] = useState<PlanetId | null>(null);
+  const [chartMode, setChartMode] = useState<'overview' | 'detailed'>(
+    initialTransit ? 'detailed' : 'overview',
+  );
+  const [selectedPlanet, setSelectedPlanet] =
+    useState<PlanetId | null>(null);
+  const [selectedTransit, setSelectedTransit] =
+    useState<PersonalTransit | null>(initialTransit);
   const [selectedAspectKey, setSelectedAspectKey] = useState<string | null>(null);
   const [selectedPlacementType, setSelectedPlacementType] =
     useState<'sign' | 'house'>('sign');
@@ -553,6 +565,7 @@ export const NatalChart = (props: NatalChartProps) => {
   });
 
   const handlePlanetSelect = (planet: PlanetId | null) => {
+    setSelectedTransit(null);
     setSelectedPlanet(planet);
     setSelectedAspectKey(null);
     setSelectedPlacementType('sign');
@@ -622,6 +635,7 @@ export const NatalChart = (props: NatalChartProps) => {
               onSelectPlanet={handlePlanetSelect}
               selectedAspectKey={selectedAspectKey}
               onSelectAspect={setSelectedAspectKey}
+              selectedTransit={selectedTransit}
             />
           )}
         </div>
@@ -696,7 +710,37 @@ export const NatalChart = (props: NatalChartProps) => {
             </div>
           )}
 
-          {chartMode === 'detailed' && !selectedPlanetData && !selectedAspect && (
+          {chartMode === 'detailed' && selectedTransit && (
+            <div className={styles.transitContext}>
+              <span>{i18n('Selected personal transit')}</span>
+              <strong>
+                {i18n(
+                  planets.find(({ id }) => id === selectedTransit.transitBody)?.name
+                    ?? selectedTransit.transitBody,
+                )}{' '}
+                {i18n(selectedTransit.aspect)}{' '}
+                {selectedTransit.targetType === 'angle'
+                  ? selectedTransit.natalTarget.toUpperCase()
+                  : i18n(
+                    planets.find(({ id }) => id === selectedTransit.natalTarget)?.name
+                      ?? selectedTransit.natalTarget,
+                  )}
+              </strong>
+              <small>
+                {i18n(selectedTransit.phase === 'applying'
+                  ? 'Applying aspect'
+                  : selectedTransit.phase === 'separating'
+                    ? 'Separating aspect'
+                    : 'Stationary influence')}
+                {' · '}{i18n('Orb')}: {selectedTransit.orb.toFixed(2)}°
+              </small>
+              <button type={'button'} onClick={() => setSelectedTransit(null)}>
+                {i18n('Close transit highlight')}
+              </button>
+            </div>
+          )}
+
+          {chartMode === 'detailed' && !selectedTransit && !selectedPlanetData && !selectedAspect && (
             <div className={styles.chartFacts}>
               <span><b>ASC</b> {i18n(getZodiacTranslationKey(angles_details.asc.sign_id))} {Math.floor(angles_details.asc.pos)}°</span>
               <span><b>MC</b> {i18n(getZodiacTranslationKey(angles_details.mc.sign_id))} {Math.floor(angles_details.mc.pos)}°</span>
@@ -830,6 +874,14 @@ export const NatalChart = (props: NatalChartProps) => {
 
       <div className={styles.secondaryAction}>
         <span>{i18n('Birth data affects the accuracy of the chart')}</span>
+        {onTransits && (
+          <Button
+            className={styles.transitsButton}
+            onClick={onTransits}
+          >
+            {i18n('Open personal transits')}
+          </Button>
+        )}
         <Button
           className={styles.editChartButton}
           onClick={handleChangeButtonClick}

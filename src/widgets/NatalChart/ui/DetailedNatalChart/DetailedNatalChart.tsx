@@ -5,7 +5,8 @@ import type {
   NatalChart,
   Planet,
 } from '@/entities/Horoscope/types/chart';
-import type { PlanetId, ZodiacSignId } from '@/entities/Horoscope/types';
+import type { BodyId, PlanetId, ZodiacSignId } from '@/entities/Horoscope/types';
+import type { PersonalTransit } from '@/entities/Horoscope/types/transit';
 
 import { getNatalAspectKey, getNatalAspectType } from '../../lib/aspects';
 
@@ -20,6 +21,7 @@ interface DetailedNatalChartProps {
   onSelectPlanet?: (planet: PlanetId | null) => void;
   selectedAspectKey?: string | null;
   onSelectAspect?: (aspectKey: string | null) => void;
+  selectedTransit?: PersonalTransit | null;
 }
 
 const PLANET_GLYPHS: Record<PlanetId, string> = {
@@ -36,6 +38,11 @@ const PLANET_GLYPHS: Record<PlanetId, string> = {
   north_node: '☊',
   chiron: '⚷',
   lilith: '⚸',
+};
+
+const TRANSIT_GLYPHS: Record<BodyId, string> = {
+  ...PLANET_GLYPHS,
+  south_node: '☋',
 };
 
 const ZODIAC: Array<{ id: ZodiacSignId; name: string; glyph: string }> = [
@@ -84,6 +91,7 @@ export const DetailedNatalChart = (props: DetailedNatalChartProps) => {
     onSelectPlanet,
     selectedAspectKey,
     onSelectAspect,
+    selectedTransit,
   } = props;
   const { i18n } = useLocales();
   const ascendant = chart.angles.asc;
@@ -101,6 +109,7 @@ export const DetailedNatalChart = (props: DetailedNatalChartProps) => {
   const isAspectActive = (aspect: Aspect) => {
     const aspectKey = getNatalAspectKey(aspect);
 
+    if (selectedTransit) return false;
     if (selectedAspectKey) return selectedAspectKey === aspectKey;
 
     return !selectedPlanet || aspect.p1 === selectedPlanet || aspect.p2 === selectedPlanet;
@@ -163,6 +172,8 @@ export const DetailedNatalChart = (props: DetailedNatalChartProps) => {
           const aspectKey = getNatalAspectKey(aspect);
           const aspectType = getNatalAspectType(aspect);
           const active = isAspectActive(aspect);
+          const firstPlanetPoint = pointAt(first.abs_pos, 102, ascendant);
+          const secondPlanetPoint = pointAt(second.abs_pos, 102, ascendant);
 
           return (
             <g
@@ -189,9 +200,59 @@ export const DetailedNatalChart = (props: DetailedNatalChartProps) => {
               >
                 <title>{`${aspect.type} · ${formatDegree(aspect.orb)}`}</title>
               </line>
+              {aspectType === 'conjunction' && (
+                <g className={`${styles.conjunctionMarkers} ${active ? styles.activeAspect : styles.muted}`}>
+                  <circle cx={firstPlanetPoint.x} cy={firstPlanetPoint.y} r={'14'} />
+                  <circle cx={secondPlanetPoint.x} cy={secondPlanetPoint.y} r={'14'} />
+                  <circle
+                    className={styles.conjunctionCore}
+                    cx={(firstPlanetPoint.x + secondPlanetPoint.x) / 2}
+                    cy={(firstPlanetPoint.y + secondPlanetPoint.y) / 2}
+                    r={'3'}
+                  />
+                </g>
+              )}
             </g>
           );
         })}
+
+        {selectedTransit && (() => {
+          const isConjunction = selectedTransit.aspect === 'conjunction';
+          const from = pointAt(
+            selectedTransit.transitPosition,
+            isConjunction ? 70 : 91,
+            ascendant,
+          );
+          const to = pointAt(selectedTransit.natalTargetPosition, 102, ascendant);
+          const transitClass = ASPECT_CLASS[selectedTransit.aspect];
+
+          return (
+            <g className={styles.selectedTransit}>
+              <line
+                className={`${styles.transitLine} ${transitClass}`}
+                x1={from.x}
+                y1={from.y}
+                x2={to.x}
+                y2={to.y}
+              />
+              <circle className={styles.transitSourceHalo} cx={from.x} cy={from.y} r={'13'} />
+              <circle className={styles.transitSource} cx={from.x} cy={from.y} r={'9'} />
+              <text
+                className={styles.transitGlyph}
+                x={from.x}
+                y={from.y}
+                textAnchor={'middle'}
+                dominantBaseline={'central'}
+              >
+                {TRANSIT_GLYPHS[selectedTransit.transitBody]}
+              </text>
+              <circle className={styles.transitTarget} cx={to.x} cy={to.y} r={'14'} />
+              {isConjunction && (
+                <circle className={styles.transitConjunctionPulse} cx={to.x} cy={to.y} r={'19'} />
+              )}
+            </g>
+          );
+        })()}
 
         <g className={styles.angleAxes}>
           <line

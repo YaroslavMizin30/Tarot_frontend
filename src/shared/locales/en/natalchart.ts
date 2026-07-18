@@ -356,6 +356,52 @@ const TRANSLATIONS_EN = {
   'of': 'of',
   'Applying aspect': 'Applying aspect',
   'Separating aspect': 'Separating aspect',
+  'Stationary influence': 'Stationary influence',
+  'Your transits today': 'Your transits today',
+  'Current sky positions compared with your natal chart':
+    'Current sky positions compared with your natal chart',
+  'Transit through natal house': 'Transit through natal house',
+  'Show in chart': 'Show in chart',
+  'Highlights are selected by aspect precision and chart significance':
+    'Highlights are selected by aspect precision and chart significance',
+  'Calculating personal transits': 'Calculating personal transits…',
+  'Personal transits are temporarily unavailable':
+    'Personal transits are temporarily unavailable',
+  'No significant exact transits for this date':
+    'No significant exact transits for this date',
+  'Transit meaning: conjunction':
+    'This influence concentrates energy and makes the natal theme more noticeable.',
+  'Transit meaning: opposition':
+    'This influence reveals a polarity that asks for balance between two directions.',
+  'Transit meaning: square':
+    'This influence creates productive tension and points to an area that requires action.',
+  'Transit meaning: trine':
+    'This influence supports a natural flow, but its opportunity still needs to be used consciously.',
+  'Transit meaning: sextile':
+    'This influence opens a supportive opportunity that responds well to personal initiative.',
+  'Transit meaning: quincunx':
+    'This influence calls for an adjustment between needs that do not immediately align.',
+  'Transit meaning: semisextile':
+    'This subtle influence invites a small but useful change in approach.',
+  'Transit focus: Sun': 'Focus: identity, confidence and personal direction.',
+  'Transit focus: Moon': 'Focus: emotions, habits and the need for security.',
+  'Transit focus: Mercury': 'Focus: thinking, communication and decisions.',
+  'Transit focus: Venus': 'Focus: relationships, values and ways of receiving pleasure.',
+  'Transit focus: Mars': 'Focus: initiative, boundaries and use of energy.',
+  'Transit focus: Jupiter': 'Focus: growth, meaning and expansion of possibilities.',
+  'Transit focus: Saturn': 'Focus: responsibility, limits and durable results.',
+  'Transit focus: Uranus': 'Focus: freedom, renewal and departure from old patterns.',
+  'Transit focus: Neptune': 'Focus: sensitivity, imagination and clarity of perception.',
+  'Transit focus: Pluto': 'Focus: deep change, control and inner resilience.',
+  'Transit focus: North Node': 'Focus: unfamiliar experience and long-term development.',
+  'Transit focus: Chiron': 'Focus: vulnerability, acceptance and recovery.',
+  'Transit focus: Lilith': 'Focus: repressed reactions, autonomy and personal boundaries.',
+  'Transit focus: ASC': 'Focus: self-presentation, initiative and immediate reactions.',
+  'Transit focus: MC': 'Focus: goals, vocation and public role.',
+  'Transit focus: IC': 'Focus: home, roots and inner stability.',
+  'Transit focus: DSC': 'Focus: partnerships, agreements and interaction with others.',
+  'Selected personal transit': 'Selected personal transit',
+  'Close transit highlight': 'Close transit highlight',
   'Orb': 'Orb',
   'Reset chart view': 'Reset chart view',
   'Drag to rotate': 'Drag to rotate',

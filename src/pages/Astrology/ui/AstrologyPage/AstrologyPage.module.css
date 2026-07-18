@@ -62,6 +62,7 @@
     0 5px 14px var(--control-gloss-shadow);
   backdrop-filter: blur(8px);
   cursor: pointer;
+  grid-column: span 2;
 }
 
 .menuIcon {
@@ -79,15 +80,19 @@
 }
 
 .menuButton:nth-child(1) {
-  --menu-tint: #4f88a9;
+  --menu-tint: #7460bd;
 }
 
 .menuButton:nth-child(2) {
-  --menu-tint: #9669b8;
+  --menu-tint: #b17a38;
 }
 
 .menuButton:nth-child(3) {
-  --menu-tint: #b17a38;
+  --menu-tint: #4f88a9;
+}
+
+.menuButton:nth-child(4) {
+  --menu-tint: #9669b8;
 }
 
 .primaryMenuButton {

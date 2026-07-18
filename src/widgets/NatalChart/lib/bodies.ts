@@ -2,21 +2,26 @@ import type { Planet } from '@/entities/Horoscope/types/chart';
 
 import { capitalize } from '@/shared/utils';
 
-export const PLANETS = [
-  'Sun',
-  'Moon',
-  'Mercury',
-  'Venus',
-  'Mars',
-  'Jupiter',
-  'Saturn',
-  'Uranus',
-  'Neptune',
-  'Pluto',
-  'North Node',
-  'Chiron',
-  'Lilith',
-] as const;
+const PLANET_BY_TAG: Record<string, Planet['id']> = {
+  sun: 'sun',
+  moon: 'moon',
+  mercury: 'mercury',
+  venus: 'venus',
+  mars: 'mars',
+  jupiter: 'jupiter',
+  saturn: 'saturn',
+  uranus: 'uranus',
+  neptune: 'neptune',
+  pluto: 'pluto',
+  north_node: 'north_node',
+  chiron: 'chiron',
+  lilith: 'lilith',
+};
+
+const normalizePlanetTag = (value: string) => value
+  .trim()
+  .toLowerCase()
+  .replace(/[\s-]+/g, '_');
 
 export const getBodies = (planets: Planet[]) => {
   const planetObj = {};
@@ -32,6 +37,7 @@ export const getBodies = (planets: Planet[]) => {
 };
 
 export const findPlanets = (planets: string[]) => {
-  //@ts-expect-error types
-  return planets.filter((p) => PLANETS.includes(capitalize(p))) as Planet['id'][];
+  return planets
+    .map((planet) => PLANET_BY_TAG[normalizePlanetTag(planet)])
+    .filter((planet): planet is Planet['id'] => Boolean(planet));
 };

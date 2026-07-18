@@ -2,10 +2,17 @@ import { useState, useRef, useEffect } from 'react';
 
 export const useHighlights = (params: {
   onHighLight?: (isHighlighted: boolean, body: string | null) => void;
+  onElementVisibility?: (isVisible: boolean, element: Element) => void;
+  threshold?: number;
   //eslint-disable-next-line
   deps?: any[];
 }) => {
-  const { onHighLight, deps } = params;
+  const {
+    onHighLight,
+    onElementVisibility,
+    threshold = 1,
+    deps,
+  } = params;
 
   const rootRef = useRef(null);
   const elementsRef = useRef<Array<HTMLElement>>([]);
@@ -66,6 +73,8 @@ export const useHighlights = (params: {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+          onElementVisibility?.(entry.isIntersecting, entry.target);
+
           if (onHighLight) {
             onHighLight(
               entry.isIntersecting,
@@ -83,7 +92,7 @@ export const useHighlights = (params: {
           }
         });
       },
-      { root: rootRef.current, threshold: 1.0 },
+      { root: rootRef.current, threshold },
     );
 
     if (elementsRef.current) {

@@ -1,4 +1,5 @@
 import type { User } from '@/entities/User';
+import type { PersonalTransit } from '@/entities/Horoscope/types/transit';
 
 export interface NatalChartProps {
   user: User;
@@ -13,4 +14,8 @@ export interface NatalChartProps {
   onUpdated?: () => void;
   /** Navigate back from the natal chart page. */
   onBack?: () => void;
+  /** Open the current personal transits page. */
+  onTransits?: () => void;
+  /** Transit selected when opening the chart from the personal forecast. */
+  initialTransit?: PersonalTransit | null;
 }

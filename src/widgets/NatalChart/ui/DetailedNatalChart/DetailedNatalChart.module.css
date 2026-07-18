@@ -124,6 +124,69 @@
   filter: none;
 }
 
+.conjunctionMarkers {
+  fill: rgb(214 193 238 / 7%);
+  stroke: rgb(225 207 247 / 72%);
+  stroke-width: 0.9;
+  pointer-events: none;
+  transition: opacity 180ms ease, filter 180ms ease;
+}
+
+.conjunctionMarkers circle:not(.conjunctionCore) {
+  stroke-dasharray: 2 2;
+}
+
+.conjunctionMarkers .conjunctionCore {
+  fill: rgb(230 211 250 / 88%);
+  stroke: none;
+  filter: drop-shadow(0 0 4px rgb(214 193 238 / 70%));
+}
+
+.selectedTransit {
+  pointer-events: none;
+}
+
+.transitLine {
+  stroke-width: 1.8;
+  opacity: 1;
+  filter: drop-shadow(0 0 3px currentColor);
+  stroke-dasharray: none;
+}
+
+.transitSourceHalo {
+  fill: rgb(224 187 119 / 10%);
+  stroke: rgb(244 220 169 / 34%);
+  stroke-width: 0.8;
+}
+
+.transitSource {
+  fill: color-mix(in srgb, var(--background-primary) 78%, #b799d5 22%);
+  stroke: rgb(245 226 187 / 90%);
+  stroke-width: 1.2;
+  filter: drop-shadow(0 0 5px rgb(224 187 119 / 58%));
+}
+
+.transitGlyph {
+  fill: var(--text-primary);
+  font-size: 13px;
+}
+
+.transitTarget {
+  fill: none;
+  stroke: rgb(247 223 175 / 92%);
+  stroke-width: 1.4;
+  stroke-dasharray: 2 2;
+  filter: drop-shadow(0 0 4px rgb(224 187 119 / 54%));
+}
+
+.transitConjunctionPulse {
+  fill: none;
+  stroke: rgb(228 199 140 / 64%);
+  stroke-width: 0.9;
+  stroke-dasharray: 3 3;
+  filter: drop-shadow(0 0 5px rgb(224 187 119 / 48%));
+}
+
 .planet {
   cursor: pointer;
   outline: none;

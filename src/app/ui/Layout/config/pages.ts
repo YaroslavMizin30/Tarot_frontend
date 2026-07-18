@@ -4,6 +4,7 @@ const SETTING_PAGES = ['/settings', '/about-app', '/billing'];
 const ASTROLOGY_PAGES = [
   '/astrology',
   '/natal-chart',
+  '/transits',
   '/horoscopes',
   '/calendar',
 ];

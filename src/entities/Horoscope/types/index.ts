@@ -297,3 +297,19 @@ export interface EphemerisData {
 export type EphemerisResponse = EphemerisData;
 
 export type EphemerisByRangeResponse = Array<EphemerisData>;
+
+export type {
+  PersonalTransit,
+  PersonalTransitInput,
+  PersonalTransitSummary,
+  TransitAngleId,
+  TransitPhase,
+  TransitTargetId,
+} from './transit';
+export type {
+  PersonalTransitReport,
+  TransitHistoryItem,
+  TransitReadingContent,
+  TransitReadingFactor,
+  TransitReportStatus,
+} from './transitReport';

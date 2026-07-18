@@ -112,6 +112,17 @@ const routes: RouteObject[] = [
         },
       },
       {
+        path: '/transits',
+        lazy: {
+          async Component() {
+            const { default: TransitsPage } =
+              await import('@/pages/Transits');
+
+            return TransitsPage;
+          },
+        },
+      },
+      {
         path: '/horoscopes',
         lazy: {
           async Component() {
