@@ -5,20 +5,25 @@ type SpreadRow = {
   spreadId?: string | null;
   draft_id?: string | null;
   draftId?: string | null;
-  user_id: number;
+  user_id?: number;
+  userId?: number;
   id: SpreadParams['id'];
   title?: string | null;
   question: string;
   user_answer?: string | null;
+  userAnswer?: string | null;
   details?: string | null;
   details_answer?: string | null;
-  cards_count: number;
+  detailsAnswer?: string | null;
+  cards_count?: number;
+  cardsCount?: number;
   cards?: Spread['cards'] | string | null;
   interpretation?: string | null;
   rating?: number | null;
   date?: string | null;
   status?: Spread['status'] | null;
   updated_at?: string | null;
+  updatedAt?: string | null;
 };
 
 const parseCards = (cards: SpreadRow['cards']): Spread['cards'] => {
@@ -35,20 +40,20 @@ const parseCards = (cards: SpreadRow['cards']): Spread['cards'] => {
 
 export const spreadFromRow = (row: SpreadRow): Spread => ({
   spreadId: row.spread_id ?? row.spreadId ?? row.draft_id ?? row.draftId ?? '',
-  userId: row.user_id,
+  userId: row.user_id ?? row.userId ?? 0,
   id: row.id,
   title: row.title ?? undefined,
   question: row.question,
-  userAnswer: row.user_answer ?? undefined,
+  userAnswer: row.user_answer ?? row.userAnswer ?? undefined,
   details: row.details ?? undefined,
-  detailsAnswer: row.details_answer ?? undefined,
-  cardsCount: row.cards_count,
+  detailsAnswer: row.details_answer ?? row.detailsAnswer ?? undefined,
+  cardsCount: row.cards_count ?? row.cardsCount ?? 0,
   cards: parseCards(row.cards),
   interpretation: row.interpretation ?? '',
   rating: row.rating ?? undefined,
   date: row.date ?? '',
   status: row.status ?? undefined,
-  updatedAt: row.updated_at ?? undefined,
+  updatedAt: row.updated_at ?? row.updatedAt ?? undefined,
 });
 
 export const spreadParamsFromRow = (row: SpreadRow): SpreadParams => {

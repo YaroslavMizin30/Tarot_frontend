@@ -49,13 +49,15 @@
 }
 
 .group + .group {
-  margin-top: 18px;
+  margin-top: 26px;
+  padding-top: 18px;
+  border-top: 1px solid color-mix(in srgb, var(--border-primary) 24%, transparent);
 }
 
 .group h4 {
-  margin: 0 0 8px 3px;
-  font-size: 12px;
-  font-weight: 600;
+  margin: 0 0 10px 3px;
+  font-size: 13px;
+  font-weight: 700;
   color: var(--text-secondary);
 }
 
