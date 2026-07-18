@@ -21,6 +21,7 @@ export const getDataFromDB = async <T>(
   },
   options: {
     throwOnError?: boolean;
+    params?: Record<string, string>;
   } = {},
 ): Promise<T[] | null> => {
   try {
@@ -36,6 +37,7 @@ export const getDataFromDB = async <T>(
         params: {
           select: '*',
           [equal.key]: `eq.${equal.value}`,
+          ...options.params,
         },
       },
     );
