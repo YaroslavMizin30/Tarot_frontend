@@ -1,342 +1,255 @@
-import { useEffect, useMemo, useState, type FormEvent } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router';
 
-import Feed from '@/features/Feed';
-import type { Message } from '@/features/Feed/ui/Feed.props';
-
-import { useDailyEphemeris, useHoroscopes } from '@/entities/Horoscope';
+import {
+  useGeneralHoroscopes,
+  type GeneralHoroscopeFacts,
+  type GeneralHoroscopePeriod,
+} from '@/entities/Horoscope';
 import { useUser } from '@/entities/User';
 
 import useLocales from '@/shared/hooks/useLocales';
 import TRANSLATIONS_EN from '@/shared/locales/en/horoscopes';
 import TRANSLATIONS_RU from '@/shared/locales/ru/horoscopes';
-import Button from '@/shared/ui/Button';
 import ArrowButton from '@/shared/ui/ArrowButton';
 import Zodiac from '@/shared/ui/Zodiac';
-import Price from '@/shared/ui/Price';
-
-import { PRICES } from '@/entities/Horoscope';
 
 import styles from './Horoscopes.module.css';
 
-const TYPES: { name: string; value: 'daily' | 'weekly' | 'monthly' }[] = [
+const TYPES: { name: string; value: GeneralHoroscopePeriod }[] = [
   { name: 'Daily', value: 'daily' },
   { name: 'Weekly', value: 'weekly' },
   { name: 'Monthly', value: 'monthly' },
 ];
 
-export const Horoscopes = () => {
-  const [selectedType, setSelectedType] = useState<
-    'daily' | 'weekly' | 'monthly'
-  >('daily');
+const capitalize = (value: string) =>
+  value.charAt(0).toUpperCase() + value.slice(1);
 
-  const [pendingMessages, setPendingMessages] = useState<Message[]>([]);
-  const [systemMessage, setSystemMessage] = useState<Message | null>(null);
-  const [scrollOverrideId, setScrollOverrideId] = useState<string | null>(null);
+const sanitizeForecastText = (value: string) =>
+  value
+    .replace(/\s*[([]\s*id\s*:\s*[\w.-]+\s*[)\]]/gi, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
 
-  const navigate = useNavigate();
-
-  const { bodies } = useDailyEphemeris();
-
-  const { i18n, addTranslations, locale } = useLocales();
-  const { user } = useUser() ?? {};
-  const {
-    horoscopes,
-    isLoading,
-    isAdding,
-    addHoroscope,
-    setUserMessage,
-    tags,
-    addTag,
-    message,
-    findExistingHoroscopeInPeriod,
-  } = useHoroscopes({
-    onSuccess: () => {
-      // Clear optimistic messages after data is refetched
-      setPendingMessages([]);
-    },
+const formatPeriodRange = (
+  startDate: string,
+  endDate: string,
+  locale: string,
+  compact = false,
+) => {
+  const formatter = new Intl.DateTimeFormat(locale, {
+    day: 'numeric',
+    month: compact ? 'short' : 'long',
   });
+  const start = formatter.format(new Date(`${startDate}T12:00:00Z`));
+  if (startDate === endDate) return start;
+  const end = formatter.format(new Date(`${endDate}T12:00:00Z`));
+  return `${start} — ${end}`;
+};
+
+export const Horoscopes = () => {
+  const [selectedType, setSelectedType] =
+    useState<GeneralHoroscopePeriod>('daily');
+  const [showBasis, setShowBasis] = useState(false);
+  const navigate = useNavigate();
+  const { user } = useUser() ?? {};
+  const { i18n, addTranslations, locale } = useLocales();
+  const forecastLocale = locale === 'ru' ? 'ru' : 'en';
+  const { forecasts, isLoading, isError } = useGeneralHoroscopes(
+    user?.sign,
+    forecastLocale,
+  );
 
   useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
-  }, [locale]);
+  }, [addTranslations, locale]);
 
-  const filteredHoroscopes = useMemo(() => {
-    return horoscopes?.filter((h) => h.type === selectedType);
-  }, [selectedType, horoscopes]);
+  const selected = forecasts[selectedType];
+  const forecast = selected?.forecast;
 
-  /** Does a horoscope of the selected type already exist for the current period? */
-  const existingHoroscopeForPeriod = useMemo(
-    () => findExistingHoroscopeInPeriod(selectedType),
-    [findExistingHoroscopeInPeriod, selectedType],
-  );
-
-  // Combine database horoscopes with pending (optimistic) messages
-  // and any system notification message
-  const messages: Message[] = useMemo(() => {
-    const horoscopeMessages: Message[] = (filteredHoroscopes ?? []).map(
-      (h) => ({
-        id: h.id,
-        text: h.content,
-        date: new Date(h.date),
-        sender: h.sender ?? 'Tarotopia',
-        isUser: h.isUserMessage ?? false,
-        avatar: !h.isUserMessage
-          ? '/assets/images/horoscope/tarotopia-avatar.jpeg'
-          : undefined,
-        type: h.type,
-      }),
+  const periodLabel = useMemo(() => {
+    if (!forecast) return '';
+    return formatPeriodRange(
+      forecast.period_start,
+      forecast.period_end,
+      locale,
     );
+  }, [forecast, locale]);
 
-    const result = [...horoscopeMessages, ...pendingMessages];
-    if (systemMessage) {
-      result.push(systemMessage);
+  const basisFacts = useMemo(() => {
+    if (!forecast) return [];
+    const facts = forecast.facts as GeneralHoroscopeFacts;
+    const allFacts = [
+      ...(facts.significant_aspects ?? []),
+      ...(facts.stations ?? []),
+      ...(facts.ingresses ?? []),
+      ...(facts.moon_phases ?? []),
+    ];
+    const ids = new Set([
+      ...forecast.content.supportive_factor.basis,
+      ...forecast.content.tension.basis,
+    ]);
+    return allFacts.filter(({ id }) => ids.has(id));
+  }, [forecast]);
+
+  const formatFact = (fact: (typeof basisFacts)[number]) => {
+    if (fact.planets?.length === 2 && fact.type) {
+      const planets = fact.planets
+        .map((planet) => i18n(capitalize(planet)))
+        .join(' — ');
+      const orb = typeof fact.orb === 'number'
+        ? ` · ${i18n('Orb')} ${fact.orb.toFixed(2)}°`
+        : '';
+      const phase = fact.phase ? ` · ${i18n(capitalize(fact.phase))}` : '';
+      return `${planets}: ${i18n(capitalize(fact.type))}${orb}${phase}`;
     }
-    return result;
-  }, [filteredHoroscopes, pendingMessages, systemMessage]);
-
-  // Context-aware loading message
-  const loadingMessage = useMemo(() => {
-    if (isAdding) {
-      return i18n(
-        selectedType === 'daily'
-          ? 'Generating daily horoscope...'
-          : selectedType === 'weekly'
-            ? 'Generating weekly horoscope...'
-            : 'Generating monthly horoscope...',
-      );
+    if (fact.body && fact.sign) {
+      return `${i18n(capitalize(fact.body))} — ${i18n(capitalize(fact.sign))}`;
     }
-    return i18n('Loading...');
-  }, [selectedType, isAdding, i18n]);
-
-  // Compute scroll target:
-  // - If an override is set (user tried to create a duplicate), use that
-  // - Otherwise, scroll to the latest horoscope of the selected type
-  const scrollTarget = useMemo(() => {
-    if (scrollOverrideId) {
-      return scrollOverrideId;
-    }
-
-    if (!filteredHoroscopes || filteredHoroscopes.length === 0) {
-      return null;
-    }
-
-    return filteredHoroscopes[filteredHoroscopes.length - 1].id;
-  }, [filteredHoroscopes, scrollOverrideId]);
-
-  const handleTypeChange = (type: 'daily' | 'weekly' | 'monthly') => {
-    setSelectedType(type);
-    // Clear notifications and scroll override when switching type
-    setSystemMessage(null);
-    setScrollOverrideId(null);
-  };
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-
-    // If a horoscope already exists for this period, prevent optimistic update,
-    // scroll to the existing horoscope, and show a system notification
-    if (existingHoroscopeForPeriod) {
-      setScrollOverrideId(existingHoroscopeForPeriod.id);
-
-      setSystemMessage({
-        id: `system-${selectedType}-${Date.now()}`,
-        text:
-          selectedType === 'daily'
-            ? i18n('You already have a daily horoscope for today')
-            : selectedType === 'weekly'
-              ? i18n('You already have a weekly horoscope for this week')
-              : i18n('You already have a monthly horoscope for this month'),
-        date: new Date(),
-        sender: 'Tarotopia',
-        isUser: false,
-        type: selectedType,
-        avatar: '/assets/images/horoscope/tarotopia-avatar.jpeg',
-      });
-
-      return;
-    }
-
-    // Immediately show the user's message in the feed (optimistic update)
-    if (message.trim()) {
-      setPendingMessages((prev) => [
-        ...prev,
-        {
-          id: `pending-${Date.now()}`,
-          text: message.trim(),
-          date: new Date(),
-          sender: user?.userName ?? 'You',
-          isUser: true,
-          type: selectedType,
-        },
-      ]);
-    }
-
-    addHoroscope(selectedType);
+    if (fact.name) return i18n(fact.name);
+    return fact.date ?? fact.id;
   };
 
   return (
     <div className={styles.container}>
-      <div className={styles.content}>
-        <div className={styles['content-header']}>
-          {TYPES.map((type) => {
-            const isActive = type.value === selectedType;
+      <button
+        type={'button'}
+        className={styles.topBack}
+        aria-label={i18n('Back')}
+        onClick={() => navigate('/astrology')}
+      >
+        <span aria-hidden={'true'}>←</span>
+        {i18n('Back')}
+      </button>
 
-            return (
-              <Button
-                key={type.value}
-                className={`${styles.button} ${isActive ? styles.active : ''}`}
-                onClick={() => handleTypeChange(type.value)}
-              >
-                {i18n(type.name)}
-              </Button>
-            );
-          })}
+      <header className={styles.header}>
+        <div>
+          <span className={styles.eyebrow}>{i18n('General forecast')}</span>
+          <h1>{user?.sign ? i18n(user.sign) : i18n('Horoscope')}</h1>
+          <p>{i18n('Based on current planetary positions')}</p>
         </div>
+        {user?.sign && (
+          <div className={styles.zodiacMark} aria-hidden={'true'}>
+            <Zodiac
+              sign={user.sign}
+              type={'big'}
+              className={styles.zodiacArtwork}
+            />
+          </div>
+        )}
+      </header>
 
-        <Feed
-          messages={messages}
-          maxHeight={80}
-          maxHeightMeasure={'%'}
-          className={styles.feed}
-          isLoading={isLoading || isAdding}
-          loadingMessage={loadingMessage}
-          scrollToMessageId={scrollTarget}
-        />
+      <nav className={styles.tabs} aria-label={i18n('Forecast period')}>
+        {TYPES.map((type) => (
+          <button
+            type={'button'}
+            key={type.value}
+            className={type.value === selectedType ? styles.activeTab : ''}
+            onClick={() => {
+              setSelectedType(type.value);
+              setShowBasis(false);
+            }}
+          >
+            <span>{i18n(type.name)}</span>
+            {forecasts[type.value]?.forecast && (
+              <small>
+                {formatPeriodRange(
+                  forecasts[type.value].forecast.period_start,
+                  forecasts[type.value].forecast.period_end,
+                  locale,
+                  true,
+                )}
+              </small>
+            )}
+          </button>
+        ))}
+      </nav>
 
-        <form className={styles.composeForm} onSubmit={handleSubmit}>
-          <textarea
-            className={styles.composeInput}
-            value={message}
-            onChange={(e) => setUserMessage(e.target.value)}
-            placeholder={i18n('Additional thoughts (optional)...')}
-          />
-
-          <div className={`${styles.tags}`}>
-            <div className={`${styles['tags-inner']} custom-scrollbar`}>
-              {tags[selectedType].map((tag) => {
-                return (
-                  <span
-                    key={tag}
-                    onClick={() => addTag(tag)}
-                    className={styles.tag}
-                  >
-                    {i18n(tag)}
-                  </span>
-                );
-              })}
+      <main className={styles.forecast}>
+        {isLoading ? (
+          <div className={styles.state}>
+            <span className={styles.loader} />
+            <p>{i18n('Loading forecast...')}</p>
+          </div>
+        ) : isError ? (
+          <div className={styles.state}>
+            <h2>{i18n('Unable to load forecast')}</h2>
+            <p>{i18n('Try opening this page a little later')}</p>
+          </div>
+        ) : !forecast ? (
+          <div className={styles.state}>
+            <h2>{i18n('Forecast is being prepared')}</h2>
+            <p>{i18n('It will appear here as soon as it is ready')}</p>
+          </div>
+        ) : (
+          <article>
+            <div className={styles.forecastMeta}>
+              <span>{periodLabel}</span>
+              <span className={styles.freeBadge}>{i18n('Available to everyone')}</span>
             </div>
-          </div>
 
-          <div className={styles.composeActions}>
-            <Button
-              type={'submit'}
-              disabled={isAdding}
-              isLoading={isAdding}
-              iconRight={<Price cost={PRICES[selectedType]} />}
-            > 
-              {isAdding ? i18n('Generating...') : i18n('Compose')}
-            </Button>
-          </div>
-        </form>
-      </div>
+            {selected.isFallback && (
+              <div className={styles.fallbackNotice}>
+                {i18n('A new forecast is being prepared. Showing the previous one for now.')}
+              </div>
+            )}
 
-      <div className={styles['current-planets']}>
-        <h3>{`${i18n('Planets')} ${new Date().toLocaleDateString()}`}</h3>
+            <h2>{sanitizeForecastText(forecast.content.title)}</h2>
+            <p className={styles.summary}>
+              {sanitizeForecastText(forecast.content.summary)}
+            </p>
 
-        <div className={styles.planets}>
-          <div className={`${styles.planet} ${styles.moon}`}>
-            {/* @ts-expect-error nocheck*/}
-            <span className={styles.name}>{i18n(bodies?.Moon?.name)}</span>
+            <section className={styles.focus}>
+              <span>{i18n('Main focus')}</span>
+              <p>{sanitizeForecastText(forecast.content.focus)}</p>
+            </section>
 
-            <Zodiac
-              type={'small'}
-              sign={bodies?.Moon?.sign}
-              className={styles.zodiac}
-            />
+            <div className={styles.factors}>
+              <section className={styles.supportive}>
+                <span>{i18n('What supports you')}</span>
+                <p>
+                  {sanitizeForecastText(
+                    forecast.content.supportive_factor.text,
+                  )}
+                </p>
+              </section>
+              <section className={styles.tension}>
+                <span>{i18n('What needs attention')}</span>
+                <p>{sanitizeForecastText(forecast.content.tension.text)}</p>
+              </section>
+            </div>
 
-            <img
-              width={'123%'}
-              height={'123%'}
-              src={'/assets/images/horoscope/moon.png'}
-            />
-          </div>
+            <section className={styles.action}>
+              <span>{i18n('Practical step')}</span>
+              <p>
+                {sanitizeForecastText(forecast.content.practical_step)}
+              </p>
+            </section>
 
-          <div className={`${styles.planet} ${styles.sun}`}>
-            {/* @ts-expect-error nocheck*/}
-            <span className={styles.name}>{i18n(bodies?.Sun?.name)}</span>
-
-            <Zodiac
-              type={'small'}
-              sign={bodies?.Sun?.sign}
-              className={styles.zodiac}
-            />
-
-            <img
-              width={'140%'}
-              height={'140%'}
-              src={'/assets/images/horoscope/sun.png'}
-            />
-          </div>
-
-          <div className={`${styles.planet} ${styles.mercury}`}>
-            {/* @ts-expect-error nocheck*/}
-            <span className={styles.name}>{i18n(bodies?.Mercury?.name)}</span>
-
-            <Zodiac
-              type={'small'}
-              sign={bodies?.Mercury?.sign}
-              className={styles.zodiac}
-            />
-
-            <img
-              width={'119%'}
-              height={'119%'}
-              src={'/assets/images/horoscope/mercury.png'}
-            />
-          </div>
-
-          <div className={`${styles.planet} ${styles.venus}`}>
-            {/* @ts-expect-error nocheck*/}
-            <span className={styles.name}>{i18n(bodies?.Venus?.name)}</span>
-
-            <Zodiac
-              type={'small'}
-              sign={bodies?.Venus?.sign}
-              className={styles.zodiac}
-            />
-
-            <img
-              width={'134%'}
-              height={'134%'}
-              src={'/assets/images/horoscope/venus.png'}
-            />
-          </div>
-
-          <div className={`${styles.planet} ${styles.mars}`}>
-            {/* @ts-expect-error nocheck*/}
-            <span className={styles.name}>{i18n(bodies?.Mars?.name)}</span>
-
-            <Zodiac
-              type={'small'}
-              sign={bodies?.Mars?.sign}
-              className={styles.zodiac}
-            />
-
-            <img
-              width={'100%'}
-              height={'100%'}
-              src={'/assets/images/horoscope/mars.png'}
-            />
-          </div>
-        </div>
-      </div>
+            {basisFacts.length > 0 && (
+              <div className={styles.basis}>
+                <button
+                  type={'button'}
+                  onClick={() => setShowBasis((value) => !value)}
+                >
+                  {i18n(showBasis ? 'Hide forecast basis' : 'What is this forecast based on?')}
+                  <span aria-hidden={'true'}>{showBasis ? '−' : '+'}</span>
+                </button>
+                {showBasis && (
+                  <ul>
+                    {basisFacts.map((fact) => (
+                      <li key={fact.id}>{formatFact(fact)}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )}
+          </article>
+        )}
+      </main>
 
       <div className={styles.bottom}>
-        <ArrowButton
-          className={styles.back}
-          onClick={() => navigate('/astrology')}
-        />
+        <ArrowButton onClick={() => navigate('/astrology')} />
       </div>
     </div>
   );

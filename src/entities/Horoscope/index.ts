@@ -13,6 +13,10 @@ export type {
   MoonCalendarNextPhases,
   MoonCalendarZodiac,
   MoonCalendarZodiacSign,
+  GeneralHoroscope,
+  GeneralHoroscopeContent,
+  GeneralHoroscopeFacts,
+  GeneralHoroscopePeriod,
 } from './types';
 export type { NatalChart, House } from './types/chart';
 
@@ -25,6 +29,7 @@ export {
 export { useCalendar } from './model/useCalendar';
 export { useDailyEphemeris } from './model/useDailyEphemeris';
 export { useEphemerisByRange } from './model/useEphemerisByRange';
+export { useGeneralHoroscopes } from './model/useGeneralHoroscopes';
 export {
   createMoonCalendarIndex,
   getMoonCalendarLocalization,

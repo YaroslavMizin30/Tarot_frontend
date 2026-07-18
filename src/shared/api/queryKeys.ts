@@ -8,6 +8,11 @@ export const queryKeys = {
     byUserId: (userId: string | number) =>
       ['horoscopes', String(userId)] as const,
   },
+  generalHoroscopes: {
+    all: ['general-horoscopes'] as const,
+    bySign: (sign: string, locale: string) =>
+      ['general-horoscopes', sign, locale] as const,
+  },
   calendar: {
     all: ['calendar'] as const,
   },

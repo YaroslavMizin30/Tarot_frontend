@@ -10,6 +10,55 @@ export interface Horoscope {
   sender?: string;
 }
 
+export type GeneralHoroscopePeriod = 'daily' | 'weekly' | 'monthly';
+export type GeneralHoroscopeLocale = 'ru' | 'en';
+
+export interface GeneralHoroscopeFactor {
+  text: string;
+  basis: string[];
+}
+
+export interface GeneralHoroscopeContent {
+  title: string;
+  summary: string;
+  focus: string;
+  supportive_factor: GeneralHoroscopeFactor;
+  tension: GeneralHoroscopeFactor;
+  practical_step: string;
+}
+
+export interface GeneralHoroscopeFact {
+  id: string;
+  date?: string;
+  planets?: string[];
+  type?: string;
+  orb?: number;
+  phase?: 'applying' | 'separating';
+  body?: string;
+  sign?: string;
+  direction?: string;
+  name?: string;
+}
+
+export interface GeneralHoroscopeFacts {
+  significant_aspects?: GeneralHoroscopeFact[];
+  stations?: GeneralHoroscopeFact[];
+  ingresses?: GeneralHoroscopeFact[];
+  moon_phases?: GeneralHoroscopeFact[];
+}
+
+export interface GeneralHoroscope {
+  id: string;
+  sign: ZodiacSignId;
+  period: GeneralHoroscopePeriod;
+  locale: GeneralHoroscopeLocale;
+  period_start: string;
+  period_end: string;
+  content: GeneralHoroscopeContent;
+  facts: GeneralHoroscopeFacts;
+  generated_at: string;
+}
+
 
 export type ZodiacSign =
   | 'Aries'
