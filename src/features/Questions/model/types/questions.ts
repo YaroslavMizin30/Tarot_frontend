@@ -1,6 +1,12 @@
 import { SpreadType } from '@/entities/Spread';
 
 export interface Question {
+  /** Expected depth of the reading. */
+  depth?: 'quick' | 'balanced' | 'deep';
+  /** Search and recommendation hints reserved for future personalization. */
+  tags?: string[];
+  /** Prioritize the question in the compact four-card grid. */
+  featured?: boolean;
   /**
    * Question text
    */

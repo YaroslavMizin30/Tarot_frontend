@@ -1,9 +1,10 @@
-import { useState, type FC } from 'react';
+import { useEffect, useMemo, useRef, useState, type FC } from 'react';
 import { useNavigate } from 'react-router';
 
 import useLocales from '@/shared/hooks/useLocales';
 import Button from '@/shared/ui/Button';
 import Modal from '@/shared/ui/Modal';
+import { useUser, type TarotProfile } from '@/entities/User';
 
 import type { ThemeProps } from './Themes.props';
 import type { Question } from '../../model/types/questions';
@@ -13,28 +14,90 @@ import { Personalization } from '../Personalization/Personalization';
 
 import styles from './Themes.module.css';
 
-const THEME_ICONS: ThemeIconName[] = [
-  'anxiety',
-  'decision',
-  'love',
-  'career',
-  'money',
-  'self',
-  'emotion',
-  'spirituality',
-  'transformation',
-  'balance',
-];
+const THEME_ICONS: Record<string, ThemeIconName> = {
+  'Decisions and future': 'decision',
+  'Love and relationships': 'love',
+  'Work and money': 'career',
+  'Inner state': 'emotion',
+  'Self-knowledge and change': 'self',
+  'Spiritual path': 'spirituality',
+};
+
+const FOCUS_THEME: Record<NonNullable<TarotProfile['focus']>[number], string> = {
+  relationships: 'Love and relationships',
+  career: 'Work and money',
+  money: 'Work and money',
+  wellbeing: 'Inner state',
+  change: 'Self-knowledge and change',
+  direction: 'Decisions and future',
+};
+
+const LIFE_STAGE_THEME: Partial<Record<NonNullable<TarotProfile['lifeStage']>, string>> = {
+  starting: 'Self-knowledge and change',
+  choosing: 'Decisions and future',
+  moving: 'Work and money',
+  changing: 'Self-knowledge and change',
+  recovering: 'Inner state',
+  uncertain: 'Decisions and future',
+};
+
+const getPreferredThemeNames = (profile?: TarotProfile) => {
+  const focusThemes = (profile?.focus ?? []).map((focus) => FOCUS_THEME[focus]);
+  const lifeStageTheme = profile?.lifeStage
+    ? LIFE_STAGE_THEME[profile.lifeStage]
+    : undefined;
+
+  return [...new Set([
+    ...focusThemes,
+    ...(focusThemes.length === 0 && lifeStageTheme ? [lifeStageTheme] : []),
+  ])];
+};
 
 const Themes: FC<ThemeProps> = (props) => {
   const { onQuestionChoose, themes } = props;
 
   const { i18n } = useLocales();
+  const { user } = useUser();
   const navigate = useNavigate();
+  const preferredThemeNames = useMemo(
+    () => getPreferredThemeNames(user?.tarotProfile),
+    [user?.tarotProfile],
+  );
+  const orderedThemes = useMemo(() => {
+    const priority = new Map(
+      preferredThemeNames.map((themeName, index) => [themeName, index]),
+    );
+
+    return themes
+      .map((theme, defaultIndex) => ({ theme, defaultIndex }))
+      .sort((left, right) => {
+        const leftPriority = priority.get(left.theme.name);
+        const rightPriority = priority.get(right.theme.name);
+
+        if (leftPriority !== undefined || rightPriority !== undefined) {
+          if (leftPriority === undefined) return 1;
+          if (rightPriority === undefined) return -1;
+          return leftPriority - rightPriority;
+        }
+
+        return left.defaultIndex - right.defaultIndex;
+      })
+      .map(({ theme }) => theme);
+  }, [preferredThemeNames, themes]);
   const [activeThemeName, setActiveThemeName] = useState(
-    themes[0]?.name ?? '',
+    orderedThemes[0]?.name ?? '',
   );
   const [isAllQuestionsOpen, setIsAllQuestionsOpen] = useState(false);
+  const hasAppliedPersonalOrder = useRef(false);
+
+  useEffect(() => {
+    if (hasAppliedPersonalOrder.current || preferredThemeNames.length === 0) {
+      return;
+    }
+
+    setActiveThemeName(orderedThemes[0]?.name ?? '');
+    hasAppliedPersonalOrder.current = true;
+  }, [orderedThemes, preferredThemeNames.length]);
 
   const activeTheme =
     themes.find((theme) => theme.name === activeThemeName) ?? themes[0];
@@ -93,7 +156,7 @@ const Themes: FC<ThemeProps> = (props) => {
         className={styles.filters}
         role={'group'}
       >
-        {themes.map((theme, index) => {
+        {orderedThemes.map((theme) => {
           const isActive = theme.name === activeTheme?.name;
 
           return (
@@ -107,7 +170,7 @@ const Themes: FC<ThemeProps> = (props) => {
               <span className={styles.filterLabel}>{i18n(theme.name)}</span>
               <ThemeIcon
                 className={styles.icon}
-                name={THEME_ICONS[index] ?? 'spirituality'}
+                name={THEME_ICONS[theme.name] ?? 'spirituality'}
               />
             </button>
           );
@@ -115,7 +178,10 @@ const Themes: FC<ThemeProps> = (props) => {
       </div>
 
       <div className={styles.grid}>
-        {activeTheme?.questions.slice(0, 4).map(renderQuestion)}
+        {activeTheme?.questions
+          .filter((question) => question.featured)
+          .slice(0, 4)
+          .map(renderQuestion)}
       </div>
 
       {(activeTheme?.questions.length ?? 0) > 4 && (

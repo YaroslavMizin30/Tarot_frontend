@@ -16,7 +16,6 @@ const TRANSLATIONS_RU: Record<string, string> = {
   'Relationships': 'Отношения',
   'Work and growth': 'Работа и развитие',
   'Money': 'Деньги',
-  'Inner state': 'Внутреннее состояние',
   'Changes': 'Перемены',
   'Finding direction': 'Поиск направления',
   'Where do you feel you are now?': 'На каком этапе вы сейчас?',
@@ -266,6 +265,67 @@ const TRANSLATIONS_RU: Record<string, string> = {
   'External circumstances': 'Внешние обстоятельства',
   'Advice': 'Совет',
   'Possible outcome': 'Возможный результат',
+  'Decisions and future': 'Решения и будущее',
+  'Love and relationships': 'Любовь и отношения',
+  'Work and money': 'Работа и деньги',
+  'Inner state': 'Внутреннее состояние',
+  'Self-knowledge and change': 'Самопознание и перемены',
+  'Spiritual path': 'Духовный путь',
+  'Consequences of inaction': 'Если ничего не менять',
+  'How may the situation develop if I leave it unchanged?':
+    'Как может развиваться ситуация, если оставить всё без изменений?',
+  'Still water': 'Тихая вода',
+  'What situation are you considering?': 'О какой ситуации идёт речь?',
+  'The situation I am considering': 'Ситуация, которую я рассматриваю',
+  'Preparing for an important conversation': 'Подготовка к важному разговору',
+  'What should I understand before the conversation? What tone and boundaries will help?':
+    'Что стоит понять перед разговором? Какой тон и какие границы помогут?',
+  'Before the conversation': 'Перед разговором',
+  'What conversation are you preparing for?': 'К какому разговору вы готовитесь?',
+  'The conversation I am preparing for': 'Разговор, к которому я готовлюсь',
+  'Sources of exhaustion': 'Источники усталости',
+  'What is draining my energy now? What can help me recover?':
+    'Что сейчас забирает мои силы? Что поможет восстановиться?',
+  'Return of strength': 'Возвращение сил',
+  'Circle of control': 'Круг контроля',
+  'What is within my control, and what is better to release?':
+    'Что находится под моим контролем, а что лучше отпустить?',
+  'My area of influence': 'Зона моего влияния',
+  'What situation feels difficult to control?': 'Какую ситуацию вам трудно контролировать?',
+  'The situation that feels difficult to control': 'Ситуация, которую мне трудно контролировать',
+  'Lesson of the current period': 'Урок текущего периода',
+  'What inner quality is this stage inviting me to develop?':
+    'Какое внутреннее качество предлагает развить этот этап?',
+  'Path through the stage': 'Путь через этап',
+  'Grounding intuition': 'Интуиция без тревоги',
+  'How can I distinguish an intuitive signal from anxiety or wishful thinking?':
+    'Как отличить интуитивный сигнал от тревоги или желаемого за действительное?',
+  'Clear signal': 'Ясный сигнал',
+  'What dynamic is unfolding between us? What deserves attention now?':
+    'Какая динамика складывается между нами? Что сейчас требует внимания?',
+  'Where can the relationship move if the current dynamic continues? What can influence it?':
+    'Куда могут двигаться отношения при нынешней динамике? Что способно на неё повлиять?',
+  'What draws me back? What would returning require, and what risks should I consider?':
+    'Что тянет меня назад? Чего потребует возвращение и какие риски стоит учесть?',
+  'What makes you consider returning?': 'Почему вы думаете о возвращении?',
+  'What makes me consider returning': 'Почему я думаю о возвращении',
+  'What dynamic is forming? What should I notice before investing further?':
+    'Какая динамика формируется? Что стоит заметить, прежде чем вкладываться сильнее?',
+  'How do our needs and values interact? Where are the strengths and points of friction?':
+    'Как взаимодействуют наши потребности и ценности? В чём сила союза и возможные точки напряжения?',
+  'What should I understand before ending or continuing this relationship? How can I care for myself?':
+    'Что важно понять перед завершением или продолжением отношений? Как позаботиться о себе?',
+  'Readiness for a new relationship': 'Готовность к новым отношениям',
+  'What may be preventing a new connection? What can help me become more open to it?':
+    'Что может мешать новой близости? Что поможет стать более открытым к ней?',
+  'Trust and uncertainty': 'Доверие и неопределённость',
+  'What is fueling my mistrust? What needs clarification, honesty or firmer boundaries?':
+    'Что подпитывает моё недоверие? Где нужны ясность, честность или более твёрдые границы?',
+  'What has made you question trust in this relationship?':
+    'Что заставило вас усомниться в доверии в этих отношениях?',
+  'What has made me question trust': 'Что заставило меня усомниться в доверии',
+  'What is straining the relationship? What can be restored, and what may require acceptance?':
+    'Что создаёт напряжение в отношениях? Что можно восстановить, а что потребует принятия?',
   'Celtic Cross': 'Кельтский крест',
   'A detailed spread for a complex situation: its roots, influences, development and possible outcome.':
     'Подробный расклад для сложной ситуации: её причины, влияния, развитие и возможный результат.',

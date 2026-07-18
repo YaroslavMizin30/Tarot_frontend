@@ -16,7 +16,6 @@ const TRANSLATIONS_EN: Record<string, string> = {
   'Relationships': 'Relationships',
   'Work and growth': 'Work and growth',
   'Money': 'Money',
-  'Inner state': 'Inner state',
   'Changes': 'Changes',
   'Finding direction': 'Finding direction',
   'Where do you feel you are now?': 'Where do you feel you are now?',
@@ -269,6 +268,67 @@ const TRANSLATIONS_EN: Record<string, string> = {
   'External circumstances': 'External circumstances',
   'Advice': 'Advice',
   'Possible outcome': 'Possible outcome',
+  'Decisions and future': 'Decisions and future',
+  'Love and relationships': 'Love and relationships',
+  'Work and money': 'Work and money',
+  'Inner state': 'Inner state',
+  'Self-knowledge and change': 'Self-knowledge and change',
+  'Spiritual path': 'Spiritual path',
+  'Consequences of inaction': 'Consequences of inaction',
+  'How may the situation develop if I leave it unchanged?':
+    'How may the situation develop if I leave it unchanged?',
+  'Still water': 'Still water',
+  'What situation are you considering?': 'What situation are you considering?',
+  'The situation I am considering': 'The situation I am considering',
+  'Preparing for an important conversation': 'Preparing for an important conversation',
+  'What should I understand before the conversation? What tone and boundaries will help?':
+    'What should I understand before the conversation? What tone and boundaries will help?',
+  'Before the conversation': 'Before the conversation',
+  'What conversation are you preparing for?': 'What conversation are you preparing for?',
+  'The conversation I am preparing for': 'The conversation I am preparing for',
+  'Sources of exhaustion': 'Sources of exhaustion',
+  'What is draining my energy now? What can help me recover?':
+    'What is draining my energy now? What can help me recover?',
+  'Return of strength': 'Return of strength',
+  'Circle of control': 'Circle of control',
+  'What is within my control, and what is better to release?':
+    'What is within my control, and what is better to release?',
+  'My area of influence': 'My area of influence',
+  'What situation feels difficult to control?': 'What situation feels difficult to control?',
+  'The situation that feels difficult to control': 'The situation that feels difficult to control',
+  'Lesson of the current period': 'Lesson of the current period',
+  'What inner quality is this stage inviting me to develop?':
+    'What inner quality is this stage inviting me to develop?',
+  'Path through the stage': 'Path through the stage',
+  'Grounding intuition': 'Grounding intuition',
+  'How can I distinguish an intuitive signal from anxiety or wishful thinking?':
+    'How can I distinguish an intuitive signal from anxiety or wishful thinking?',
+  'Clear signal': 'Clear signal',
+  'What dynamic is unfolding between us? What deserves attention now?':
+    'What dynamic is unfolding between us? What deserves attention now?',
+  'Where can the relationship move if the current dynamic continues? What can influence it?':
+    'Where can the relationship move if the current dynamic continues? What can influence it?',
+  'What draws me back? What would returning require, and what risks should I consider?':
+    'What draws me back? What would returning require, and what risks should I consider?',
+  'What makes you consider returning?': 'What makes you consider returning?',
+  'What makes me consider returning': 'What makes me consider returning',
+  'What dynamic is forming? What should I notice before investing further?':
+    'What dynamic is forming? What should I notice before investing further?',
+  'How do our needs and values interact? Where are the strengths and points of friction?':
+    'How do our needs and values interact? Where are the strengths and points of friction?',
+  'What should I understand before ending or continuing this relationship? How can I care for myself?':
+    'What should I understand before ending or continuing this relationship? How can I care for myself?',
+  'Readiness for a new relationship': 'Readiness for a new relationship',
+  'What may be preventing a new connection? What can help me become more open to it?':
+    'What may be preventing a new connection? What can help me become more open to it?',
+  'Trust and uncertainty': 'Trust and uncertainty',
+  'What is fueling my mistrust? What needs clarification, honesty or firmer boundaries?':
+    'What is fueling my mistrust? What needs clarification, honesty or firmer boundaries?',
+  'What has made you question trust in this relationship?':
+    'What has made you question trust in this relationship?',
+  'What has made me question trust': 'What has made me question trust',
+  'What is straining the relationship? What can be restored, and what may require acceptance?':
+    'What is straining the relationship? What can be restored, and what may require acceptance?',
   'Celtic Cross': 'Celtic Cross',
   'A detailed spread for a complex situation: its roots, influences, development and possible outcome.':
     'A detailed spread for a complex situation: its roots, influences, development and possible outcome.',
