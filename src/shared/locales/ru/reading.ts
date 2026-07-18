@@ -4,6 +4,46 @@ import { TARIFFS } from '@/shared/const/tariffs';
 
 const TRANSLATIONS_RU: Record<string, string> = {
   'Topics': 'Темы раскладов',
+  'Setup': 'Настройка',
+  'Spread progress': 'Прогресс расклада',
+  'Personalization': 'Персонализация',
+  'of': 'из',
+  'Make readings more personal': 'Сделать расклады точнее',
+  'Readings are personalized': 'Расклады настроены',
+  'You can update your answers anytime': 'Ответы можно изменить в любой момент',
+  'What is taking up most of your thoughts right now?':
+    'Что сейчас занимает больше всего ваших мыслей?',
+  'Relationships': 'Отношения',
+  'Work and growth': 'Работа и развитие',
+  'Money': 'Деньги',
+  'Inner state': 'Внутреннее состояние',
+  'Changes': 'Перемены',
+  'Finding direction': 'Поиск направления',
+  'Where do you feel you are now?': 'На каком этапе вы сейчас?',
+  'Starting something new': 'Начинаю новое',
+  'Choosing a direction': 'Выбираю направление',
+  'Moving toward a goal': 'Двигаюсь к цели',
+  'Going through changes': 'Переживаю перемены',
+  'Recovering': 'Восстанавливаюсь',
+  'Hard to define yet': 'Пока сложно определить',
+  'What is most useful to hear in a reading?':
+    'Что обычно полезнее услышать в раскладе?',
+  'A clear conclusion': 'Прямой вывод',
+  'Possible scenarios': 'Возможные сценарии',
+  'Hidden reasons': 'Скрытые причины',
+  'A practical next step': 'Практический следующий шаг',
+  'What tone feels right for you?': 'Какой тон вам ближе?',
+  'Gentle and supportive': 'Мягкий и поддерживающий',
+  'Calm and neutral': 'Спокойный и нейтральный',
+  'Direct and specific': 'Прямой и конкретный',
+  'Is there any context worth keeping in mind?':
+    'Есть ли контекст, который стоит учитывать?',
+  'Choose up to two': 'Можно выбрать до двух вариантов',
+  'For example: I am considering a career change':
+    'Например: рассматриваю смену сферы работы',
+  'Could not save answers': 'Не удалось сохранить ответы. Попробуйте ещё раз.',
+  'Continue': 'Продолжить',
+  'Save': 'Сохранить',
 
   // Темы
   'Anxiety and uncertainty': 'Тревога и неопределённость',

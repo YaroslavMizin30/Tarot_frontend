@@ -1,4 +1,4 @@
-import { type FC } from 'react';
+import { useEffect, type FC } from 'react';
 import { useNavigate } from 'react-router';
 
 import { useQuestion } from '../../model/hooks/useQuestion';
@@ -21,11 +21,15 @@ import { type QuestionProps } from './Questions.props';
 import styles from './Questions.module.css';
 
 export const Questions: FC<QuestionProps> = (props) => {
-  const { onSpreadSelect } = props;
+  const { onSpreadSelect, onStepChange } = props;
 
   const { changeStep, changeSpread, clearSpread, spread, step } = useQuestion();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    onStepChange?.(step);
+  }, [onStepChange, step]);
 
   const handleQuestionChoose = (q: Question) => {
     const {

@@ -12,8 +12,8 @@ export const updateUser = async (userId: string, userData: Partial<User>) => {
     },
   );
 
-  if (!updated) {
-    return false;
+  if (!updated?.[0]) {
+    throw new Error('User update did not return a row');
   }
 
   return updated[0];

@@ -38,10 +38,8 @@ const getAllCardsParagraphs = (i18n: I18nFn): string[] => {
   return paragraphs;
 };
 
-/**
- * "Arcanes" theme — tutorial of all 78 tarot cards.
- */
+/** Tutorial containing descriptions of all 78 Tarot cards. */
 export const ABOUT_ARCANES = {
-  title: 'Arcanes',
+  title: 'Tarot cards',
   getParagraphs: (i18n: I18nFn) => getAllCardsParagraphs(i18n),
 };

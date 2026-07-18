@@ -1,20 +1,115 @@
-.limit {
+.reading {
   display: flex;
+  width: 100%;
+  min-height: 100%;
   flex-direction: column;
-  width: fit-content;
-  align-items: center;
-  max-width: 80%;
-  padding: 10px;
-
-  text-align: center;
-  border: 1px solid var(--border-secondary);
-  border-radius: 10px;
-
-  color: var(--text-primary);
 }
 
-.link {
-  margin-top: 20px;
+.progress {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: calc(100% - 28px);
+  margin: 8px auto 3px;
+}
+
+.progress::before {
+  content: '';
+  position: absolute;
+  top: 7px;
+  right: calc(100% / 6);
+  left: calc(100% / 6);
+  height: 0;
+  box-shadow: 0 0 7px 1px var(--border-secondary);
+}
+
+.step {
+  position: relative;
+  display: flex;
+  padding-top: 14px;
+  justify-content: center;
+  font-size: 10px;
+  line-height: 1;
+  color: var(--text-secondary);
+}
+
+.step::before {
+  content: '';
+  position: absolute;
+  top: 7px;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: transparent;
+  box-shadow: none;
+  transition: box-shadow 0.35s ease;
+}
+
+.step:first-child::before {
+  left: 50%;
+  width: 50%;
+}
+
+.step:last-child::before {
+  width: 50%;
+}
+
+.step::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background: var(--surface-panel);
+  border: 2px solid var(--border-interactive);
+  border-radius: 50%;
+  box-shadow: 0 0 10px 2px var(--border-secondary);
+  transform: translateX(-50%);
+}
+
+.complete::before {
+  box-shadow: 0 0 7px 1.5px var(--surface-control);
+}
+
+.current:not(:first-child)::before {
+  width: 50%;
+  box-shadow: 0 0 7px 1.5px var(--surface-control);
+}
+
+.current:last-child::before {
+  box-shadow: 0 0 7px 1.5px var(--surface-control);
+}
+
+.complete::after,
+.current::after {
+  background: var(--surface-control);
+  border-color: var(--surface-control);
+  box-shadow:
+    0 0 6px 2px var(--surface-control),
+    0 0 11px 3px var(--border-secondary);
+}
+
+.step::after {
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.current {
   color: var(--text-primary);
-  text-decoration: none;
+  font-weight: 700;
+}
+
+.current::after {
+  box-shadow:
+    0 0 7px 2px var(--surface-control),
+    0 0 13px 4px var(--border-secondary);
+}
+
+.content {
+  min-height: 0;
+  flex: 1;
 }

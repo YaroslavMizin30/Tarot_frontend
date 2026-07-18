@@ -21,6 +21,9 @@ import {
 } from '@/app/store';
 
 import { Step } from '../config/steps';
+import styles from './Reading.module.css';
+
+const FLOW_LABELS = ['Question', 'Setup', 'Cards'] as const;
 
 export const Reading = () => {
   const dispatch = useAppDispatch();
@@ -32,6 +35,7 @@ export const Reading = () => {
   const draftId = searchParams.get('draft');
 
   const [step, setStep] = useState<`${Step}`>('question');
+  const [flowStep, setFlowStep] = useState(0);
   const [isResuming, setIsResuming] = useState(Boolean(draftId));
   const [resumeError, setResumeError] = useState<string | null>(null);
   const [resumeAttempt, setResumeAttempt] = useState(0);
@@ -41,6 +45,7 @@ export const Reading = () => {
     dispatch(setSpread(params));
 
     setStep('reading');
+    setFlowStep(2);
   };
 
   useEffect(() => {
@@ -72,6 +77,7 @@ export const Reading = () => {
           }),
         );
         setStep('reading');
+        setFlowStep(2);
         navigate('/tarot', { replace: true });
       })
       .catch(() => {
@@ -96,13 +102,34 @@ export const Reading = () => {
     );
   }
 
-  switch (step) {
-    case 'question':
-      return <Questions onSpreadSelect={handleSpreadSelect} />;
+  return (
+    <div className={styles.reading}>
+      <div aria-label={i18n('Spread progress')} className={styles.progress}>
+        {FLOW_LABELS.map((label, index) => (
+          <span
+            aria-current={index === flowStep ? 'step' : undefined}
+            className={`${styles.step} ${index < flowStep ? styles.complete : ''} ${index === flowStep ? styles.current : ''}`}
+            key={label}
+          >
+            {i18n(label)}
+          </span>
+        ))}
+      </div>
 
-    case 'reading':
-      return <TarotSpread spread={spread} />;
-  }
+      <div className={styles.content}>
+        {step === 'question' ? (
+          <Questions
+            onSpreadSelect={handleSpreadSelect}
+            onStepChange={(currentStep) =>
+              setFlowStep(currentStep === 'theme' ? 0 : 1)
+            }
+          />
+        ) : (
+          <TarotSpread spread={spread} />
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default Reading;

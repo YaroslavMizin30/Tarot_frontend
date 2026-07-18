@@ -132,6 +132,7 @@ const TRANSLATIONS_EN = {
   'Major Arcana shows your life from the side through the journey of the Fool. At the same time, it is not so much the number of the drawn card that matters, but what you decide to do with its lesson in your own spiritual journey.':
     'Major Arcana shows your life from the side through the journey of the Fool. At the same time, it is not so much the number of the drawn card that matters, but what you decide to do with its lesson in your own spiritual journey.',
   'Arcanes': 'Arcanes',
+  'Tarot cards': 'Tarot cards',
 };
 
 export default TRANSLATIONS_EN;

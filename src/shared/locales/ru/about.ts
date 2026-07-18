@@ -131,6 +131,7 @@ const TRANSLATIONS_RU = {
   'Major Arcana shows your life from the side through the journey of the Fool. At the same time, it is not so much the number of the drawn card that matters, but what you decide to do with its lesson in your own spiritual journey.':
     'Старшие Арканы показывают вашу жизнь со стороны через путешествие Дурака. При этом не столько важен номер вытянутой карты, сколько то, что вы решите делать с ее уроком в собственном духовном странствии.',
   'Arcanes': 'Арканы',
+  'Tarot cards': 'Карты Таро',
 };
 
 export default TRANSLATIONS_RU;

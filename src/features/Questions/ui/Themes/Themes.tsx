@@ -12,6 +12,7 @@ import type { ThemeProps } from './Themes.props';
 import type { Question } from '../../model/types/questions';
 import { ThemeIcon, type ThemeIconName } from './ThemeIcon';
 import { QuestionCardFan } from './QuestionCardFan';
+import { Personalization } from '../Personalization/Personalization';
 
 import styles from './Themes.module.css';
 
@@ -91,8 +92,6 @@ const Themes: FC<ThemeProps> = (props) => {
 
   return (
     <div className={styles.content}>
-      <div className={styles.personalizationSlot} aria-hidden={true} />
-
       <Button className={styles.button} onClick={handleOwnQuestionClick}>
         {i18n('My own question')}
       </Button>
@@ -140,14 +139,29 @@ const Themes: FC<ThemeProps> = (props) => {
         </button>
       )}
 
-      <button
-        className={styles.history}
-        onClick={() => navigate('/history')}
-        type={'button'}
-      >
-        <span>{i18n('Spreads history')}</span>
-        <span aria-hidden={true}>→</span>
-      </button>
+      <nav aria-label={i18n('Tarot')} className={styles.secondaryActions}>
+        <button
+          className={styles.secondaryAction}
+          onClick={() => navigate('/history')}
+          type={'button'}
+        >
+          <span>{i18n('Spreads history')}</span>
+          <span aria-hidden={true}>→</span>
+        </button>
+
+        <button
+          className={styles.secondaryAction}
+          onClick={() => navigate('/about')}
+          type={'button'}
+        >
+          <span>{i18n('About Tarot')}</span>
+          <span aria-hidden={true}>→</span>
+        </button>
+      </nav>
+
+      <div className={styles.personalizationSlot}>
+        <Personalization />
+      </div>
 
       <Modal
         className={styles.overlayScreen}

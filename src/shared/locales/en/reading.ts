@@ -4,6 +4,46 @@ import { TARIFFS } from '@/shared/const/tariffs';
 
 const TRANSLATIONS_EN: Record<string, string> = {
   'Topics': 'Topics',
+  'Setup': 'Setup',
+  'Spread progress': 'Spread progress',
+  'Personalization': 'Personalization',
+  'of': 'of',
+  'Make readings more personal': 'Make readings more personal',
+  'Readings are personalized': 'Readings are personalized',
+  'You can update your answers anytime': 'You can update your answers anytime',
+  'What is taking up most of your thoughts right now?':
+    'What is taking up most of your thoughts right now?',
+  'Relationships': 'Relationships',
+  'Work and growth': 'Work and growth',
+  'Money': 'Money',
+  'Inner state': 'Inner state',
+  'Changes': 'Changes',
+  'Finding direction': 'Finding direction',
+  'Where do you feel you are now?': 'Where do you feel you are now?',
+  'Starting something new': 'Starting something new',
+  'Choosing a direction': 'Choosing a direction',
+  'Moving toward a goal': 'Moving toward a goal',
+  'Going through changes': 'Going through changes',
+  'Recovering': 'Recovering',
+  'Hard to define yet': 'Hard to define yet',
+  'What is most useful to hear in a reading?':
+    'What is most useful to hear in a reading?',
+  'A clear conclusion': 'A clear conclusion',
+  'Possible scenarios': 'Possible scenarios',
+  'Hidden reasons': 'Hidden reasons',
+  'A practical next step': 'A practical next step',
+  'What tone feels right for you?': 'What tone feels right for you?',
+  'Gentle and supportive': 'Gentle and supportive',
+  'Calm and neutral': 'Calm and neutral',
+  'Direct and specific': 'Direct and specific',
+  'Is there any context worth keeping in mind?':
+    'Is there any context worth keeping in mind?',
+  'Choose up to two': 'Choose up to two',
+  'For example: I am considering a career change':
+    'For example: I am considering a career change',
+  'Could not save answers': 'Could not save answers. Please try again.',
+  'Continue': 'Continue',
+  'Save': 'Save',
 
   // Темы
   'Anxiety and uncertainty': 'Anxiety and uncertainty',

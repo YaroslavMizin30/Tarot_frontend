@@ -40,7 +40,14 @@ export const useUser = () => {
       await ensureSupabase();
       return updateUserApi(id, data);
     },
-    onSuccess: () => {
+    onSuccess: (updatedUser, variables) => {
+      queryClient.setQueryData<User | null>(
+        queryKeys.user.byId(variables.id),
+        (currentUser) =>
+          currentUser
+            ? { ...currentUser, ...variables.data }
+            : updatedUser,
+      );
       queryClient.invalidateQueries({ queryKey: queryKeys.user.all });
     },
     onError: () => {

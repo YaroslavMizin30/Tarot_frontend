@@ -10,6 +10,10 @@ import TRANSLATIONS_EN_CARDS from '@/shared/locales/en/cards';
 import TRANSLATIONS_RU_CARDS from '@/shared/locales/ru/cards';
 import useLocales from '@/shared/hooks/useLocales';
 import type { I18nFn } from '@/entities/TarotCard';
+import TarotCard, {
+  ALL_CARDS,
+  getCardInfoI18n,
+} from '@/entities/TarotCard';
 
 import { THEMES } from '../config/themes';
 
@@ -75,7 +79,45 @@ export const AboutPage = () => {
       )}
 
       {step === 'paragraphs' && theme && (
-        <>
+        theme.title === 'Tarot cards' ? (
+          <section className={styles.cardGuide}>
+            <h3 className={styles.guideTitle}>{i18n(theme.title)}</h3>
+
+            <div className={`${styles.cardList} custom-scrollbar`}>
+              {ALL_CARDS.map((card) => {
+                const localized = getCardInfoI18n(card.id, i18n);
+
+                if (!localized) {
+                  return null;
+                }
+
+                return (
+                  <article className={styles.cardEntry} key={card.id}>
+                    <TarotCard
+                      className={styles.cardImage}
+                      localizedName={localized.name}
+                      name={card.id}
+                      size={'s'}
+                    />
+
+                    <div className={styles.cardCopy}>
+                      <h4>{localized.name}</h4>
+                      <p className={styles.meanings}>
+                        {localized.meanings}
+                      </p>
+                      <p>{localized.description}</p>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+
+            <ArrowButton
+              onClick={handleBackButtonClick}
+              className={styles.arrow}
+            />
+          </section>
+        ) : (
           <TextContainer
             paragraphs={getParagraphs(theme, i18n)}
             title={i18n(theme.title)}
@@ -88,7 +130,7 @@ export const AboutPage = () => {
               />
             }
           />
-        </>
+        )
       )}
     </div>
   );
