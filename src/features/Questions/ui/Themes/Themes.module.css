@@ -192,19 +192,6 @@
   -webkit-line-clamp: 3;
 }
 
-.priceRange {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.priceIcon {
-  width: 15px;
-  height: 15px;
-}
-
 .showAll {
   display: flex;
   width: 100%;

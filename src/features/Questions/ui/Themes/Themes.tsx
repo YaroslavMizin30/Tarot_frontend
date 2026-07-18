@@ -4,9 +4,6 @@ import { useNavigate } from 'react-router';
 import useLocales from '@/shared/hooks/useLocales';
 import Button from '@/shared/ui/Button';
 import Modal from '@/shared/ui/Modal';
-import Pentacle from '@/shared/ui/Pentacle';
-
-import { SPREADS } from '@/features/TarotSpread';
 
 import type { ThemeProps } from './Themes.props';
 import type { Question } from '../../model/types/questions';
@@ -79,13 +76,6 @@ const Themes: FC<ThemeProps> = (props) => {
     >
       <span className={styles.label}>{i18n(question.label)}</span>
       <span className={styles.description}>{i18n(question.text)}</span>
-      <span className={styles.priceRange}>
-        {`${Math.min(...SPREADS.map(({ cardCount }) => cardCount))}–${Math.max(
-          question.spreadNumber,
-          ...SPREADS.map(({ cardCount }) => cardCount),
-        )}`}
-        <Pentacle className={styles.priceIcon} />
-      </span>
       <QuestionCardFan className={styles.cardFan} />
     </button>
   );
