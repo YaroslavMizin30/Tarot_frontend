@@ -59,6 +59,8 @@ export const spreadParamsFromRow = (row: SpreadRow): SpreadParams => {
     details: spread.details,
     detailsAnswer: spread.detailsAnswer,
     cardsCount: spread.cardsCount,
+    cards: spread.cards,
+    status: spread.status,
   };
 };
 

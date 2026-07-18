@@ -44,6 +44,17 @@ const TRANSLATIONS_RU: Record<string, string> = {
   'Could not save answers': 'Не удалось сохранить ответы. Попробуйте ещё раз.',
   'Continue': 'Продолжить',
   'Save': 'Сохранить',
+  'Choose a card': 'Выберите карту',
+  'Choose card': 'Выбрать карту',
+  'Cards are selected': 'Карты выбраны',
+  'Your selection is saved': 'Ваш выбор сохранён',
+  'Selected cards': 'Выбранные карты',
+  'Lay out cards': 'Разложить карты',
+  'Focus on your question and choose the card that draws you':
+    'Сосредоточьтесь на вопросе и выберите карту, которая вас притягивает',
+  'Select the rest automatically': 'Выбрать остальные автоматически',
+  'Get interpretation': 'Получить интерпретацию',
+  'Unable to select card': 'Не удалось выбрать карту. Попробуйте ещё раз.',
 
   // Темы
   'Anxiety and uncertainty': 'Тревога и неопределённость',

@@ -10,6 +10,7 @@ import { getTodayString } from '@/shared/utils/getTodayString';
 import type { Card } from '@/entities/TarotCard';
 import type { Spread, SpreadParams } from '@/entities/Spread';
 import { addSpread, updateSpread } from '@/entities/Spread';
+import { interpretSpreadDraft } from '@/entities/Spread';
 import { useUser } from '@/entities/User';
 import { useBalance } from '@/features/Billing';
 import { sendAnalytics, getAnalytics } from '@/entities/Analytics';
@@ -35,7 +36,7 @@ export const useInterpretation = (options: UseInterpretationOptions = {}) => {
   const { requireBalance, charge } = useBalance();
   const queryClient = useQueryClient();
 
-  const { i18n } = useLocales();
+  const { i18n, locale } = useLocales();
 
   const getInterpretationMutation = useMutation({
     mutationFn: async ({
@@ -60,6 +61,15 @@ export const useInterpretation = (options: UseInterpretationOptions = {}) => {
 
       const persistedSpreadId =
         requestOptions?.spreadId ?? spread.spreadId ?? v4();
+
+      if (isPreparedDraft && !options.isFree) {
+        const result = await interpretSpreadDraft(persistedSpreadId, locale);
+        if (!result.interpretation) {
+          throw new Error('EMPTY_INTERPRETATION');
+        }
+        setSpreadId(persistedSpreadId);
+        return result.interpretation;
+      }
 
       if (user && requestOptions?.persistBeforeRequest) {
         const draftSpread: Spread = {

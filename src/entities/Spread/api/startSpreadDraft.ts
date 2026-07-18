@@ -4,10 +4,16 @@ import { ensureSupabase } from '@/shared/api/supabase';
 
 import type {
   PendingSpreadDraftResult,
+  CardSelectionResult,
+  FinalizeSpreadResult,
   SpreadDraftResult,
   SpreadParams,
 } from '../types';
-import { spreadParamsFromRow, type SpreadRow } from './spreadMapper';
+import {
+  spreadFromRow,
+  spreadParamsFromRow,
+  type SpreadRow,
+} from './spreadMapper';
 
 export const isSpreadDraftId = (value: unknown): value is string =>
   typeof value === 'string' &&
@@ -26,18 +32,56 @@ const parseDraftResult = (value: unknown): SpreadDraftResult => {
     throw new Error('Invalid spread draft id in server response');
   }
 
-  if (result.status === 'ready') {
-    if (!result.spread) {
-      throw new Error('Missing spread in server response');
-    }
-
+  if (result.status !== 'insufficient_balance' && result.spread) {
     return {
       ...result,
-      spread: spreadParamsFromRow(result.spread),
+      spread: {
+        ...spreadParamsFromRow(result.spread),
+        selectedCount: result.selectedCount,
+        selectedIndices: result.selectedIndices ?? [],
+      },
     };
   }
 
   return result;
+};
+
+export const selectSpreadCard = async (
+  draftId: string,
+  options: { index?: number; autoFill?: boolean },
+): Promise<CardSelectionResult> => {
+  await ensureSupabase();
+  const { data, error } = await window.supabase.functions.invoke('tarot-reading', {
+    body: { action: 'select', draftId, ...options },
+  });
+  if (error) throw error;
+  if (!data || data.status !== 'selecting') throw new Error('Invalid card selection response');
+  return data as CardSelectionResult;
+};
+
+export const finalizeSpreadDraft = async (
+  draftId: string,
+): Promise<FinalizeSpreadResult> => {
+  await ensureSupabase();
+  const { data, error } = await window.supabase.functions.invoke('tarot-reading', {
+    body: { action: 'finalize', draftId },
+  });
+  if (error) throw error;
+  if (data?.status === 'insufficient_balance') return data as FinalizeSpreadResult;
+  if (data?.status !== 'ready' || !data.spread) throw new Error('Invalid finalize response');
+  return { ...data, spread: spreadFromRow(data.spread as SpreadRow) } as FinalizeSpreadResult;
+};
+
+export const interpretSpreadDraft = async (
+  draftId: string,
+  locale: string,
+): Promise<{ status: string; draftId: string; interpretation?: string }> => {
+  await ensureSupabase();
+  const { data, error } = await window.supabase.functions.invoke('tarot-reading', {
+    body: { action: 'interpret', draftId, locale },
+  });
+  if (error) throw error;
+  return data;
 };
 
 export const startSpreadDraft = async (

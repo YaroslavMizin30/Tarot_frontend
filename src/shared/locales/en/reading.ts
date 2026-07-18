@@ -44,6 +44,17 @@ const TRANSLATIONS_EN: Record<string, string> = {
   'Could not save answers': 'Could not save answers. Please try again.',
   'Continue': 'Continue',
   'Save': 'Save',
+  'Choose a card': 'Choose a card',
+  'Choose card': 'Choose card',
+  'Cards are selected': 'Cards are selected',
+  'Your selection is saved': 'Your selection is saved',
+  'Selected cards': 'Selected cards',
+  'Lay out cards': 'Lay out cards',
+  'Focus on your question and choose the card that draws you':
+    'Focus on your question and choose the card that draws you',
+  'Select the rest automatically': 'Select the rest automatically',
+  'Get interpretation': 'Get interpretation',
+  'Unable to select card': 'Unable to select the card. Try again.',
 
   // Темы
   'Anxiety and uncertainty': 'Anxiety and uncertainty',

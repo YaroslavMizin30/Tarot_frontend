@@ -4,6 +4,8 @@ export {
   type Spread,
   type SpreadDraftResult,
   type PendingSpreadDraftResult,
+  type CardSelectionResult,
+  type FinalizeSpreadResult,
 } from './types';
 
 export { addSpread } from './api/addSpread';
@@ -15,5 +17,8 @@ export {
   resumeSpreadDraft,
   isSpreadDraftId,
   getPendingSpreadDraft,
+  selectSpreadCard,
+  finalizeSpreadDraft,
+  interpretSpreadDraft,
 } from './api/startSpreadDraft';
 export { DAILY_CARD_SPREAD_MARKER } from './model/constants';
