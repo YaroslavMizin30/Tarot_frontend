@@ -308,6 +308,7 @@ const TRANSLATIONS_RU = {
 
   'Change': 'Изменить',
   'Compose chart': 'Составить карту',
+  'Compose': 'Создать карту',
   'Edit chart': 'Редактировать карту',
   'Chart mode': 'Режим карты',
   'Overview': 'Обзор',

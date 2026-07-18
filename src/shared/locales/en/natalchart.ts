@@ -309,6 +309,7 @@ const TRANSLATIONS_EN = {
 
   'Change': 'Change',
   'Compose chart': 'Compose chart',
+  'Compose': 'Create chart',
   'Edit chart': 'Edit chart',
   'Chart mode': 'Chart mode',
   'Overview': 'Overview',
