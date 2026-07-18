@@ -149,6 +149,7 @@ export interface InterpretationMetadata {
 export interface Interpretation {
   metadata: InterpretationMetadata;
   sections: InterpretationSections;
+  index?: ChartIndex;
 }
 
 export interface PlacementIndex {
@@ -188,5 +189,5 @@ export interface NatalChart {
   angles_details: AnglesDetails;
   stelliums: Stelliums;
   interpretation: Interpretation;
-  index: ChartIndex;
+  index?: ChartIndex;
 }

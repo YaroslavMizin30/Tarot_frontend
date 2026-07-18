@@ -33,5 +33,5 @@ export const getBodies = (planets: Planet[]) => {
 
 export const findPlanets = (planets: string[]) => {
   //@ts-expect-error types
-  return planets.filter((p) => PLANETS.includes(capitalize(p)));
+  return planets.filter((p) => PLANETS.includes(capitalize(p))) as Planet['id'][];
 };

@@ -1,4 +1,5 @@
 import type { PlanetId, ZodiacSign } from '@/entities/Horoscope';
+import type { Aspect } from '@/entities/Horoscope/types/chart';
 
 interface Item {
   title: string;
@@ -19,6 +20,11 @@ export interface AccordionProps {
     isHighLighter: boolean,
     body: PlanetId | ZodiacSign | null | string,
   ) => void;
+  selectedPlanet?: PlanetId | null;
+  onSelectPlanet?: (planet: PlanetId | null) => void;
+  aspects?: Aspect[];
+  selectedAspectKey?: string | null;
+  onSelectAspect?: (aspectKey: string | null) => void;
 }
 
 export interface SectionProps {
@@ -31,4 +37,9 @@ export interface SectionProps {
     isHighLighter: boolean,
     body: PlanetId | ZodiacSign | null | string,
   ) => void;
+  selectedPlanet?: PlanetId | null;
+  onSelectPlanet?: (planet: PlanetId | null) => void;
+  aspects?: Aspect[];
+  selectedAspectKey?: string | null;
+  onSelectAspect?: (aspectKey: string | null) => void;
 }

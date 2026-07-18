@@ -8,13 +8,32 @@ import { useHighlights } from '@/features/Circle';
 import { findPlanets } from '../../lib/bodies';
 import { findSign } from '../../lib/signs';
 import { findHouse } from '../../lib/houses';
+import {
+  getNatalAspectKey,
+  getNatalAspectType,
+  normalizeNatalAspectType,
+} from '../../lib/aspects';
+
+import type { AspectType } from '@/entities/Horoscope/types';
 
 import { type AccordionProps, type SectionProps } from './Accordion.props';
 
 import styles from './Accordion.module.css';
 
 const Section = (props: SectionProps) => {
-  const { isOpened, onClick, items, name, className = '', onHighLight } = props;
+  const {
+    isOpened,
+    onClick,
+    items,
+    name,
+    className = '',
+    onHighLight,
+    selectedPlanet,
+    onSelectPlanet,
+    aspects = [],
+    selectedAspectKey,
+    onSelectAspect,
+  } = props;
 
   const { i18n } = useLocales();
 
@@ -24,13 +43,18 @@ const Section = (props: SectionProps) => {
     <div
       className={`${styles.section} ${isOpened ? styles['section-opened'] : ''} ${className}`}
     >
-      <div className={`${styles.button} ${styles[name]}`} onClick={onClick}>
-        {i18n(name)}
+      <button
+        type={'button'}
+        className={`${styles.button} ${styles[name]}`}
+        aria-expanded={isOpened}
+        onClick={onClick}
+      >
+        <span>{i18n(name)}</span>
 
         <div
           className={`${styles.chevron} ${isOpened ? styles.up : styles.down}`}
         />
-      </div>
+      </button>
 
       <div
         className={`${styles['items-wrapper']} ${isOpened ? styles['items-wrapper--opened'] : ''}`}
@@ -43,9 +67,45 @@ const Section = (props: SectionProps) => {
             const planets = findPlanets(tags);
             const sign = findSign(tags);
             const house = findHouse(tags);
+            const aspectType = tags
+              .map(normalizeNatalAspectType)
+              .find((type): type is AspectType => Boolean(type));
+            const relatedAspect = planets.length > 1
+              ? aspects.find((aspect) => {
+                const samePlanets =
+                  (aspect.p1 === planets[0] && aspect.p2 === planets[1]) ||
+                  (aspect.p1 === planets[1] && aspect.p2 === planets[0]);
+
+                return samePlanets && (!aspectType || getNatalAspectType(aspect) === aspectType);
+              })
+              : undefined;
+            const aspectKey = relatedAspect ? getNatalAspectKey(relatedAspect) : null;
+            const isSelected = aspectKey
+              ? selectedAspectKey === aspectKey
+              : Boolean(selectedPlanet && planets.includes(selectedPlanet));
+
+            const handleSelect = () => {
+              if (relatedAspect && aspectKey) {
+                onSelectPlanet?.(relatedAspect.p1);
+                onSelectAspect?.(selectedAspectKey === aspectKey ? null : aspectKey);
+              } else if (planets[0]) {
+                onSelectPlanet?.(selectedPlanet === planets[0] ? null : planets[0]);
+              }
+            };
 
             return (
-              <div className={styles.item} key={title}>
+              <div
+                className={`${styles.item} ${isSelected ? styles.selectedItem : ''}`}
+                key={title}
+                role={planets[0] ? 'button' : undefined}
+                tabIndex={planets[0] ? 0 : undefined}
+                onClick={handleSelect}
+                onKeyDown={(event) => {
+                  if (planets[0] && (event.key === 'Enter' || event.key === ' ')) {
+                    handleSelect();
+                  }
+                }}
+              >
                 <div className={styles.header}>
                   {planets?.[0] && (
                     <img
@@ -104,9 +164,19 @@ const Section = (props: SectionProps) => {
 };
 
 const Accordion: FC<AccordionProps> = (props) => {
-  const { sections, onHighLight } = props;
+  const {
+    sections,
+    onHighLight,
+    selectedPlanet,
+    onSelectPlanet,
+    aspects,
+    selectedAspectKey,
+    onSelectAspect,
+  } = props;
 
-  const [openedItem, setOpenedItem] = useState<string | null>(null);
+  const { i18n } = useLocales();
+
+  const [openedItem, setOpenedItem] = useState<string | null>('core');
 
   const handleItemClick = (value: string) => {
     if (value === openedItem) {
@@ -116,64 +186,89 @@ const Accordion: FC<AccordionProps> = (props) => {
     }
   };
 
-  const isHidden = (item: string) => {
-    return Boolean(openedItem) && openedItem !== item;
-  };
-
   return (
     <div className={styles.accordion}>
+      <div className={styles.heading}>
+        <span>{i18n('General characteristics')}</span>
+        <small>{i18n('Open a topic to explore your chart')}</small>
+      </div>
+
       <Section
         onHighLight={onHighLight}
+        selectedPlanet={selectedPlanet}
+        onSelectPlanet={onSelectPlanet}
+        aspects={aspects}
+        selectedAspectKey={selectedAspectKey}
+        onSelectAspect={onSelectAspect}
         name={'core'}
         onClick={() => handleItemClick('core')}
         isOpened={openedItem === 'core'}
         items={sections.core_self}
-        className={isHidden('core') ? styles.hidden : ''}
       />
 
       <Section
         onHighLight={onHighLight}
+        selectedPlanet={selectedPlanet}
+        onSelectPlanet={onSelectPlanet}
+        aspects={aspects}
+        selectedAspectKey={selectedAspectKey}
+        onSelectAspect={onSelectAspect}
         name={'mind'}
         onClick={() => handleItemClick('mind')}
         isOpened={openedItem === 'mind'}
         items={sections.mind}
-        className={isHidden('mind') ? styles.hidden : ''}
       />
 
       <Section
         onHighLight={onHighLight}
+        selectedPlanet={selectedPlanet}
+        onSelectPlanet={onSelectPlanet}
+        aspects={aspects}
+        selectedAspectKey={selectedAspectKey}
+        onSelectAspect={onSelectAspect}
         name={'work'}
         onClick={() => handleItemClick('work')}
         isOpened={openedItem === 'work'}
         items={sections.work_path}
-        className={isHidden('work') ? styles.hidden : ''}
       />
 
       <Section
         onHighLight={onHighLight}
+        selectedPlanet={selectedPlanet}
+        onSelectPlanet={onSelectPlanet}
+        aspects={aspects}
+        selectedAspectKey={selectedAspectKey}
+        onSelectAspect={onSelectAspect}
         name={'love'}
         onClick={() => handleItemClick('love')}
         isOpened={openedItem === 'love'}
         items={sections.love_relating}
-        className={isHidden('love') ? styles.hidden : ''}
       />
 
       <Section
         onHighLight={onHighLight}
+        selectedPlanet={selectedPlanet}
+        onSelectPlanet={onSelectPlanet}
+        aspects={aspects}
+        selectedAspectKey={selectedAspectKey}
+        onSelectAspect={onSelectAspect}
         name={'social'}
         onClick={() => handleItemClick('social')}
         isOpened={openedItem === 'social'}
         items={sections.social_collective}
-        className={isHidden('social') ? styles.hidden : ''}
       />
 
       <Section
         onHighLight={onHighLight}
+        selectedPlanet={selectedPlanet}
+        onSelectPlanet={onSelectPlanet}
+        aspects={aspects}
+        selectedAspectKey={selectedAspectKey}
+        onSelectAspect={onSelectAspect}
         name={'karmic'}
         onClick={() => handleItemClick('karmic')}
         isOpened={openedItem === 'karmic'}
         items={sections.karmic_healing}
-        className={isHidden('karmic') ? styles.hidden : ''}
       />
     </div>
   );

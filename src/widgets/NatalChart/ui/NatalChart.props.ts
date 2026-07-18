@@ -11,4 +11,6 @@ export interface NatalChartProps {
    * (and the user data has been refetched).
    */
   onUpdated?: () => void;
+  /** Navigate back from the natal chart page. */
+  onBack?: () => void;
 }

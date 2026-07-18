@@ -1,0 +1,347 @@
+.scene {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
+  border-radius: 50%;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 48% 48%, rgb(48 29 78 / 76%) 0 18%, rgb(20 12 42 / 72%) 52%, rgb(6 4 18 / 82%) 76%, transparent 100%);
+  box-shadow:
+    inset 0 0 42px rgb(176 137 216 / 11%),
+    0 20px 38px rgb(8 3 22 / 24%);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.scene[data-dragging='true'] {
+  cursor: grabbing;
+}
+
+.plane {
+  --rotation-x: 7deg;
+  --rotation-y: 0deg;
+  --counter-x: -7deg;
+  --counter-y: 0deg;
+
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  transform: perspective(560px) rotateX(var(--rotation-x)) rotateY(var(--rotation-y));
+  transform-style: preserve-3d;
+  transition: transform 360ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: transform;
+}
+
+.scene[data-dragging='true'] .plane {
+  transition: none;
+}
+
+.nebula,
+.stars,
+.starDust,
+.foregroundMist {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.starDust {
+  z-index: 2;
+}
+
+.starDust span {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow:
+    0 0 2px rgb(255 255 255 / 92%),
+    0 0 5px rgb(190 205 255 / 52%);
+}
+
+.nebula {
+  z-index: 0;
+  background:
+    radial-gradient(ellipse at 34% 60%, rgb(130 91 174 / 20%), transparent 42%),
+    radial-gradient(ellipse at 68% 37%, rgb(67 100 153 / 15%), transparent 38%),
+    linear-gradient(142deg, transparent 27%, rgb(175 139 207 / 8%) 48%, transparent 68%);
+  filter: blur(9px);
+}
+
+.stars {
+  z-index: 1;
+  opacity: 0.72;
+  background-image:
+    radial-gradient(circle at 18% 22%, rgb(255 255 255 / 75%) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 72% 18%, rgb(224 212 255 / 68%) 0 0.8px, transparent 1.4px),
+    radial-gradient(circle at 83% 61%, rgb(255 255 255 / 62%) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 28% 78%, rgb(203 220 255 / 56%) 0 0.8px, transparent 1.4px),
+    radial-gradient(circle at 59% 71%, rgb(255 255 255 / 48%) 0 0.8px, transparent 1.3px);
+}
+
+.guide {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: none;
+  stroke: rgb(226 211 245 / 13%);
+  stroke-width: 0.7;
+  transform: translateZ(7px);
+}
+
+.guide line {
+  opacity: 0.42;
+  transition: opacity 220ms ease, filter 220ms ease;
+}
+
+.guide .activeHouse {
+  opacity: 1;
+  filter: drop-shadow(0 0 3px rgb(235 221 255 / 80%));
+}
+
+.zodiac {
+  position: absolute;
+  z-index: 3;
+  color: rgb(231 218 247 / 40%);
+  font-size: 13px;
+  line-height: 1;
+  transform: translate(-50%, -50%) translateZ(11px);
+  transition: color 220ms ease, filter 220ms ease, transform 220ms ease;
+}
+
+.activeZodiac {
+  color: rgb(247 239 255 / 92%);
+  filter: drop-shadow(0 0 6px rgb(218 191 248 / 82%));
+  transform: translate(-50%, -50%) translateZ(20px) scale(1.2);
+}
+
+.observer {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  left: 50%;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgb(229 214 248 / 18%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(213 188 238 / 14%), rgb(49 29 77 / 7%) 48%, transparent 72%);
+  box-shadow: 0 0 24px rgb(176 137 216 / 13%);
+  transform: translate(-50%, -50%) translateZ(8px);
+}
+
+.observer span {
+  position: absolute;
+  inset: 13px;
+  border: 1px solid rgb(241 233 252 / 38%);
+  border-radius: 50%;
+  box-shadow: 0 0 9px rgb(212 184 241 / 25%);
+}
+
+.planet {
+  position: absolute;
+  z-index: 10;
+  top: var(--planet-top);
+  left: var(--planet-left);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--planet-size);
+  height: var(--planet-size);
+  opacity: var(--planet-opacity);
+  transform: translate(-50%, -50%) translateZ(var(--planet-depth)) scale(var(--planet-scale)) rotateY(var(--counter-y)) rotateX(var(--counter-x));
+  transition: transform 260ms ease, filter 260ms ease, opacity 260ms ease;
+  cursor: pointer;
+  outline: none;
+}
+
+.planet img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: blur(var(--planet-blur)) saturate(0.72) brightness(0.82) drop-shadow(0 4px 5px rgb(0 0 0 / 36%));
+  transition: filter 260ms ease;
+  user-select: none;
+}
+
+.nodeGlyph {
+  position: relative;
+  z-index: 1;
+  color: rgb(223 211 239 / 84%);
+  font-size: 23px;
+  line-height: 1;
+  text-shadow: 0 3px 5px rgb(0 0 0 / 38%);
+}
+
+.planetGlow {
+  position: absolute;
+  width: 48%;
+  height: 48%;
+  border-radius: 50%;
+  background: rgb(211 184 239 / 16%);
+  filter: blur(6px);
+  transition: background 260ms ease, box-shadow 260ms ease;
+}
+
+.planet small {
+  position: absolute;
+  z-index: 2;
+  top: -2px;
+  right: -2px;
+  color: #d9b8d2;
+  font-size: 7px;
+}
+
+.activePlanet {
+  z-index: 30;
+  opacity: 1;
+  transform: translate(-50%, -50%) translateZ(42px) scale(1.22) rotateY(var(--counter-y)) rotateX(var(--counter-x));
+  filter: drop-shadow(0 0 7px rgb(226 204 249 / 64%));
+}
+
+.activePlanet img {
+  filter: blur(0) saturate(1) brightness(1.08) drop-shadow(0 5px 7px rgb(0 0 0 / 42%));
+}
+
+.activePlanet .nodeGlyph {
+  color: #f4eaff;
+  text-shadow: 0 0 8px rgb(220 194 247 / 76%);
+}
+
+.activePlanet .planetGlow {
+  background: rgb(229 207 250 / 48%);
+  box-shadow: 0 0 18px 8px rgb(191 151 228 / 22%);
+}
+
+.foregroundMist {
+  z-index: 40;
+  top: 67%;
+  background: linear-gradient(to top, rgb(7 4 18 / 30%), transparent 72%);
+  filter: blur(7px);
+}
+
+.interactionHint {
+  position: absolute;
+  z-index: 55;
+  bottom: 22px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 7px 4px 5px;
+  color: rgb(248 240 255 / 92%);
+  font-size: 9px;
+  line-height: 1;
+  border: 1px solid rgb(229 213 247 / 32%);
+  border-radius: 999px;
+  background: rgb(20 11 40 / 68%);
+  opacity: 1;
+  pointer-events: none;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 3px 12px rgb(5 2 15 / 26%), inset 0 1px 0 rgb(255 255 255 / 9%);
+  transform: translateX(-50%);
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+
+.interactionHint svg {
+  width: 19px;
+  height: 19px;
+  overflow: visible;
+  fill: rgb(220 195 244 / 16%);
+  stroke: currentColor;
+  stroke-width: 1.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.hiddenHint {
+  opacity: 0;
+  transform: translate(-50%, 4px);
+}
+
+.resetView {
+  position: absolute;
+  z-index: 60;
+  right: 18px;
+  bottom: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 27px;
+  height: 27px;
+  padding: 0 0 2px;
+  color: rgb(238 225 252 / 72%);
+  font: inherit;
+  font-size: 17px;
+  border: 1px solid rgb(229 213 247 / 22%);
+  border-radius: 50%;
+  background: rgb(20 11 40 / 48%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 9%);
+  cursor: pointer;
+  backdrop-filter: blur(5px);
+}
+
+.resetView:hover {
+  color: #f7efff;
+  border-color: rgb(229 213 247 / 45%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .nebula {
+    animation: breathe 8s ease-in-out infinite alternate;
+  }
+
+  .interactionHint:not(.hiddenHint) svg {
+    animation: hintFloat 2.4s ease-in-out infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene,
+  .plane,
+  .nebula,
+  .stars,
+  .planet,
+  .planet img {
+    transition: none;
+  }
+}
+
+@keyframes breathe {
+  from {
+    opacity: 0.72;
+    filter: blur(9px) brightness(0.94);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(10px) brightness(1.06);
+  }
+}
+
+@keyframes hintFloat {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  40% {
+    transform: translate(2px, -1px);
+  }
+
+  70% {
+    transform: translate(-1px, 1px);
+  }
+}
+
+@media (max-width: 380px) {
+  .scene {
+    width: 276px;
+    height: 276px;
+  }
+}

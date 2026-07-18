@@ -17,13 +17,621 @@
 
 .name {
   color: var(--text-primary);
-  margin-bottom: 20px;
+  margin: 0;
+  font-size: 16px;
+  text-align: center;
 }
 
 .chart {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: min(100%, 430px);
+}
+
+.stickyHeader {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: calc(100% + 32px);
+  margin: 0 -16px 18px;
+  padding: 0 16px 13px;
+  box-sizing: border-box;
+  background: var(--gradient-secondary);
+  isolation: isolate;
+}
+
+.stickyHeader::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  right: 0;
+  bottom: -22px;
+  left: 0;
+  height: 28px;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--gradient-secondary) 92%, transparent),
+    transparent
+  );
+  filter: blur(7px);
+  pointer-events: none;
+}
+
+.headerTopline {
+  position: relative;
+  display: grid;
+  width: 100%;
+  min-height: 34px;
+  place-items: center;
+}
+
+.headerBack {
+  position: absolute;
+  left: 0;
+  display: inline-flex;
+  min-height: 32px;
+  padding: 0 5px;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 12px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.headerBack span {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.modeSwitch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: min(100%, 310px);
+  margin-top: 5px;
+  padding: 3px;
+  border: 1px solid color-mix(in srgb, var(--border-primary) 62%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--background-primary) 56%, transparent);
+  box-shadow: inset 0 1px 8px rgb(20 10 40 / 10%);
+}
+
+.modeSwitch button {
+  min-height: 32px;
+  padding: 6px 14px;
+  color: var(--text-on-control);
+  font: inherit;
+  font-size: 12px;
+  border: 1px solid color-mix(in srgb, var(--control-gloss-border) 72%, transparent);
+  border-radius: 999px;
+  background:
+    radial-gradient(
+      ellipse at 14% 0%,
+      color-mix(in srgb, var(--control-gloss-highlight) 72%, transparent) 0%,
+      transparent 54%
+    ),
+    linear-gradient(
+      142deg,
+      color-mix(in srgb, var(--control-gloss-sheen) 72%, transparent) 0%,
+      transparent 48%,
+      color-mix(in srgb, var(--control-gloss-pressed) 62%, transparent) 100%
+    ),
+    color-mix(in srgb, var(--surface-control) 78%, var(--gradient-secondary));
+  cursor: pointer;
+  box-shadow:
+    inset 1px 1px 0 color-mix(in srgb, var(--control-gloss-highlight) 68%, transparent),
+    inset -2px -3px 7px color-mix(in srgb, var(--control-gloss-pressed) 58%, transparent),
+    0 2px 7px color-mix(in srgb, var(--control-gloss-shadow) 55%, transparent);
+  transition: color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+}
+
+.modeSwitch button:hover {
+  filter: brightness(1.05) saturate(1.03);
+}
+
+.modeSwitch .activeMode {
+  color: var(--text-on-control);
+  border-color: color-mix(in srgb, var(--control-gloss-border) 96%, white 4%);
+  background:
+    radial-gradient(
+      ellipse at 14% 0%,
+      var(--control-gloss-highlight) 0%,
+      transparent 55%
+    ),
+    linear-gradient(
+      142deg,
+      var(--control-gloss-sheen) 0%,
+      transparent 46%,
+      var(--control-gloss-pressed) 100%
+    ),
+    var(--surface-control);
+  box-shadow:
+    inset 1px 1px 0 var(--control-gloss-highlight),
+    inset -3px -3px 9px var(--control-gloss-pressed),
+    0 4px 11px var(--control-gloss-shadow),
+    0 0 9px color-mix(in srgb, var(--control-gloss-border) 22%, transparent);
+}
+
+.visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.detailedVisual {
+  width: 100%;
+}
+
+.chartStage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: min(100%, 330px);
+  height: 350px;
+  padding-top: 18px;
+  box-sizing: border-box;
+}
+
+.detailPanel {
+  width: min(100%, 360px);
+  min-height: 72px;
+  padding: 9px 10px;
+  border: 1px solid color-mix(in srgb, var(--border-primary) 62%, transparent);
+  border-radius: 12px;
+  background: linear-gradient(145deg, rgb(255 255 255 / 9%), rgb(64 38 92 / 10%));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 14%);
+}
+
+.overviewFoundation {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.foundationHeading {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: center;
+}
+
+.foundationHeading strong {
+  color: var(--text-primary);
+  font-size: 13px;
+}
+
+.foundationHeading span {
+  color: color-mix(in srgb, var(--text-primary) 78%, var(--text-secondary));
+  font-size: 9px;
+}
+
+.foundationGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.foundationCard {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  min-height: 76px;
+  padding: 7px;
+  color: color-mix(in srgb, var(--text-primary) 82%, var(--text-secondary));
+  font: inherit;
+  text-align: left;
+  border: 1px solid rgb(229 218 247 / 31%);
+  border-radius: 10px;
+  background: linear-gradient(145deg, rgb(255 255 255 / 7%), rgb(112 76 145 / 8%));
+}
+
+button.foundationCard {
+  position: relative;
+  padding: 8px;
+  color: var(--text-on-control);
+  border-color: color-mix(in srgb, var(--control-gloss-border) 88%, transparent);
+  background:
+    radial-gradient(
+      ellipse at 14% 0%,
+      color-mix(in srgb, var(--control-gloss-highlight) 88%, transparent) 0%,
+      transparent 54%
+    ),
+    linear-gradient(
+      142deg,
+      color-mix(in srgb, var(--control-gloss-sheen) 84%, transparent) 0%,
+      transparent 46%,
+      color-mix(in srgb, var(--control-gloss-pressed) 78%, transparent) 100%
+    ),
+    color-mix(in srgb, var(--surface-control) 92%, var(--gradient-secondary));
+  cursor: pointer;
+  box-shadow:
+    inset 1px 1px 0 color-mix(in srgb, var(--control-gloss-highlight) 84%, transparent),
+    inset -3px -3px 8px color-mix(in srgb, var(--control-gloss-pressed) 72%, transparent),
+    0 4px 11px color-mix(in srgb, var(--control-gloss-shadow) 68%, transparent);
+  transition: border-color 180ms ease, background 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+button.foundationCard:hover {
+  border-color: var(--control-gloss-border);
+  filter: brightness(1.05) saturate(1.03);
+  box-shadow:
+    inset 1px 1px 0 var(--control-gloss-highlight),
+    inset -3px -3px 9px var(--control-gloss-pressed),
+    0 6px 14px var(--control-gloss-shadow);
+}
+
+button.foundationCard:active {
+  transform: translateY(1px);
+}
+
+.foundationCard img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.foundationCard > span:not(.ascendantSymbol) {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.foundationCard b {
+  overflow: hidden;
+  color: var(--text-primary);
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.foundationCard small {
+  color: color-mix(in srgb, var(--text-primary) 74%, var(--text-secondary));
+  font-size: 8px;
+}
+
+.foundationCard p {
+  display: -webkit-box;
+  grid-column: 1 / -1;
+  margin: 0;
+  overflow: hidden;
+  color: color-mix(in srgb, var(--text-primary) 76%, var(--text-secondary));
+  font-size: 8px;
+  line-height: 1.35;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+button.foundationCard b,
+button.foundationCard small,
+button.foundationCard p {
+  color: var(--text-on-control);
+}
+
+button.foundationCard small,
+button.foundationCard p {
+  opacity: 0.82;
+}
+
+.foundationAction {
+  display: inline-flex !important;
+  grid-column: 1 / -1;
+  flex-direction: row !important;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  color: var(--text-on-control);
+  font-size: 8px;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.foundationAction > span {
+  font-size: 11px;
+  line-height: 1;
+}
+
+.ascendantCard {
+  opacity: 0.78;
+}
+
+.ascendantIcons {
+  position: relative;
+  width: 27px;
+  height: 27px;
+}
+
+.ascendantRulerIcon {
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+  filter: saturate(0.82) brightness(0.96) drop-shadow(0 2px 4px rgb(20 8 38 / 24%));
+}
+
+.ascendantZodiacIcon {
+  position: absolute !important;
+  right: -4px;
+  bottom: -3px;
+  width: 14px !important;
+  height: 14px !important;
+  color: var(--text-primary);
+  filter: drop-shadow(0 0 4px rgb(221 196 244 / 48%));
+}
+
+.ascendantZodiacIcon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.chartLegend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 5px 10px;
+  margin-bottom: 8px;
+  padding-bottom: 7px;
+  color: var(--text-secondary);
+  font-size: 9px;
+  text-align: center;
+  border-bottom: 1px solid color-mix(in srgb, var(--border-primary) 45%, transparent);
+}
+
+.chartLegend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.chartLegend small {
+  flex-basis: 100%;
+  font-size: 9px;
+}
+
+.chartLegend i {
+  width: 14px;
+  height: 1.5px;
+  border-radius: 99px;
+}
+
+.softMarker {
+  background: #a8e6dc;
+}
+
+.hardMarker {
+  background: #f0a8bc;
+}
+
+.minorMarker {
+  height: 1px !important;
+  background: repeating-linear-gradient(to right, #cdb9df 0 3px, transparent 3px 5px);
+  opacity: 0.7;
+}
+
+.chartFacts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px 12px;
+  width: min(100%, 350px);
+  margin-top: 8px;
+  color: var(--text-secondary);
+  font-size: 11px;
+  text-align: center;
+}
+
+.chartFacts b {
+  color: var(--text-primary);
+}
+
+.selectedPlanetInfo {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 10px;
+  width: min(100%, 350px);
+  padding: 2px 4px;
+  color: color-mix(in srgb, var(--text-primary) 78%, var(--text-secondary));
+  font-size: 11px;
+}
+
+.selectedPlanetInfo strong {
+  width: 100%;
+  color: var(--text-primary);
+  text-align: center;
+}
+
+.aspectConnections {
+  margin-top: 8px;
+  padding-top: 7px;
+  border-top: 1px solid color-mix(in srgb, var(--border-primary) 52%, transparent);
+}
+
+.connectionLabel {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--text-primary);
+  font-size: 11px;
+  text-align: center;
+}
+
+.connectionButtons {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  max-height: 124px;
+  padding: 2px 1px 4px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.connectionButtons button {
+  padding: 5px 9px;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 10px;
+  border: 1px solid rgb(229 218 247 / 24%);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 6%);
+  cursor: pointer;
+  white-space: normal;
+}
+
+.connectionButtons .activeConnection {
+  color: var(--text-primary);
+  border-color: rgb(229 218 247 / 58%);
+  background: rgb(190 164 222 / 18%);
+  box-shadow: 0 0 10px rgb(196 167 229 / 18%);
+}
+
+.indexDetail {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 9px;
+  padding-top: 8px;
+  color: color-mix(in srgb, var(--text-primary) 80%, var(--text-secondary));
+  font-size: 11px;
+  border-top: 1px solid color-mix(in srgb, var(--border-primary) 52%, transparent);
+}
+
+.indexDetail > strong {
+  color: var(--text-primary);
+  font-size: 12px;
+  text-align: center;
+}
+
+.indexTabs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5px;
+}
+
+.indexTabs button,
+.backToConnections {
+  padding: 5px 8px;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 10px;
+  border: 1px solid rgb(229 218 247 / 20%);
+  border-radius: 8px;
+  background: rgb(255 255 255 / 5%);
+  cursor: pointer;
+}
+
+.indexTabs .activeIndexTab {
+  color: var(--text-primary);
+  border-color: rgb(229 218 247 / 48%);
+  background: rgb(190 164 222 / 15%);
+}
+
+.indexContent {
+  max-height: 145px;
+  padding-right: 6px;
+  overflow-y: auto;
+  color: color-mix(in srgb, var(--text-primary) 82%, var(--text-secondary));
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.aspectMeta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 9px;
+  color: var(--text-secondary);
+  font-size: 9px;
+}
+
+.backToConnections {
+  align-self: center;
+  margin-top: 2px;
+}
+
+.backToFoundation {
+  display: inline-flex;
+  align-items: center;
+  align-self: center;
+  gap: 6px;
+  margin: 7px auto 0;
+  padding: 5px 10px;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 10px;
+  border: 1px solid rgb(229 218 247 / 34%);
+  border-radius: 999px;
+  background: linear-gradient(145deg, rgb(255 255 255 / 10%), rgb(121 82 158 / 13%));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 13%);
+  cursor: pointer;
+}
+
+.backToFoundation:hover {
+  border-color: rgb(229 218 247 / 58%);
+  background: linear-gradient(145deg, rgb(255 255 255 / 15%), rgb(137 94 178 / 18%));
+}
+
+.secondaryAction {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: min(100%, 300px);
+  margin-top: 2px;
+  padding: 14px 12px 2px;
+  border-top: 1px solid color-mix(in srgb, var(--border-primary) 25%, transparent);
+}
+
+.secondaryAction > span {
+  color: color-mix(in srgb, var(--text-primary) 64%, var(--text-secondary));
+  font-size: 9px;
+  text-align: center;
+}
+
+.chart .editChartButton {
+  min-height: 32px;
+  padding: 5px 13px;
+  color: color-mix(in srgb, var(--text-primary) 86%, var(--text-secondary));
+  font-size: 11px;
+  border-color: rgb(231 218 247 / 25%);
+  background:
+    radial-gradient(ellipse at 18% 0%, rgb(255 255 255 / 13%), transparent 52%),
+    linear-gradient(145deg, rgb(123 88 156 / 15%), rgb(45 26 72 / 13%));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 10%),
+    inset -2px -3px 8px rgb(25 12 45 / 10%),
+    0 3px 10px rgb(14 6 30 / 10%);
+}
+
+.chart .editChartButton:hover {
+  border-color: rgb(231 218 247 / 42%);
+  filter: brightness(1.08);
+}
+
+@media (max-width: 380px) {
+  .chartStage {
+    width: 290px;
+    height: 320px;
+    padding-top: 12px;
+  }
+
+  .connectionButtons {
+    grid-template-columns: 1fr;
+  }
+
+  .foundationGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .foundationCard {
+    min-height: 58px;
+  }
+
 }
 
 .title {
