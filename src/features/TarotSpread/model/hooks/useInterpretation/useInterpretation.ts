@@ -12,8 +12,6 @@ import type { Spread, SpreadParams } from '@/entities/Spread';
 import { addSpread, updateSpread } from '@/entities/Spread';
 import { interpretSpreadDraft } from '@/entities/Spread';
 import { useUser } from '@/entities/User';
-import { useBalance } from '@/features/Billing';
-import { sendAnalytics, getAnalytics } from '@/entities/Analytics';
 
 interface UseInterpretationOptions {
   onFinish?: (interpretation?: string) => void;
@@ -33,7 +31,6 @@ export const useInterpretation = (options: UseInterpretationOptions = {}) => {
   const [error, setError] = useState<string | null>(null);
 
   const { user } = useUser();
-  const { requireBalance, charge } = useBalance();
   const queryClient = useQueryClient();
 
   const { i18n, locale } = useLocales();
@@ -48,21 +45,16 @@ export const useInterpretation = (options: UseInterpretationOptions = {}) => {
       spread: SpreadParams;
       requestOptions?: InterpretationRequestOptions;
     }) => {
-      const { title, userAnswer, question, detailsAnswer, cardsCount } = spread;
-
-      const isPreparedDraft = Boolean(spread.spreadId);
-      const isPaidSpread = !options.isFree && !isPreparedDraft;
-
-      // Для платных тарифов — проверяем баланс до выполнения.
-      // useBalance сам редиректит на /billing при нехватке пентаклей.
-      if (isPaidSpread && !requireBalance(cardsCount)) {
-        throw new Error('INSUFFICIENT_BALANCE');
-      }
+      const { title, userAnswer, question, detailsAnswer } = spread;
 
       const persistedSpreadId =
         requestOptions?.spreadId ?? spread.spreadId ?? v4();
 
-      if (isPreparedDraft && !options.isFree) {
+      if (!options.isFree) {
+        if (!spread.spreadId && !requestOptions?.spreadId) {
+          throw new Error('MISSING_SPREAD_DRAFT');
+        }
+
         const result = await interpretSpreadDraft(persistedSpreadId, locale);
         if (!result.interpretation) {
           throw new Error('EMPTY_INTERPRETATION');
@@ -176,19 +168,8 @@ export const useInterpretation = (options: UseInterpretationOptions = {}) => {
           },
         );
 
-        // Списываем пентакли только после того, как спред успешно сохранён.
-        if (!options.isFree && !isPreparedDraft) {
-          await charge(cardsCount);
-        }
-
         setSpreadId(persistedSpreadId);
 
-        const { tarotSpreadsCount = 0 } = (await getAnalytics(user.id)) ?? {};
-
-        await sendAnalytics(user.id, {
-          lastActionAt: new Date().toISOString(),
-          tarotSpreadsCount: tarotSpreadsCount + 1,
-        });
       }
 
       return interpretationText;

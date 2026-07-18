@@ -91,5 +91,4 @@ export const SpreadConfig: Record<
   [SpreadType.NINE]: NineCardsSpread,
   [SpreadType.HORSESHOE]: HorseshoeSpread,
   [SpreadType.CELTIC_CROSS]: CelticCrossSpread,
-  // [SpreadType.CELTIC_CROSS]: CelticCrossSpread,
 } as const;
