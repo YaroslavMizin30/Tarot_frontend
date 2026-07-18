@@ -71,6 +71,8 @@ export const enum SpreadType {
   TWO_DECKS = 'two_decks',
   SEVEN = 'seven',
   NINE = 'nine',
+  HORSESHOE = 'horseshoe',
+  CELTIC_CROSS = 'celtic_cross',
   // CELTIC_CROSS = 'celtic_cross',
 }
 

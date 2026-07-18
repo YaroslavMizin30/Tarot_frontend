@@ -13,6 +13,7 @@ import { useUser } from '@/entities/User';
 import {
   finalizeSpreadDraft,
   selectSpreadCard,
+  SpreadType,
 } from '@/entities/Spread';
 import { BILLING_REDIRECT_STATE_KEY } from '@/features/Billing/model/useBalance';
 import { getTodayString } from '@/shared/utils/getTodayString';
@@ -28,6 +29,9 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
   const { spread, onSpreadFinish, onInterpretationFinish } = props;
 
   const { title, id, cardsCount } = spread;
+  const isHorseshoeLayout = id === SpreadType.HORSESHOE;
+  const isCelticCrossLayout = id === SpreadType.CELTIC_CROSS;
+  const isCompactLayout = isHorseshoeLayout || isCelticCrossLayout;
 
   const navigate = useNavigate();
 
@@ -264,7 +268,7 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
     <div className={styles.tarotSpread}>
       <h3 className={styles.title}>{title}</h3>
 
-      <div className={styles.cards}>
+      <div className={`${styles.cards} ${isCompactLayout ? styles.compactCards : ''} ${isHorseshoeLayout ? styles.horseshoeCards : ''} ${isCelticCrossLayout ? styles.celticCrossCards : ''}`}>
         {SpreadConfig[id].cards.map((item, idx) => {
           const {
             index,
@@ -280,7 +284,7 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
           const count = idx + 1;
 
           return (
-            <Placeholder
+              <Placeholder
               key={`${title} ${index}`}
               style={style}
               index={index}
@@ -295,7 +299,7 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
                 key={name}
                 name={name}
                 localizedName={i18n(name)}
-                size={'l'}
+                size={isCelticCrossLayout ? 's' : isCompactLayout ? 'm' : 'l'}
                 className={`${styles.card} ${count === activeCard && styles['active-card']}`}
                 style={{
                   animationDelay: `${count}s`,

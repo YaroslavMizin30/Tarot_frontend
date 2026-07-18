@@ -11,6 +11,8 @@ import { SixCardSpread } from './six';
 import { TwoDecksSpread } from './two_decks';
 import { SevenCardsSpread } from './seven';
 import { NineCardsSpread } from './nine';
+import { HorseshoeSpread } from './horseshoe';
+import { CelticCrossSpread } from './celticCross';
 
 export interface Spread {
   id: `${SpreadType}`;
@@ -39,6 +41,20 @@ export const SPREADS: Spread[] = [
     cardCount: 5,
     description:
       'This spread breaks down the situation into components and analyzes it by parts — its fiery aspect, watery aspect, and so on.',
+  },
+  {
+    id: SpreadType.HORSESHOE,
+    label: 'Horseshoe',
+    cardCount: 7,
+    description:
+      'A deep look at the development of a situation: from the past and hidden influences to advice and a possible outcome.',
+  },
+  {
+    id: SpreadType.CELTIC_CROSS,
+    label: 'Celtic Cross',
+    cardCount: 10,
+    description:
+      'A detailed spread for a complex situation: its roots, influences, development and possible outcome.',
   },
   // {
   //   id: SpreadType.CELTIC_CROSS,
@@ -73,5 +89,7 @@ export const SpreadConfig: Record<
   [SpreadType.TWO_DECKS]: TwoDecksSpread,
   [SpreadType.SEVEN]: SevenCardsSpread,
   [SpreadType.NINE]: NineCardsSpread,
+  [SpreadType.HORSESHOE]: HorseshoeSpread,
+  [SpreadType.CELTIC_CROSS]: CelticCrossSpread,
   // [SpreadType.CELTIC_CROSS]: CelticCrossSpread,
 } as const;
