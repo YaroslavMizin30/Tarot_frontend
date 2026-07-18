@@ -37,6 +37,7 @@
 }
 
 .menuButton {
+  position: relative;
   display: flex;
   min-width: 0;
   min-height: 70px;
@@ -55,6 +56,27 @@
   box-shadow: 0 4px 14px rgb(61 41 69 / 8%);
   backdrop-filter: blur(8px);
   cursor: pointer;
+}
+
+.menuIcon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 21px;
+  height: 21px;
+  opacity: 0.72;
+}
+
+.menuButton:nth-child(1) .menuIcon {
+  color: #8054a3;
+}
+
+.menuButton:nth-child(2) .menuIcon {
+  color: #976326;
+}
+
+.menuButton:nth-child(3) .menuIcon {
+  color: #477c9b;
 }
 
 .menuButton:nth-child(1) {
@@ -91,6 +113,7 @@
 }
 
 .menuButton strong {
+  max-width: calc(100% - 20px);
   font-size: 12px;
   line-height: 1.2;
 }

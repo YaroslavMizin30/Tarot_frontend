@@ -14,7 +14,14 @@ import FORECAST_TRANSLATIONS_EN from '@/shared/locales/en/forecast';
 import FORECAST_TRANSLATIONS_RU from '@/shared/locales/ru/forecast';
 
 import styles from './AstrologyPage.module.css';
+import { AstrologySectionIcon } from './AstrologySectionIcon';
 import { SkyOverview } from '../SkyOverview/SkyOverview';
+
+const SECTION_ICONS = {
+  '/horoscopes': 'horoscopes',
+  '/natal-chart': 'natal-chart',
+  '/calendar': 'calendar',
+} as const;
 
 export const AstrologyPage = () => {
   const { i18n, addTranslations, locale } = useLocales();
@@ -46,6 +53,10 @@ export const AstrologyPage = () => {
             className={styles.menuButton}
             onClick={() => handleOpen(key)}
           >
+            <AstrologySectionIcon
+              className={styles.menuIcon}
+              name={SECTION_ICONS[key]}
+            />
             <strong>{i18n(label)}</strong>
             <span>{i18n(`${label} hint`)}</span>
           </button>
