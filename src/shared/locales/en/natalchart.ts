@@ -319,6 +319,7 @@ const TRANSLATIONS_EN = {
   'Tense aspects': 'Tense aspects',
   'Minor aspects': 'Minor aspects',
   'Select a planet to trace its connections': 'Select a planet to trace its connections',
+  'Select a planet on the chart to open its description': 'Select a planet on the chart to open its description',
   'Houses accuracy': 'Houses accuracy',
   'Major aspects': 'Major aspects',
   'Aspects': 'Aspects',
@@ -365,6 +366,7 @@ const TRANSLATIONS_EN = {
   'Highlights are selected by aspect precision and chart significance':
     'Highlights are selected by aspect precision and chart significance',
   'Calculating personal transits': 'Calculating personal transits…',
+  'Open personal transits': 'Open personal transits',
   'Personal transits are temporarily unavailable':
     'Personal transits are temporarily unavailable',
   'No significant exact transits for this date':
@@ -446,6 +448,8 @@ const TRANSLATIONS_EN = {
   'City search is unavailable, enter it manually': 'City search is temporarily unavailable — enter it manually',
   'No cities found, you can enter it manually': 'No cities found — you can enter it manually',
   'City search data': 'Search data',
+  'Chart geometry and key technical reference points':
+    'Chart geometry and key technical reference points',
 };
 
 export default TRANSLATIONS_EN;

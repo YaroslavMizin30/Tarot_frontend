@@ -318,6 +318,7 @@ const TRANSLATIONS_RU = {
   'Tense aspects': 'Напряжённые аспекты',
   'Minor aspects': 'Минорные аспекты',
   'Select a planet to trace its connections': 'Нажмите на планету, чтобы проследить её связи',
+  'Select a planet on the chart to open its description': 'Нажмите на планету на карте, чтобы открыть её описание',
   'Houses accuracy': 'Точность домов',
   'Major aspects': 'Основных аспектов',
   'Aspects': 'Аспекты',
@@ -364,6 +365,7 @@ const TRANSLATIONS_RU = {
   'Highlights are selected by aspect precision and chart significance':
     'Главные влияния выбраны по точности аспекта и значимости точки карты',
   'Calculating personal transits': 'Рассчитываем персональные транзиты…',
+  'Open personal transits': 'Открыть личные транзиты',
   'Personal transits are temporarily unavailable':
     'Персональные транзиты временно недоступны',
   'No significant exact transits for this date':
@@ -445,6 +447,8 @@ const TRANSLATIONS_RU = {
   'City search is unavailable, enter it manually': 'Поиск временно недоступен — введите город вручную',
   'No cities found, you can enter it manually': 'Город не найден — его можно ввести вручную',
   'City search data': 'Данные поиска',
+  'Chart geometry and key technical reference points':
+    'Геометрия карты и основные технические ориентиры',
 };
 
 export default TRANSLATIONS_RU;

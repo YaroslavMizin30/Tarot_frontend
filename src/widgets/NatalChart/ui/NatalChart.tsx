@@ -618,43 +618,65 @@ export const NatalChart = (props: NatalChartProps) => {
         </div>
       </div>
 
-      <div className={`${styles.visual} ${chartMode === 'detailed' ? styles.detailedVisual : ''}`}>
-        <div className={styles.chartStage}>
-          {chartMode === 'overview' ? (
-            <CelestialNatalOverview
-              chart={user.natalChart}
-              highlightedBodies={highlightedBodies}
-              selectedPlanet={selectedPlanet}
-              onSelectPlanet={handlePlanetSelect}
-            />
-          ) : (
-            <DetailedNatalChart
-              chart={user.natalChart}
-              highlightedBodies={highlightedBodies}
-              selectedPlanet={selectedPlanet}
-              onSelectPlanet={handlePlanetSelect}
-              selectedAspectKey={selectedAspectKey}
-              onSelectAspect={setSelectedAspectKey}
-              selectedTransit={selectedTransit}
-            />
-          )}
-        </div>
+      <div className={styles.modeIntro}>
+        {chartMode === 'overview' ? (
+          selectedPlanetData && selectedPlacement ? (
+            <div className={styles.foundationDetail}>
+              <div className={styles.foundationDetailHeader}>
+                <img
+                  src={`/assets/images/horoscope/${selectedPlanetData.id}.png`}
+                  alt={''}
+                />
+                <span>
+                  <strong>{selectedPlacement.title}</strong>
+                  <small>
+                    {i18n(selectedPlanetData.name)} ·{' '}
+                    {i18n(getZodiacTranslationKey(selectedPlanetData.sign_id))}{' '}
+                    {selectedPlanetData.pos.toFixed(1)}° · {i18n('House')}{' '}
+                    {selectedPlanetData.house}
+                  </small>
+                </span>
+                <button
+                  type={'button'}
+                  className={styles.foundationDetailClose}
+                  onClick={() => handlePlanetSelect(null)}
+                >
+                  <span aria-hidden={'true'}>←</span>
+                  {i18n('Back to chart foundation')}
+                </button>
+              </div>
 
-        <div className={styles.detailPanel}>
-          {chartMode === 'detailed' && (
-            <div className={styles.chartLegend}>
-              <span><i className={styles.softMarker} />{i18n('Harmonious aspects')}</span>
-              <span><i className={styles.hardMarker} />{i18n('Tense aspects')}</span>
-              <span><i className={styles.minorMarker} />{i18n('Minor aspects')}</span>
-              <small>{i18n('Select a planet to trace its connections')}</small>
+              {selectedPlacements.length > 1 && (
+                <div className={styles.foundationDetailTabs}>
+                  {(['sign', 'house'] as const).map((type) => {
+                    const placementExists = selectedPlacements.some(
+                      (placement) => placement.type === type,
+                    );
+                    if (!placementExists) return null;
+
+                    return (
+                      <button
+                        type={'button'}
+                        key={type}
+                        className={selectedPlacementType === type ? styles.activeFoundationTab : ''}
+                        onClick={() => setSelectedPlacementType(type)}
+                      >
+                        {i18n(type === 'sign' ? 'Sign placement' : 'House placement')}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+
+              <div className={`${styles.foundationDetailText} custom-scrollbar`}>
+                {selectedPlacement.content}
+              </div>
             </div>
-          )}
-
-          {chartMode === 'overview' && !selectedPlanetData && (
+          ) : (
             <div className={styles.overviewFoundation}>
               <div className={styles.foundationHeading}>
                 <strong>{i18n('Chart foundation')}</strong>
-                <span>{i18n('The three main reference points of your chart')}</span>
+                <span>{i18n('Select a planet on the chart to open its description')}</span>
               </div>
 
               <div className={styles.foundationGrid}>
@@ -665,10 +687,7 @@ export const NatalChart = (props: NatalChartProps) => {
                     className={styles.foundationCard}
                     onClick={() => handlePlanetSelect(planetId)}
                   >
-                    <img
-                      src={`/assets/images/horoscope/${planetId}.png`}
-                      alt={''}
-                    />
+                    <img src={`/assets/images/horoscope/${planetId}.png`} alt={''} />
                     <span>
                       <b>{i18n(planet.name)}</b>
                       <small>{i18n(getZodiacTranslationKey(planet.sign_id))}</small>
@@ -708,39 +727,19 @@ export const NatalChart = (props: NatalChartProps) => {
                 </div>
               </div>
             </div>
-          )}
-
-          {chartMode === 'detailed' && selectedTransit && (
-            <div className={styles.transitContext}>
-              <span>{i18n('Selected personal transit')}</span>
-              <strong>
-                {i18n(
-                  planets.find(({ id }) => id === selectedTransit.transitBody)?.name
-                    ?? selectedTransit.transitBody,
-                )}{' '}
-                {i18n(selectedTransit.aspect)}{' '}
-                {selectedTransit.targetType === 'angle'
-                  ? selectedTransit.natalTarget.toUpperCase()
-                  : i18n(
-                    planets.find(({ id }) => id === selectedTransit.natalTarget)?.name
-                      ?? selectedTransit.natalTarget,
-                  )}
-              </strong>
-              <small>
-                {i18n(selectedTransit.phase === 'applying'
-                  ? 'Applying aspect'
-                  : selectedTransit.phase === 'separating'
-                    ? 'Separating aspect'
-                    : 'Stationary influence')}
-                {' · '}{i18n('Orb')}: {selectedTransit.orb.toFixed(2)}°
-              </small>
-              <button type={'button'} onClick={() => setSelectedTransit(null)}>
-                {i18n('Close transit highlight')}
-              </button>
+          )
+        ) : (
+          <div className={styles.detailedFoundation}>
+            <div className={styles.foundationHeading}>
+              <strong>{i18n('Detailed chart')}</strong>
+              <span>{i18n('Chart geometry and key technical reference points')}</span>
             </div>
-          )}
-
-          {chartMode === 'detailed' && !selectedTransit && !selectedPlanetData && !selectedAspect && (
+            <div className={styles.chartLegend}>
+              <span><i className={styles.softMarker} />{i18n('Harmonious aspects')}</span>
+              <span><i className={styles.hardMarker} />{i18n('Tense aspects')}</span>
+              <span><i className={styles.minorMarker} />{i18n('Minor aspects')}</span>
+              <small>{i18n('Select a planet to trace its connections')}</small>
+            </div>
             <div className={styles.chartFacts}>
               <span><b>ASC</b> {i18n(getZodiacTranslationKey(angles_details.asc.sign_id))} {Math.floor(angles_details.asc.pos)}°</span>
               <span><b>MC</b> {i18n(getZodiacTranslationKey(angles_details.mc.sign_id))} {Math.floor(angles_details.mc.pos)}°</span>
@@ -749,115 +748,161 @@ export const NatalChart = (props: NatalChartProps) => {
               <span>{i18n('Vertex')}: {i18n(getZodiacTranslationKey(angles_details.vertex.sign_id))} {Math.floor(angles_details.vertex.pos)}°</span>
               <span>{i18n('Stelliums')}: {stelliums.total}</span>
             </div>
-          )}
+          </div>
+        )}
+      </div>
 
-          {selectedPlanetData && !selectedAspect && (
-            <>
-              <div className={styles.selectedPlanetInfo}>
-                <strong>{i18n(selectedPlanetData.name)}</strong>
-                <span>{i18n(getZodiacTranslationKey(selectedPlanetData.sign_id))} {selectedPlanetData.pos.toFixed(1)}°</span>
-                <span>{i18n('House')} {selectedPlanetData.house}</span>
-                <span>{i18n('Declination')}: {selectedPlanetData.declination_deg.toFixed(1)}°</span>
-                {selectedPlanetData.retrograde && <span>{i18n('Retrograde')}</span>}
-              </div>
-
-              {chartMode === 'overview' && (
-                <button
-                  type={'button'}
-                  className={styles.backToFoundation}
-                  onClick={() => handlePlanetSelect(null)}
-                >
-                  <span aria-hidden={'true'}>←</span>
-                  {i18n('Back to chart foundation')}
-                </button>
-              )}
-
-              {selectedPlacement && (
-                <div className={styles.indexDetail}>
-                  {selectedPlacements.length > 1 && (
-                    <div className={styles.indexTabs}>
-                      {(['sign', 'house'] as const).map((type) => {
-                        const placementExists = selectedPlacements.some(
-                          (placement) => placement.type === type,
-                        );
-                        if (!placementExists) return null;
-
-                        return (
-                          <button
-                            type={"button"}
-                            key={type}
-                            className={selectedPlacementType === type ? styles.activeIndexTab : ''}
-                            onClick={() => setSelectedPlacementType(type)}
-                          >
-                            {i18n(type === 'sign' ? 'Sign placement' : 'House placement')}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  )}
-                  <strong>{selectedPlacement.title}</strong>
-                  <div className={`${styles.indexContent} custom-scrollbar`}>
-                    {selectedPlacement.content}
-                  </div>
-                </div>
-              )}
-            </>
-          )}
-
-          {chartMode === 'detailed' && !selectedAspect && visibleAspects.length > 0 && (
-            <div className={styles.aspectConnections}>
-              <span className={styles.connectionLabel}>
-                {selectedPlanet
-                  ? `${i18n('Planet connections')}: ${visibleAspects.length} ${i18n('of')} ${user.natalChart.aspects.length}`
-                  : `${i18n('All connections')}: ${visibleAspects.length}`}
-              </span>
-              <div className={styles.connectionButtons}>
-                {visibleAspects.map((aspect) => {
-                  const aspectKey = getNatalAspectKey(aspect);
-                  const firstPlanet = planets.find((planet) => planet.id === aspect.p1);
-                  const secondPlanet = planets.find((planet) => planet.id === aspect.p2);
-                  const relationTitle = selectedPlanet
-                    ? i18n((aspect.p1 === selectedPlanet ? secondPlanet : firstPlanet)?.name ?? '')
-                    : `${i18n(firstPlanet?.name ?? aspect.p1)} — ${i18n(secondPlanet?.name ?? aspect.p2)}`;
-
-                  return (
-                    <button
-                      type={"button"}
-                      key={aspectKey}
-                      className={selectedAspectKey === aspectKey ? styles.activeConnection : ''}
-                      onClick={() => setSelectedAspectKey(selectedAspectKey === aspectKey ? null : aspectKey)}
-                    >
-                      {aspect.type} · {relationTitle} · {aspect.orb.toFixed(1)}°
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {chartMode === 'detailed' && selectedAspect && (
-            <div className={`${styles.indexDetail} ${styles.aspectDetail}`}>
-              <div className={styles.aspectMeta}>
-                <span>{selectedAspect.type}</span>
-                <span>{i18n(selectedAspect.is_applying ? 'Applying aspect' : 'Separating aspect')}</span>
-                <span>{i18n('Orb')}: {selectedAspect.orb.toFixed(2)}°</span>
-              </div>
-              <strong>{selectedAspectDescription?.title ?? selectedAspect.type}</strong>
-              {selectedAspectDescription?.content && (
-                <div className={`${styles.indexContent} custom-scrollbar`}>
-                  {selectedAspectDescription.content}
-                </div>
-              )}
-              <button
-                type={"button"}
-                className={styles.backToConnections}
-                onClick={() => setSelectedAspectKey(null)}
-              >
-                {i18n('Back to connections')}
-              </button>
-            </div>
+      <div className={`${styles.visual} ${chartMode === 'detailed' ? styles.detailedVisual : ''}`}>
+        <div className={styles.chartStage}>
+          {chartMode === 'overview' ? (
+            <CelestialNatalOverview
+              chart={user.natalChart}
+              highlightedBodies={highlightedBodies}
+              selectedPlanet={selectedPlanet}
+              onSelectPlanet={handlePlanetSelect}
+            />
+          ) : (
+            <DetailedNatalChart
+              chart={user.natalChart}
+              highlightedBodies={highlightedBodies}
+              selectedPlanet={selectedPlanet}
+              onSelectPlanet={handlePlanetSelect}
+              selectedAspectKey={selectedAspectKey}
+              onSelectAspect={setSelectedAspectKey}
+              selectedTransit={selectedTransit}
+            />
           )}
         </div>
+
+        {chartMode === 'detailed' && (
+          <div className={styles.detailPanel}>
+            {chartMode === 'detailed' && selectedTransit && (
+              <div className={styles.transitContext}>
+                <span>{i18n('Selected personal transit')}</span>
+                <strong>
+                  {i18n(
+                    planets.find(({ id }) => id === selectedTransit.transitBody)?.name
+                    ?? selectedTransit.transitBody,
+                  )}{' '}
+                  {i18n(selectedTransit.aspect)}{' '}
+                  {selectedTransit.targetType === 'angle'
+                    ? selectedTransit.natalTarget.toUpperCase()
+                    : i18n(
+                      planets.find(({ id }) => id === selectedTransit.natalTarget)?.name
+                      ?? selectedTransit.natalTarget,
+                    )}
+                </strong>
+                <small>
+                  {i18n(selectedTransit.phase === 'applying'
+                    ? 'Applying aspect'
+                    : selectedTransit.phase === 'separating'
+                      ? 'Separating aspect'
+                      : 'Stationary influence')}
+                  {' · '}{i18n('Orb')}: {selectedTransit.orb.toFixed(2)}°
+                </small>
+                <button type={'button'} onClick={() => setSelectedTransit(null)}>
+                  {i18n('Close transit highlight')}
+                </button>
+              </div>
+            )}
+
+            {selectedPlanetData && !selectedAspect && (
+              <>
+                <div className={styles.selectedPlanetInfo}>
+                  <strong>{i18n(selectedPlanetData.name)}</strong>
+                  <span>{i18n(getZodiacTranslationKey(selectedPlanetData.sign_id))} {selectedPlanetData.pos.toFixed(1)}°</span>
+                  <span>{i18n('House')} {selectedPlanetData.house}</span>
+                  <span>{i18n('Declination')}: {selectedPlanetData.declination_deg.toFixed(1)}°</span>
+                  {selectedPlanetData.retrograde && <span>{i18n('Retrograde')}</span>}
+                </div>
+
+                {selectedPlacement && (
+                  <div className={styles.indexDetail}>
+                    {selectedPlacements.length > 1 && (
+                      <div className={styles.indexTabs}>
+                        {(['sign', 'house'] as const).map((type) => {
+                          const placementExists = selectedPlacements.some(
+                            (placement) => placement.type === type,
+                          );
+                          if (!placementExists) return null;
+
+                          return (
+                            <button
+                              type={"button"}
+                              key={type}
+                              className={selectedPlacementType === type ? styles.activeIndexTab : ''}
+                              onClick={() => setSelectedPlacementType(type)}
+                            >
+                              {i18n(type === 'sign' ? 'Sign placement' : 'House placement')}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
+                    <strong>{selectedPlacement.title}</strong>
+                    <div className={`${styles.indexContent} custom-scrollbar`}>
+                      {selectedPlacement.content}
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
+
+            {chartMode === 'detailed' && !selectedAspect && visibleAspects.length > 0 && (
+              <div className={styles.aspectConnections}>
+                <span className={styles.connectionLabel}>
+                  {selectedPlanet
+                    ? `${i18n('Planet connections')}: ${visibleAspects.length} ${i18n('of')} ${user.natalChart.aspects.length}`
+                    : `${i18n('All connections')}: ${visibleAspects.length}`}
+                </span>
+                <div className={styles.connectionButtons}>
+                  {visibleAspects.map((aspect) => {
+                    const aspectKey = getNatalAspectKey(aspect);
+                    const firstPlanet = planets.find((planet) => planet.id === aspect.p1);
+                    const secondPlanet = planets.find((planet) => planet.id === aspect.p2);
+                    const relationTitle = selectedPlanet
+                      ? i18n((aspect.p1 === selectedPlanet ? secondPlanet : firstPlanet)?.name ?? '')
+                      : `${i18n(firstPlanet?.name ?? aspect.p1)} — ${i18n(secondPlanet?.name ?? aspect.p2)}`;
+
+                    return (
+                      <button
+                        type={"button"}
+                        key={aspectKey}
+                        className={selectedAspectKey === aspectKey ? styles.activeConnection : ''}
+                        onClick={() => setSelectedAspectKey(selectedAspectKey === aspectKey ? null : aspectKey)}
+                      >
+                        {aspect.type} · {relationTitle} · {aspect.orb.toFixed(1)}°
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {chartMode === 'detailed' && selectedAspect && (
+              <div className={`${styles.indexDetail} ${styles.aspectDetail}`}>
+                <div className={styles.aspectMeta}>
+                  <span>{selectedAspect.type}</span>
+                  <span>{i18n(selectedAspect.is_applying ? 'Applying aspect' : 'Separating aspect')}</span>
+                  <span>{i18n('Orb')}: {selectedAspect.orb.toFixed(2)}°</span>
+                </div>
+                <strong>{selectedAspectDescription?.title ?? selectedAspect.type}</strong>
+                {selectedAspectDescription?.content && (
+                  <div className={`${styles.indexContent} custom-scrollbar`}>
+                    {selectedAspectDescription.content}
+                  </div>
+                )}
+                <button
+                  type={"button"}
+                  className={styles.backToConnections}
+                  onClick={() => setSelectedAspectKey(null)}
+                >
+                  {i18n('Back to connections')}
+                </button>
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {chartMode === 'overview' && (
