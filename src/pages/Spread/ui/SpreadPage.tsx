@@ -134,6 +134,7 @@ export const SpreadPage = () => {
 
         <div className={styles.interpretationBlock}>
           <TextContainer
+            format={'markdown'}
             paragraphs={interpretation.split('\n')}
             maxHeight={100}
             maxHeightMeasure={'%'}

@@ -25,4 +25,6 @@ export interface TextContainerProps {
    * Children
    */
   children?: ReactNode;
+  /** Render a safe subset of Markdown used in AI responses. */
+  format?: 'plain' | 'markdown';
 }

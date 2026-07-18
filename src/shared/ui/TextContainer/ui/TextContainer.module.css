@@ -22,6 +22,66 @@
   overflow-x: hidden;
 }
 
+.text,
+.text * {
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif !important;
+}
+
+.text p,
+.text h2,
+.text h3,
+.text h4,
+.text ul,
+.text ol {
+  margin: 0;
+}
+
+.text p + p,
+.text p + ul,
+.text p + ol,
+.text ul + p,
+.text ol + p,
+.text h2 + *,
+.text h3 + *,
+.text h4 + * {
+  margin-top: 10px;
+}
+
+.text h2,
+.text h3,
+.text h4 {
+  line-height: 1.25;
+  color: var(--text-primary);
+}
+
+.text h2 {
+  font-size: 18px;
+}
+
+.text h3 {
+  font-size: 16px;
+}
+
+.text h4 {
+  font-size: 14px;
+}
+
+.text ul,
+.text ol {
+  padding-left: 22px;
+}
+
+.text li + li {
+  margin-top: 5px;
+}
+
 .text > span + span {
   margin-top: 7px;
 }
