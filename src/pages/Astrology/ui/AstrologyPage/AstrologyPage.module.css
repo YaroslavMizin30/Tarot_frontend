@@ -19,12 +19,15 @@
   flex: 0 0 auto;
   position: relative;
   z-index: 1;
-  width: min(100%, 420px);
+  width: calc(100% - 8px);
+  margin: 14px 4px 16px;
   gap: 8px;
   animation: fadeIn 1s ease;
 }
 
 .menuButton {
+  --menu-tint: #9c75bd;
+
   position: relative;
   display: flex;
   min-width: 0;
@@ -34,14 +37,29 @@
   align-items: flex-start;
   justify-content: space-between;
   font: inherit;
-  color: var(--text-primary);
+  color: var(--text-on-control);
   text-align: left;
-  border-color: color-mix(in srgb, var(--border-primary) 45%, transparent);
+  border-color: var(--control-gloss-border);
   border-style: solid;
   border-width: 1px;
   border-radius: 12px;
-  background: color-mix(in srgb, var(--surface-panel) 72%, transparent);
-  box-shadow: 0 4px 14px rgb(61 41 69 / 8%);
+  background:
+    radial-gradient(
+      ellipse at 14% 0%,
+      var(--control-gloss-highlight) 0%,
+      transparent 54%
+    ),
+    linear-gradient(
+      142deg,
+      var(--control-gloss-sheen) 0%,
+      transparent 46%,
+      var(--control-gloss-pressed) 100%
+    ),
+    color-mix(in srgb, var(--menu-tint) 34%, var(--surface-control));
+  box-shadow:
+    inset 1px 1px 0 var(--control-gloss-highlight),
+    inset -3px -3px 9px var(--control-gloss-pressed),
+    0 5px 14px var(--control-gloss-shadow);
   backdrop-filter: blur(8px);
   cursor: pointer;
 }
@@ -52,52 +70,19 @@
   right: 8px;
   width: 21px;
   height: 21px;
-  opacity: 0.72;
-}
-
-.menuButton:nth-child(1) .menuIcon {
-  color: #8054a3;
-}
-
-.menuButton:nth-child(2) .menuIcon {
-  color: #976326;
-}
-
-.menuButton:nth-child(3) .menuIcon {
-  color: #477c9b;
+  opacity: 0.86;
 }
 
 .menuButton:nth-child(1) {
-  border-color: color-mix(in srgb, #9c75bd 38%, var(--border-primary));
-  background:
-    radial-gradient(
-      ellipse at 12% 0%,
-      rgb(210 177 232 / 24%),
-      transparent 62%
-    ),
-    color-mix(in srgb, #c5a1dc 20%, var(--surface-panel));
+  --menu-tint: #9669b8;
 }
 
 .menuButton:nth-child(2) {
-  border-color: color-mix(in srgb, #b78447 38%, var(--border-primary));
-  background:
-    radial-gradient(
-      ellipse at 12% 0%,
-      rgb(246 205 142 / 24%),
-      transparent 62%
-    ),
-    color-mix(in srgb, #dfb676 20%, var(--surface-panel));
+  --menu-tint: #b17a38;
 }
 
 .menuButton:nth-child(3) {
-  border-color: color-mix(in srgb, #668ead 38%, var(--border-primary));
-  background:
-    radial-gradient(
-      ellipse at 12% 0%,
-      rgb(170 213 235 / 24%),
-      transparent 62%
-    ),
-    color-mix(in srgb, #86b5ce 20%, var(--surface-panel));
+  --menu-tint: #4f88a9;
 }
 
 .menuButton strong {

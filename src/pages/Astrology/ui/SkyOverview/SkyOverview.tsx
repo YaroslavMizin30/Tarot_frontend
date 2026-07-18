@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, type ReactNode } from 'react';
 
 import { useDailyEphemeris } from '@/entities/Horoscope';
 import useLocales from '@/shared/hooks/useLocales';
@@ -10,6 +10,7 @@ import styles from './SkyOverview.module.css';
 
 interface SkyOverviewProps {
   sign?: Sign;
+  actions?: ReactNode;
 }
 
 const NORMALIZED_SIGNS: Partial<Record<Sign, Sign>> = {
@@ -45,7 +46,7 @@ const BODY_DOMAINS: Record<string, string> = {
   Pluto: 'power and deep changes',
 };
 
-export const SkyOverview = ({ sign }: SkyOverviewProps) => {
+export const SkyOverview = ({ actions, sign }: SkyOverviewProps) => {
   const { astrology, bodies, error, isLoading, timestamp } =
     useDailyEphemeris();
   const { i18n, locale } = useLocales();
@@ -122,6 +123,12 @@ export const SkyOverview = ({ sign }: SkyOverviewProps) => {
     })
     : null;
 
+  const todayLabel = new Intl.DateTimeFormat(locale, {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+  }).format(new Date());
+
   const formatPosition = (body: { degreeInSign: number; sign: Sign }) =>
     `${body.degreeInSign.toLocaleString(locale, {
       maximumFractionDigits: 1,
@@ -146,12 +153,19 @@ export const SkyOverview = ({ sign }: SkyOverviewProps) => {
   return (
     <section className={styles.overview} aria-labelledby={'sky-overview-title'}>
       <header className={styles.header}>
-        <span className={styles.eyebrow}>{i18n('Sky now')}</span>
+        <div className={styles.headerMeta}>
+          <span className={styles.eyebrow}>{i18n('Sky now')}</span>
+          <time dateTime={new Date().toISOString().slice(0, 10)}>
+            {todayLabel}
+          </time>
+        </div>
         <h1 className={styles.title} id={'sky-overview-title'}>
           {mainEvent.title}
         </h1>
         <p className={styles.description}>{mainEvent.description}</p>
       </header>
+
+      {actions}
 
       <div className={styles.profile}>
         {normalizedSign ? (
@@ -182,6 +196,18 @@ export const SkyOverview = ({ sign }: SkyOverviewProps) => {
 
           return (
             <article className={styles.signal} key={body}>
+              {item ? (
+                <span
+                  className={styles.signalSign}
+                  title={i18n(item.sign)}
+                  aria-label={i18n(item.sign)}
+                >
+                  <Zodiac
+                    sign={NORMALIZED_SIGNS[item.sign] ?? item.sign}
+                    type={'small'}
+                  />
+                </span>
+              ) : null}
               <img
                 className={styles.planet}
                 src={`/assets/images/horoscope/${id}.png`}

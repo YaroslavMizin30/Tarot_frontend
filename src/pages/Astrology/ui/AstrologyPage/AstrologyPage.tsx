@@ -40,25 +40,28 @@ export const AstrologyPage = () => {
 
   return (
     <div className={styles.container}>
-      <SkyOverview sign={user?.sign} />
-
-      <div className={styles.menu}>
-        {SUBSECTIONS.map(({ key, label }) => (
-          <button
-            type={'button'}
-            key={key}
-            className={styles.menuButton}
-            onClick={() => handleOpen(key)}
-          >
-            <AstrologySectionIcon
-              className={styles.menuIcon}
-              name={SECTION_ICONS[key]}
-            />
-            <strong>{i18n(label)}</strong>
-            <span>{i18n(`${label} hint`)}</span>
-          </button>
-        ))}
-      </div>
+      <SkyOverview
+        sign={user?.sign}
+        actions={(
+          <nav className={styles.menu} aria-label={i18n('Astrology')}>
+            {SUBSECTIONS.map(({ key, label }) => (
+              <button
+                type={'button'}
+                key={key}
+                className={styles.menuButton}
+                onClick={() => handleOpen(key)}
+              >
+                <AstrologySectionIcon
+                  className={styles.menuIcon}
+                  name={SECTION_ICONS[key]}
+                />
+                <strong>{i18n(label)}</strong>
+                <span>{i18n(`${label} hint`)}</span>
+              </button>
+            ))}
+          </nav>
+        )}
+      />
     </div>
   );
 };

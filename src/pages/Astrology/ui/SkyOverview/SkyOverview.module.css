@@ -31,13 +31,27 @@
   box-shadow: 0 6px 20px rgb(36 26 44 / 8%);
 }
 
-.eyebrow {
-  display: block;
+.headerMeta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
   margin-bottom: 6px;
+}
+
+.eyebrow,
+.headerMeta time {
   font-size: 10px;
   letter-spacing: 0.09em;
   text-transform: uppercase;
   opacity: 0.64;
+}
+
+.headerMeta time {
+  overflow: hidden;
+  letter-spacing: 0.03em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .title {
@@ -138,10 +152,24 @@
 }
 
 .signalLabel {
+  max-width: calc(100% - 24px);
   min-height: 28px;
   font-size: 9px;
   line-height: 1.25;
   opacity: 0.62;
+}
+
+.signalSign {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  z-index: 2;
+  display: grid;
+  width: 20px;
+  height: 20px;
+  place-items: center;
+  color: var(--text-primary);
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--surface-panel) 78%, transparent));
 }
 
 .signal strong {
