@@ -74,9 +74,11 @@ export const HistoryPage = () => {
                 <span>{`${i18n('Date')}: ${spread.date}`}</span>
 
                 <Button
-                  onClick={() =>
-                    navigate(`/history/${spread.spreadId}`, { state: spread })
-                  }
+                  disabled={!spread.spreadId}
+                  onClick={() => {
+                    if (!spread.spreadId) return;
+                    navigate(`/history/${spread.spreadId}`, { state: spread });
+                  }}
                 >
                   {i18n('View')}
                 </Button>

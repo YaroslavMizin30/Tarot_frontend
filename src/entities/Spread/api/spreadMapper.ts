@@ -1,7 +1,10 @@
 import type { Spread, SpreadParams } from '../types';
 
 type SpreadRow = {
-  spread_id: string;
+  spread_id?: string | null;
+  spreadId?: string | null;
+  draft_id?: string | null;
+  draftId?: string | null;
   user_id: number;
   id: SpreadParams['id'];
   title?: string | null;
@@ -30,7 +33,7 @@ const parseCards = (cards: SpreadRow['cards']): Spread['cards'] => {
 };
 
 export const spreadFromRow = (row: SpreadRow): Spread => ({
-  spreadId: row.spread_id,
+  spreadId: row.spread_id ?? row.spreadId ?? row.draft_id ?? row.draftId ?? '',
   userId: row.user_id,
   id: row.id,
   title: row.title ?? undefined,

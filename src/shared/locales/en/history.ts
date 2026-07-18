@@ -24,6 +24,10 @@ const TRANSLATIONS_EN = {
   'Do not mention user rating. Use rating to mention less spreads with low rating':
     'Do not mention user rating. Use rating to mention less spreads with low rating',
   'To spreads history': 'To spreads history',
+  'Spread not found': 'Spread not found',
+  'Back': 'Back',
+  'Upright position': 'Upright',
+  'Reversed position': 'Reversed',
 };
 
 export default TRANSLATIONS_EN;

@@ -24,6 +24,10 @@ const TRANSLATIONS_RU = {
   'Do not mention user rating. Use rating to mention less spreads with low rating':
     'Не упоминай о рейтинге раскладов. Используй рейтинг, чтобы упоминать меньше о раскладах с низким рейтингом',
   'To spreads history': 'К истории раскладов',
+  'Spread not found': 'Расклад не найден',
+  'Back': 'Назад',
+  'Upright position': 'Прямое положение',
+  'Reversed position': 'Перевёрнутое положение',
 };
 
 export default TRANSLATIONS_RU;
