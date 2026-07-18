@@ -35,9 +35,6 @@
   height: 100%;
   overflow: hidden;
   pointer-events: none;
-}
-
-.deep {
   background:
     radial-gradient(
       ellipse at 64% 34%,
@@ -76,15 +73,15 @@
   mask-repeat: no-repeat;
 }
 
-.deep::before,
-.deep::after {
+.composition::before,
+.composition::after {
   content: '';
   position: absolute;
   pointer-events: none;
   transform: rotate(-18deg);
 }
 
-.deep::before {
+.composition::before {
   top: 32%;
   left: -22%;
   width: 144%;
@@ -106,7 +103,7 @@
   filter: blur(15px);
 }
 
-.deep::after {
+.composition::after {
   top: 24%;
   left: -18%;
   width: 136%;

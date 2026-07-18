@@ -72,8 +72,12 @@ export const Layout = () => {
           <div className={styles.cloud}></div>
           <div className={styles.couldBottom}></div>
 
-          {getPageAttachment('astrology', pathname) && (
-            <StarsComposition isDeep={pathname === '/astrology'} />
+          {isAuthenticating ? (
+            <StarsComposition />
+          ) : (
+            getPageAttachment('astrology', pathname) && (
+              <StarsComposition />
+            )
           )}
           {getPageAttachment('tarot', pathname) && pathname !== '/' && (
             <TorchComposition />
