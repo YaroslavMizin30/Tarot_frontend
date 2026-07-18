@@ -5,8 +5,6 @@ const TRANSLATIONS_RU: Record<string, string> = {
   'Additional thoughts (optional)...': 'Что-то конкретное (необязательно)...',
   'Generating...': 'Генерируем...',
   'Compose': 'Составить',
-  'Make horoscope as a professional astrologist.':
-    'Составь гороскоп как профессиональный астролог.',
   'Call user by name.': 'Обращайся к пользователю по имени.',
   'User zodiac sign:': 'Знак зодиака пользователя: ',
   'User natal chart:': 'Натальная карта пользователя: ',

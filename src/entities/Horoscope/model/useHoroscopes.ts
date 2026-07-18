@@ -126,7 +126,6 @@ export const useHoroscopes = (options?: UseHoroscopesOptions) => {
   };
 
   const DEVELOPER_MESSAGE =
-    `${i18n('Make horoscope as a professional astrologist.')} ` +
     `${i18n('Call user by name.')}. ` +
     `${i18n('User zodiac sign:')} ` +
     `${user?.sign}. ` +

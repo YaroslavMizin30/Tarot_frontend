@@ -5,8 +5,6 @@ const TRANSLATIONS_EN: Record<string, string> = {
   'Additional thoughts (optional)...': 'Additional thoughts (optional)...',
   'Generating...': 'Generating...',
   'Compose': 'Compose',
-  'Make horoscope as a professional astrologist.':
-    'Make horoscope as a professional astrologist.',
   'Call user by name.': 'Call user by name.',
   'User zodiac sign:': 'User zodiac sign: ',
   'User natal chart:': 'User natal chart: ',
