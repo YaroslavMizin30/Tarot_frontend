@@ -9,7 +9,7 @@ export interface SubsectionConfig {
 }
 
 export const SUBSECTIONS: SubsectionConfig[] = [
+  { key: '/calendar', label: 'Moon calendar' },
   { key: '/horoscopes', label: 'Horoscopes' },
   { key: '/natal-chart', label: 'Natal chart' },
-  { key: '/calendar', label: 'Moon calendar' },
 ];

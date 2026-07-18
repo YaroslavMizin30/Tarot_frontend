@@ -49,7 +49,7 @@ const TRANSLATIONS_RU: Record<string, string> = {
   'No data': 'Нет данных',
   'Horoscopes hint': 'Прогнозы на период',
   'Natal chart hint': 'Ваши личные позиции',
-  'Moon calendar hint': 'Ритм лунного месяца',
+  'Moon calendar hint': 'Планируйте дела в ритме Луны',
   'Practical focus': 'Практический фокус',
   'Based on': 'Основание',
   'Source': 'Источник',

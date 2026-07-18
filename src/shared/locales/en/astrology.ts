@@ -49,7 +49,7 @@ const TRANSLATIONS_EN: Record<string, string> = {
   'No data': 'No data',
   'Horoscopes hint': 'Forecasts for a period',
   'Natal chart hint': 'Your personal placements',
-  'Moon calendar hint': 'The lunar month rhythm',
+  'Moon calendar hint': 'Plan your days with the Moon',
   'Practical focus': 'Practical focus',
   'Based on': 'Based on',
   'Source': 'Source',

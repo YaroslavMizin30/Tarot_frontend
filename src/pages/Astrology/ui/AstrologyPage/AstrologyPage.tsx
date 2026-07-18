@@ -48,7 +48,9 @@ export const AstrologyPage = () => {
               <button
                 type={'button'}
                 key={key}
-                className={styles.menuButton}
+                className={`${styles.menuButton} ${
+                  key === '/calendar' ? styles.primaryMenuButton : ''
+                }`}
                 onClick={() => handleOpen(key)}
               >
                 <AstrologySectionIcon
