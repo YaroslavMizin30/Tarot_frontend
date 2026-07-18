@@ -8,5 +8,8 @@ export interface UseLocalesResult {
   addTranslations: (
     translations: Record<Locale, Record<string, string>>,
   ) => void;
-  i18n: (id: string) => string;
+  i18n: (
+    id: string,
+    params?: Record<string, string | number>,
+  ) => string;
 }

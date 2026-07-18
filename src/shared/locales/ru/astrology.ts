@@ -27,6 +27,9 @@ const TRANSLATIONS_RU: Record<string, string> = {
   'Водолей': 'Водолей',
   'Рыбы': 'Рыбы',
   'Sky now': 'Небо сейчас',
+  '{body} changes direction': '{body} меняет направление',
+  '{body} enters {sign}': '{body} входит в знак {sign}',
+  'Sun in {sign}': 'Солнце в знаке {sign}',
   'The sky right now': 'Текущее небо',
   'The central context of the current period':
     'Главный контекст текущего периода',
@@ -77,6 +80,10 @@ const TRANSLATIONS_RU: Record<string, string> = {
   'ideals and boundaries': 'идеалы и границы',
   'power and deep changes': 'влияние и глубокие перемены',
   'current priorities': 'текущие приоритеты',
+  "Avoid rushing decisions around {domain}: the planet's rhythm is changing.":
+    'Не торопите решения в вопросах, связанных с темами «{domain}»: ритм планеты сейчас меняется.',
+  'Notice shifting priorities around {domain}: the planet is entering a new sign.':
+    'Наблюдайте, как меняются приоритеты в сфере «{domain}»: планета входит в новый знак.',
 };
 
 export default TRANSLATIONS_RU;

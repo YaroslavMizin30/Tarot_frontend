@@ -36,8 +36,19 @@ export const useLocales = (): UseLocalesResult => {
     dispatch(changeLocale(id));
   };
 
-  const i18n = (id: string) => {
-    return translations[id] || id;
+  const i18n = (
+    id: string,
+    params?: Record<string, string | number>,
+  ) => {
+    const translation = translations[id] || id;
+
+    if (!params) return translation;
+
+    return Object.entries(params).reduce(
+      (result, [key, value]) =>
+        result.replaceAll(`{${key}}`, String(value)),
+      translation,
+    );
   };
 
   return {

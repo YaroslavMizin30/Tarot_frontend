@@ -27,6 +27,9 @@ const TRANSLATIONS_EN: Record<string, string> = {
   'Водолей': 'Aquarius',
   'Рыбы': 'Pisces',
   'Sky now': 'Sky now',
+  '{body} changes direction': '{body} changes direction',
+  '{body} enters {sign}': '{body} enters {sign}',
+  'Sun in {sign}': 'Sun in {sign}',
   'The sky right now': 'The sky right now',
   'The central context of the current period':
     'The central context of the current period',
@@ -77,6 +80,10 @@ const TRANSLATIONS_EN: Record<string, string> = {
   'ideals and boundaries': 'ideals and boundaries',
   'power and deep changes': 'power and deep changes',
   'current priorities': 'current priorities',
+  "Avoid rushing decisions around {domain}: the planet's rhythm is changing.":
+    "Avoid rushing decisions around {domain}: the planet's rhythm is changing.",
+  'Notice shifting priorities around {domain}: the planet is entering a new sign.':
+    'Notice shifting priorities around {domain}: the planet is entering a new sign.',
 };
 
 export default TRANSLATIONS_EN;

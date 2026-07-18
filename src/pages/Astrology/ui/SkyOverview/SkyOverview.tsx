@@ -58,10 +58,9 @@ export const SkyOverview = ({ sign }: SkyOverviewProps) => {
 
     if (station) {
       return {
-        title:
-          locale === 'ru'
-            ? `${i18n(station.body)} меняет направление`
-            : `${i18n(station.body)} changes direction`,
+        title: i18n('{body} changes direction', {
+          body: i18n(station.body),
+        }),
         description: i18n('A turning point in the current planetary rhythm'),
         body: station.body,
         kind: 'station' as const,
@@ -70,10 +69,10 @@ export const SkyOverview = ({ sign }: SkyOverviewProps) => {
 
     if (ingress) {
       return {
-        title:
-          locale === 'ru'
-            ? `${i18n(ingress.body)} входит в знак ${i18n(ingress.sign)}`
-            : `${i18n(ingress.body)} enters ${i18n(ingress.sign)}`,
+        title: i18n('{body} enters {sign}', {
+          body: i18n(ingress.body),
+          sign: i18n(ingress.sign),
+        }),
         description: i18n('The focus of this planet is shifting'),
         body: ingress.body,
         kind: 'ingress' as const,
@@ -82,40 +81,40 @@ export const SkyOverview = ({ sign }: SkyOverviewProps) => {
 
     return {
       title: sun
-        ? locale === 'ru'
-          ? `Солнце в знаке ${i18n(sun.sign)}`
-          : `Sun in ${i18n(sun.sign)}`
+        ? i18n('Sun in {sign}', { sign: i18n(sun.sign) })
         : i18n('The sky right now'),
       description: i18n('The central context of the current period'),
       body: 'Sun' as const,
       kind: 'position' as const,
     };
-  }, [astrology, bodies.Sun, i18n, locale]);
+  }, [astrology, bodies.Sun, i18n]);
 
   const practicalFocus = useMemo(() => {
     const domain = i18n(BODY_DOMAINS[mainEvent.body] ?? 'current priorities');
 
     if (mainEvent.kind === 'station') {
-      return locale === 'ru'
-        ? `Не торопите решения в вопросах, связанных с темами «${domain}»: ритм планеты сейчас меняется.`
-        : `Avoid rushing decisions around ${domain}: the planet's rhythm is changing.`;
+      return i18n(
+        "Avoid rushing decisions around {domain}: the planet's rhythm is changing.",
+        { domain },
+      );
     }
 
     if (mainEvent.kind === 'ingress') {
-      return locale === 'ru'
-        ? `Наблюдайте, как меняются приоритеты в сфере «${domain}»: планета входит в новый знак.`
-        : `Notice shifting priorities around ${domain}: the planet is entering a new sign.`;
+      return i18n(
+        'Notice shifting priorities around {domain}: the planet is entering a new sign.',
+        { domain },
+      );
     }
 
     return i18n(
       'There are no abrupt planetary changes today; use the positions below as context',
     );
-  }, [i18n, locale, mainEvent]);
+  }, [i18n, mainEvent]);
 
   const focusBody = bodies[mainEvent.body];
 
   const ephemerisTime = timestamp
-    ? new Date(timestamp).toLocaleString(locale === 'ru' ? 'ru-RU' : 'en-US', {
+    ? new Date(timestamp).toLocaleString(locale, {
       day: 'numeric',
       month: 'short',
       hour: '2-digit',
@@ -124,7 +123,7 @@ export const SkyOverview = ({ sign }: SkyOverviewProps) => {
     : null;
 
   const formatPosition = (body: { degreeInSign: number; sign: Sign }) =>
-    `${body.degreeInSign.toLocaleString(locale === 'ru' ? 'ru-RU' : 'en-US', {
+    `${body.degreeInSign.toLocaleString(locale, {
       maximumFractionDigits: 1,
     })}° ${i18n(body.sign)}`;
 
