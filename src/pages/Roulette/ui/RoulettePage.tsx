@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 
 import ArrowButton from '@/shared/ui/ArrowButton';
 import useLocales from '@/shared/hooks/useLocales';
@@ -11,7 +12,8 @@ import { Roulette } from './Roulette/Roulette';
 import styles from './RoulettePage.module.css';
 
 export const RoulettePage = () => {
-  const { locale, addTranslations } = useLocales();
+  const { locale, addTranslations, i18n } = useLocales();
+  const navigate = useNavigate();
 
   const [subPage, setSubPage] = useState<'main' | 'rules'>('main');
 
@@ -24,6 +26,11 @@ export const RoulettePage = () => {
       case 'main':
         return (
           <>
+            <ArrowButton
+              className={styles.homeArrow}
+              onClick={() => navigate('/')}
+              aria-label={i18n('Home')}
+            />
             <Roulette onRulesButtonClick={() => setSubPage('rules')} />
           </>
         );

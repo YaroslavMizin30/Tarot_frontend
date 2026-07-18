@@ -9,9 +9,15 @@ const TRANSLATIONS_EN = {
   'Shuffle': 'Shuffle',
   'Rules': 'Rules',
   'Daily card': 'Daily card',
+  'Free card': 'Free card',
   'Try your luck': 'Try your luck',
   'Open card': 'Open card',
   'Try for 1 pentacle': 'Try for 1 pentacle',
+  'Return card': 'Return card',
+  'Return card to the wheel': 'Return card to the wheel',
+  'Tap the card to return it': 'Tap the card to return it',
+  'Could not load bonus game': 'Could not load the bonus game',
+  'Try again': 'Try again',
   'Open your daily card first': 'Open your daily card first',
   'You need 1 bonus pentacle': 'You need 1 bonus pentacle',
   'You have already tried your luck today':
@@ -94,6 +100,22 @@ const TRANSLATIONS_EN = {
 
   // Rules section
   'Card effects': 'Card effects',
+  'What the cards mean': 'What the cards mean',
+  'Your daily card': 'Your daily card',
+  'If you want to take a risk': 'If you want to take a risk',
+  'How bonuses are used': 'How bonuses are used',
+  'Open one free card every day. It will give you a bonus or move you closer to a guaranteed reward.':
+    'Open one free card every day. It will give you a bonus or move you closer to a guaranteed reward.',
+  'Purchased pentacles are safe and are never charged by the game.':
+    'Purchased pentacles are safe and are never charged by the game.',
+  'After the daily card, you can try your luck once. The stake is 1 bonus pentacle.':
+    'After the daily card, you can try your luck once. The stake is 1 bonus pentacle.',
+  'A payout of 0 loses the stake, 1 returns it, 2 gives 1 pentacle of profit, and 4 gives 3 pentacles of profit.':
+    'A payout of 0 loses the stake, 1 returns it, 2 gives 1 pentacle of profit, and 4 gives 3 pentacles of profit.',
+  'This mode is optional. You can keep your bonus and leave without playing.':
+    'This mode is optional. You can keep your bonus and leave without playing.',
+  'Bonus pentacles are stored separately and are used first when you pay for a tarot reading.':
+    'Bonus pentacles are stored separately and are used first when you pay for a tarot reading.',
   'The roulette contains 12 sections, each has card. 2 cards have positive effect. 1 card is negative.':
     'The roulette contains 12 sections, each has card. 2 cards have positive effect. 1 card is negative.',
   'You can win a discount, coins, free spreads or horoscopes as well as lose pentacles or bonus effects':

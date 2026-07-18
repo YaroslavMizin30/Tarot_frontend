@@ -38,7 +38,10 @@ export const useRoulette = () => {
   ): Promise<DailyBonusResult | null> => {
     const result = await playMutation.mutateAsync(mode);
     if (result.status !== 'played') return null;
+    return result;
+  };
 
+  const applyResultCards = (result: DailyBonusResult) => {
     setPlayingCards(
       result.cards.map((id, index) =>
         createPlayingCard(
@@ -49,7 +52,6 @@ export const useRoulette = () => {
         ),
       ),
     );
-    return result;
   };
 
   const revealResult = async (
@@ -78,14 +80,22 @@ export const useRoulette = () => {
 
   const status = statusQuery.data;
 
+  const retry = async () => {
+    playMutation.reset();
+    await statusQuery.refetch();
+  };
+
   return {
     playingCards,
     play,
+    applyResultCards,
     revealResult,
     progress: status?.progress ?? 0,
     bonusBalance: status?.bonusBalance ?? 0,
     nextAvailableAt: status?.nextAvailableAt,
     isLoading: statusQuery.isLoading,
+    isError: statusQuery.isError || playMutation.isError,
+    retry,
     isPlaying: playMutation.isPending,
     dailyStatus: status?.status,
     riskStatus: status?.riskStatus,

@@ -8,9 +8,15 @@ const TRANSLATIONS_RU = {
   'Shuffle': 'Перемешать',
   'Rules': 'Правила',
   'Daily card': 'Карта дня',
+  'Free card': 'Бесплатная карта',
   'Try your luck': 'Испытать удачу',
   'Open card': 'Открыть карту',
   'Try for 1 pentacle': 'Испытать удачу за 1',
+  'Return card': 'Вернуть карту',
+  'Return card to the wheel': 'Вернуть карту в колесо',
+  'Tap the card to return it': 'Нажмите на карту, чтобы вернуть её',
+  'Could not load bonus game': 'Не удалось загрузить бонусную игру',
+  'Try again': 'Повторить',
   'Open your daily card first': 'Сначала откройте ежедневную карту',
   'You need 1 bonus pentacle': 'Нужен 1 бонусный пентакль',
   'You have already tried your luck today':
@@ -94,6 +100,22 @@ const TRANSLATIONS_RU = {
 
   // Rules section
   'Card effects': 'Эффекты карт',
+  'What the cards mean': 'Что означают карты',
+  'Your daily card': 'Ежедневная карта',
+  'If you want to take a risk': 'Если хочется рискнуть',
+  'How bonuses are used': 'Как используются бонусы',
+  'Open one free card every day. It will give you a bonus or move you closer to a guaranteed reward.':
+    'Каждый день можно бесплатно открыть одну карту. Она даст бонус или приблизит гарантированную награду.',
+  'Purchased pentacles are safe and are never charged by the game.':
+    'Купленные пентакли в безопасности: игра никогда их не списывает.',
+  'After the daily card, you can try your luck once. The stake is 1 bonus pentacle.':
+    'После ежедневной карты можно один раз испытать удачу. Ставка — 1 бонусный пентакль.',
+  'A payout of 0 loses the stake, 1 returns it, 2 gives 1 pentacle of profit, and 4 gives 3 pentacles of profit.':
+    'Выплата 0 означает потерю ставки, 1 возвращает её, 2 дают прибыль в 1 пентакль, а 4 — прибыль в 3 пентакля.',
+  'This mode is optional. You can keep your bonus and leave without playing.':
+    'Рисковать необязательно: бонус можно сохранить и просто выйти.',
+  'Bonus pentacles are stored separately and are used first when you pay for a tarot reading.':
+    'Бонусные пентакли хранятся отдельно и первыми расходуются при оплате расклада.',
   'The roulette contains 12 sections, each has card. 2 cards have positive effect. 1 card is negative.':
     'Рулетка содержит 12 секций, в каждой по карте. 2 карты имеют положительный эффект. 1 карта — отрицательный.',
   'You can win a discount, coins, free spreads or horoscopes as well as lose pentacles or bonus effects':

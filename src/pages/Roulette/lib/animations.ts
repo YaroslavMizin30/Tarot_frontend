@@ -8,30 +8,30 @@ export const animateCard = (element: HTMLDivElement) => {
         offset: 0,
       },
       {
-        transform: 'translateY(-50px) scale(0.6)',
+        transform: 'translateY(50px) scale(0.6)',
         opacity: 0,
         offset: 0.01,
       },
       {
-        transform: 'translateY(-100px) scale(0.6)',
+        transform: 'translateY(100px) scale(0.6)',
         opacity: 0.5,
         filter: 'blur(5px)',
         offset: 0.25,
       },
       {
-        transform: 'translateY(-100px) scale(1.15)',
+        transform: 'translateY(100px) scale(1.15)',
         opacity: 1,
         filter: 'blur(0)',
         offset: 0.5,
       },
       {
-        transform: 'translateY(-100px) scale(2)',
+        transform: 'translateY(100px) scale(2)',
         opacity: 1,
         filter: 'blur(0)',
         offset: 0.75,
       },
       {
-        transform: 'translateY(-100px) scale(3)',
+        transform: 'translateY(100px) scale(3)',
         opacity: 1,
         filter: 'blur(0)',
         offset: 1,
@@ -128,32 +128,32 @@ export const reverseCardAnimation = (element: HTMLDivElement) => {
   return element.animate(
     [
       {
-        transform: 'translateY(-100px) scale(3)',
+        transform: 'translateY(100px) scale(3)',
         opacity: 1,
         filter: 'blur(0)',
         offset: 0,
       },
       {
-        transform: 'translateY(-100px) scale(2)',
+        transform: 'translateY(100px) scale(2)',
         opacity: 1,
         filter: 'blur(0)',
         offset: 0.01,
       },
 
       {
-        transform: 'translateY(-100px) scale(1.15)',
+        transform: 'translateY(100px) scale(1.15)',
         opacity: 1,
         filter: 'blur(0)',
         offset: 0.25,
       },
       {
-        transform: 'translateY(-100px) scale(0.6)',
+        transform: 'translateY(100px) scale(0.6)',
         opacity: 0.5,
         filter: 'blur(5px)',
         offset: 0.5,
       },
       {
-        transform: 'translateY(-50px) scale(0.6)',
+        transform: 'translateY(50px) scale(0.6)',
         opacity: 0,
         offset: 0.75,
       },

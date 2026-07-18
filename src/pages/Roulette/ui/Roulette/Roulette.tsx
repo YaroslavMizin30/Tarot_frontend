@@ -29,6 +29,11 @@ const waitForNextFrame = () =>
     requestAnimationFrame(() => resolve());
   });
 
+const wait = (duration: number) =>
+  new Promise<void>((resolve) => {
+    window.setTimeout(resolve, duration);
+  });
+
 export const Roulette = (props: RouletteProps) => {
   const { onRulesButtonClick } = props;
 
@@ -38,17 +43,23 @@ export const Roulette = (props: RouletteProps) => {
   const isAnimating = useRef(false);
 
   const [animationState, setAnimationState] = useState<
-    'idle' | 'spinning' | 'switching'
+    'idle' | 'spinning' | 'returning'
   >('idle');
+  const [revealedCardIndex, setRevealedCardIndex] = useState<number | null>(
+    null,
+  );
   const [mode, setMode] = useState<BonusGameMode>('daily');
 
   const {
     playingCards,
     play,
+    applyResultCards,
     revealResult,
     progress,
     bonusBalance,
     isLoading,
+    isError,
+    retry,
     dailyStatus,
     riskStatus,
   } = useRoulette();
@@ -65,15 +76,12 @@ export const Roulette = (props: RouletteProps) => {
     const orbit = rouletteRef.current.querySelector(
       `[data-orbit-index="${index}"]`,
     ) as HTMLDivElement | null;
-    const card = rouletteRef.current.querySelector(
+    const cardWrapper = rouletteRef.current.querySelector(
       `[data-card-index="${index}"]`,
     ) as HTMLDivElement | null;
-    const description = rouletteRef.current.querySelector(
-      `[data-description-index="${index}"]`,
-    ) as HTMLSpanElement | null;
-
-    if (orbit && card && description) {
-      return { orbit, card, description };
+    const card = cardWrapper?.firstElementChild as HTMLDivElement | null;
+    if (orbit && cardWrapper && card) {
+      return { orbit, cardWrapper, card };
     }
 
     return null;
@@ -85,39 +93,35 @@ export const Roulette = (props: RouletteProps) => {
       const elements = findCardElements(index);
 
       if (elements) {
-        const { orbit, card, description } = elements;
-
-        orbit.style.transform = `rotate(${index * DEGREES_PER_CARD - 15}deg)`;
-        orbit.style.zIndex = '';
-        description.style.opacity = '0';
-
-        // Remove counter-rotation so card returns to its natural orientation
-        const cardWrapper = rouletteRef.current?.querySelector(
-          `[data-card-index="${index}"]`,
-        ) as HTMLDivElement | null;
-        if (cardWrapper) {
-          cardWrapper.style.transform = '';
-        }
+        const { orbit, cardWrapper, card } = elements;
 
         await reverseCardAnimation(card);
+
+        cardWrapper.style.transform = '';
+        orbit.style.zIndex = '';
       }
 
       drawnCardIndex.current = null;
+      setRevealedCardIndex(null);
     }
   };
 
-  const handleModeChange = async (nextMode: BonusGameMode) => {
-    if (nextMode === mode || isAnimating.current) return;
+  const handleReturnCard = async () => {
+    if (drawnCardIndex.current === null || isAnimating.current) return;
 
     isAnimating.current = true;
-    setAnimationState('switching');
+    setAnimationState('returning');
     try {
       await reverseCard();
-      setMode(nextMode);
     } finally {
       isAnimating.current = false;
       setAnimationState('idle');
     }
+  };
+
+  const handleModeChange = (nextMode: BonusGameMode) => {
+    if (nextMode === mode || isAnimating.current) return;
+    setMode(nextMode);
   };
 
   const handleSpinButtonClick = async () => {
@@ -138,47 +142,42 @@ export const Roulette = (props: RouletteProps) => {
       await waitForNextFrame();
 
       if (rouletteRef.current) {
+        const cardDegree = randomIndex * DEGREES_PER_CARD;
+        const n = Math.ceil(
+          (lastSpinDegree.current + cardDegree) / FULL_ROTATION,
+        );
+        const targetRotation =
+          1080 + FULL_ROTATION * n - cardDegree + 180;
+
+        const spinAnimation = animateSpin(
+          rouletteRef.current,
+          lastSpinDegree.current,
+          targetRotation,
+        );
+
+        // Replace the wheel only after it has gained speed, so the server
+        // layout cannot appear as a static visual jump before the spin.
+        await wait(240);
+        applyResultCards(result);
+        await waitForNextFrame();
+        await spinAnimation;
+
+        lastSpinDegree.current = targetRotation;
+
         const elements = findCardElements(randomIndex);
 
         if (elements) {
-          const { orbit, card, description } = elements;
+          const { orbit, cardWrapper, card } = elements;
 
-          // Calculate rotation so the selected card ends up at the pointer (top)
-          // Card is at position `randomIndex * 30` degrees on the wheel.
-          // Need: (wheelRotation + cardPosition) % 360 === 0 (top/pointer)
-          // wheelRotation = animationTarget + 15 (CSS transform)
-          // So: (targetRotation + 15 + randomIndex * 30 - 15) % 360 === 0
-          // Simplified: (targetRotation + randomIndex * 30) % 360 === 0
-          // targetRotation = 360 * n - randomIndex * 30
-          // n is chosen so targetRotation >= lastSpinDegree + 1080 (at least 3 full spins)
-          const cardDegree = randomIndex * DEGREES_PER_CARD;
-          const n = Math.ceil(
-            (lastSpinDegree.current + cardDegree) / FULL_ROTATION,
-          );
-          const targetRotation = 1080 + FULL_ROTATION * n - cardDegree + 180;
-
-          await animateSpin(
-            rouletteRef.current,
-            lastSpinDegree.current,
-            targetRotation,
-          );
-
-          lastSpinDegree.current = targetRotation;
-
-          orbit.style.transform = `rotate(${FULL_ROTATION / 2 + cardDegree - 15}deg)`;
           orbit.style.zIndex = '1';
-          description.style.opacity = '1';
 
-          // Counter-rotate the card wrapper so the card stays right-side up
-          // (orbit is rotated 180°, which would flip the card upside down)
-          const cardWrapper = rouletteRef.current?.querySelector(
-            `[data-card-index="${randomIndex}"]`,
-          ) as HTMLDivElement | null;
-          if (cardWrapper) {
-            cardWrapper.style.transform = 'rotate(180deg)';
-          }
+          // The wheel target puts the selected orbit exactly 180° from its
+          // resting bottom position, directly under the top pointer. Keep the
+          // orbit unchanged and only counter-rotate the card content upright.
+          cardWrapper.style.transform = 'rotate(180deg)';
 
           await animateCard(card);
+          setRevealedCardIndex(randomIndex);
         }
       }
 
@@ -190,8 +189,25 @@ export const Roulette = (props: RouletteProps) => {
   };
 
   if (isLoading) {
-    return <Spinner size={'l'} />;
+    return (
+      <div className={styles.loading} aria-live={'polite'}>
+        <Spinner size={'l'} />
+      </div>
+    );
   }
+
+  if (isError) {
+    return (
+      <div className={`${styles.loading} ${styles.errorState}`}>
+        <p>{i18n('Could not load bonus game')}</p>
+        <Button onClick={retry}>{i18n('Try again')}</Button>
+      </div>
+    );
+  }
+
+  const revealedCard = revealedCardIndex === null
+    ? null
+    : playingCards[revealedCardIndex];
 
   return (
     <div className={styles.container}>
@@ -206,7 +222,7 @@ export const Roulette = (props: RouletteProps) => {
           onClick={() => handleModeChange('daily')}
           disabled={animationState !== 'idle'}
         >
-          {i18n('Daily card')}
+          {i18n('Free card')}
         </button>
         <button
           type={'button'}
@@ -246,80 +262,129 @@ export const Roulette = (props: RouletteProps) => {
         </span>
       </div>
 
-      <div className={styles.roulette} ref={rouletteRef}>
-        <div className={styles.line}></div>
-        <div className={styles.line} style={{ transform: 'rotate(30deg)' }} />
-        <div className={styles.line} style={{ transform: 'rotate(60deg)' }} />
-        <div className={styles.line} style={{ transform: 'rotate(90deg)' }} />
-        <div className={styles.line} style={{ transform: 'rotate(120deg)' }} />
-        <div className={styles.line} style={{ transform: 'rotate(150deg)' }} />
+      <div className={styles.rouletteStage}>
+        <div className={styles.roulette} ref={rouletteRef}>
+          <div className={styles.line}></div>
+          <div className={styles.line} style={{ transform: 'rotate(30deg)' }} />
+          <div className={styles.line} style={{ transform: 'rotate(60deg)' }} />
+          <div className={styles.line} style={{ transform: 'rotate(90deg)' }} />
+          <div className={styles.line} style={{ transform: 'rotate(120deg)' }} />
+          <div className={styles.line} style={{ transform: 'rotate(150deg)' }} />
 
-        {playingCards?.map((card, index) => {
-          const { id, effect, description } = card;
+          {playingCards?.map((card, index) => {
+            const { id, effect } = card;
 
-          return (
-            <div
-              className={`${styles.orbit}`}
-              style={{
-                transform: `rotate(${index * 30 - 15}deg)`,
-              }}
-              key={id}
-              data-orbit-index={index}
-            >
-              <Effect
-                effect={effect}
-                className={`${styles.effect} ${styles[`effect-${effect}`]}`}
-              />
-
-              <div data-card-index={index}>
-                <Card
-                  className={`${styles.card} ${effect ? styles[`card-${effect}`] : ''}`}
-                  name={id}
-                  size={'xs'}
-                  localizedName={i18n(id)}
-                />
-              </div>
-
-              <span
-                className={styles['card-effect']}
-                data-description-index={index}
+            return (
+              <div
+                className={`${styles.orbit}`}
+                style={{
+                  transform: `rotate(${index * 30 - 15}deg)`,
+                }}
+                key={id}
+                data-orbit-index={index}
               >
-                <div
-                  className={`${styles['effect-shadow']} ${effect ? styles[`shadow-${effect}`] : ''}`}
+                <Effect
+                  effect={effect}
+                  className={`${styles.effect} ${styles[`effect-${effect}`]}`}
                 />
-                {i18n(description ?? 'This card has no effects')}
-              </span>
-            </div>
-          );
-        })}
 
-        <div className={styles['roulette-inner']}></div>
-        <div className={styles['roulette-outer']}></div>
-        <div className={styles['inner-circle']}>
-          <div className={styles.line} style={{ transform: 'rotate(15deg)' }} />
-          <div className={styles.line} style={{ transform: 'rotate(45deg)' }} />
-          <div className={styles.line} style={{ transform: 'rotate(75deg)' }} />
-          <div
-            className={styles.line}
-            style={{ transform: 'rotate(105deg)' }}
-          />
-          <div
-            className={styles.line}
-            style={{ transform: 'rotate(135deg)' }}
-          />
-          <div
-            className={styles.line}
-            style={{ transform: 'rotate(165deg)' }}
-          />
+                <div
+                  data-card-index={index}
+                  className={
+                    revealedCardIndex === index ? styles.revealedCard : ''
+                  }
+                  role={revealedCardIndex === index ? 'button' : undefined}
+                  tabIndex={revealedCardIndex === index ? 0 : undefined}
+                  aria-label={
+                    revealedCardIndex === index
+                      ? i18n('Return card to the wheel')
+                      : undefined
+                  }
+                  onClick={
+                    revealedCardIndex === index
+                      ? handleReturnCard
+                      : undefined
+                  }
+                  onKeyDown={
+                    revealedCardIndex === index
+                      ? (event) => {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                          event.preventDefault();
+                          handleReturnCard();
+                        }
+                      }
+                      : undefined
+                  }
+                >
+                  <Card
+                    className={`${styles.card} ${effect ? styles[`card-${effect}`] : ''}`}
+                    name={id}
+                    size={'xs'}
+                    localizedName={i18n(id)}
+                  />
+                </div>
+
+              </div>
+            );
+          })}
+
+          <div className={styles['roulette-inner']}></div>
+          <div className={styles['roulette-outer']}></div>
+          <div className={styles['inner-circle']}>
+            <div className={styles.line} style={{ transform: 'rotate(15deg)' }} />
+            <div className={styles.line} style={{ transform: 'rotate(45deg)' }} />
+            <div className={styles.line} style={{ transform: 'rotate(75deg)' }} />
+            <div
+              className={styles.line}
+              style={{ transform: 'rotate(105deg)' }}
+            />
+            <div
+              className={styles.line}
+              style={{ transform: 'rotate(135deg)' }}
+            />
+            <div
+              className={styles.line}
+              style={{ transform: 'rotate(165deg)' }}
+            />
+          </div>
         </div>
+
+        <div className={styles.pointer}>
+          <div className={styles['pointer-light-out']}></div>
+
+          <div className={styles['pointer-light']}></div>
+
+          <PointerIcon className={styles['pointer-icon']} />
+        </div>
+
+        {revealedCard && (
+          <span className={styles.resultDescription}>
+            <span
+              className={`${styles['effect-shadow']} ${
+                revealedCard.effect
+                  ? styles[`shadow-${revealedCard.effect}`]
+                  : ''
+              }`}
+            />
+            {i18n(
+              revealedCard.description ?? 'This card has no effects',
+            )}
+          </span>
+        )}
       </div>
 
-      <div className={styles.pointer}>
-        <div className={styles['pointer-light-out']}></div>
-
-        <div className={styles['pointer-light']}></div>
-
-        <PointerIcon className={styles['pointer-icon']} />
+      <div className={styles.returnSlot}>
+        <button
+          type={'button'}
+          className={styles.returnButton}
+          onClick={handleReturnCard}
+          disabled={
+            revealedCardIndex === null || animationState !== 'idle'
+          }
+          aria-hidden={revealedCardIndex === null}
+        >
+          {i18n('Tap the card to return it')}
+        </button>
       </div>
 
       <div className={styles.menu}>
