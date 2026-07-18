@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useNavigate, useOutletContext } from 'react-router';
 
 import type { User } from '@/entities/User';
-import Zodiac from '@/shared/ui/Zodiac';
 
 import { SUBSECTIONS } from '../../config/subsections';
 import type { Subsection } from '../../config/subsections';
@@ -41,8 +40,6 @@ export const AstrologyPage = () => {
 
   return (
     <div className={styles.container}>
-      <Zodiac sign={user?.sign} className={styles.zodiacBackground} />
-
       <SkyOverview sign={user?.sign} />
 
       <div className={styles.menu}>

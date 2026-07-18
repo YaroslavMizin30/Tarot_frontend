@@ -1,46 +1,186 @@
+:root {
+  --astrology-sky-top: #28213d;
+  --astrology-sky-middle: #3b2d50;
+  --astrology-sky-bottom: #62506f;
+  --astrology-nebula: rgb(151 112 179 / 22%);
+  --astrology-star: #fff4dc;
+  --astrology-milky-core: rgb(229 207 239 / 22%);
+  --astrology-milky-dust: rgb(255 239 213 / 58%);
+}
+
+:root[data-theme='gray'] {
+  --astrology-sky-top: #222735;
+  --astrology-sky-middle: #303849;
+  --astrology-sky-bottom: #566072;
+  --astrology-nebula: rgb(125 146 190 / 20%);
+  --astrology-star: #f2f5ff;
+  --astrology-milky-core: rgb(197 210 238 / 21%);
+  --astrology-milky-dust: rgb(236 243 255 / 58%);
+}
+
+:root[data-theme='bronze'] {
+  --astrology-sky-top: #312119;
+  --astrology-sky-middle: #493024;
+  --astrology-sky-bottom: #75513b;
+  --astrology-nebula: rgb(198 129 72 / 19%);
+  --astrology-star: #ffe7bd;
+  --astrology-milky-core: rgb(231 183 137 / 20%);
+  --astrology-milky-dust: rgb(255 222 176 / 54%);
+}
+
 .composition {
   position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.deep {
+  background:
+    radial-gradient(
+      ellipse at 64% 34%,
+      var(--astrology-nebula),
+      transparent 46%
+    ),
+    radial-gradient(
+      ellipse at 24% 66%,
+      color-mix(in srgb, var(--astrology-nebula) 66%, transparent),
+      transparent 42%
+    ),
+    radial-gradient(
+      ellipse 78% 61% at 50% 50%,
+      color-mix(in srgb, var(--astrology-sky-top) 72%, transparent) 0%,
+      color-mix(in srgb, var(--astrology-sky-middle) 54%, transparent) 38%,
+      color-mix(in srgb, var(--astrology-sky-bottom) 26%, transparent) 66%,
+      transparent 91%
+    );
+  -webkit-mask-image: radial-gradient(
+    ellipse 108% 88% at 53% 48%,
+    #000 0%,
+    rgb(0 0 0 / 94%) 36%,
+    rgb(0 0 0 / 68%) 62%,
+    rgb(0 0 0 / 24%) 82%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 108% 88% at 53% 48%,
+    #000 0%,
+    rgb(0 0 0 / 94%) 36%,
+    rgb(0 0 0 / 68%) 62%,
+    rgb(0 0 0 / 24%) 82%,
+    transparent 100%
+  );
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.deep::before,
+.deep::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  transform: rotate(-18deg);
+}
+
+.deep::before {
+  top: 32%;
+  left: -22%;
+  width: 144%;
+  height: 29%;
+  background:
+    radial-gradient(
+      ellipse at 48% 50%,
+      var(--astrology-milky-core) 0 18%,
+      color-mix(in srgb, var(--astrology-nebula) 72%, transparent) 42%,
+      transparent 74%
+    ),
+    linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--astrology-milky-core) 74%, transparent) 48%,
+      transparent
+    );
+  opacity: 0.86;
+  filter: blur(15px);
+}
+
+.deep::after {
+  top: 24%;
+  left: -18%;
+  width: 136%;
+  height: 42%;
+  background-image:
+    radial-gradient(circle, var(--astrology-milky-dust) 0 0.7px, transparent 1px),
+    radial-gradient(circle, var(--astrology-star) 0 0.55px, transparent 0.9px),
+    radial-gradient(circle, var(--astrology-milky-dust) 0 0.45px, transparent 0.8px);
+  background-position:
+    7px 11px,
+    23px 31px,
+    41px 17px;
+  background-size:
+    31px 37px,
+    47px 53px,
+    71px 61px;
+  opacity: 0.48;
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    transparent,
+    #000 23%,
+    #000 72%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    180deg,
+    transparent,
+    #000 23%,
+    #000 72%,
+    transparent
+  );
 }
 
 .smallStar {
   position: absolute;
   width: 1px;
   height: 1px;
-  background-color: #fff;
-  box-shadow: 0px 0px 3px 1px #fff;
+  background-color: var(--astrology-star);
+  box-shadow: 0 0 3px 1px var(--astrology-star);
+  z-index: 2;
 }
 
 .mediumStar {
   position: absolute;
   width: 1px;
   height: 1px;
-  background-color: #fff;
-  box-shadow: 0px 0px 10px 3px #fff;
+  background-color: var(--astrology-star);
+  box-shadow: 0 0 10px 3px var(--astrology-star);
+  z-index: 2;
 }
 
 .largeStar {
   position: absolute;
   width: 3px;
   height: 3px;
-  background-color: #fff;
+  background-color: var(--astrology-star);
   border-radius: 100%;
 
-  box-shadow: 0px 0px 5px 3px #fff;
+  box-shadow: 0 0 5px 3px var(--astrology-star);
 
   animation: blink 2s ease infinite;
+  z-index: 2;
 }
 
 .cloud {
   position: absolute;
-  background-color: #fff;
+  background-color: var(--astrology-nebula);
   width: 46%;
   height: 40%;
   
-  opacity: 0.3;
+  opacity: 0.5;
   border-radius: 100%;
-  filter: blur(40px);
+  filter: blur(58px);
+  z-index: 1;
 }
 
 @keyframes blink {

@@ -1,8 +1,12 @@
 import styles from './StarsComposition.module.css';
 
-export const StarsComposition = () => {
+interface StarsCompositionProps {
+  isDeep?: boolean;
+}
+
+export const StarsComposition = ({ isDeep = false }: StarsCompositionProps) => {
   return (
-    <div className={styles.composition}>
+    <div className={`${styles.composition} ${isDeep ? styles.deep : ''}`}>
       <div className={styles.smallStar} style={{ top: '35%', left: '55%' }} />
       <div className={styles.mediumStar} style={{ top: '50%', left: '45%' }} />
       <div className={styles.largeStar} style={{ top: '40%', right: '30%' }} />
