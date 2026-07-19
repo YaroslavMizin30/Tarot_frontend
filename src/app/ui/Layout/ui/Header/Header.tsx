@@ -59,7 +59,9 @@ const Header = (props: { isLoading?: boolean }) => {
   return (
     <header className={`${styles.header} ${isLoading ? styles.loading : ''}`}>
       <div className={styles.leftSection}>
-        <span className={styles.balance}>{user?.balance}</span>
+        <span className={styles.balance}>
+          {(user?.balance ?? 0) + (user?.bonusBalance ?? 0)}
+        </span>
 
         {user && <Pentacle className={styles.pentacle} />}
       </div>
