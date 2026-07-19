@@ -10,6 +10,7 @@
 html,
 body {
   background-color: var(--gradient-primary);
+  transition: background-color 520ms ease;
 }
 
 :root {

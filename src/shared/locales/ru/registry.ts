@@ -317,6 +317,23 @@ const TRANSLATIONS_RU = {
   'Try again': 'Попробовать снова',
   'Error during request, please try again':
     'Ошибка при запросе. Пожалуйста, попробуйте снова',
+  'Step {step} of 2': 'Шаг {step} из 2',
+  'How should we address you?': 'Как к вам обращаться?',
+  'We will use this name in personal readings. You can change it later.':
+    'Будем использовать это имя в персональных материалах. Позже его можно изменить.',
+  'Your name': 'Ваше имя',
+  'Please enter your name': 'Укажите, как к вам обращаться',
+  'Continue': 'Продолжить',
+  'When were you born?': 'Когда вы родились?',
+  'Your birth date helps us determine your zodiac sign and personalize the app.':
+    'Дата рождения поможет определить ваш знак и персонализировать приложение.',
+  'Please enter your birth date': 'Укажите дату рождения',
+  'We use this information for personalized features and do not show it to other users.':
+    'Используем эти данные для персональных функций и не показываем их другим пользователям.',
+  'Privacy policy': 'Политика конфиденциальности',
+  'Back': 'Назад',
+  'Get started': 'Начать',
+  'Creating account': 'Создаём аккаунт',
 };
 
 export default TRANSLATIONS_RU;

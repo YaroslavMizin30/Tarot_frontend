@@ -2,8 +2,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100wv;
+  width: 100vw;
   height: 100dvh;
+  overflow: hidden;
 }
 
 .main {
@@ -26,10 +27,28 @@
 
   overflow-y: auto;
   overflow-x: hidden;
+  transition:
+    margin 420ms ease,
+    background-color 520ms ease,
+    color 420ms ease;
 }
 
-.loading {
-  background: #323232;
+.authShell {
+  --text-primary: #fff8ec;
+  --text-secondary: #f5e8d4;
+  --text-default: #fff8ec;
+  --surface-control: rgb(101 71 128 / 88%);
+  --text-on-control: #fffaf1;
+  --control-gloss-border: rgb(255 241 216 / 24%);
+  --control-gloss-shadow: rgb(0 0 0 / 26%);
+  --control-gloss-highlight: rgb(255 255 255 / 15%);
+  --control-gloss-pressed: rgb(18 10 28 / 24%);
+
+  min-height: 100dvh;
+  margin: 0;
+  color: #fff8ec;
+  background:
+    radial-gradient(circle at 50% 42%, #2e253f 0%, #171522 46%, #0e0e16 100%);
 }
 
 :root {
@@ -49,6 +68,7 @@
 
 .background {
   position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   display: flex;
@@ -94,6 +114,38 @@
   z-index: 1;
 }
 
+.authContainer {
+  min-height: 100%;
+  animation: revealAuthContent 460ms ease both;
+}
+
+.authStatus {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: min(100% - 36px, 440px);
+  min-height: 240px;
+  padding: 28px;
+  color: #fff8ec;
+  text-align: center;
+  background: rgb(25 22 36 / 36%);
+  border: 1px solid rgb(255 244 225 / 10%);
+  border-radius: 24px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: revealAuthContent 460ms ease both;
+}
+
+.authStatus > span {
+  margin-top: 26px;
+  color: rgb(255 248 237 / 78%);
+  font-size: 14px;
+  text-shadow: 0 2px 16px rgb(0 0 0 / 55%);
+}
+
 @keyframes shift {
   0% {
     background-position: 0 0;
@@ -128,5 +180,28 @@
 
   100% {
     transform: scaleX(1) rotate(-20deg);
+  }
+}
+
+@keyframes revealAuthContent {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .main {
+    transition: none;
+  }
+
+  .authContainer,
+  .authStatus {
+    animation: none;
   }
 }

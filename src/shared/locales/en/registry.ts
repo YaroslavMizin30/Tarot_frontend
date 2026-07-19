@@ -317,6 +317,23 @@ const TRANSLATIONS_EN = {
   'Try again': 'Try again',
   'Error during request, please try again':
     'Error during request, please try again',
+  'Step {step} of 2': 'Step {step} of 2',
+  'How should we address you?': 'How should we address you?',
+  'We will use this name in personal readings. You can change it later.':
+    'We will use this name in personal readings. You can change it later.',
+  'Your name': 'Your name',
+  'Please enter your name': 'Please enter your name',
+  'Continue': 'Continue',
+  'When were you born?': 'When were you born?',
+  'Your birth date helps us determine your zodiac sign and personalize the app.':
+    'Your birth date helps us determine your zodiac sign and personalize the app.',
+  'Please enter your birth date': 'Please enter your birth date',
+  'We use this information for personalized features and do not show it to other users.':
+    'We use this information for personalized features and do not show it to other users.',
+  'Privacy policy': 'Privacy policy',
+  'Back': 'Back',
+  'Get started': 'Get started',
+  'Creating account': 'Creating account',
 };
 
 export default TRANSLATIONS_EN;

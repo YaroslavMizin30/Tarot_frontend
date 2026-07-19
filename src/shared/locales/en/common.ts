@@ -30,6 +30,7 @@ const TRANSLATIONS_EN = {
     'Error loading data. Please try again',
   'Authentication failed. Open the app from Telegram and try again':
     'Authentication failed. Open the app from Telegram and try again',
+  'Confirming sign-in': 'Confirming sign-in',
   'Standard': 'Standard',
   'Gray': 'Gray',
   'Bronze': 'Bronze',

@@ -20,6 +20,21 @@ import { getPageAttachment } from '../../config/pages';
 import styles from './Layout.module.css';
 import { useEffect } from 'react';
 
+const THEME_CONFIG = {
+  standard: {
+    header: '#35245c',
+    footer: '#f0d6e5',
+  },
+  gray: {
+    header: '#2d3348',
+    footer: '#e2e4e9',
+  },
+  bronze: {
+    header: '#552b18',
+    footer: '#f0dcc4',
+  },
+};
+
 export const Layout = () => {
   const { state } = useNavigation();
   const { pathname } = useLocation();
@@ -36,31 +51,18 @@ export const Layout = () => {
   } = useAuth();
 
   const { theme } = user ?? {};
-
-  const themeConfig = {
-    standard: {
-      header: '#35245c',
-      footer: '#f0d6e5',
-    },
-    gray: {
-      header: '#2d3348',
-      footer: '#e2e4e9',
-    },
-    bronze: {
-      header: '#552b18',
-      footer: '#f0dcc4',
-    },
-  };
+  const isAuthShell =
+    isAuthenticating || Boolean(authError) || pathname === '/reg' || !user;
 
   useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
-  }, [locale]);
+  }, [addTranslations, locale]);
 
   useEffect(() => {
     if (theme) {
       document.documentElement.setAttribute('data-theme', theme);
-      window.Telegram?.WebApp?.setHeaderColor(themeConfig[theme].header);
-      window.Telegram?.WebApp?.setBottomBarColor(themeConfig[theme].footer);
+      window.Telegram?.WebApp?.setHeaderColor(THEME_CONFIG[theme].header);
+      window.Telegram?.WebApp?.setBottomBarColor(THEME_CONFIG[theme].footer);
     } else {
       window.Telegram?.WebApp?.setHeaderColor('#323232');
       window.Telegram?.WebApp?.setBottomBarColor('#323232');
@@ -69,25 +71,21 @@ export const Layout = () => {
 
   return (
     <div className={styles.layout}>
-      <Header isLoading={isAuthenticating}></Header>
+      {!isAuthShell && <Header />}
 
       <main
-        className={`${styles.main} ${isAuthenticating ? styles.loading : ''} custom-scrollbar`}
+        className={`${styles.main} ${isAuthShell ? styles.authShell : ''} custom-scrollbar`}
       >
         <div className={styles.background}>
-          {pathname !== '/' && (
+          {!isAuthShell && pathname !== '/' && (
             <>
               <div className={styles.cloud}></div>
               <div className={styles.couldBottom}></div>
             </>
           )}
 
-          {isAuthenticating ? (
+          {(isAuthShell || getPageAttachment('astrology', pathname)) && (
             <StarsComposition />
-          ) : (
-            getPageAttachment('astrology', pathname) && (
-              <StarsComposition />
-            )
           )}
           {getPageAttachment('tarot', pathname) && pathname !== '/' && (
             <TorchComposition />
@@ -96,24 +94,34 @@ export const Layout = () => {
         </div>
 
         {isLoading || isAuthenticating ? (
-          <Spinner size={'l'} />
+          <div
+            aria-busy={true}
+            className={isAuthShell ? styles.authStatus : undefined}
+          >
+            <Spinner size={'l'} />
+            {isAuthenticating && <span>{i18n('Confirming sign-in')}</span>}
+          </div>
         ) : authError ? (
-          <Error
-            error={i18n(
-              'Authentication failed. Open the app from Telegram and try again',
-            )}
-            onRetryButtonClick={() => {
-              retryAuth().catch(() => undefined);
-            }}
-          />
+          <div className={styles.authStatus}>
+            <Error
+              error={i18n(
+                'Authentication failed. Open the app from Telegram and try again',
+              )}
+              onRetryButtonClick={() => {
+                retryAuth().catch(() => undefined);
+              }}
+            />
+          </div>
         ) : (
-          <div className={styles.container}>
+          <div
+            className={`${styles.container} ${isAuthShell ? styles.authContainer : ''}`}
+          >
             <Outlet context={{ user }} />
           </div>
         )}
       </main>
 
-      <Footer isLoading={isAuthenticating} />
+      {!isAuthShell && <Footer />}
     </div>
   );
 };

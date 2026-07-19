@@ -30,6 +30,7 @@ const TRANSLATIONS_RU = {
     'Ошибка при загрузке данных. Пожалуйста, попробуйте снова',
   'Authentication failed. Open the app from Telegram and try again':
     'Не удалось подтвердить вход. Откройте приложение из Telegram и попробуйте снова',
+  'Confirming sign-in': 'Подтверждаем вход через Telegram',
   'Standard': 'Обычная',
   'Gray': 'Серая',
   'Bronze': 'Бронза',
