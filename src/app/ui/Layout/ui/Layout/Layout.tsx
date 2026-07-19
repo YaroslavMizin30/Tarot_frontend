@@ -53,6 +53,10 @@ export const Layout = () => {
   const { theme } = user ?? {};
   const isAuthShell =
     isAuthenticating || Boolean(authError) || pathname === '/reg' || !user;
+  const isAuthLoadingVisible =
+    isAuthenticating || (!user && !authError && pathname !== '/reg');
+  const canRenderOutlet =
+    !isAuthenticating && (Boolean(user) || pathname === '/reg');
 
   useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
@@ -93,32 +97,40 @@ export const Layout = () => {
 
         </div>
 
-        {isLoading || isAuthenticating ? (
-          <div
-            aria-busy={true}
-            className={isAuthShell ? styles.authStatus : undefined}
-          >
+        <div
+          aria-hidden={!isAuthLoadingVisible}
+          className={`${styles.authLoadingLayer} ${
+            isAuthLoadingVisible ? styles.authLoadingLayerVisible : ''
+          }`}
+        >
+          <div aria-busy={isAuthLoadingVisible} className={styles.authStatus}>
             <Spinner size={'l'} />
-            {isAuthenticating && <span>{i18n('Confirming sign-in')}</span>}
+            <span>{i18n('Confirming sign-in')}</span>
           </div>
+        </div>
+
+        {isLoading && !isAuthShell ? (
+          <Spinner size={'l'} />
         ) : authError ? (
-          <div className={styles.authStatus}>
-            <Error
-              error={i18n(
-                'Authentication failed. Open the app from Telegram and try again',
-              )}
-              onRetryButtonClick={() => {
-                retryAuth().catch(() => undefined);
-              }}
-            />
+          <div className={`${styles.container} ${styles.authContainer}`}>
+            <div className={styles.authStatus}>
+              <Error
+                error={i18n(
+                  'Authentication failed. Open the app from Telegram and try again',
+                )}
+                onRetryButtonClick={() => {
+                  retryAuth().catch(() => undefined);
+                }}
+              />
+            </div>
           </div>
-        ) : (
+        ) : canRenderOutlet ? (
           <div
             className={`${styles.container} ${isAuthShell ? styles.authContainer : ''}`}
           >
             <Outlet context={{ user }} />
           </div>
-        )}
+        ) : null}
       </main>
 
       {!isAuthShell && <Footer />}

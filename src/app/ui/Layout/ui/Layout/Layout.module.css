@@ -44,8 +44,9 @@
   --control-gloss-highlight: rgb(255 255 255 / 15%);
   --control-gloss-pressed: rgb(18 10 28 / 24%);
 
-  min-height: 100dvh;
+  min-height: 100%;
   margin: 0;
+  justify-content: flex-start;
   color: #fff8ec;
   background:
     radial-gradient(circle at 50% 42%, #2e253f 0%, #171522 46%, #0e0e16 100%);
@@ -116,7 +117,31 @@
 
 .authContainer {
   min-height: 100%;
+  justify-content: flex-start;
   animation: revealAuthContent 460ms ease both;
+}
+
+.authLoadingLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(36px, 10svh, 92px) 18px 24px;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 460ms ease,
+    visibility 0s linear 460ms;
+}
+
+.authLoadingLayerVisible {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transition-delay: 0s;
 }
 
 .authStatus {
@@ -126,8 +151,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: min(100% - 36px, 440px);
-  min-height: 240px;
+  width: min(100%, 560px);
+  min-height: 440px;
   padding: 28px;
   color: #fff8ec;
   text-align: center;
@@ -136,7 +161,6 @@
   border-radius: 24px;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  animation: revealAuthContent 460ms ease both;
 }
 
 .authStatus > span {
@@ -186,12 +210,22 @@
 @keyframes revealAuthContent {
   from {
     opacity: 0;
-    transform: translateY(6px);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+  }
+}
+
+@media (max-width: 420px) {
+  .authLoadingLayer {
+    padding: clamp(24px, 7svh, 58px) 12px 20px;
+  }
+
+  .authStatus {
+    min-height: 430px;
+    padding: 22px;
+    border-radius: 18px;
   }
 }
 
@@ -203,5 +237,9 @@
   .authContainer,
   .authStatus {
     animation: none;
+  }
+
+  .authLoadingLayer {
+    transition: none;
   }
 }

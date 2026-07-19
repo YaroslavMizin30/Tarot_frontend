@@ -1,11 +1,11 @@
 .container {
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   width: min(100%, 560px);
   min-height: 100%;
-  padding: 24px 18px;
+  padding: clamp(36px, 10svh, 92px) 18px 24px;
   color: #fff8ec;
 }
 
@@ -304,7 +304,7 @@
 .modalContent {
   width: 100%;
   max-height: min(76dvh, 620px);
-  padding: 26px 22px 22px;
+  padding: 34px 30px 30px;
   overflow: hidden;
 }
 
@@ -340,7 +340,7 @@
 
 @media (max-width: 420px) {
   .container {
-    padding: 16px 12px;
+    padding: clamp(24px, 7svh, 58px) 12px 20px;
   }
 
   .card {
@@ -361,6 +361,10 @@
 
   .dateSelect > button {
     padding-inline: 8px;
+  }
+
+  .modalContent {
+    padding: 30px 22px 24px;
   }
 }
 
