@@ -19,6 +19,7 @@
   justify-content: flex-end;
   transform-origin: 50% 100%;
   animation: flame 2.7s ease-in-out infinite;
+  filter: blur(3px);
 }
 
 .flame::before {
