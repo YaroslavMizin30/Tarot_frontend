@@ -14,7 +14,7 @@ export const useUpdateNatalChart = () => {
   const [error, setError] = useState<string | null | unknown>(null);
 
   const { updateUser, refetchUser, user } = useUser();
-  const { requireBalance, charge } = useBalance();
+  const { requireBalance } = useBalance();
 
   const updateMutation = useMutation({
     mutationFn: async (options: CreateChartParams): Promise<void> => {
@@ -26,7 +26,6 @@ export const useUpdateNatalChart = () => {
         city,
         minute,
         hour,
-        userId,
         timeKnown,
         country,
         lang,
@@ -48,7 +47,6 @@ export const useUpdateNatalChart = () => {
         city,
         minute,
         hour,
-        userId,
         timeKnown,
         lang,
       });
@@ -61,9 +59,6 @@ export const useUpdateNatalChart = () => {
         birthTime: timeKnown ? `${hour}:${minute}` : '',
         birthPlace: country ? `${country}, ${city}` : city,
       });
-
-      // Действие успешно выполнено — списываем пентакли.
-      await charge(NATAL_CHART_COST);
 
       await refetchUser();
     },

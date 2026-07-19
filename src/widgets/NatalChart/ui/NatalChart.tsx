@@ -278,7 +278,6 @@ export const NatalChart = (props: NatalChartProps) => {
     };
 
     await updateNatalChart({
-      userId: String(user.id),
       name,
       country,
       city,

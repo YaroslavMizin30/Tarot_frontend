@@ -12,7 +12,6 @@ export interface CreateChartParams {
   hour?: number | string;
   minute?: number | string;
   city: string;
-  userId: string | number;
   country?: string;
   lang: 'ru-RU' | 'en-EN';
 }
@@ -20,9 +19,13 @@ export interface CreateChartParams {
 export const createChart = async (
   params: CreateChartParams,
 ): Promise<NatalChart> => {
-  const { data: chart } = await window.supabase.functions.invoke('chart', {
-    body: snakeize(params),
+  const { data: chart, error } = await window.supabase.functions.invoke('chart', {
+    body: snakeize({ ...params, requestId: crypto.randomUUID() }),
   });
+
+  if (error || !chart) {
+    throw error ?? new Error('NATAL_CHART_FAILED');
+  }
 
   return camelize(chart) as NatalChart;
 };

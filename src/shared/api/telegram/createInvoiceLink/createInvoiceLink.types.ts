@@ -14,19 +14,11 @@ export interface CreateInvoiceLinkParams {
   code: PaymentMethodCode;
   /** Кол-во монет (пентаклей), которые будут зачислены пользователю */
   amount: number;
-  /** Сумма платежа в минимальных единицах валюты: для XTR — это кол-во звёзд, для RUB — копейки */
-  price: number;
-  /** Код валюты (XTR для Stars, RUB для СБП). Если не передан — бэкенд выберет сам по `code`. */
-  currency?: string;
-  /** Произвольный payload для идемпотентности и связи платежа с заказом на бэкенде */
-  payload?: string;
-  /** Заголовок в окне оплаты Telegram (необязательно) */
-  title?: string;
-  /** Описание в окне оплаты Telegram (необязательно) */
-  description?: string;
 }
 
 export interface CreateInvoiceLinkResponse {
   /** Готовая ссылка вида https://t.me/$<slug>, которую передаём в openInvoice */
   invoiceLink: string;
+  /** Идентификатор платежа ЮKassa; возвращается только для СБП. */
+  paymentId?: string;
 }

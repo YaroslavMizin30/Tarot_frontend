@@ -28,6 +28,8 @@ const TRANSLATIONS_RU = {
     'Ошибка при запросе. Пожалуйста, попробуйте снова',
   'Error loading data. Please try again':
     'Ошибка при загрузке данных. Пожалуйста, попробуйте снова',
+  'Authentication failed. Open the app from Telegram and try again':
+    'Не удалось подтвердить вход. Откройте приложение из Telegram и попробуйте снова',
   'Standard': 'Обычная',
   'Gray': 'Серая',
   'Bronze': 'Бронза',

@@ -11,7 +11,7 @@ export const getUser = async (id: string | number): Promise<User | null> => {
   const data = await getDataFromDB<UserResponse>('users', {
     key: 'id',
     value: String(id),
-  });
+  }, { throwOnError: true });
 
   if (!data || data.length === 0) {
     return null;

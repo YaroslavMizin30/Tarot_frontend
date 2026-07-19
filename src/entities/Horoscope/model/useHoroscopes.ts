@@ -65,7 +65,7 @@ export const useHoroscopes = (options?: UseHoroscopesOptions) => {
   const { user } = useUser() ?? {};
   const queryClient = useQueryClient();
 
-  const { requireBalance, charge } = useBalance();
+  const { requireBalance } = useBalance();
 
   const { bodies } = useDailyEphemeris();
   const { ephemeris: monthlyEphemeris } = useEphemerisByRange('month');
@@ -233,9 +233,6 @@ export const useHoroscopes = (options?: UseHoroscopesOptions) => {
         userId: user!.id,
         date: new Date().toISOString(),
       } as Horoscope);
-
-      // Действие успешно выполнено — списываем пентакли.
-      await charge(PRICES[type]);
 
       return content;
     },

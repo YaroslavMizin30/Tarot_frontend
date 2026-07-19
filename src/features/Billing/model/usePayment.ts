@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { createInvoiceLink } from '@/shared/api/telegram';
+import { createInvoiceLink, getPaymentStatus } from '@/shared/api/telegram';
 import type { PaymentMethodCode } from '@/shared/api/telegram';
-import useLocales from '@/shared/hooks/useLocales';
 
 import { useBalance } from './useBalance';
 
@@ -61,11 +60,9 @@ export const usePayment = ({
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState<PaymentStatus>(null);
 
-  const { code, amount, price, currency } = method;
+  const { code, amount } = method;
 
-  const { i18n } = useLocales();
-
-  const { topUp, refresh: refreshBalance } = useBalance();
+  const { refresh: refreshBalance } = useBalance();
 
   // Ref для отслеживания попапа СБП, чтобы корректно чистить интервал
   // при размонтировании компонента / новом запуске оплаты.
@@ -88,14 +85,8 @@ export const usePayment = ({
     onError?.(next);
   };
 
-  /**
-   * Запускает polling закрытия попапа СБП.
-   * После закрытия попапа вызываем onSuccess — окончательный статус
-   * платежа определяется на бэкенде (он пришлёт push/webhook и обновит
-   * баланс пользователя). Здесь же мы лишь сигнализируем UI,
-   * что процесс оплаты пользователь завершил.
-   */
-  const watchSbpPopup = (popup: Window) => {
+  /** После закрытия попапа подтверждает платёж сервер-сервер через ЮKassa. */
+  const watchSbpPopup = (popup: Window, paymentId: string) => {
     if (sbpPollRef.current !== null) {
       clearInterval(sbpPollRef.current);
     }
@@ -109,14 +100,30 @@ export const usePayment = ({
 
         sbpPopupRef.current = null;
 
-        // Если пользователь закрыл попап — считаем оплату завершённой.
-        // Баланс обновляется на бэкенде, поэтому здесь подтягиваем его.
-        setIsLoading(false);
-        setStatus('paid');
-        // СБП: баланс зачисляется на бэкенде — рефетчим пользователя,
-        // чтобы UI сразу отобразил актуальное значение.
-        await refreshBalance().catch(() => undefined);
-        onSuccess?.();
+        for (let attempt = 0; attempt < 12; attempt += 1) {
+          try {
+            const paymentStatus = await getPaymentStatus(paymentId);
+            if (paymentStatus === 'paid') {
+              setIsLoading(false);
+              setStatus('paid');
+              await refreshBalance().catch(() => undefined);
+              onSuccess?.();
+              return;
+            }
+            if (paymentStatus === 'cancelled') {
+              fail('cancelled');
+              return;
+            }
+          } catch {
+            // A transient provider error is retried within this short window.
+          }
+
+          await new Promise<void>((resolve) => {
+            setTimeout(resolve, 2_500);
+          });
+        }
+
+        fail('pending');
       }
     }, 500);
   };
@@ -139,11 +146,6 @@ export const usePayment = ({
       const invoice = await createInvoiceLink({
         code,
         amount,
-        price,
-        currency,
-        title: `${amount} ${i18n('coins')}`,
-        description: `${i18n('Top up')} ${amount} ${i18n('coins')}`,
-        payload: `${code}:${amount}:${Date.now()}`,
       });
 
       if (!invoice) {
@@ -159,9 +161,8 @@ export const usePayment = ({
             setIsLoading(false);
 
             if (nextStatus === 'paid') {
-              // Telegram Stars: пополнение происходит на клиенте,
-              // т.к. мы точно знаем, что инвойс был оплачен.
-              await topUp(amount).catch(() => false);
+              // Начисление выполняет webhook Telegram на сервере.
+              await refreshBalance().catch(() => undefined);
               onSuccess?.();
             } else {
               onError?.(nextStatus);
@@ -173,6 +174,10 @@ export const usePayment = ({
       }
 
       if (code === 'sbp') {
+        if (!invoice.paymentId) {
+          fail('network_error');
+          return;
+        }
         // СБП-провайдер возвращает обычный URL, по которому пользователь
         // проходит оплату во внешнем окне (мобильный банк / сайт банка).
         // Открываем его в popup согласно требованию UX.
@@ -198,7 +203,7 @@ export const usePayment = ({
           // no-op: фокус не критичен для оплаты
         }
 
-        watchSbpPopup(popup);
+        watchSbpPopup(popup, invoice.paymentId);
 
         return;
       }

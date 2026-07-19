@@ -45,6 +45,7 @@ interface NatalChartWidgetFormProps {
   onSubmit: (
     e: React.FormEvent<HTMLFormElement>,
     withNatalChart: boolean,
+    chartData?: ChartFormData,
   ) => void;
   i18n: (id: string) => string;
   locale: Locale;
@@ -115,7 +116,7 @@ const NatalChartWidgetForm = (props: NatalChartWidgetFormProps) => {
       return;
     }
 
-    onSubmit(e, true);
+    onSubmit(e, true, { ...chartData, name });
   };
 
   return (
@@ -284,6 +285,7 @@ export const Registry = () => {
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>,
     withNatalChart: boolean,
+    chartData?: ChartFormData,
   ) => {
     e.preventDefault();
 
@@ -301,7 +303,10 @@ export const Registry = () => {
       setShowNatalChartWidget(false);
     }
 
-    await createUser({ ...formData, withNatalChart });
+    await createUser({
+      ...(chartData ?? formData),
+      withNatalChart,
+    });
   };
 
   useEffect(() => {

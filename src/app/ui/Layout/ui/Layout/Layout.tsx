@@ -1,6 +1,7 @@
 import { Outlet, useNavigation, useLocation } from 'react-router';
 
 import Spinner from '@/shared/ui/Spinner';
+import Error from '@/shared/ui/Error';
 
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -23,11 +24,16 @@ export const Layout = () => {
   const { state } = useNavigation();
   const { pathname } = useLocation();
 
-  const { addTranslations, locale } = useLocales();
+  const { addTranslations, i18n, locale } = useLocales();
 
   const isLoading = state === 'loading';
 
-  const { isLoading: isAuthenticating, user } = useAuth();
+  const {
+    isLoading: isAuthenticating,
+    user,
+    error: authError,
+    retry: retryAuth,
+  } = useAuth();
 
   const { theme } = user ?? {};
 
@@ -91,6 +97,15 @@ export const Layout = () => {
 
         {isLoading || isAuthenticating ? (
           <Spinner size={'l'} />
+        ) : authError ? (
+          <Error
+            error={i18n(
+              'Authentication failed. Open the app from Telegram and try again',
+            )}
+            onRetryButtonClick={() => {
+              retryAuth().catch(() => undefined);
+            }}
+          />
         ) : (
           <div className={styles.container}>
             <Outlet context={{ user }} />

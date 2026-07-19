@@ -15,7 +15,9 @@ export default defineConfig({
     react(),
     svgr({ include: '**/*.svg' }),
     dts(),
-    analyzer({ analyzerMode: 'server' }),
+    ...(process.env.ANALYZE === 'true'
+      ? [analyzer({ analyzerMode: 'server' })]
+      : []),
   ],
   resolve: {
     alias: {
