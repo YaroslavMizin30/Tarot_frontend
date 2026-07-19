@@ -288,6 +288,7 @@ export const Registry = () => {
         contentClassName={styles.modalContent}
         isOpen={showUserAgreement}
         onClose={() => setShowUserAgreement(false)}
+        overlayClassName={styles.policyOverlay}
       >
         <h3 className={styles.modalTitle}>
           {i18n('Terms of Service and Privacy Policy for the TAROTOPIA App')}
