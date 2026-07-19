@@ -7,16 +7,22 @@
 
 .progress {
   position: relative;
+  align-self: center;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  width: min(calc(100% - 56px), 220px);
-  margin: 8px auto 3px;
+  width: 420px;
+  margin: 8px 18px;
+  padding: 5px;
+  box-sizing: border-box;
+  border: 1px solid color-mix(in srgb, var(--border-primary) 38%, transparent);
+  border-radius: 11px;
+  background: var(--gradient-secondary);
 }
 
 .progress::before {
   content: '';
   position: absolute;
-  top: 29px;
+  top: 34px;
   right: calc(100% / 6);
   left: calc(100% / 6);
   height: 0;
@@ -88,9 +94,6 @@
 .current::after {
   background: var(--surface-control);
   border-color: var(--surface-control);
-  box-shadow:
-    0 0 6px 2px var(--surface-control),
-    0 0 11px 3px var(--border-secondary);
 }
 
 .step::after {
@@ -103,12 +106,12 @@
 .current {
   color: var(--text-primary);
   font-weight: 700;
+  text-shadow: none;
 }
 
 .current::after {
-  box-shadow:
-    0 0 7px 2px var(--surface-control),
-    0 0 13px 4px var(--border-secondary);
+  background: var(--surface-selected);
+  border-color: var(--border-interactive);
 }
 
 .content {

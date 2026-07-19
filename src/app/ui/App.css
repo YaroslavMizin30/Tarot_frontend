@@ -171,8 +171,7 @@ body {
 
 .custom-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color:
-    color-mix(in srgb, var(--border-primary) 58%, transparent)
+  scrollbar-color: color-mix(in srgb, var(--border-primary) 58%, transparent)
     color-mix(in srgb, var(--surface-panel) 24%, transparent);
 }
 
@@ -198,4 +197,6 @@ body {
 
 #root * {
   font-family: 'Pangolin', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
 }
