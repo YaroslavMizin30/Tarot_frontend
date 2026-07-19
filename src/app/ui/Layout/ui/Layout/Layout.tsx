@@ -69,8 +69,12 @@ export const Layout = () => {
         className={`${styles.main} ${isAuthenticating ? styles.loading : ''} custom-scrollbar`}
       >
         <div className={styles.background}>
-          <div className={styles.cloud}></div>
-          <div className={styles.couldBottom}></div>
+          {pathname !== '/' && (
+            <>
+              <div className={styles.cloud}></div>
+              <div className={styles.couldBottom}></div>
+            </>
+          )}
 
           {isAuthenticating ? (
             <StarsComposition />

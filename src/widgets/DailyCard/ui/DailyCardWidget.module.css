@@ -15,51 +15,6 @@
   border-radius: 18px;
 }
 
-.hero::before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  bottom: 58px;
-  left: 16%;
-  width: 132px;
-  height: 72px;
-  pointer-events: none;
-  background: url('/assets/images/horoscope/saturn.png') center / contain
-    no-repeat;
-  opacity: 0.18;
-  filter: grayscale(0.72) saturate(0.54) contrast(0.82) blur(0.25px);
-  transform: rotate(-11deg);
-}
-
-.hero::after {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  top: 0;
-  right: 18px;
-  width: 210px;
-  height: 190px;
-  pointer-events: none;
-  background-image: var(--card-cover-image);
-  background-repeat: no-repeat;
-  background-position: center 53%;
-  background-size: 142px auto;
-  opacity: 0.2;
-  filter: saturate(1.08) contrast(0.92);
-  -webkit-mask-image: radial-gradient(
-    ellipse at center,
-    #000 0 34%,
-    rgb(0 0 0 / 72%) 52%,
-    transparent 78%
-  );
-  mask-image: radial-gradient(
-    ellipse at center,
-    #000 0 34%,
-    rgb(0 0 0 / 72%) 52%,
-    transparent 78%
-  );
-}
-
 .summary {
   min-width: 0;
 }

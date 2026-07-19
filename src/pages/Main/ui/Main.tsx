@@ -10,6 +10,7 @@ import DailyGuidanceWidget from '@/widgets/DailyGuidance';
 import DailyReflection from '@/widgets/DailyReflection';
 import RouletteIcon from '@/shared/assets/svg/common/roulette_page.svg';
 import { getDailyBonusStatus } from '@/entities/BonusGame';
+import { DaySky } from '@/widgets/DaySky';
 
 import styles from './Main.module.css';
 
@@ -35,58 +36,62 @@ export const MainPage = () => {
 
   return (
     <div className={styles.container}>
-      <DailyCardWidget />
+      <DaySky />
 
-      <DailyGuidanceWidget />
+      <div className={styles.content}>
+        <DailyCardWidget />
 
-      <DailyReflection />
+        <DailyGuidanceWidget />
 
-      <div className={styles.actions}>
-        <button
-          type={'button'}
-          className={styles.bonus}
-          onClick={() => navigate('/roulette')}
-        >
-          <span className={styles.bonusIcon} aria-hidden={'true'}>
-            <RouletteIcon />
-          </span>
+        <DailyReflection />
 
-          <span className={styles.bonusText}>
-            <strong>{i18n('Daily roulette')}</strong>
-            <span>
-              {i18n(
-                dailyBonus?.status === 'already_played'
-                  ? 'Daily card opened'
-                  : 'Daily card available',
-              )}
-              {' · '}
-              {i18n('Bonus balance')}: {dailyBonus?.bonusBalance ?? 0}
+        <div className={styles.actions}>
+          <button
+            type={'button'}
+            className={styles.bonus}
+            onClick={() => navigate('/roulette')}
+          >
+            <span className={styles.bonusIcon} aria-hidden={'true'}>
+              <RouletteIcon />
             </span>
-          </span>
 
-          <span className={styles.arrow} aria-hidden={'true'}>→</span>
-        </button>
-
-        <div className={styles.resumeSlot}>
-          {resumableSpread && (
-            <button
-              className={styles.resume}
-              onClick={() =>
-                navigate(`/tarot?draft=${resumableSpread.spreadId}`)
-              }
-              type={'button'}
-            >
-              <span className={styles.resumeText}>
-                <strong>{i18n('Continue spread')}</strong>
-                <span>
-                  {resumableSpread.title ||
-                    resumableSpread.question ||
-                    i18n('Your unfinished spread')}
-                </span>
+            <span className={styles.bonusText}>
+              <strong>{i18n('Daily roulette')}</strong>
+              <span>
+                {i18n(
+                  dailyBonus?.status === 'already_played'
+                    ? 'Daily card opened'
+                    : 'Daily card available',
+                )}
+                {' · '}
+                {i18n('Bonus balance')}: {dailyBonus?.bonusBalance ?? 0}
               </span>
-              <span className={styles.arrow} aria-hidden={'true'}>→</span>
-            </button>
-          )}
+            </span>
+
+            <span className={styles.arrow} aria-hidden={'true'}>→</span>
+          </button>
+
+          <div className={styles.resumeSlot}>
+            {resumableSpread && (
+              <button
+                className={styles.resume}
+                onClick={() =>
+                  navigate(`/tarot?draft=${resumableSpread.spreadId}`)
+                }
+                type={'button'}
+              >
+                <span className={styles.resumeText}>
+                  <strong>{i18n('Continue spread')}</strong>
+                  <span>
+                    {resumableSpread.title ||
+                      resumableSpread.question ||
+                      i18n('Your unfinished spread')}
+                  </span>
+                </span>
+                <span className={styles.arrow} aria-hidden={'true'}>→</span>
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>

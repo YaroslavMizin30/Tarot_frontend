@@ -1,0 +1,383 @@
+.sky {
+  --cloud-shadow-color: rgb(67 91 122 / 24%);
+
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  min-height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  background: linear-gradient(180deg, #a8d8ee 0%, #dcecf0 48%, #ead8d5 100%);
+  opacity: 0.96;
+  transition: background 1.2s ease;
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    transparent 0%,
+    #000 5%,
+    #000 88%,
+    rgb(0 0 0 / 82%) 94%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    180deg,
+    transparent 0%,
+    #000 5%,
+    #000 88%,
+    rgb(0 0 0 / 82%) 94%,
+    transparent 100%
+  );
+}
+
+.dawn {
+  --cloud-shadow-color: rgb(113 82 99 / 24%);
+
+  background:
+    radial-gradient(ellipse at 72% 28%, rgb(255 224 172 / 76%), transparent 36%),
+    linear-gradient(180deg, #7ea9cf 0%, #d9b7bc 48%, #f1c99d 72%, #e8d7cd 100%);
+}
+
+.day {
+  background:
+    radial-gradient(ellipse at 52% 20%, rgb(255 255 255 / 58%), transparent 40%),
+    linear-gradient(180deg, #74bce1 0%, #b8dff0 45%, #e4edf0 80%, #eadfe4 100%);
+}
+
+.dusk {
+  --cloud-shadow-color: rgb(65 55 92 / 30%);
+
+  background:
+    radial-gradient(ellipse at 74% 29%, rgb(255 184 124 / 58%), transparent 35%),
+    linear-gradient(180deg, #516792 0%, #a16f92 40%, #e99d78 68%, #e9c2a9 100%);
+}
+
+.night {
+  --cloud-shadow-color: rgb(14 18 45 / 38%);
+
+  background:
+    radial-gradient(ellipse at 38% 22%, rgb(97 100 162 / 32%), transparent 40%),
+    linear-gradient(180deg, #10172f 0%, #252448 42%, #4a3b60 72%, #827088 100%);
+}
+
+.stars {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  opacity: 0;
+  background-image:
+    radial-gradient(circle at 8% 16%, rgb(255 255 238 / 88%) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 17% 32%, rgb(224 232 255 / 72%) 0 0.8px, transparent 1.6px),
+    radial-gradient(circle at 28% 11%, rgb(255 244 221 / 82%) 0 1.2px, transparent 2px),
+    radial-gradient(circle at 39% 27%, rgb(221 229 255 / 72%) 0 0.8px, transparent 1.6px),
+    radial-gradient(circle at 51% 13%, rgb(255 248 225 / 86%) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 63% 35%, rgb(229 233 255 / 68%) 0 0.7px, transparent 1.5px),
+    radial-gradient(circle at 72% 17%, rgb(255 241 217 / 82%) 0 1.1px, transparent 1.9px),
+    radial-gradient(circle at 84% 29%, rgb(218 230 255 / 78%) 0 0.9px, transparent 1.7px),
+    radial-gradient(circle at 93% 9%, rgb(255 249 231 / 88%) 0 1px, transparent 1.9px),
+    radial-gradient(circle at 12% 49%, rgb(230 235 255 / 64%) 0 0.8px, transparent 1.5px),
+    radial-gradient(circle at 46% 45%, rgb(255 245 225 / 62%) 0 0.9px, transparent 1.6px),
+    radial-gradient(circle at 78% 48%, rgb(225 231 255 / 58%) 0 0.7px, transparent 1.5px);
+  filter: drop-shadow(0 0 3px rgb(225 228 255 / 72%));
+  transition: opacity 1.2s ease;
+}
+
+.dusk .stars {
+  opacity: 0.34;
+}
+
+.night .stars {
+  opacity: 0.82;
+}
+
+.haze,
+.lightVeil,
+.softEdge {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.haze {
+  z-index: 2;
+  background:
+    radial-gradient(ellipse at 12% 38%, rgb(255 255 255 / 34%), transparent 33%),
+    radial-gradient(ellipse at 88% 52%, rgb(239 221 245 / 29%), transparent 38%),
+    linear-gradient(110deg, transparent 18%, rgb(255 255 255 / 13%) 48%, transparent 76%);
+  filter: blur(16px);
+}
+
+.lightVeil {
+  z-index: 3;
+  background:
+    radial-gradient(ellipse at 50% 42%, rgb(255 255 255 / 15%), transparent 55%),
+    linear-gradient(180deg, transparent 40%, rgb(244 230 238 / 25%) 80%, transparent);
+}
+
+.dusk .lightVeil,
+.night .lightVeil {
+  background:
+    radial-gradient(
+      ellipse at 50% 46%,
+      color-mix(in srgb, var(--gradient-primary) 66%, transparent) 0 34%,
+      color-mix(in srgb, var(--gradient-primary) 42%, transparent) 58%,
+      transparent 86%
+    ),
+    linear-gradient(180deg, transparent 32%, rgb(235 218 236 / 16%) 82%, transparent);
+}
+
+.orbTrack {
+  position: absolute;
+  z-index: 3;
+  top: var(--orb-y);
+  left: var(--orb-x);
+  width: clamp(132px, 39vw, 190px);
+  height: clamp(132px, 39vw, 190px);
+  transform: translate(-50%, -26%);
+  transition: top 55s linear, left 55s linear;
+  animation: orbBreathe 7s ease-in-out infinite alternate;
+}
+
+.orbGlow {
+  position: absolute;
+  inset: -48%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(255 252 205 / 82%), rgb(255 243 172 / 34%) 38%, transparent 74%);
+  filter: blur(24px);
+}
+
+.sky[data-celestial='moon'] .orbGlow {
+  background: radial-gradient(circle, rgb(223 226 255 / 38%), rgb(150 164 221 / 16%) 44%, transparent 72%);
+}
+
+.dusk[data-celestial='sun'] .orbGlow {
+  background: radial-gradient(circle, rgb(255 210 158 / 74%), rgb(255 157 105 / 29%) 40%, transparent 74%);
+}
+
+.sun,
+.moonFallback,
+.moon {
+  position: absolute !important;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 50%;
+  -webkit-mask-image: radial-gradient(
+    circle,
+    #000 0 47%,
+    rgb(0 0 0 / 88%) 57%,
+    rgb(0 0 0 / 52%) 71%,
+    rgb(0 0 0 / 14%) 88%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    circle,
+    #000 0 47%,
+    rgb(0 0 0 / 88%) 57%,
+    rgb(0 0 0 / 52%) 71%,
+    rgb(0 0 0 / 14%) 88%,
+    transparent 100%
+  );
+}
+
+.sun {
+  background: #fff5a3;
+  box-shadow: inset 0 0 38px rgb(255 255 239 / 88%);
+  filter: blur(3.8px) brightness(1.24) saturate(0.58);
+}
+
+.dawn .sun {
+  background: #ffe0a1;
+  box-shadow: inset 0 0 38px rgb(255 248 219 / 82%);
+  filter: blur(3.8px) brightness(1.16) saturate(0.72);
+}
+
+.dusk .sun {
+  background: #ffad70;
+  box-shadow: inset 0 0 38px rgb(255 220 177 / 66%);
+  filter: blur(4.2px) brightness(1.08) saturate(0.9);
+}
+
+.moon,
+.moonFallback {
+  box-shadow: 0 0 22px 8px rgb(214 220 255 / 32%);
+  filter: saturate(0.66) brightness(1.04) blur(1.3px);
+}
+
+.moonFallback {
+  background: radial-gradient(circle at 38% 35%, #f6f1de, #c9cad4 68%, transparent 93%);
+}
+
+.cloudBank {
+  position: absolute;
+  inset: 0;
+  filter: blur(0.2px);
+}
+
+.cloudBankBack {
+  z-index: 2;
+}
+
+.cloudBankFront {
+  z-index: 4;
+}
+
+.cloud {
+  position: absolute;
+  display: block;
+  width: 190px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(
+    var(--cloud-light-angle),
+    rgb(219 226 235 / 72%) 0%,
+    rgb(249 250 247 / 92%) 42%,
+    rgb(255 254 248 / 96%) 62%,
+    rgb(184 200 218 / 68%) 100%
+  );
+  filter:
+    blur(4.5px)
+    drop-shadow(var(--cloud-shadow-x) 10px 9px var(--cloud-shadow-color));
+  box-shadow:
+    32px -18px 18px 8px rgb(255 254 247 / 88%),
+    82px -7px 22px 13px rgb(245 247 246 / 84%),
+    132px 2px 25px 12px rgb(213 223 235 / 76%),
+    -42px 10px 23px 9px rgb(198 211 227 / 68%);
+}
+
+.dusk .cloud,
+.night .cloud {
+  background: linear-gradient(
+    var(--cloud-light-angle),
+    rgb(117 119 157 / 58%) 0%,
+    rgb(206 200 220 / 76%) 48%,
+    rgb(229 218 225 / 78%) 64%,
+    rgb(91 93 137 / 58%) 100%
+  );
+  filter:
+    blur(5px)
+    drop-shadow(var(--cloud-shadow-x) 11px 10px var(--cloud-shadow-color));
+  box-shadow:
+    32px -18px 20px 8px rgb(225 215 229 / 62%),
+    82px -7px 24px 13px rgb(194 188 214 / 58%),
+    132px 2px 27px 12px rgb(142 144 181 / 52%),
+    -42px 10px 25px 9px rgb(161 162 195 / 48%);
+}
+
+.cloudFarLeft {
+  z-index: 1;
+  top: 15%;
+  left: -95px;
+  opacity: 0.66;
+  transform: scale(1.15);
+  animation: driftRight 44s ease-in-out infinite alternate;
+}
+
+.cloudFarRight {
+  z-index: 1;
+  top: 29%;
+  right: -108px;
+  opacity: 0.62;
+  transform: scale(0.92);
+  animation: driftLeft 52s ease-in-out infinite alternate;
+}
+
+.cloudMiddle {
+  z-index: 3;
+  top: 38%;
+  left: 28%;
+  opacity: 0.64;
+  transform: scale(1.2);
+  animation: driftLeft 38s ease-in-out infinite alternate;
+}
+
+.cloudFrontLeft {
+  z-index: 5;
+  top: 25%;
+  left: -76px;
+  opacity: 0.88;
+  transform: scale(1.22);
+  animation: driftRight 29s ease-in-out infinite alternate;
+}
+
+.cloudFrontCenter {
+  z-index: 6;
+  top: 31%;
+  left: 41%;
+  opacity: 0.84;
+  transform: scale(1.34);
+  animation: driftLeft 34s ease-in-out infinite alternate;
+}
+
+.cloudFrontRight {
+  z-index: 5;
+  top: 20%;
+  right: -98px;
+  opacity: 0.82;
+  transform: scale(1.18);
+  animation: driftLeft 31s ease-in-out infinite alternate;
+}
+
+.time {
+  position: absolute;
+  z-index: 7;
+  top: 15px;
+  left: 50%;
+  color: rgb(45 43 61 / 66%);
+  font-family: 'Monomakh', serif !important;
+  font-size: clamp(24px, 7vw, 36px);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.03em;
+  text-shadow: 0 1px 10px rgb(255 255 255 / 44%);
+  transform: translateX(-50%);
+}
+
+.dusk .time,
+.night .time {
+  color: rgb(246 238 250 / 76%);
+  text-shadow: 0 1px 12px rgb(20 18 40 / 48%);
+}
+
+.softEdge {
+  z-index: 8;
+  box-shadow:
+    inset 0 34px 44px -28px var(--gradient-secondary),
+    inset 0 -54px 58px -34px var(--gradient-primary),
+    inset 26px 0 38px -34px var(--gradient-secondary),
+    inset -26px 0 38px -34px var(--gradient-secondary);
+}
+
+@keyframes driftRight {
+  to {
+    translate: 42px 5px;
+  }
+}
+
+@keyframes driftLeft {
+  to {
+    translate: -46px 7px;
+  }
+}
+
+@keyframes orbBreathe {
+  to {
+    scale: 1.025;
+  }
+}
+
+@media (max-width: 380px) {
+  .time {
+    top: 14px;
+  }
+
+  .orbTrack {
+    width: 142px;
+    height: 142px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbTrack,
+  .cloud {
+    animation: none;
+    transition: none;
+  }
+}
