@@ -36,6 +36,21 @@ const TRANSLATIONS_RU: Record<string, string> = {
   'Not enough balance for this reading': 'Недостаточно пентаклей для этой трактовки',
   'The reading is still being prepared. Try again shortly':
     'Трактовка ещё составляется. Попробуйте открыть её через несколько секунд',
+  'The reading could not be prepared and the pentacles were returned':
+    'Не удалось составить трактовку. Пентакли возвращены на ваш баланс',
+  'The reading could not be prepared. Please try again':
+    'Не удалось составить трактовку. Попробуйте ещё раз',
+  'Could not check the reading price. Please try again':
+    'Не удалось проверить стоимость трактовки. Попробуйте ещё раз',
+  'Could not save your reflection. Please try again':
+    'Не удалось сохранить заметку. Попробуйте ещё раз',
+  'Could not start the reading. Your balance was not charged':
+    'Не удалось начать создание трактовки. Средства с баланса не списаны',
+  'Could not open this reading. Please try again':
+    'Не удалось открыть трактовку. Попробуйте ещё раз',
+  'The reading is taking longer than usual. You can check its status again':
+    'Создание трактовки занимает больше времени, чем обычно. Вы можете проверить её статус повторно',
+  'Check reading status': 'Проверить статус трактовки',
   'pentacles': 'пентаклей',
   'Your reflection': 'Ваша заметка',
   'Write down what resonates or what you want to revisit later':

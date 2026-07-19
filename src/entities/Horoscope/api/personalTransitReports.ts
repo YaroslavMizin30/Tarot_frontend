@@ -44,6 +44,7 @@ export const purchasePersonalTransitReport = (reportId: string) =>
   invoke<
     | { status: 'completed'; report: PersonalTransitReport }
     | { status: 'processing'; report: PersonalTransitReport }
+    | { status: 'failed' | 'refunded'; report: PersonalTransitReport }
     | {
       status: 'insufficient_balance';
       reportId: string;

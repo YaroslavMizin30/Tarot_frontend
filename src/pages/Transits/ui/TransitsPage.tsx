@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import {
@@ -60,7 +60,7 @@ const SectionSkeleton = ({ history = false }: { history?: boolean }) => (
 
 export const TransitsPage = () => {
   const navigate = useNavigate();
-  const { user } = useUser() ?? {};
+  const { user, refetchUser } = useUser() ?? {};
   const { i18n, addTranslations, locale } = useLocales();
   const [view, setView] = useState<TransitsView>('today');
   const [summary, setSummary] = useState<PersonalTransitSummary | null>(null);
@@ -75,8 +75,13 @@ export const TransitsPage = () => {
   const [historyReload, setHistoryReload] = useState(0);
   const [pendingAction, setPendingAction] = useState<PendingAction>(null);
   const [actionError, setActionError] = useState<string | null>(null);
+  const [isTodayRefunded, setIsTodayRefunded] = useState(false);
+  const [isPollingPaused, setIsPollingPaused] = useState(false);
   const [reflection, setReflection] = useState('');
   const [reflectionSaved, setReflectionSaved] = useState(false);
+  const pendingReportId = quotedReport?.id;
+  const pendingReportStatus = quotedReport?.status;
+  const pollingState = useRef({ reportId: '', checks: 0 });
 
   useEffect(() => {
     addTranslations({
@@ -100,7 +105,17 @@ export const TransitsPage = () => {
       .then(({ facts, currentReport }) => {
         if (!current) return;
         setSummary(facts);
-        setActiveReport(currentReport);
+        const completedReport = currentReport?.status === 'completed' ? currentReport : null;
+        const pendingReport = currentReport
+          && ['charged', 'processing', 'failed'].includes(currentReport.status)
+          ? currentReport
+          : null;
+        setActiveReport(completedReport);
+        setQuotedReport(pendingReport);
+        setIsTodayRefunded(currentReport?.status === 'refunded');
+        if (currentReport?.status === 'refunded') {
+          setActionError('The reading could not be prepared and the pentacles were returned');
+        }
         const savedReflection = currentReport
           ?.personal_transit_reflections?.[0]?.content ?? '';
         setReflection(savedReflection);
@@ -114,6 +129,60 @@ export const TransitsPage = () => {
       current = false;
     };
   }, [previewReload, user?.natalChart]);
+
+  useEffect(() => {
+    if (isPollingPaused || !pendingReportId || !pendingReportStatus
+      || !['charged', 'processing'].includes(pendingReportStatus)) return;
+
+    if (pollingState.current.reportId !== pendingReportId) {
+      pollingState.current = { reportId: pendingReportId, checks: 0 };
+    }
+
+    let current = true;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+
+    const checkReport = async () => {
+      pollingState.current.checks += 1;
+      if (pollingState.current.checks > 120) {
+        setIsPollingPaused(true);
+        setActionError('The reading is taking longer than usual. You can check its status again');
+        return;
+      }
+      try {
+        const { report } = await getPersonalTransitReport(pendingReportId);
+        if (!current) return;
+
+        if (report.status === 'completed') {
+          setActiveReport(report);
+          setQuotedReport(null);
+          setActionError(null);
+          return;
+        }
+
+        if (report.status === 'failed' || report.status === 'refunded') {
+          setQuotedReport(report.status === 'failed' ? report : null);
+          setIsTodayRefunded(report.status === 'refunded');
+          setActionError(report.status === 'refunded'
+            ? 'The reading could not be prepared and the pentacles were returned'
+            : 'The reading could not be prepared. Please try again');
+          refetchUser?.().catch(() => undefined);
+          return;
+        }
+
+        setQuotedReport(report);
+        timer = setTimeout(checkReport, 2500);
+      } catch {
+        if (current) timer = setTimeout(checkReport, 4000);
+      }
+    };
+
+    timer = setTimeout(checkReport, 1500);
+
+    return () => {
+      current = false;
+      if (timer) clearTimeout(timer);
+    };
+  }, [isPollingPaused, pendingReportId, pendingReportStatus, refetchUser]);
 
   useEffect(() => {
     if (view !== 'history') return;
@@ -142,8 +211,8 @@ export const TransitsPage = () => {
       );
       if (report.status === 'completed') setActiveReport(report);
       else setQuotedReport(report);
-    } catch (reason) {
-      setActionError(reason instanceof Error ? reason.message : String(reason));
+    } catch {
+      setActionError('Could not check the reading price. Please try again');
     } finally {
       setPendingAction(null);
     }
@@ -156,8 +225,8 @@ export const TransitsPage = () => {
     try {
       await savePersonalTransitReflection(activeReport.id, reflection);
       setReflectionSaved(true);
-    } catch (reason) {
-      setActionError(reason instanceof Error ? reason.message : String(reason));
+    } catch {
+      setActionError('Could not save your reflection. Please try again');
     } finally {
       setPendingAction(null);
     }
@@ -170,15 +239,26 @@ export const TransitsPage = () => {
     try {
       const result = await purchasePersonalTransitReport(quotedReport.id);
       if (result.status === 'insufficient_balance') {
-        setActionError(i18n('Not enough balance for this reading'));
+        setActionError('Not enough balance for this reading');
       } else if (result.status === 'completed') {
         setActiveReport(result.report);
         setQuotedReport(null);
+        setIsTodayRefunded(false);
+        refetchUser?.().catch(() => undefined);
+      } else if (result.status === 'failed' || result.status === 'refunded') {
+        setQuotedReport(result.status === 'failed' ? result.report : null);
+        setIsTodayRefunded(result.status === 'refunded');
+        setActionError(result.status === 'refunded'
+          ? 'The reading could not be prepared and the pentacles were returned'
+          : 'The reading could not be prepared. Please try again');
+        refetchUser?.().catch(() => undefined);
       } else {
-        setActionError(i18n('The reading is still being prepared. Try again shortly'));
+        setQuotedReport(result.report);
+        setIsPollingPaused(false);
+        refetchUser?.().catch(() => undefined);
       }
-    } catch (reason) {
-      setActionError(reason instanceof Error ? reason.message : String(reason));
+    } catch {
+      setActionError('Could not start the reading. Your balance was not charged');
     } finally {
       setPendingAction(null);
     }
@@ -194,8 +274,8 @@ export const TransitsPage = () => {
       setReflection(savedReflection);
       setReflectionSaved(Boolean(savedReflection));
       setView('today');
-    } catch (reason) {
-      setHistoryError(reason instanceof Error ? reason.message : String(reason));
+    } catch {
+      setHistoryError(i18n('Could not open this reading. Please try again'));
     } finally {
       setPendingAction(null);
     }
@@ -316,7 +396,7 @@ export const TransitsPage = () => {
                 })}
               />
 
-              {!activeReport && (quotedReport ? (
+              {!activeReport && !isTodayRefunded && (quotedReport ? (
                 <section className={styles.purchasePanel}>
                   <div>
                     <span className={styles.sectionLabel}>{i18n('Detailed personal reading')}</span>
@@ -324,15 +404,31 @@ export const TransitsPage = () => {
                     <p>{i18n('The report connects the strongest transits into one practical reading and remains in your history')}</p>
                   </div>
                   <div className={styles.purchaseActions}>
-                    <span>{quotedReport.quoted_cost} {i18n('pentacles')}</span>
-                    <Button disabled={pendingAction !== null} onClick={handlePurchase}>
-                      {pendingAction === 'purchase'
-                        ? <LoadingLabel>{i18n('Preparing reading')}</LoadingLabel>
-                        : i18n('Confirm and create reading')}
-                    </Button>
-                    <button type={'button'} onClick={() => setQuotedReport(null)}>
-                      {i18n('Cancel')}
-                    </button>
+                    {['charged', 'processing'].includes(quotedReport.status) ? (
+                      isPollingPaused ? (
+                        <Button
+                          onClick={() => {
+                            pollingState.current.checks = 0;
+                            setActionError(null);
+                            setIsPollingPaused(false);
+                          }}
+                        >
+                          {i18n('Check reading status')}
+                        </Button>
+                      ) : <LoadingLabel>{i18n('Preparing reading')}</LoadingLabel>
+                    ) : (
+                      <>
+                        <span>{quotedReport.quoted_cost} {i18n('pentacles')}</span>
+                        <Button disabled={pendingAction !== null} onClick={handlePurchase}>
+                          {pendingAction === 'purchase'
+                            ? <LoadingLabel>{i18n('Preparing reading')}</LoadingLabel>
+                            : i18n('Confirm and create reading')}
+                        </Button>
+                        <button type={'button'} onClick={() => setQuotedReport(null)}>
+                          {i18n('Cancel')}
+                        </button>
+                      </>
+                    )}
                   </div>
                 </section>
               ) : summary?.highlights.length ? (
@@ -349,7 +445,7 @@ export const TransitsPage = () => {
                 </section>
               ) : null)}
 
-              {actionError ? <p className={styles.error}>{actionError}</p> : null}
+              {actionError ? <p className={styles.error}>{i18n(actionError)}</p> : null}
             </>
           )
         ) : isHistoryLoading ? <SectionSkeleton history /> : historyError ? (
