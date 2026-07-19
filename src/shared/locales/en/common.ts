@@ -31,6 +31,7 @@ const TRANSLATIONS_EN = {
   'Authentication failed. Open the app from Telegram and try again':
     'Authentication failed. Open the app from Telegram and try again',
   'Confirming sign-in': 'Confirming sign-in',
+  'Opening the app': 'Opening the app',
   'Standard': 'Standard',
   'Gray': 'Gray',
   'Bronze': 'Bronze',

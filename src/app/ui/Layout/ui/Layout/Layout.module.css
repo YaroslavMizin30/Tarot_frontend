@@ -122,13 +122,16 @@
 }
 
 .authLoadingLayer {
-  position: absolute;
+  position: fixed;
   inset: 0;
-  z-index: 4;
+  z-index: 3000;
   display: flex;
   align-items: flex-start;
   justify-content: center;
   padding: clamp(36px, 10svh, 92px) 18px 24px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 42%, #2e253f 0%, #171522 46%, #0e0e16 100%);
   visibility: hidden;
   opacity: 0;
   pointer-events: none;
@@ -146,7 +149,7 @@
 
 .authStatus {
   position: relative;
-  z-index: 1;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -53,8 +53,11 @@ export const Layout = () => {
   const { theme } = user ?? {};
   const isAuthShell =
     isAuthenticating || Boolean(authError) || pathname === '/reg' || !user;
+  const isRegistrationCompleting = Boolean(user) && pathname === '/reg';
   const isAuthLoadingVisible =
-    isAuthenticating || (!user && !authError && pathname !== '/reg');
+    isAuthenticating ||
+    (!user && !authError && pathname !== '/reg') ||
+    isRegistrationCompleting;
   const canRenderOutlet =
     !isAuthenticating && (Boolean(user) || pathname === '/reg');
 
@@ -97,18 +100,6 @@ export const Layout = () => {
 
         </div>
 
-        <div
-          aria-hidden={!isAuthLoadingVisible}
-          className={`${styles.authLoadingLayer} ${
-            isAuthLoadingVisible ? styles.authLoadingLayerVisible : ''
-          }`}
-        >
-          <div aria-busy={isAuthLoadingVisible} className={styles.authStatus}>
-            <Spinner size={'l'} />
-            <span>{i18n('Confirming sign-in')}</span>
-          </div>
-        </div>
-
         {isLoading && !isAuthShell ? (
           <Spinner size={'l'} />
         ) : authError ? (
@@ -134,6 +125,25 @@ export const Layout = () => {
       </main>
 
       {!isAuthShell && <Footer />}
+
+      <div
+        aria-hidden={!isAuthLoadingVisible}
+        className={`${styles.authLoadingLayer} ${
+          isAuthLoadingVisible ? styles.authLoadingLayerVisible : ''
+        }`}
+      >
+        <StarsComposition />
+        <div aria-busy={isAuthLoadingVisible} className={styles.authStatus}>
+          <Spinner size={'l'} />
+          <span>
+            {i18n(
+              isRegistrationCompleting
+                ? 'Opening the app'
+                : 'Confirming sign-in',
+            )}
+          </span>
+        </div>
+      </div>
     </div>
   );
 };

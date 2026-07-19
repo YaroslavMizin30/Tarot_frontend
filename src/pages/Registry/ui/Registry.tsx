@@ -19,6 +19,7 @@ import { useCreateUser } from '../model/useCreateUser/useCreateUser';
 import styles from './Registry.module.css';
 
 type RegistrationStep = 'name' | 'birthDate';
+const REGISTRATION_EXIT_DURATION = 460;
 
 interface FormData {
   name: string;
@@ -124,7 +125,11 @@ export const Registry = () => {
 
   useEffect(() => {
     if (user) {
-      navigate('/', { replace: true });
+      const navigationTimeout = window.setTimeout(() => {
+        navigate('/', { replace: true });
+      }, REGISTRATION_EXIT_DURATION);
+
+      return () => window.clearTimeout(navigationTimeout);
     }
   }, [navigate, user]);
 
