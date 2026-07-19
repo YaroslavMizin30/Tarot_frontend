@@ -1,0 +1,176 @@
+.container {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 11px 12px 9px;
+  color: var(--text-primary);
+  background:
+    radial-gradient(
+      ellipse at 92% 0%,
+      color-mix(in srgb, var(--surface-control) 12%, transparent),
+      transparent 58%
+    ),
+    color-mix(in srgb, var(--surface-panel) 78%, transparent);
+  border: 1px solid color-mix(in srgb, var(--border-interactive) 52%, transparent);
+  border-radius: 16px;
+  box-shadow:
+    inset 1px 1px 0 var(--panel-gloss-highlight),
+    0 5px 17px color-mix(in srgb, var(--control-gloss-shadow) 68%, transparent);
+}
+
+.header {
+  display: flex;
+  margin-bottom: 8px;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.header span {
+  flex: 0 0 auto;
+  color: var(--text-secondary);
+  font-size: 9px;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: 0.68fr 1.45fr 1.18fr 0.78fr;
+  gap: 5px;
+}
+
+.metric {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 52px;
+  padding: 6px 7px;
+  flex-direction: column;
+  justify-content: center;
+  background: color-mix(in srgb, var(--surface-panel) 58%, transparent);
+  border: 1px solid color-mix(in srgb, var(--border-interactive) 24%, transparent);
+  border-radius: 10px;
+}
+
+.metric > span {
+  color: var(--text-secondary);
+  font-size: 8px;
+  line-height: 1.15;
+}
+
+.metric strong,
+.value strong {
+  display: -webkit-box;
+  margin-top: 3px;
+  overflow: hidden;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.15;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.value {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 4px;
+}
+
+.value strong {
+  min-width: 0;
+}
+
+.value small {
+  flex: 0 0 auto;
+  padding-bottom: 1px;
+  color: var(--text-secondary);
+  font-size: 8px;
+}
+
+.suitIcon {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  fill: none;
+  stroke: color-mix(in srgb, var(--surface-control) 82%, var(--text-primary));
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.45;
+}
+
+.primary {
+  align-items: center;
+  text-align: center;
+}
+
+.primary strong {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.primary > span {
+  margin-top: 3px;
+  white-space: normal;
+}
+
+.note {
+  margin: 6px 1px 0;
+  color: var(--text-secondary);
+  font-size: 8px;
+  line-height: 1.2;
+}
+
+@media (max-width: 430px) {
+  .metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .metric {
+    min-height: 46px;
+  }
+}
+
+@media (max-width: 350px) {
+  .container {
+    padding-inline: 9px;
+  }
+
+  .metrics {
+    gap: 4px;
+  }
+
+  .metric {
+    padding-inline: 5px;
+  }
+}
+
+@media (max-height: 720px) {
+  .container {
+    padding-top: 8px;
+    padding-bottom: 7px;
+  }
+
+  .header {
+    margin-bottom: 6px;
+  }
+
+  .metrics {
+    gap: 4px;
+  }
+
+  .metric {
+    min-height: 42px;
+    padding-block: 5px;
+  }
+
+  .note {
+    margin-top: 4px;
+  }
+}

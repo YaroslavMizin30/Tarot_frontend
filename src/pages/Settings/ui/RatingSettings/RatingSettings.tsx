@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent } from 'react';
+import { useMemo, useState, type ChangeEvent } from 'react';
 
 import { useUser } from '@/entities/User';
 import { useRating, type RatingPayload } from '@/entities/Rating';
@@ -11,7 +11,6 @@ import Spinner from '@/shared/ui/Spinner';
 import TextArea from '@/shared/ui/TextArea';
 
 import styles from './RatingSettings.module.css';
-import pageStyles from '../SettingsPage.module.css';
 
 type RatingField = Exclude<keyof RatingPayload, 'feedback'>;
 
@@ -41,35 +40,41 @@ const RatingSettings = (props: { onBackButtonClick: () => void }) => {
   const { rating, isLoading, isSubmitting, hasRated, error, submitRating } =
     useRating();
 
-  const [values, setValues] = useState<RatingPayload>(EMPTY_VALUES);
+  const [draftValues, setDraftValues] = useState<RatingPayload | null>(null);
   const [isSaved, setIsSaved] = useState(false);
   const [validationError, setValidationError] = useState<string | null>(null);
-  const [isInitialized, setIsInitialized] = useState(false);
+  const initialValues = useMemo<RatingPayload>(() => {
+    if (!rating) return EMPTY_VALUES;
 
-  if (rating && !isInitialized) {
-    setValues({
+    return {
       convenience: rating.convenience,
       aesthetics: rating.aesthetics,
       predictions: rating.predictions,
       tarotSpreads: rating.tarotSpreads,
       details: rating.details,
       feedback: rating.feedback ?? '',
-    });
-    setIsInitialized(true);
-  }
+    };
+  }, [rating]);
+  const values = draftValues ?? initialValues;
 
   if (!user) {
     return null;
   }
 
   const handleRatingChange = (field: RatingField) => (value: number) => {
-    setValues((prev) => ({ ...prev, [field]: value }));
+    setDraftValues((previous) => ({
+      ...(previous ?? initialValues),
+      [field]: value,
+    }));
     setIsSaved(false);
     setValidationError(null);
   };
 
   const handleFeedbackChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setValues((prev) => ({ ...prev, feedback: event.target.value }));
+    setDraftValues((previous) => ({
+      ...(previous ?? initialValues),
+      feedback: event.target.value,
+    }));
     setIsSaved(false);
     setValidationError(null);
   };
@@ -98,24 +103,24 @@ const RatingSettings = (props: { onBackButtonClick: () => void }) => {
   if (isLoading) {
     return (
       <>
-        <h3 className={pageStyles.title}>{i18n('Rate the app')}</h3>
+        <h3 className={styles.title}>{i18n('Rate the app')}</h3>
 
-        <div className={pageStyles.section}>
+        <div className={styles.section}>
           <div className={styles.loader}>
             <Spinner size={'l'} />
           </div>
         </div>
 
-        <ArrowButton className={pageStyles.arrow} onClick={onBackButtonClick} />
+        <ArrowButton className={styles.arrow} onClick={onBackButtonClick} />
       </>
     );
   }
 
   return (
     <>
-      <h3 className={pageStyles.title}>{i18n('Rate the app')}</h3>
+      <h3 className={styles.title}>{i18n('Rate the app')}</h3>
 
-      <div className={pageStyles.section}>
+      <div className={styles.section}>
         <div className={styles.form}>
           <div className={styles.criteria}>
             {RATING_FIELDS.map(({ field, labelKey }) => (
@@ -166,7 +171,7 @@ const RatingSettings = (props: { onBackButtonClick: () => void }) => {
         </div>
       </div>
 
-      <ArrowButton className={pageStyles.arrow} onClick={onBackButtonClick} />
+      <ArrowButton className={styles.arrow} onClick={onBackButtonClick} />
     </>
   );
 };

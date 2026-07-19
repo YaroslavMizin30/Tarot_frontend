@@ -1,7 +1,9 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, type ReactNode } from 'react';
 
 import { useUser, type TarotProfile } from '@/entities/User';
 import useLocales from '@/shared/hooks/useLocales';
+import TRANSLATIONS_EN from '@/shared/locales/en/reading';
+import TRANSLATIONS_RU from '@/shared/locales/ru/reading';
 import Modal from '@/shared/ui/Modal';
 
 import styles from './Personalization.module.css';
@@ -14,6 +16,15 @@ const REQUIRED_FIELDS = [
 ] as const;
 
 type RequiredField = (typeof REQUIRED_FIELDS)[number];
+
+interface PersonalizationProps {
+  renderTrigger?: (options: {
+    completed: number;
+    open: () => void;
+    progress: number;
+    total: number;
+  }) => ReactNode;
+}
 
 const STEPS: Array<{
   field: RequiredField | 'context';
@@ -79,8 +90,8 @@ const getCompletedFields = (profile: TarotProfile): RequiredField[] =>
     return hasValue || profile.completedSteps?.includes(field);
   });
 
-export const Personalization = () => {
-  const { i18n } = useLocales();
+export const Personalization = ({ renderTrigger }: PersonalizationProps = {}) => {
+  const { i18n, addTranslations, locale } = useLocales();
   const { user, updateUser } = useUser();
   const [isOpen, setIsOpen] = useState(false);
   const [stepIndex, setStepIndex] = useState(0);
@@ -91,6 +102,10 @@ export const Personalization = () => {
   useEffect(() => {
     setProfile(user?.tarotProfile ?? { version: 1 });
   }, [user?.tarotProfile]);
+
+  useEffect(() => {
+    addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
+  }, [addTranslations, locale]);
 
   const completedFields = useMemo(() => getCompletedFields(profile), [profile]);
   const progress = Math.round(
@@ -169,24 +184,33 @@ export const Personalization = () => {
 
   return (
     <>
-      <button className={styles.progressCard} onClick={openFlow} type={'button'}>
-        <span
-          aria-hidden={true}
-          className={styles.progressFill}
-          style={{ width: `${progress}%` }}
-        />
-        <span className={styles.progressCopy}>
-          <strong>
-            {i18n(progress === 100 ? 'Readings are personalized' : 'Make readings more personal')}
-          </strong>
-          <span>
-            {progress === 100
-              ? i18n('You can update your answers anytime')
-              : `${i18n('Personalization')} · ${completedFields.length} ${i18n('of')} ${REQUIRED_FIELDS.length}`}
+      {renderTrigger ? (
+        renderTrigger({
+          completed: completedFields.length,
+          open: openFlow,
+          progress,
+          total: REQUIRED_FIELDS.length,
+        })
+      ) : (
+        <button className={styles.progressCard} onClick={openFlow} type={'button'}>
+          <span
+            aria-hidden={true}
+            className={styles.progressFill}
+            style={{ width: `${progress}%` }}
+          />
+          <span className={styles.progressCopy}>
+            <strong>
+              {i18n(progress === 100 ? 'Readings are personalized' : 'Make readings more personal')}
+            </strong>
+            <span>
+              {progress === 100
+                ? i18n('You can update your answers anytime')
+                : `${i18n('Personalization')} · ${completedFields.length} ${i18n('of')} ${REQUIRED_FIELDS.length}`}
+            </span>
           </span>
-        </span>
-        <span aria-hidden={true} className={styles.progressValue}>{progress}%</span>
-      </button>
+          <span aria-hidden={true} className={styles.progressValue}>{progress}%</span>
+        </button>
+      )}
 
       <Modal
         className={styles.screen}

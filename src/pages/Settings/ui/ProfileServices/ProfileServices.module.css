@@ -1,0 +1,56 @@
+.container {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.container button {
+  display: inline-flex;
+  min-width: 0;
+  min-height: 40px;
+  padding: 7px 9px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 9px;
+  background: color-mix(in srgb, var(--surface-panel) 52%, transparent);
+  border: 1px solid color-mix(in srgb, var(--border-interactive) 30%, transparent);
+  border-radius: 11px;
+  cursor: pointer;
+}
+
+.container svg {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 15px;
+  fill: none;
+  stroke: currentcolor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+}
+
+.container span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.container button:active {
+  transform: translateY(1px);
+}
+
+.container button:focus-visible {
+  outline: 2px solid var(--border-interactive);
+  outline-offset: 2px;
+}
+
+@media (max-height: 720px) {
+  .container button {
+    min-height: 36px;
+    padding-block: 5px;
+  }
+}

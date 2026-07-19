@@ -1,21 +1,16 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 
-import GlobeIcon from '@/shared/assets/svg/common/globe.svg';
 import Theme from '@/shared/assets/svg/common/theme.svg';
 import AudioOn from '@/shared/assets/svg/common/audio_on.svg';
 import AudioOff from '@/shared/assets/svg/common/audio_off.svg';
 import useOutsideClick from '@/shared/hooks/useOutsideClick';
-import useLocales, { type Locale } from '@/shared/hooks/useLocales';
+import useLocales from '@/shared/hooks/useLocales';
 import Pentacle from '@/shared/ui/Pentacle';
 
 import { useUser } from '@/entities/User';
 
 import styles from './Header.module.css';
-
-const LANGS: { name: string; locale: Locale }[] = [
-  { name: 'English', locale: 'en' },
-  { name: 'Русский', locale: 'ru' },
-];
 
 const THEMES: { name: string; value: 'standard' | 'gray' | 'bronze' }[] = [
   { name: 'Standard', value: 'standard' },
@@ -26,23 +21,16 @@ const THEMES: { name: string; value: 'standard' | 'gray' | 'bronze' }[] = [
 const Header = (props: { isLoading?: boolean }) => {
   const { isLoading } = props;
 
-  const [isLangSwitcherVisible, setIsLangSwitcherVisible] = useState(false);
   const [isThemeSwitcherVisible, setIsThemeSwitcherVisible] = useState(false);
   const { user, updateUser } = useUser();
-
-  const handleLangSwitcherClick = () => {
-    setIsLangSwitcherVisible(!isLangSwitcherVisible);
-  };
+  const navigate = useNavigate();
+  const { i18n } = useLocales();
 
   const handleThemeSwitcherClick = () => {
     setIsThemeSwitcherVisible(!isThemeSwitcherVisible);
   };
 
-  const langSwitcherRef = useOutsideClick(() =>
-    setIsLangSwitcherVisible(false),
-  );
-
-  const themeSwitcherRef = useOutsideClick(() =>
+  const themeSwitcherRef = useOutsideClick<HTMLDivElement>(() =>
     setIsThemeSwitcherVisible(false),
   );
 
@@ -54,87 +42,81 @@ const Header = (props: { isLoading?: boolean }) => {
     await updateUser(`${user.id}`, { audio: !user?.audio });
   };
 
-  const { changeLanguage, locale, i18n } = useLocales();
-
   return (
     <header className={`${styles.header} ${isLoading ? styles.loading : ''}`}>
-      <div className={styles.leftSection}>
+      <button
+        aria-label={i18n('Open wallet')}
+        className={styles.leftSection}
+        disabled={!user || isLoading}
+        onClick={() => navigate('/billing')}
+        type={'button'}
+      >
         <span className={styles.balance}>
           {(user?.balance ?? 0) + (user?.bonusBalance ?? 0)}
         </span>
 
-        {user && <Pentacle className={styles.pentacle} />}
-      </div>
+        {user && <Pentacle />}
+      </button>
+
       <div
         className={`${styles.rightSection} ${isLoading ? styles['rightSection-loading'] : ''}`}
       >
-        <Theme
-          ref={themeSwitcherRef}
-          className={`${styles.moon} ${!user && styles.hidden}`}
-          onClick={handleThemeSwitcherClick}
-        />
+        <div className={styles.themeControl} ref={themeSwitcherRef}>
+          <button
+            aria-expanded={isThemeSwitcherVisible}
+            aria-haspopup={'menu'}
+            aria-label={i18n('Choose theme')}
+            className={styles.iconButton}
+            disabled={!user}
+            onClick={handleThemeSwitcherClick}
+            type={'button'}
+          >
+            <Theme className={styles.moon} aria-hidden={true} />
+          </button>
 
-        {isThemeSwitcherVisible && (
-          <div className={styles.themes}>
-            {THEMES.map((theme) => {
-              const handleThemeClick = async () => {
-                if (!user) {
-                  return;
-                }
+          {isThemeSwitcherVisible && (
+            <div className={styles.themes} role={'menu'}>
+              {THEMES.map((theme) => {
+                const isSelected = theme.value === user?.theme;
 
-                await updateUser(String(user.id), { theme: theme.value });
-              };
+                const handleThemeClick = async () => {
+                  if (!user) return;
 
-              return (
-                <div
-                  key={theme.value}
-                  className={`${styles.theme} ${theme.value === user?.theme ? styles.selected : ''}`}
-                  onClick={handleThemeClick}
-                >
-                  {i18n(theme.name)}
-                </div>
-              );
-            })}
-          </div>
-        )}
+                  setIsThemeSwitcherVisible(false);
+                  await updateUser(String(user.id), { theme: theme.value });
+                };
 
-        <GlobeIcon
-          ref={langSwitcherRef}
-          className={styles.globe}
-          onClick={handleLangSwitcherClick}
-        />
+                return (
+                  <button
+                    aria-checked={isSelected}
+                    className={`${styles.theme} ${isSelected ? styles.selected : ''}`}
+                    key={theme.value}
+                    onClick={handleThemeClick}
+                    role={'menuitemradio'}
+                    type={'button'}
+                  >
+                    {i18n(theme.name)}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        </div>
 
-        {isLangSwitcherVisible && (
-          <div className={styles.langs}>
-            {LANGS.map((lang) => {
-              const handleLocaleClick = () => {
-                changeLanguage(lang.locale);
-              };
-
-              return (
-                <div
-                  key={lang.locale}
-                  className={`${styles.lang} ${locale === lang.locale ? styles.selected : ''}`}
-                  onClick={handleLocaleClick}
-                >
-                  {lang.name}
-                </div>
-              );
-            })}
-          </div>
-        )}
-
-        {user?.audio ? (
-          <AudioOn
-            onClick={handleAudioClick}
-            className={`${styles.audio} ${!user && styles.hidden}`}
-          />
-        ) : (
-          <AudioOff
-            onClick={handleAudioClick}
-            className={`${styles.audio} ${!user && styles.hidden}`}
-          />
-        )}
+        <button
+          aria-label={i18n(user?.audio ? 'Sound enabled' : 'Sound disabled')}
+          aria-pressed={Boolean(user?.audio)}
+          className={styles.iconButton}
+          disabled={!user}
+          onClick={handleAudioClick}
+          type={'button'}
+        >
+          {user?.audio ? (
+            <AudioOn className={styles.audio} aria-hidden={true} />
+          ) : (
+            <AudioOff className={styles.audio} aria-hidden={true} />
+          )}
+        </button>
       </div>
     </header>
   );

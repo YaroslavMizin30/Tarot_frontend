@@ -8,10 +8,18 @@
 }
 
 .title {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin: 0 0 10px;
   text-align: center;
   color: var(--text-primary);
+}
+
+.description {
+  width: min(calc(100% - 36px), 380px);
+  margin: 0 0 18px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.45;
+  text-align: center;
 }
 
 .menu {
@@ -34,4 +42,14 @@
   margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
+}
+
+@media (max-height: 650px) {
+  .description {
+    margin-bottom: 12px;
+  }
+
+  .menu > .button + .button {
+    margin-top: 12px;
+  }
 }
