@@ -22,6 +22,7 @@ const DailyReflection = lazy(() => import('@/widgets/DailyReflection'));
 const loadDaySky = () => import('@/widgets/DaySky');
 
 const SKY_MOUNT_DELAY = 560;
+const SKY_FADE_IN_DURATION = 2400;
 
 const MainSkeleton = ({ className = '' }: { className?: string }) => (
   <div
@@ -60,6 +61,7 @@ export const MainPage = () => {
       <DeferredComposition
         className={styles.skyLayer}
         delay={SKY_MOUNT_DELAY}
+        fadeInDuration={SKY_FADE_IN_DURATION}
         loader={loadDaySky}
       />
 

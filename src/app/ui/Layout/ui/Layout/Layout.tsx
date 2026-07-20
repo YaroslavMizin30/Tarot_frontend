@@ -37,10 +37,14 @@ const loadStarsComposition = () => import('../StarsComposition');
 const loadTorchComposition = () =>
   import('../TorchComposition/TorchComposition');
 const AUTH_BACKGROUND_EXIT_DELAY = 460;
+const TAROT_BACKGROUND_FADE_IN_DURATION = 2400;
+const ROUTE_LOADING_REVEAL_DELAY = 220;
+const ROUTE_ENTRY_FADE_DURATION = 900;
 
 export const Layout = () => {
-  const { state } = useNavigation();
-  const { pathname } = useLocation();
+  const { location: pendingLocation, state } = useNavigation();
+  const location = useLocation();
+  const { pathname } = location;
 
   const { addTranslations, i18n, locale } = useLocales();
 
@@ -64,6 +68,9 @@ export const Layout = () => {
   const [isAuthLoadingVisible, setIsAuthLoadingVisible] = useState(true);
   const [isAuthBackgroundMounted, setIsAuthBackgroundMounted] =
     useState(true);
+  const [animatedRouteKey, setAnimatedRouteKey] = useState<string | null>(
+    null,
+  );
   const canRenderOutlet =
     !isAuthenticating && (Boolean(user) || pathname === '/reg');
   const hasTarotBackground =
@@ -122,6 +129,34 @@ export const Layout = () => {
   }, [addTranslations, locale]);
 
   useEffect(() => {
+    if (!isLoading || isAuthShell || !pendingLocation?.key) {
+      return;
+    }
+
+    const revealTimeout = window.setTimeout(() => {
+      setAnimatedRouteKey(pendingLocation.key);
+    }, ROUTE_LOADING_REVEAL_DELAY);
+
+    return () => {
+      window.clearTimeout(revealTimeout);
+    };
+  }, [isAuthShell, isLoading, pendingLocation?.key]);
+
+  useEffect(() => {
+    if (!animatedRouteKey || isLoading) {
+      return;
+    }
+
+    const resetTimeout = window.setTimeout(() => {
+      setAnimatedRouteKey(null);
+    }, animatedRouteKey === location.key ? ROUTE_ENTRY_FADE_DURATION : 0);
+
+    return () => {
+      window.clearTimeout(resetTimeout);
+    };
+  }, [animatedRouteKey, isLoading, location.key]);
+
+  useEffect(() => {
     if (theme) {
       document.documentElement.setAttribute('data-theme', theme);
       window.Telegram?.WebApp?.setHeaderColor(THEME_CONFIG[theme].header);
@@ -171,6 +206,7 @@ export const Layout = () => {
           )}
           {hasTarotBackground && (
             <DeferredComposition
+              fadeInDuration={TAROT_BACKGROUND_FADE_IN_DURATION}
               isExiting={isLoading}
               loader={loadTorchComposition}
             />
@@ -203,7 +239,20 @@ export const Layout = () => {
               isLoading && !isAuthShell ? styles.routeContentLeaving : ''
             }`}
           >
-            <Outlet context={{ user }} />
+            {isAuthShell ? (
+              <Outlet context={{ user }} />
+            ) : (
+              <div
+                className={`${styles.routePage} ${
+                  animatedRouteKey === location.key
+                    ? styles.routePageEntering
+                    : ''
+                }`}
+                key={pathname}
+              >
+                <Outlet context={{ user }} />
+              </div>
+            )}
           </div>
         ) : null}
       </main>
