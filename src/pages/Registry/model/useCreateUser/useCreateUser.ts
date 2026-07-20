@@ -2,15 +2,12 @@ import { useState } from 'react';
 
 import {
   authenticateWithTelegram,
-  insertRaw,
+  completeUserOnboarding,
 } from '@/shared/api/supabase/index.ts';
 import useLocales from '@/shared/hooks/useLocales';
 
 import { useUser } from '@/entities/User/index.ts';
-import { sendAnalytics } from '@/entities/Analytics';
 import { createChart } from '@/widgets/NatalChart/api/createChart';
-
-import { getZodiacSign } from '../../lib/getZodiacSign.ts';
 
 import type { CreateUserOptions } from './useCreateUser.types.ts';
 
@@ -22,7 +19,6 @@ export const useCreateUser = () => {
   const [error, setError] = useState<string | null | unknown>(null);
 
   const createUser = async (options: CreateUserOptions) => {
-    let profileCreated = false;
     const {
       day,
       year,
@@ -37,34 +33,16 @@ export const useCreateUser = () => {
     const date = `${day}.${month}.${year}`;
     const place = country && city ? `${country}, ${city}` : '';
 
-    const zodiac = getZodiacSign(Number(day), Number(month));
-
     try {
       setError(null);
       setIsLoading(true);
 
-      const { telegramId: id } = await authenticateWithTelegram();
-
-      const inserted = await insertRaw('users', {
-        id,
+      await authenticateWithTelegram();
+      await completeUserOnboarding({
         userName: name,
         birthDate: date,
         birthPlace: place,
         birthTime: time ?? '',
-        sign: zodiac,
-      });
-
-      if (!inserted?.length) {
-        throw new Error('USER_CREATION_FAILED');
-      }
-      profileCreated = true;
-
-      insertRaw('activity', { userId: id });
-
-      sendAnalytics(id, {
-        registered: true,
-        lastActionAt: new Date().toISOString(),
-        tarotSpreadsCount: 0,
       });
 
       if (withNatalChart) {
@@ -82,13 +60,17 @@ export const useCreateUser = () => {
         });
       }
 
-      await refetchUser();
-
-    } catch (e) {
-      if (profileCreated) {
-        await refetchUser();
+      const result = await refetchUser();
+      if (!result.data) {
+        throw new Error('USER_ONBOARDING_NOT_VISIBLE');
       }
-      setError(e);
+    } catch (e) {
+      // The transaction may have committed even if its HTTP response was
+      // interrupted. Re-read the profile before presenting a retry error.
+      const result = await refetchUser();
+      if (!result.data) {
+        setError(e);
+      }
     } finally {
       setIsLoading(false);
     }
