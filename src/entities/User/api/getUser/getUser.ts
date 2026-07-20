@@ -9,7 +9,7 @@ interface UserResponse extends Omit<User, 'natalChart'> {
 
 export const getUser = async (id: string | number): Promise<User | null> => {
   const data = await getDataFromDB<UserResponse>('users', {
-    key: 'id',
+    key: 'app_user_id',
     value: String(id),
   }, { throwOnError: true });
 

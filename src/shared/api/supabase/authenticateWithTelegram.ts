@@ -6,20 +6,33 @@ export type { AuthenticatedTelegramIdentity } from '@/shared/types/identity';
 
 interface TelegramAuthResponse {
   tokenHash: string;
+  appUserId: string;
   telegramId: number;
 }
 
 let authenticationPromise: Promise<AuthenticatedTelegramIdentity> | null = null;
+const UUID_PATTERN =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 const createAuthenticatedIdentity = (
   authUserId: string,
+  appUserId: string,
   telegramId: number,
 ): AuthenticatedTelegramIdentity => ({
+  appUserId,
   authUserId,
   provider: 'telegram',
   externalUserId: String(telegramId),
   telegramId,
 });
+
+const appUserIdFromMetadata = (metadata: Record<string, unknown>) => {
+  const appUserId = metadata.app_user_id;
+
+  return typeof appUserId === 'string' && UUID_PATTERN.test(appUserId)
+    ? appUserId
+    : null;
+};
 
 const telegramIdFromMetadata = (metadata: Record<string, unknown>) => {
   const telegramId = Number(metadata.telegram_id);
@@ -54,6 +67,16 @@ const clearLocalSession = async () => {
   }
 };
 
+const resolveAppUserId = async (metadata: Record<string, unknown>) => {
+  const metadataAppUserId = appUserIdFromMetadata(metadata);
+  if (metadataAppUserId) return metadataAppUserId;
+
+  const { data, error } = await window.supabase.rpc('current_app_user_id');
+  return !error && typeof data === 'string' && UUID_PATTERN.test(data)
+    ? data
+    : null;
+};
+
 const getReusableSession = async (
   expectedTelegramId: number | null,
 ): Promise<AuthenticatedTelegramIdentity | null> => {
@@ -64,10 +87,14 @@ const getReusableSession = async (
   const telegramId = data.user
     ? telegramIdFromMetadata(data.user.app_metadata)
     : null;
+  const appUserId = data.user
+    ? await resolveAppUserId(data.user.app_metadata)
+    : null;
 
   if (
     error ||
     !data.user ||
+    appUserId === null ||
     telegramId === null ||
     (expectedTelegramId !== null && telegramId !== expectedTelegramId)
   ) {
@@ -75,7 +102,7 @@ const getReusableSession = async (
     return null;
   }
 
-  return createAuthenticatedIdentity(data.user.id, telegramId);
+  return createAuthenticatedIdentity(data.user.id, appUserId, telegramId);
 };
 
 const authenticateInDevelopment = async (): Promise<AuthenticatedTelegramIdentity> => {
@@ -94,15 +121,19 @@ const authenticateInDevelopment = async (): Promise<AuthenticatedTelegramIdentit
   const telegramId = data.user
     ? telegramIdFromMetadata(data.user.app_metadata)
     : null;
+  const appUserId = data.user
+    ? await resolveAppUserId(data.user.app_metadata)
+    : null;
   if (
     error ||
     !data.user ||
+    appUserId === null ||
     telegramId === null
   ) {
     throw error ?? new Error('DEV_TELEGRAM_IDENTITY_REQUIRED');
   }
 
-  return createAuthenticatedIdentity(data.user.id, telegramId);
+  return createAuthenticatedIdentity(data.user.id, appUserId, telegramId);
 };
 
 const authenticateInTelegram = async (): Promise<AuthenticatedTelegramIdentity> => {
@@ -120,6 +151,8 @@ const authenticateInTelegram = async (): Promise<AuthenticatedTelegramIdentity> 
   if (
     error ||
     !data?.tokenHash ||
+    typeof data.appUserId !== 'string' ||
+    !UUID_PATTERN.test(data.appUserId) ||
     !Number.isSafeInteger(data.telegramId) ||
     data.telegramId <= 0
   ) {
@@ -135,9 +168,14 @@ const authenticateInTelegram = async (): Promise<AuthenticatedTelegramIdentity> 
   const verifiedTelegramId = verification.user
     ? telegramIdFromMetadata(verification.user.app_metadata)
     : null;
+  const verifiedAppUserId = verification.user
+    ? await resolveAppUserId(verification.user.app_metadata)
+    : null;
   if (
     verificationError ||
     !verification.user ||
+    verifiedAppUserId === null ||
+    verifiedAppUserId !== data.appUserId ||
     verifiedTelegramId === null ||
     verifiedTelegramId !== data.telegramId
   ) {
@@ -146,6 +184,7 @@ const authenticateInTelegram = async (): Promise<AuthenticatedTelegramIdentity> 
 
   return createAuthenticatedIdentity(
     verification.user.id,
+    verifiedAppUserId,
     verifiedTelegramId,
   );
 };

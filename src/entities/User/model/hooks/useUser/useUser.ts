@@ -24,7 +24,7 @@ export const useUser = () => {
     queryFn: async () => {
       const identity = await authenticateCurrentPlatform();
 
-      return getUser(identity.externalUserId);
+      return getUser(identity.appUserId);
     },
     retry: false,
   });

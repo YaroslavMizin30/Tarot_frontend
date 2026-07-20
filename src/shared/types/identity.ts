@@ -6,6 +6,7 @@ export interface ExternalIdentity {
 }
 
 export interface AuthenticatedIdentity extends ExternalIdentity {
+  appUserId: string;
   authUserId: string;
 }
 
