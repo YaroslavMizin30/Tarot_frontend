@@ -322,8 +322,10 @@
   width: min(100%, 310px);
   margin-top: 5px;
   padding: 3px;
+  border: 1px solid var(--border-primary);
   border: 1px solid color-mix(in srgb, var(--border-primary) 62%, transparent);
   border-radius: 999px;
+  background: var(--background-primary);
   background: color-mix(in srgb, var(--background-primary) 56%, transparent);
   box-shadow: inset 0 1px 8px rgb(20 10 40 / 10%);
 }
@@ -331,30 +333,16 @@
 .modeSwitch button {
   min-height: 32px;
   padding: 6px 14px;
-  color: var(--text-on-control);
+  color: var(--text-primary);
   font: inherit;
   font-size: 12px;
-  border: 1px solid color-mix(in srgb, var(--control-gloss-border) 72%, transparent);
+  border: 1px solid transparent;
   border-radius: 999px;
-  background:
-    radial-gradient(
-      ellipse at 14% 0%,
-      color-mix(in srgb, var(--control-gloss-highlight) 72%, transparent) 0%,
-      transparent 54%
-    ),
-    linear-gradient(
-      142deg,
-      color-mix(in srgb, var(--control-gloss-sheen) 72%, transparent) 0%,
-      transparent 48%,
-      color-mix(in srgb, var(--control-gloss-pressed) 62%, transparent) 100%
-    ),
-    color-mix(in srgb, var(--surface-control) 78%, var(--gradient-secondary));
+  background: transparent;
   cursor: pointer;
-  box-shadow:
-    inset 1px 1px 0 color-mix(in srgb, var(--control-gloss-highlight) 68%, transparent),
-    inset -2px -3px 7px color-mix(in srgb, var(--control-gloss-pressed) 58%, transparent),
-    0 2px 7px color-mix(in srgb, var(--control-gloss-shadow) 55%, transparent);
-  transition: color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+  box-shadow: none;
+  opacity: 0.68;
+  transition: color 180ms ease, background 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
 }
 
 .modeSwitch button:hover {
@@ -363,7 +351,7 @@
 
 .modeSwitch .activeMode {
   color: var(--text-on-control);
-  border-color: color-mix(in srgb, var(--control-gloss-border) 96%, white 4%);
+  border-color: var(--control-gloss-border);
   background:
     radial-gradient(
       ellipse at 14% 0%,
@@ -377,6 +365,7 @@
       var(--control-gloss-pressed) 100%
     ),
     var(--surface-control);
+  opacity: 1;
   box-shadow:
     inset 1px 1px 0 var(--control-gloss-highlight),
     inset -3px -3px 9px var(--control-gloss-pressed),
@@ -385,6 +374,11 @@
 }
 
 .visual {
+  --text-primary: #f8f1fd;
+  --text-secondary: #ded0e9;
+  --text-default: #f8f1fd;
+  --border-primary: rgb(235 220 248 / 42%);
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -392,6 +386,11 @@
 }
 
 .modeIntro {
+  --text-primary: #f8f1fd;
+  --text-secondary: #ded0e9;
+  --text-default: #f8f1fd;
+  --border-primary: rgb(235 220 248 / 42%);
+
   display: flex;
   width: min(100%, 380px);
   height: 142px;
@@ -405,6 +404,23 @@
     radial-gradient(circle at 15% 0%, rgb(255 255 255 / 9%), transparent 48%),
     linear-gradient(145deg, rgb(255 255 255 / 7%), rgb(64 38 92 / 9%));
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 12%);
+  color: var(--text-primary);
+}
+
+.readingSections,
+.secondaryAction {
+  --text-primary: #f8f1fd;
+  --text-secondary: #ded0e9;
+  --text-default: #f8f1fd;
+  --border-primary: rgb(235 220 248 / 42%);
+
+  color: var(--text-primary);
+}
+
+.readingSections {
+  display: flex;
+  width: 100%;
+  justify-content: center;
 }
 
 .modeIntro > div {
@@ -582,7 +598,21 @@ button.foundationCard {
   position: relative;
   padding: 8px;
   color: var(--text-on-control);
+  border-color: var(--control-gloss-border);
   border-color: color-mix(in srgb, var(--control-gloss-border) 88%, transparent);
+  background:
+    radial-gradient(
+      ellipse at 14% 0%,
+      var(--control-gloss-highlight) 0%,
+      transparent 54%
+    ),
+    linear-gradient(
+      142deg,
+      var(--control-gloss-sheen) 0%,
+      transparent 46%,
+      var(--control-gloss-pressed) 100%
+    ),
+    var(--surface-control);
   background:
     radial-gradient(
       ellipse at 14% 0%,
@@ -1409,7 +1439,6 @@ button.foundationCard p {
     background: var(--background-primary);
   }
 
-  .modeSwitch button,
   button.foundationCard {
     color: var(--text-on-control);
     border-color: var(--control-gloss-border);
@@ -1433,7 +1462,21 @@ button.foundationCard p {
   }
 
   .modeSwitch .activeMode {
+    color: var(--text-on-control);
     border-color: var(--text-on-control);
+    background:
+      radial-gradient(
+        ellipse at 14% 0%,
+        var(--control-gloss-highlight) 0%,
+        transparent 55%
+      ),
+      linear-gradient(
+        142deg,
+        var(--control-gloss-sheen) 0%,
+        transparent 46%,
+        var(--control-gloss-pressed) 100%
+      ),
+      var(--surface-control);
     box-shadow:
       inset 1px 1px 0 var(--control-gloss-highlight),
       inset -3px -3px 9px var(--control-gloss-pressed),

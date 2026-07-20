@@ -19,8 +19,10 @@
 
 .header {
   padding: 16px;
+  border: 1px solid var(--border-primary);
   border: 1px solid color-mix(in srgb, var(--border-primary) 28%, transparent);
   border-radius: 18px;
+  background: var(--surface-panel);
   background:
     radial-gradient(
       ellipse at 90% 0%,
@@ -94,9 +96,11 @@
   margin-top: 8px;
   padding: 10px 12px;
   flex-direction: column;
+  border-left: 2px solid var(--surface-control);
   border-left: 2px solid
     color-mix(in srgb, var(--surface-control) 72%, transparent);
   border-radius: 0 10px 10px 0;
+  background: var(--surface-panel);
   background: color-mix(in srgb, var(--surface-panel) 54%, transparent);
 }
 
@@ -135,8 +139,10 @@
   padding: 10px;
   flex-direction: column;
   overflow: hidden;
+  border: 1px solid var(--border-primary);
   border: 1px solid color-mix(in srgb, var(--border-primary) 24%, transparent);
   border-radius: 14px;
+  background: var(--surface-panel);
   background: color-mix(in srgb, var(--surface-panel) 70%, transparent);
 }
 

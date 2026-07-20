@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useState } from 'react';
+import { forwardRef, useState } from 'react';
 import classNames from 'classnames/bind';
 
 import type { TarotCardProps } from './Card.props';
@@ -27,12 +27,8 @@ export const TarotCard = forwardRef<HTMLDivElement, TarotCardProps>(
       size = 'l',
     } = props;
 
-    const [isCardReversed, setIsReversed] = useState(isReversed);
     const [isLoaded, setIsLoaded] = useState(!hasLoadingState);
-
-    useEffect(() => {
-      setIsReversed(isReversed);
-    }, [isReversed]);
+    const isCardReversed = Boolean(isReversed);
 
     const handleImageLoad = () => {
       if (hasLoadingState) {
@@ -42,15 +38,13 @@ export const TarotCard = forwardRef<HTMLDivElement, TarotCardProps>(
 
     const handleCardClick = () => {
       if (canTurnOver && isCardReversed) {
-        setIsReversed(!isCardReversed);
-
         onClick();
       }
     };
 
     return (
       <div
-        className={`${styles.container} ${canTurnOver ? styles.clickable : ''} ${className} ${isInverted ? styles.inverted : ''} ${styles[`container-${size}`]}`}
+        className={`${styles.container} ${canTurnOver ? styles.clickable : ''} ${className} ${styles[`container-${size}`]}`}
         onClick={handleCardClick}
         style={style}
         ref={ref}
@@ -64,20 +58,16 @@ export const TarotCard = forwardRef<HTMLDivElement, TarotCardProps>(
         >
           <div className={cx('back', size, { backShimmer: hasBackShimmer })} />
 
-          <div className={cx('front', size)}>
+          <div className={cx('front', size, { inverted: isInverted })}>
             <div className={styles['image-wrapper']}>
               <img
-                className={`${styles.image} ${isInverted && !isCardReversed ? styles.reversed : ''} ${styles[`image-${size}`]}`}
+                className={`${styles.image} ${styles[`image-${size}`]}`}
                 src={`/assets/images/card/${name}.png`}
                 onLoad={handleImageLoad}
               />
             </div>
 
-            <div
-              className={cx('footer', {
-                reversed: isInverted && !isCardReversed,
-              })}
-            >
+            <div className={styles.footer}>
               <h2 className={`${styles.name} ${styles[`name-${size}`]}`}>
                 {localizedName}
               </h2>

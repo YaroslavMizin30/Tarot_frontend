@@ -44,6 +44,24 @@
     ),
     radial-gradient(
       ellipse at 24% 66%,
+      var(--astrology-nebula),
+      transparent 42%
+    ),
+    radial-gradient(
+      ellipse 78% 61% at 50% 50%,
+      var(--astrology-sky-top) 0%,
+      var(--astrology-sky-middle) 38%,
+      var(--astrology-sky-bottom) 66%,
+      transparent 91%
+    );
+  background:
+    radial-gradient(
+      ellipse at 64% 34%,
+      var(--astrology-nebula),
+      transparent 46%
+    ),
+    radial-gradient(
+      ellipse at 24% 66%,
       color-mix(in srgb, var(--astrology-nebula) 66%, transparent),
       transparent 42%
     ),
@@ -69,6 +87,23 @@
   left: -28%;
   width: 156%;
   height: 58%;
+  background:
+    radial-gradient(
+      ellipse 38% 31% at 22% 59%,
+      var(--astrology-nebula) 0%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse 44% 27% at 51% 47%,
+      var(--astrology-milky-core) 0%,
+      var(--astrology-nebula) 52%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse 36% 32% at 81% 42%,
+      var(--astrology-milky-core) 0%,
+      transparent 100%
+    );
   background:
     radial-gradient(
       ellipse 38% 31% at 22% 59%,
@@ -156,6 +191,11 @@
   position: absolute;
   width: 58%;
   height: 52%;
+  background: radial-gradient(
+    ellipse,
+    var(--astrology-nebula) 0%,
+    transparent 74%
+  );
   background: radial-gradient(
     ellipse,
     var(--astrology-nebula) 0%,

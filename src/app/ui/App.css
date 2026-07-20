@@ -64,6 +64,13 @@ body {
   --tarot-scene-haze-soft: rgb(224 210 232 / 19%);
   --tarot-table-spot: rgb(28 22 31 / 68%);
   --tarot-table-spot-mid: rgb(55 35 58 / 38%);
+  --tarot-progress-panel: rgb(34 27 38 / 18%);
+  --tarot-progress-border: rgb(121 82 134 / 32%);
+  --tarot-progress-track: rgb(121 82 134 / 46%);
+  --tarot-progress-node: rgb(255 255 255 / 22%);
+  --tarot-progress-node-border: rgb(121 82 134 / 76%);
+  --tarot-progress-complete: rgb(118 81 138 / 72%);
+  --tarot-progress-shadow: rgb(34 27 38 / 34%);
 }
 
 :root[data-theme='gray'] {
@@ -116,6 +123,13 @@ body {
   --tarot-scene-haze-soft: rgb(202 206 220 / 20%);
   --tarot-table-spot: rgb(23 25 32 / 69%);
   --tarot-table-spot-mid: rgb(42 46 58 / 39%);
+  --tarot-progress-panel: rgb(27 30 38 / 18%);
+  --tarot-progress-border: rgb(89 96 119 / 34%);
+  --tarot-progress-track: rgb(89 96 119 / 48%);
+  --tarot-progress-node: rgb(255 255 255 / 20%);
+  --tarot-progress-node-border: rgb(89 96 119 / 78%);
+  --tarot-progress-complete: rgb(80 88 112 / 74%);
+  --tarot-progress-shadow: rgb(27 30 38 / 34%);
 }
 
 :root[data-theme='bronze'] {
@@ -168,6 +182,13 @@ body {
   --tarot-scene-haze-soft: rgb(220 184 149 / 20%);
   --tarot-table-spot: rgb(35 24 19 / 70%);
   --tarot-table-spot-mid: rgb(66 40 26 / 40%);
+  --tarot-progress-panel: rgb(43 29 22 / 18%);
+  --tarot-progress-border: rgb(119 70 43 / 34%);
+  --tarot-progress-track: rgb(119 70 43 / 48%);
+  --tarot-progress-node: rgb(255 248 238 / 21%);
+  --tarot-progress-node-border: rgb(119 70 43 / 78%);
+  --tarot-progress-complete: rgb(112 67 38 / 74%);
+  --tarot-progress-shadow: rgb(43 29 22 / 36%);
 }
 
 .custom-scrollbar {

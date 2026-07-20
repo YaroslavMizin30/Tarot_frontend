@@ -122,7 +122,9 @@
 
 .detailsButton {
   color: var(--text-primary);
+  border-color: var(--border-primary);
   border-color: color-mix(in srgb, var(--border-primary) 55%, transparent);
+  background: var(--surface-panel);
   background: color-mix(in srgb, var(--surface-panel) 82%, transparent);
 }
 
@@ -182,6 +184,7 @@
   align-items: center;
   min-height: 52px;
   padding: max(8px, env(safe-area-inset-top)) 18px 8px;
+  background: var(--gradient-secondary);
   background: color-mix(in srgb, var(--gradient-secondary) 82%, transparent);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);

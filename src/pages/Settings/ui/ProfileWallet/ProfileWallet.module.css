@@ -8,6 +8,7 @@
   align-items: center;
   gap: 10px;
   color: var(--text-primary);
+  background: var(--gradient-secondary);
   background:
     radial-gradient(
       ellipse at 8% 0%,
@@ -15,6 +16,7 @@
       transparent 54%
     ),
     color-mix(in srgb, var(--surface-panel) 80%, transparent);
+  border: 1px solid var(--border-interactive);
   border: 1px solid color-mix(in srgb, var(--border-interactive) 54%, transparent);
   border-radius: 16px;
   box-shadow:
@@ -58,6 +60,7 @@
   padding-left: 10px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
+  border-left: 1px solid var(--border-interactive);
   border-left: 1px solid color-mix(in srgb, var(--border-interactive) 28%, transparent);
 }
 

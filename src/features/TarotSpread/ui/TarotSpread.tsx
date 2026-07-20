@@ -214,10 +214,14 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
         <span className={styles.selectionEyebrow}>
           {selectedCount} / {cardsCount}
         </span>
-        <h3>{i18n(isSelectionComplete ? 'Cards are selected' : 'Choose a card')}</h3>
-        <p>{i18n(isSelectionComplete
-          ? 'Your selection is saved'
-          : 'Focus on your question and choose the card that draws you')}</p>
+        <h3>
+          {i18n(isSelectionComplete ? 'Cards are selected' : 'Choose a card')}
+        </h3>
+        <p>
+          {i18n(isSelectionComplete
+            ? 'Your selection is saved'
+            : 'Focus on your question and choose the card that draws you')}
+        </p>
 
         <div
           className={styles.selectedCards}
@@ -284,7 +288,7 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
           const count = idx + 1;
 
           return (
-              <Placeholder
+            <Placeholder
               key={`${title} ${index}`}
               style={style}
               index={index}
@@ -308,7 +312,7 @@ export const TarotSpread: FC<TarotSpreadProps> = (props) => {
                 isInverted={isInverted}
                 onClick={handleCardClick}
                 canTurnOver={!isFinished && count === activeCard}
-                isReversed={!isFinished}
+                isReversed={!isFinished && count >= activeCard}
               />
             </Placeholder>
           );

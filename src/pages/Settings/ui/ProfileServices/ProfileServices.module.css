@@ -16,7 +16,9 @@
   color: var(--text-secondary);
   font: inherit;
   font-size: 9px;
+  background: var(--gradient-secondary);
   background: color-mix(in srgb, var(--surface-panel) 52%, transparent);
+  border: 1px solid var(--border-interactive);
   border: 1px solid color-mix(in srgb, var(--border-interactive) 30%, transparent);
   border-radius: 11px;
   cursor: pointer;

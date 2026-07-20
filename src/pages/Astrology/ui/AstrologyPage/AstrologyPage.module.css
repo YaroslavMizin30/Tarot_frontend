@@ -54,6 +54,19 @@
       transparent 46%,
       var(--control-gloss-pressed) 100%
     ),
+    var(--surface-control);
+  background:
+    radial-gradient(
+      ellipse at 14% 0%,
+      var(--control-gloss-highlight) 0%,
+      transparent 54%
+    ),
+    linear-gradient(
+      142deg,
+      var(--control-gloss-sheen) 0%,
+      transparent 46%,
+      var(--control-gloss-pressed) 100%
+    ),
     color-mix(in srgb, var(--menu-tint) 34%, var(--surface-control));
   box-shadow:
     inset 1px 1px 0 var(--control-gloss-highlight),
@@ -73,6 +86,7 @@
   width: 20px;
   height: 20px;
   opacity: 0.9;
+  filter: drop-shadow(0 2px 4px rgb(23 10 42 / 24%));
   filter:
     drop-shadow(0 2px 4px rgb(23 10 42 / 24%))
     drop-shadow(0 0 5px color-mix(in srgb, var(--menu-tint) 48%, transparent));
@@ -97,6 +111,10 @@
 
 .primaryMenuButton {
   grid-column: span 2;
+  box-shadow:
+    inset 1px 1px 0 var(--control-gloss-highlight),
+    inset -3px -3px 9px var(--control-gloss-pressed),
+    0 7px 18px var(--control-gloss-shadow);
   box-shadow:
     inset 1px 1px 0 var(--control-gloss-highlight),
     inset -3px -3px 9px var(--control-gloss-pressed),

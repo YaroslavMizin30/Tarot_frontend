@@ -9,6 +9,11 @@
   padding: 15px 16px;
   overflow: hidden;
   color: var(--text-primary);
+  background: linear-gradient(
+    145deg,
+    var(--gradient-secondary),
+    var(--gradient-primary)
+  );
   background:
     radial-gradient(
       circle at 12% 22%,
@@ -20,6 +25,7 @@
       color-mix(in srgb, var(--surface-panel) 92%, transparent),
       color-mix(in srgb, var(--surface-panel) 62%, transparent)
     );
+  border: 1px solid var(--border-interactive);
   border: 1px solid color-mix(in srgb, var(--border-interactive) 72%, transparent);
   border-radius: 18px;
   box-shadow:
@@ -35,6 +41,11 @@
   width: 145px;
   height: 145px;
   pointer-events: none;
+  background: radial-gradient(
+    circle,
+    var(--surface-control),
+    transparent 68%
+  );
   background: radial-gradient(
     circle,
     color-mix(in srgb, var(--surface-control) 12%, transparent),

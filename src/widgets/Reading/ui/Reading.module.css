@@ -18,13 +18,9 @@
   margin: 8px 0;
   padding: 5px;
   box-sizing: border-box;
-  border: 1px solid color-mix(in srgb, var(--border-primary) 20%, transparent);
+  border: 1px solid var(--tarot-progress-border);
   border-radius: 11px;
-  background: color-mix(
-    in srgb,
-    var(--tarot-scene-center) 18%,
-    transparent
-  );
+  background: var(--tarot-progress-panel);
 }
 
 .progress::before {
@@ -34,7 +30,7 @@
   right: calc(100% / 6);
   left: calc(100% / 6);
   height: 1px;
-  background: color-mix(in srgb, var(--border-secondary) 42%, transparent);
+  background: var(--tarot-progress-track);
 }
 
 .step {
@@ -44,9 +40,9 @@
   justify-content: center;
   font-size: 11px;
   line-height: 1;
-  color: var(--text-secondary);
-  text-shadow: 0 1px 5px
-    color-mix(in srgb, var(--tarot-scene-center) 34%, transparent);
+  color: var(--navigation-text);
+  opacity: 0.72;
+  text-shadow: 0 1px 5px var(--tarot-progress-shadow);
 }
 
 .step::before {
@@ -77,24 +73,23 @@
   left: 50%;
   width: 14px;
   height: 14px;
-  background: color-mix(in srgb, var(--surface-panel) 24%, transparent);
-  border: 1px solid
-    color-mix(in srgb, var(--border-interactive) 76%, transparent);
+  background: var(--tarot-progress-node);
+  border: 1px solid var(--tarot-progress-node-border);
   border-radius: 50%;
   transform: translateX(-50%);
 }
 
 .complete::before {
-  background: color-mix(in srgb, var(--surface-control) 72%, transparent);
+  background: var(--tarot-progress-complete);
 }
 
 .current:not(:first-child)::before {
   width: 50%;
-  background: color-mix(in srgb, var(--surface-control) 72%, transparent);
+  background: var(--tarot-progress-complete);
 }
 
 .current:last-child::before {
-  background: color-mix(in srgb, var(--surface-control) 72%, transparent);
+  background: var(--tarot-progress-complete);
 }
 
 .complete::after,
@@ -105,7 +100,7 @@
       var(--surface-control) 0 3px,
       transparent 3.5px
     ),
-    color-mix(in srgb, var(--surface-panel) 24%, transparent);
+    var(--tarot-progress-node);
 }
 
 .step::after {
@@ -115,51 +110,14 @@
 }
 
 .current {
-  color: var(--text-primary);
+  color: var(--navigation-text);
   font-weight: 700;
-  text-shadow: none;
+  opacity: 1;
+  text-shadow: 0 1px 7px var(--tarot-progress-shadow);
 }
 
 .content {
   width: min(calc(100% - 36px), var(--reading-content-width));
   min-height: 0;
   flex: 1;
-}
-
-@supports not (color: color-mix(in srgb, #000, #fff)) {
-  .progress {
-    border-color: var(--border-primary);
-    background: var(--control-gloss-pressed);
-  }
-
-  .progress::before {
-    background: var(--border-secondary);
-    opacity: 0.42;
-  }
-
-  .step {
-    text-shadow: none;
-  }
-
-  .step::after {
-    background: var(--surface-panel);
-    border-color: var(--border-interactive);
-  }
-
-  .complete::before,
-  .current:not(:first-child)::before,
-  .current:last-child::before {
-    background: var(--surface-control);
-  }
-
-  .complete::after,
-  .current::after {
-    background:
-      radial-gradient(
-        circle,
-        var(--surface-control) 0 3px,
-        transparent 3.5px
-      ),
-      var(--surface-panel);
-  }
 }

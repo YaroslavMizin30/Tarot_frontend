@@ -45,9 +45,11 @@
   width: min(100%, 420px);
   overflow: hidden;
   padding: 18px;
+  border: 1px solid var(--border-primary);
   border: 1px solid
     color-mix(in srgb, var(--border-primary) 20%, transparent);
   border-radius: 16px;
+  background: var(--surface-panel);
   background: color-mix(in srgb, var(--surface-panel) 58%, transparent);
   box-sizing: border-box;
 }
@@ -228,9 +230,17 @@
   font: inherit;
   color: var(--text-primary);
   text-align: left;
+  border: 1px solid var(--border-primary);
   border: 1px solid
     color-mix(in srgb, var(--border-primary) 34%, transparent);
   border-radius: 14px;
+  background:
+    radial-gradient(
+      ellipse at 12% 0%,
+      var(--panel-gloss-highlight) 0%,
+      transparent 58%
+    ),
+    var(--surface-panel);
   background:
     radial-gradient(
       ellipse at 12% 0%,
@@ -250,6 +260,7 @@
   width: 100%;
   height: 56px;
   min-height: 56px;
+  background: var(--surface-panel);
   background:
     radial-gradient(
       ellipse at 12% 0%,

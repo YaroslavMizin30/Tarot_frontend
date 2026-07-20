@@ -24,12 +24,20 @@
       var(--panel-gloss-highlight),
       transparent 56%
     ),
+    var(--gradient-secondary);
+  background:
+    radial-gradient(
+      ellipse at 10% 0%,
+      var(--panel-gloss-highlight),
+      transparent 56%
+    ),
     linear-gradient(
       142deg,
       transparent 42%,
       color-mix(in srgb, var(--action-tint) 9%, transparent)
     ),
     color-mix(in srgb, var(--surface-panel) 82%, transparent);
+  border: 1px solid var(--action-tint);
   border: 1px solid color-mix(in srgb, var(--action-tint) 56%, transparent);
   border-radius: 14px;
   box-shadow:
@@ -76,6 +84,7 @@
   width: 20px;
   height: 20px;
   place-items: center;
+  color: var(--action-tint);
   color: color-mix(in srgb, var(--action-tint) 82%, var(--text-primary));
   opacity: 0.88;
 }
@@ -99,6 +108,7 @@ svg.icon {
   inset: auto auto 0 0;
   z-index: 1;
   height: 3px;
+  background: var(--action-tint);
   background: color-mix(in srgb, var(--action-tint) 76%, transparent);
   transition: width 0.35s ease;
 }
@@ -174,7 +184,9 @@ svg.icon {
   color: var(--text-primary);
   font: inherit;
   font-size: 11px;
+  background: var(--gradient-secondary);
   background: color-mix(in srgb, var(--surface-panel) 76%, transparent);
+  border: 1px solid var(--border-interactive);
   border: 1px solid color-mix(in srgb, var(--border-interactive) 48%, transparent);
   border-radius: 10px;
   cursor: pointer;
@@ -199,6 +211,7 @@ svg.icon {
   position: relative;
   width: 34px;
   height: 18px;
+  background: var(--text-secondary);
   background: color-mix(in srgb, var(--text-secondary) 28%, transparent);
   border-radius: 999px;
 }

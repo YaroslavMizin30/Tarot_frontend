@@ -7,10 +7,11 @@
 }
 
 .title {
-  color: var(--text-primary);
+  color: var(--navigation-text);
   margin: 18px 0 8px;
   font-size: 18px;
   text-align: left;
+  text-shadow: 0 1px 8px var(--tarot-scene-center);
 }
 
 .button {
@@ -127,6 +128,19 @@
       transparent 45%,
       var(--control-gloss-pressed) 100%
     ),
+    var(--surface-control);
+  background:
+    radial-gradient(
+      ellipse at 14% 0%,
+      var(--control-gloss-highlight) 0%,
+      transparent 56%
+    ),
+    linear-gradient(
+      142deg,
+      var(--control-gloss-sheen) 0%,
+      transparent 45%,
+      var(--control-gloss-pressed) 100%
+    ),
     color-mix(in srgb, var(--surface-control) 78%, var(--surface-panel));
   border: 1px solid var(--control-gloss-border);
   border-radius: 12px;
@@ -156,6 +170,7 @@
   width: 92px;
   height: 69px;
   pointer-events: none;
+  color: var(--text-on-control);
   color: color-mix(in srgb, var(--text-on-control) 34%, var(--surface-control));
   opacity: 0.34;
   stroke: currentColor;
@@ -229,6 +244,7 @@
   font-size: 13px;
   font-weight: 700;
   color: var(--navigation-text);
+  text-shadow: 0 1px 8px var(--tarot-scene-center);
   text-shadow: 0 1px 8px
     color-mix(in srgb, var(--tarot-scene-center) 58%, transparent);
   background: transparent;
@@ -316,6 +332,7 @@
   min-height: 52px;
   padding: 8px 18px;
   align-items: center;
+  background: var(--gradient-secondary);
   background: color-mix(in srgb, var(--gradient-secondary) 84%, transparent);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);

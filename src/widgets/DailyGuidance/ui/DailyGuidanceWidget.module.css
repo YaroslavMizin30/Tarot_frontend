@@ -16,8 +16,10 @@
   padding: 13px 14px;
   color: var(--text-primary);
   text-align: left;
+  border: 1px solid var(--border-primary);
   border: 1px solid
     color-mix(in srgb, var(--border-primary) 30%, transparent);
+  background: var(--surface-panel);
   background: color-mix(in srgb, var(--surface-panel) 84%, transparent);
   box-shadow: 0 5px 18px rgb(61 41 69 / 7%);
   cursor: pointer;
@@ -31,8 +33,10 @@
   gap: 14px;
   overflow: hidden;
   padding: 13px 14px;
+  border: 1px solid var(--border-primary);
   border: 1px solid
     color-mix(in srgb, var(--border-primary) 18%, transparent);
+  background: var(--surface-panel);
   background: color-mix(in srgb, var(--surface-panel) 30%, transparent);
 }
 

@@ -905,15 +905,17 @@ export const NatalChart = (props: NatalChartProps) => {
       </div>
 
       {chartMode === 'overview' && (
-        <Accordion
-          sections={interpretation.sections}
-          onHighLight={handleBodyHighlight}
-          selectedPlanet={selectedPlanet}
-          onSelectPlanet={handlePlanetSelect}
-          aspects={user.natalChart.aspects}
-          selectedAspectKey={selectedAspectKey}
-          onSelectAspect={setSelectedAspectKey}
-        />
+        <div className={styles.readingSections}>
+          <Accordion
+            sections={interpretation.sections}
+            onHighLight={handleBodyHighlight}
+            selectedPlanet={selectedPlanet}
+            onSelectPlanet={handlePlanetSelect}
+            aspects={user.natalChart.aspects}
+            selectedAspectKey={selectedAspectKey}
+            onSelectAspect={setSelectedAspectKey}
+          />
+        </div>
       )}
 
       <div className={styles.secondaryAction}>
