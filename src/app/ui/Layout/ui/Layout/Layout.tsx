@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Outlet, useNavigation, useLocation } from 'react-router';
 
 import Spinner from '@/shared/ui/Spinner';
@@ -18,7 +19,6 @@ import TorchComposition from '@/app/ui/Layout/ui/TorchComposition/TorchCompositi
 import { getPageAttachment } from '../../config/pages';
 
 import styles from './Layout.module.css';
-import { useEffect } from 'react';
 
 const THEME_CONFIG = {
   standard: {
@@ -54,12 +54,35 @@ export const Layout = () => {
   const isAuthShell =
     isAuthenticating || Boolean(authError) || pathname === '/reg' || !user;
   const isRegistrationCompleting = Boolean(user) && pathname === '/reg';
-  const isAuthLoadingVisible =
+  const shouldShowAuthLoading =
     isAuthenticating ||
     (!user && !authError && pathname !== '/reg') ||
     isRegistrationCompleting;
+  const [isAuthLoadingVisible, setIsAuthLoadingVisible] = useState(true);
   const canRenderOutlet =
     !isAuthenticating && (Boolean(user) || pathname === '/reg');
+
+  useEffect(() => {
+    let firstFrame = 0;
+    let secondFrame = 0;
+
+    if (shouldShowAuthLoading) {
+      firstFrame = window.requestAnimationFrame(() => {
+        setIsAuthLoadingVisible(true);
+      });
+    } else {
+      firstFrame = window.requestAnimationFrame(() => {
+        secondFrame = window.requestAnimationFrame(() => {
+          setIsAuthLoadingVisible(false);
+        });
+      });
+    }
+
+    return () => {
+      window.cancelAnimationFrame(firstFrame);
+      window.cancelAnimationFrame(secondFrame);
+    };
+  }, [shouldShowAuthLoading]);
 
   useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });

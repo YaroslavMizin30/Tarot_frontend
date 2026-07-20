@@ -1,1 +1,1 @@
-export { DaySky } from './ui/DaySky';
+export { DaySky, DaySky as default } from './ui/DaySky';

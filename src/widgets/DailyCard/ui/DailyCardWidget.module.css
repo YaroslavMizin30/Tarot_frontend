@@ -19,6 +19,47 @@
   min-width: 0;
 }
 
+.summaryPlaceholder {
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+  padding: 18px 0;
+}
+
+.summaryPlaceholder::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    104deg,
+    transparent 20%,
+    rgb(255 255 255 / 28%) 46%,
+    transparent 72%
+  );
+  transform: translateX(-100%);
+  animation: summaryShimmer 1.55s ease-in-out infinite;
+}
+
+.summaryPlaceholder span {
+  display: block;
+  width: 46%;
+  height: 9px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--text-primary) 10%, transparent);
+}
+
+.summaryPlaceholder span + span {
+  width: 88%;
+  height: 15px;
+  margin-top: 16px;
+}
+
+.summaryPlaceholder span:last-child {
+  width: 64%;
+  height: 9px;
+  margin-top: 13px;
+}
+
 .eyebrow,
 .sheetEyebrow {
   display: block;
@@ -204,6 +245,12 @@
   margin-top: 10px;
 }
 
+@keyframes summaryShimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
 @media (max-width: 360px) {
   .hero {
     gap: 12px;
@@ -211,5 +258,11 @@
 
   .title {
     font-size: 23px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .summaryPlaceholder::after {
+    animation: none;
   }
 }

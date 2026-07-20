@@ -22,6 +22,45 @@
   animation: reflectionAppear 0.9s ease-out both;
 }
 
+.placeholder {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.placeholder::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    104deg,
+    transparent 22%,
+    rgb(255 255 255 / 28%) 46%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  animation: reflectionShimmer 1.55s ease-in-out infinite;
+}
+
+.placeholder span {
+  display: block;
+  width: 34%;
+  height: 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--text-primary) 10%, transparent);
+}
+
+.placeholder span + span {
+  width: 92%;
+  height: 10px;
+  margin-top: 13px;
+}
+
+.placeholder span:last-child {
+  width: 68%;
+  margin-top: 9px;
+}
+
 .root p {
   display: -webkit-box;
   overflow: hidden;
@@ -45,8 +84,18 @@
   }
 }
 
+@keyframes reflectionShimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .content {
+    animation: none;
+  }
+
+  .placeholder::after {
     animation: none;
   }
 }

@@ -25,7 +25,7 @@ export const DailyReflection = () => {
   const { user } = useUser();
   const { locale, i18n } = useLocales();
   const date = new Date().toLocaleDateString('en-CA');
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: queryKeys.dailyReflection.byUserDate(user?.id ?? 'no-user', date),
     queryFn: getDailyReflection,
     enabled: Boolean(user),
@@ -37,13 +37,23 @@ export const DailyReflection = () => {
     : data?.question?.text_en;
 
   return (
-    <section className={styles.root} aria-live={'polite'}>
-      {question && (
+    <section
+      aria-busy={isLoading}
+      className={styles.root}
+      aria-live={'polite'}
+    >
+      {isLoading ? (
+        <div aria-hidden={'true'} className={styles.placeholder}>
+          <span />
+          <span />
+          <span />
+        </div>
+      ) : question ? (
         <div className={styles.content}>
           <span className={styles.eyebrow}>{i18n('A question for yourself')}</span>
           <p>{question}</p>
         </div>
-      )}
+      ) : null}
     </section>
   );
 };

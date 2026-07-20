@@ -1,3 +1,10 @@
+import {
+  lazy,
+  Suspense,
+  type ComponentType,
+  useEffect,
+  useState,
+} from 'react';
 import { useNavigate } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 
@@ -5,27 +12,43 @@ import useLocales from '@/shared/hooks/useLocales';
 import { getPendingSpreadDraft } from '@/entities/Spread';
 import { useUser } from '@/entities/User';
 import { queryKeys } from '@/shared/api/queryKeys';
-import DailyCardWidget from '@/widgets/DailyCard';
-import DailyGuidanceWidget from '@/widgets/DailyGuidance';
-import DailyReflection from '@/widgets/DailyReflection';
 import RouletteIcon from '@/shared/assets/svg/common/roulette_page.svg';
 import { getDailyBonusStatus } from '@/entities/BonusGame';
-import { DaySky } from '@/widgets/DaySky';
 
 import styles from './Main.module.css';
 
+const DailyCardWidget = lazy(() => import('@/widgets/DailyCard'));
+const DailyGuidanceWidget = lazy(() => import('@/widgets/DailyGuidance'));
+const DailyReflection = lazy(() => import('@/widgets/DailyReflection'));
+
+const SKY_MOUNT_DELAY = 560;
+
+const MainSkeleton = ({ className = '' }: { className?: string }) => (
+  <div
+    aria-hidden={'true'}
+    className={`${styles.skeleton} ${className}`}
+  >
+    <span />
+    <span />
+    <span />
+  </div>
+);
+
 export const MainPage = () => {
   const navigate = useNavigate();
+  const [SkyComponent, setSkyComponent] =
+    useState<ComponentType | null>(null);
+  const [isSkyVisible, setIsSkyVisible] = useState(false);
 
   const { i18n } = useLocales();
   const { user } = useUser();
-  const { data: pendingDraft } = useQuery({
+  const { data: pendingDraft, isLoading: isPendingDraftLoading } = useQuery({
     queryKey: queryKeys.spreads.pending(user?.id ?? 'no-user'),
     queryFn: getPendingSpreadDraft,
     enabled: Boolean(user),
     staleTime: 0,
   });
-  const { data: dailyBonus } = useQuery({
+  const { data: dailyBonus, isLoading: isDailyBonusLoading } = useQuery({
     queryKey: queryKeys.dailyBonus.all,
     queryFn: getDailyBonusStatus,
     enabled: Boolean(user),
@@ -34,45 +57,108 @@ export const MainPage = () => {
     ? pendingDraft.spread
     : null;
 
+  useEffect(() => {
+    let isCancelled = false;
+    const loadTimeout = window.setTimeout(() => {
+      import('@/widgets/DaySky')
+        .then(({ default: LoadedDaySky }) => {
+          if (!isCancelled) {
+            setSkyComponent(() => LoadedDaySky);
+          }
+        })
+        .catch(() => undefined);
+    }, SKY_MOUNT_DELAY);
+
+    return () => {
+      isCancelled = true;
+      window.clearTimeout(loadTimeout);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!SkyComponent) {
+      return;
+    }
+
+    let firstFrame = 0;
+    let secondFrame = 0;
+
+    firstFrame = window.requestAnimationFrame(() => {
+      secondFrame = window.requestAnimationFrame(() => {
+        setIsSkyVisible(true);
+      });
+    });
+
+    return () => {
+      window.cancelAnimationFrame(firstFrame);
+      window.cancelAnimationFrame(secondFrame);
+    };
+  }, [SkyComponent]);
+
   return (
     <div className={styles.container}>
-      <DaySky />
+      <div
+        aria-hidden={'true'}
+        className={`${styles.skyLayer} ${
+          isSkyVisible ? styles.skyLayerVisible : ''
+        }`}
+      >
+        {SkyComponent && <SkyComponent />}
+      </div>
 
       <div className={styles.content}>
-        <DailyCardWidget />
+        <Suspense
+          fallback={<MainSkeleton className={styles.cardSkeleton} />}
+        >
+          <DailyCardWidget />
+        </Suspense>
 
-        <DailyGuidanceWidget />
+        <Suspense
+          fallback={<MainSkeleton className={styles.guidanceSkeleton} />}
+        >
+          <DailyGuidanceWidget />
+        </Suspense>
 
-        <DailyReflection />
+        <Suspense
+          fallback={<MainSkeleton className={styles.reflectionSkeleton} />}
+        >
+          <DailyReflection />
+        </Suspense>
 
         <div className={styles.actions}>
-          <button
-            type={'button'}
-            className={styles.bonus}
-            onClick={() => navigate('/roulette')}
-          >
-            <span className={styles.bonusIcon} aria-hidden={'true'}>
-              <RouletteIcon />
-            </span>
-
-            <span className={styles.bonusText}>
-              <strong>{i18n('Daily roulette')}</strong>
-              <span>
-                {i18n(
-                  dailyBonus?.status === 'already_played'
-                    ? 'Daily card opened'
-                    : 'Daily card available',
-                )}
-                {' · '}
-                {i18n('Bonus balance')}: {dailyBonus?.bonusBalance ?? 0}
+          {isDailyBonusLoading ? (
+            <MainSkeleton className={styles.actionSkeleton} />
+          ) : (
+            <button
+              type={'button'}
+              className={styles.bonus}
+              onClick={() => navigate('/roulette')}
+            >
+              <span className={styles.bonusIcon} aria-hidden={'true'}>
+                <RouletteIcon />
               </span>
-            </span>
 
-            <span className={styles.arrow} aria-hidden={'true'}>→</span>
-          </button>
+              <span className={styles.bonusText}>
+                <strong>{i18n('Daily roulette')}</strong>
+                <span>
+                  {i18n(
+                    dailyBonus?.status === 'already_played'
+                      ? 'Daily card opened'
+                      : 'Daily card available',
+                  )}
+                  {' · '}
+                  {i18n('Bonus balance')}: {dailyBonus?.bonusBalance ?? 0}
+                </span>
+              </span>
+
+              <span className={styles.arrow} aria-hidden={'true'}>→</span>
+            </button>
+          )}
 
           <div className={styles.resumeSlot}>
-            {resumableSpread && (
+            {isPendingDraftLoading ? (
+              <MainSkeleton className={styles.resumeSkeleton} />
+            ) : resumableSpread ? (
               <button
                 className={styles.resume}
                 onClick={() =>
@@ -90,7 +176,7 @@ export const MainPage = () => {
                 </span>
                 <span className={styles.arrow} aria-hidden={'true'}>→</span>
               </button>
-            )}
+            ) : null}
           </div>
         </div>
       </div>

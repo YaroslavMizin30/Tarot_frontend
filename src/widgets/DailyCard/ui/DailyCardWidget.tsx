@@ -44,6 +44,30 @@ const DailyCardContent = ({
   const canShowDetails =
     isRevealed && interpretation.length > 0 && Boolean(cardInfo);
 
+  if (isBooting && !hasDataError) {
+    return (
+      <section
+        aria-busy={'true'}
+        aria-label={i18n('Card of the day')}
+        className={styles.widget}
+      >
+        <div className={styles.hero}>
+          <div aria-hidden={'true'} className={styles.summaryPlaceholder}>
+            <span />
+            <span />
+            <span />
+          </div>
+
+          <div className={styles.cardColumn}>
+            <div className={styles.cardPlaceholder}>
+              <GlassLoader />
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className={styles.widget} aria-labelledby={'daily-card-title'}>
       <div className={styles.hero}>

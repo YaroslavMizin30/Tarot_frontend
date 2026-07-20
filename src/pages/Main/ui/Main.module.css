@@ -4,6 +4,28 @@
   width: 100%;
   min-height: 100%;
   overflow: hidden;
+  background:
+    radial-gradient(
+      ellipse at 50% 20%,
+      color-mix(in srgb, var(--gradient-secondary) 62%, white) 0%,
+      transparent 58%
+    ),
+    linear-gradient(180deg, var(--gradient-secondary), var(--gradient-primary));
+}
+
+.skyLayer {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  contain: layout paint;
+  transition: opacity 820ms ease;
+}
+
+.skyLayerVisible {
+  opacity: 1;
 }
 
 .content {
@@ -30,6 +52,98 @@
   width: min(100%, 420px);
 
   animation: fadeIn 1s ease;
+}
+
+.skeleton {
+  position: relative;
+  width: min(100%, 420px);
+  overflow: hidden;
+  padding: 18px;
+  border: 1px solid
+    color-mix(in srgb, var(--border-primary) 20%, transparent);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--surface-panel) 58%, transparent);
+  box-sizing: border-box;
+}
+
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    104deg,
+    transparent 22%,
+    color-mix(in srgb, white 30%, transparent) 46%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  animation: skeletonShimmer 1.55s ease-in-out infinite;
+}
+
+.skeleton span {
+  display: block;
+  width: 72%;
+  height: 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--text-primary) 10%, transparent);
+}
+
+.skeleton span + span {
+  width: 88%;
+  margin-top: 12px;
+}
+
+.skeleton span:last-child {
+  width: 54%;
+}
+
+.cardSkeleton {
+  height: 190px;
+  flex: 0 0 190px;
+  padding-top: 48px;
+  padding-right: 118px;
+  border-color: transparent;
+  background: transparent;
+}
+
+.guidanceSkeleton {
+  height: 122px;
+  flex: 0 0 122px;
+  padding-top: 31px;
+  padding-right: 92px;
+}
+
+.reflectionSkeleton {
+  height: 100px;
+  flex: 0 0 100px;
+  padding: 25px 8px;
+  border-color: transparent;
+  background: transparent;
+}
+
+.actionSkeleton {
+  height: 62px;
+  padding: 13px 62px;
+}
+
+.resumeSkeleton {
+  height: 56px;
+  padding: 12px 18px;
+}
+
+.actionSkeleton span,
+.resumeSkeleton span {
+  height: 8px;
+}
+
+.actionSkeleton span + span,
+.resumeSkeleton span + span {
+  margin-top: 7px;
+}
+
+.actionSkeleton span:last-child,
+.resumeSkeleton span:last-child {
+  display: none;
 }
 
 .bonus,
@@ -169,5 +283,25 @@
 
   100% {
     opacity: 1;
+  }
+}
+
+@keyframes skeletonShimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skyLayer {
+    transition: none;
+  }
+
+  .actions {
+    animation: none;
+  }
+
+  .skeleton::after {
+    animation: none;
   }
 }
