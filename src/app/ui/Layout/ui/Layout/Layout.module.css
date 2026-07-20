@@ -81,17 +81,39 @@
 
 .tarotBackgroundBase {
   background:
+    linear-gradient(
+      180deg,
+      transparent 36%,
+      color-mix(in srgb, var(--tarot-scene-haze-soft) 54%, transparent) 57%,
+      transparent 76%
+    ),
     radial-gradient(
-      ellipse 84% 68% at 50% 48%,
-      var(--tarot-scene-center) 0%,
-      color-mix(in srgb, var(--tarot-scene-mid) 78%, transparent) 48%,
-      transparent 80%
+      ellipse 92% 72% at 50% 40%,
+      color-mix(
+        in srgb,
+        var(--gradient-secondary) 24%,
+        var(--tarot-scene-mid)
+      ) 0%,
+      color-mix(in srgb, var(--tarot-scene-mid) 54%, transparent) 48%,
+      transparent 78%
     ),
     linear-gradient(
       180deg,
-      color-mix(in srgb, var(--navigation-background) 62%, #17131c) 0%,
-      color-mix(in srgb, var(--navigation-background) 48%, #2a1d2d) 52%,
-      color-mix(in srgb, var(--tarot-table-edge) 56%, #1b151e) 100%
+      color-mix(
+        in srgb,
+        var(--gradient-secondary) 68%,
+        var(--navigation-background)
+      ) 0%,
+      color-mix(
+        in srgb,
+        var(--gradient-secondary) 56%,
+        var(--navigation-background)
+      ) 52%,
+      color-mix(
+        in srgb,
+        var(--gradient-primary) 64%,
+        var(--navigation-background)
+      ) 100%
     );
 }
 
