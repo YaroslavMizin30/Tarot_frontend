@@ -6,11 +6,13 @@
   opacity: 0;
   pointer-events: none;
   contain: layout paint;
-  transition: opacity 780ms ease;
+  transition: opacity 620ms cubic-bezier(0.4, 0, 1, 1);
 }
 
 .visible {
   opacity: 1;
+  transition-duration: 1300ms;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @media (prefers-reduced-motion: reduce) {

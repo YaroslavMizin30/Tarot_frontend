@@ -9,12 +9,14 @@ type CompositionModule = {
 interface DeferredCompositionProps {
   className?: string;
   delay?: number;
+  isExiting?: boolean;
   loader: () => Promise<CompositionModule>;
 }
 
 export const DeferredComposition = ({
   className = '',
   delay = 480,
+  isExiting = false,
   loader,
 }: DeferredCompositionProps) => {
   const [Composition, setComposition] =
@@ -62,7 +64,7 @@ export const DeferredComposition = ({
   return (
     <div
       aria-hidden={'true'}
-      className={`${styles.layer} ${isVisible ? styles.visible : ''} ${className}`}
+      className={`${styles.layer} ${isVisible && !isExiting ? styles.visible : ''} ${className}`}
     >
       {Composition && <Composition />}
     </div>

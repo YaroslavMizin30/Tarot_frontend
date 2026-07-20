@@ -137,6 +137,7 @@ export const Layout = () => {
       {!isAuthShell && <Header />}
 
       <main
+        aria-busy={isLoading && !isAuthShell}
         className={`${styles.main} ${isAuthShell ? styles.authShell : ''} custom-scrollbar`}
       >
         <div
@@ -163,17 +164,25 @@ export const Layout = () => {
             />
           )}
           {hasAstrologyBackground && (
-            <DeferredComposition loader={loadStarsComposition} />
+            <DeferredComposition
+              isExiting={isLoading}
+              loader={loadStarsComposition}
+            />
           )}
           {hasTarotBackground && (
-            <DeferredComposition loader={loadTorchComposition} />
+            <DeferredComposition
+              isExiting={isLoading}
+              loader={loadTorchComposition}
+            />
           )}
 
         </div>
 
-        {isLoading && !isAuthShell ? (
-          <Spinner size={'l'} />
-        ) : authError ? (
+        {isLoading && !isAuthShell && (
+          <div aria-hidden={'true'} className={styles.routeProgress} />
+        )}
+
+        {authError ? (
           <div className={`${styles.container} ${styles.authContainer}`}>
             <div className={styles.authStatus}>
               <Error
@@ -188,7 +197,11 @@ export const Layout = () => {
           </div>
         ) : canRenderOutlet ? (
           <div
-            className={`${styles.container} ${isAuthShell ? styles.authContainer : ''}`}
+            className={`${styles.container} ${
+              isAuthShell ? styles.authContainer : styles.routeContent
+            } ${
+              isLoading && !isAuthShell ? styles.routeContentLeaving : ''
+            }`}
           >
             <Outlet context={{ user }} />
           </div>
