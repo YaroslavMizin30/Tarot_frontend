@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useLayoutEffect } from 'react';
 
 import useLocales from '@/shared/hooks/useLocales';
 import TRANSLATIONS_EN from '@/shared/locales/en/select';
@@ -21,6 +21,8 @@ export const Select = ({
 }: SelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [opensUpward, setOpensUpward] = useState(false);
+  const [optionsMaxHeight, setOptionsMaxHeight] = useState(180);
   const selectRef = useRef<HTMLDivElement>(null);
 
   const selectedOption = options.find((option) => option.value === value);
@@ -50,7 +52,7 @@ export const Select = ({
 
   useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
-  }, [locale]);
+  }, [addTranslations, locale]);
 
   // Обработка клавиатуры
   useEffect(() => {
@@ -66,6 +68,41 @@ export const Select = ({
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isOpen]);
+
+  useLayoutEffect(() => {
+    if (!isOpen || !selectRef.current) return;
+
+    const updateDropdownPlacement = () => {
+      const bounds = selectRef.current?.getBoundingClientRect();
+      if (!bounds) return;
+
+      const viewportHeight = Math.min(
+        window.innerHeight,
+        window.Telegram?.WebApp?.viewportStableHeight || window.innerHeight,
+      );
+      const edgeGap = 12;
+      const availableBelow = viewportHeight - bounds.bottom - edgeGap;
+      const availableAbove = bounds.top - edgeGap;
+      const shouldOpenUpward =
+        availableBelow < 200 && availableAbove > availableBelow;
+      const availableHeight = shouldOpenUpward
+        ? availableAbove
+        : availableBelow;
+      const searchHeight = options.length > 5 && hasSearch ? 50 : 0;
+
+      setOpensUpward(shouldOpenUpward);
+      setOptionsMaxHeight(
+        Math.max(96, Math.min(180, availableHeight - searchHeight)),
+      );
+    };
+
+    updateDropdownPlacement();
+    window.addEventListener('resize', updateDropdownPlacement);
+
+    return () => {
+      window.removeEventListener('resize', updateDropdownPlacement);
+    };
+  }, [hasSearch, isOpen, options.length]);
 
   const handleSelect = (option: SelectOption) => {
     onChange(option.value);
@@ -86,7 +123,15 @@ export const Select = ({
     <div className={selectClasses} ref={selectRef}>
       <button
         type={'button'}
-        className={`${styles['custom-select__trigger']} ${isOpen && styles['custom-select__trigger--open']}`}
+        className={`${styles['custom-select__trigger']} ${
+          isOpen
+            ? styles[
+              opensUpward
+                ? 'custom-select__trigger--open-top'
+                : 'custom-select__trigger--open'
+            ]
+            : ''
+        }`}
         onClick={() => !disabled && setIsOpen(!isOpen)}
         disabled={disabled}
         aria-haspopup={'listbox'}
@@ -112,7 +157,13 @@ export const Select = ({
       </button>
 
       {isOpen && (
-        <div className={styles['custom-select__dropdown']}>
+        <div
+          className={`${styles['custom-select__dropdown']} ${
+            opensUpward
+              ? styles['custom-select__dropdown--top']
+              : ''
+          }`}
+        >
           {/* Поиск */}
           {options.length > 5 && hasSearch && (
             <div className={styles['custom-select__search-container']}>
@@ -130,6 +181,7 @@ export const Select = ({
           {/* Список опций */}
           <ul
             className={`${styles['custom-select__options']} custom-scrollbar`}
+            style={{ maxHeight: `${optionsMaxHeight}px` }}
             role={'listbox'}
             aria-label={'Select options'}
           >
