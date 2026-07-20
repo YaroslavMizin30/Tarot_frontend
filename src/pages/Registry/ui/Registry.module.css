@@ -5,7 +5,7 @@
   justify-content: center;
   width: min(100%, 560px);
   min-height: 100%;
-  padding: clamp(36px, 10svh, 92px) 18px 24px;
+  padding: calc(24px + env(safe-area-inset-top)) 18px 24px;
   color: #fff8ec;
 }
 
@@ -193,7 +193,8 @@
   color: inherit !important;
 }
 
-.dateSelect > div {
+.dateSelect > div,
+.dateDropdown {
   color: #31283e;
   background: rgb(250 244 255 / 97%);
   border-color: rgb(255 255 255 / 42%);
@@ -340,7 +341,7 @@
 
 @media (max-width: 420px) {
   .container {
-    padding: clamp(24px, 7svh, 58px) 12px 20px;
+    padding: calc(24px + env(safe-area-inset-top)) 12px 20px;
   }
 
   .card {

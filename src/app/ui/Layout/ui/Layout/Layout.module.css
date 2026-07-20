@@ -107,7 +107,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: clamp(36px, 10svh, 92px) 18px 24px;
+  padding: calc(24px + env(safe-area-inset-top)) 18px 24px;
   overflow: hidden;
   background:
     radial-gradient(circle at 50% 42%, #2e253f 0%, #171522 46%, #0e0e16 100%);
@@ -174,7 +174,7 @@
 
 @media (max-width: 420px) {
   .authLoadingLayer {
-    padding: clamp(24px, 7svh, 58px) 12px 20px;
+    padding: calc(24px + env(safe-area-inset-top)) 12px 20px;
   }
 
   .authStatus {

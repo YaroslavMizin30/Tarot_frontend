@@ -1,4 +1,11 @@
-import { useState, useRef, useEffect, useLayoutEffect } from 'react';
+import {
+  useState,
+  useRef,
+  useEffect,
+  useLayoutEffect,
+  type CSSProperties,
+} from 'react';
+import { createPortal } from 'react-dom';
 
 import useLocales from '@/shared/hooks/useLocales';
 import TRANSLATIONS_EN from '@/shared/locales/en/select';
@@ -18,12 +25,16 @@ export const Select = ({
   hasSearch = false,
   emptyPhrase,
   error,
+  usePortal = false,
+  dropdownClassName = '',
 }: SelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [opensUpward, setOpensUpward] = useState(false);
   const [optionsMaxHeight, setOptionsMaxHeight] = useState(180);
+  const [dropdownStyle, setDropdownStyle] = useState<CSSProperties>();
   const selectRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const selectedOption = options.find((option) => option.value === value);
 
@@ -39,7 +50,8 @@ export const Select = ({
     const handleClickOutside = (event: MouseEvent) => {
       if (
         selectRef.current &&
-        !selectRef.current.contains(event.target as Node)
+        !selectRef.current.contains(event.target as Node) &&
+        !dropdownRef.current?.contains(event.target as Node)
       ) {
         setIsOpen(false);
         setSearchQuery('');
@@ -94,15 +106,42 @@ export const Select = ({
       setOptionsMaxHeight(
         Math.max(96, Math.min(180, availableHeight - searchHeight)),
       );
+      setDropdownStyle(
+        usePortal
+          ? {
+            top: shouldOpenUpward ? 'auto' : bounds.bottom,
+            bottom: shouldOpenUpward
+              ? window.innerHeight - bounds.top
+              : 'auto',
+            left: bounds.left,
+            width: bounds.width,
+          }
+          : undefined,
+      );
+    };
+
+    const handleDocumentScroll = (event: Event) => {
+      if (dropdownRef.current?.contains(event.target as Node)) return;
+      updateDropdownPlacement();
     };
 
     updateDropdownPlacement();
     window.addEventListener('resize', updateDropdownPlacement);
+    document.addEventListener('scroll', handleDocumentScroll, true);
+    window.Telegram?.WebApp?.onEvent(
+      'viewportChanged',
+      updateDropdownPlacement,
+    );
 
     return () => {
       window.removeEventListener('resize', updateDropdownPlacement);
+      document.removeEventListener('scroll', handleDocumentScroll, true);
+      window.Telegram?.WebApp?.offEvent(
+        'viewportChanged',
+        updateDropdownPlacement,
+      );
     };
-  }, [hasSearch, isOpen, options.length]);
+  }, [hasSearch, isOpen, options.length, usePortal]);
 
   const handleSelect = (option: SelectOption) => {
     onChange(option.value);
@@ -118,6 +157,58 @@ export const Select = ({
   ]
     .filter(Boolean)
     .join(' ');
+
+  const dropdown = (
+    <div
+      className={`${styles['custom-select__dropdown']} ${
+        opensUpward
+          ? styles['custom-select__dropdown--top']
+          : ''
+      } ${
+        usePortal ? styles['custom-select__dropdown--portal'] : ''
+      } ${dropdownClassName}`}
+      ref={dropdownRef}
+      style={dropdownStyle}
+    >
+      {options.length > 5 && hasSearch && (
+        <div className={styles['custom-select__search-container']}>
+          <input
+            type={'text'}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder={i18n('Search')}
+            className={styles['custom-select__search-input']}
+            autoFocus
+          />
+        </div>
+      )}
+
+      <ul
+        className={`${styles['custom-select__options']} custom-scrollbar`}
+        style={{ maxHeight: `${optionsMaxHeight}px` }}
+        role={'listbox'}
+        aria-label={'Select options'}
+      >
+        {filteredOptions.length > 0 ? (
+          filteredOptions.map((option) => (
+            <li
+              key={option.value}
+              className={`${styles['custom-select__option']} ${value === option.value ? styles['custom-select__option--selected'] : ''}`}
+              onClick={() => handleSelect(option)}
+              role={'option'}
+              aria-selected={value === option.value}
+            >
+              {option.label}
+            </li>
+          ))
+        ) : (
+          <li className={styles['custom-select__no-results']}>
+            {emptyPhrase ?? i18n('Nothing was found')}
+          </li>
+        )}
+      </ul>
+    </div>
+  );
 
   return (
     <div className={selectClasses} ref={selectRef}>
@@ -157,53 +248,7 @@ export const Select = ({
       </button>
 
       {isOpen && (
-        <div
-          className={`${styles['custom-select__dropdown']} ${
-            opensUpward
-              ? styles['custom-select__dropdown--top']
-              : ''
-          }`}
-        >
-          {/* Поиск */}
-          {options.length > 5 && hasSearch && (
-            <div className={styles['custom-select__search-container']}>
-              <input
-                type={'text'}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={i18n('Search')}
-                className={styles['custom-select__search-input']}
-                autoFocus
-              />
-            </div>
-          )}
-
-          {/* Список опций */}
-          <ul
-            className={`${styles['custom-select__options']} custom-scrollbar`}
-            style={{ maxHeight: `${optionsMaxHeight}px` }}
-            role={'listbox'}
-            aria-label={'Select options'}
-          >
-            {filteredOptions.length > 0 ? (
-              filteredOptions.map((option) => (
-                <li
-                  key={option.value}
-                  className={`${styles['custom-select__option']} ${value === option.value ? styles['custom-select__option--selected'] : ''}`}
-                  onClick={() => handleSelect(option)}
-                  role={'option'}
-                  aria-selected={value === option.value}
-                >
-                  {option.label}
-                </li>
-              ))
-            ) : (
-              <li className={styles['custom-select__no-results']}>
-                {emptyPhrase ?? i18n('Nothing was found')}
-              </li>
-            )}
-          </ul>
-        </div>
+        usePortal ? createPortal(dropdown, document.body) : dropdown
       )}
 
       {error && <div className={styles['custom-select__error']}>{error}</div>}

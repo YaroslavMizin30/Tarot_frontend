@@ -13,4 +13,6 @@ export interface SelectProps {
   error?: string;
   hasSearch?: boolean;
   emptyPhrase?: string;
+  usePortal?: boolean;
+  dropdownClassName?: string;
 }

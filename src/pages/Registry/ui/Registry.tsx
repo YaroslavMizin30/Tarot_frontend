@@ -215,13 +215,16 @@ export const Registry = () => {
               <div className={styles.date}>
                 <Select
                   className={styles.dateSelect}
+                  dropdownClassName={styles.dateDropdown}
                   onChange={handleMonthChange}
                   options={MONTHS[locale]}
                   placeholder={i18n('month')}
+                  usePortal
                   value={formData.month}
                 />
                 <Select
                   className={styles.dateSelect}
+                  dropdownClassName={styles.dateDropdown}
                   emptyPhrase={i18n('choose month')}
                   onChange={handleDayChange}
                   options={getDaysInMonth(
@@ -229,14 +232,17 @@ export const Registry = () => {
                     Number(formData.year),
                   )}
                   placeholder={i18n('day')}
+                  usePortal
                   value={formData.day}
                 />
                 <Select
                   className={styles.dateSelect}
+                  dropdownClassName={styles.dateDropdown}
                   hasSearch
                   onChange={handleYearChange}
                   options={YEARS}
                   placeholder={i18n('year')}
+                  usePortal
                   value={formData.year}
                 />
               </div>
