@@ -1,6 +1,7 @@
 .widget,
 .placeholder {
   width: min(100%, 420px);
+  height: 122px;
   min-height: 122px;
   border-radius: 16px;
 }

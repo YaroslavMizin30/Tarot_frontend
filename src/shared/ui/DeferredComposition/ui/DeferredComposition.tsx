@@ -1,4 +1,9 @@
-import { type ComponentType, useEffect, useState } from 'react';
+import {
+  type ComponentType,
+  type TransitionEvent,
+  useEffect,
+  useState,
+} from 'react';
 
 import styles from './DeferredComposition.module.css';
 
@@ -8,6 +13,7 @@ type CompositionModule = {
 
 interface DeferredCompositionProps {
   className?: string;
+  deferMotionUntilVisible?: boolean;
   delay?: number;
   fadeInDuration?: number;
   fadeInTimingFunction?: string;
@@ -17,6 +23,7 @@ interface DeferredCompositionProps {
 
 export const DeferredComposition = ({
   className = '',
+  deferMotionUntilVisible = false,
   delay = 480,
   fadeInDuration = 1300,
   fadeInTimingFunction,
@@ -26,6 +33,9 @@ export const DeferredComposition = ({
   const [Composition, setComposition] =
     useState<ComponentType | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [isMotionReady, setIsMotionReady] = useState(
+    !deferMotionUntilVisible,
+  );
 
   useEffect(() => {
     let isCancelled = false;
@@ -65,10 +75,34 @@ export const DeferredComposition = ({
     };
   }, [Composition]);
 
+  const handleTransitionEnd = (
+    event: TransitionEvent<HTMLDivElement>,
+  ) => {
+    if (
+      event.currentTarget === event.target &&
+      event.propertyName === 'opacity' &&
+      isVisible &&
+      !isExiting
+    ) {
+      setIsMotionReady(true);
+    }
+  };
+
   return (
     <div
       aria-hidden={'true'}
-      className={`${styles.layer} ${isVisible && !isExiting ? styles.visible : ''} ${className}`}
+      className={`${styles.layer} ${
+        isVisible && !isExiting ? styles.visible : ''
+      } ${
+        isVisible && !isExiting && !isMotionReady
+          ? styles.revealing
+          : ''
+      } ${
+        deferMotionUntilVisible && (!isMotionReady || isExiting)
+          ? styles.motionDeferred
+          : ''
+      } ${className}`}
+      onTransitionEnd={handleTransitionEnd}
       style={
         isVisible && !isExiting
           ? {

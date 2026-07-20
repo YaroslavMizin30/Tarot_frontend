@@ -15,6 +15,18 @@
   transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.revealing {
+  will-change: opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.motionDeferred *,
+.motionDeferred *::before,
+.motionDeferred *::after {
+  animation-play-state: paused !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .layer {
     transition: none;

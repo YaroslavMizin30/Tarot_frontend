@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'Monomakh';
-  src: url('./Monomakh/Monomakh-Regular.woff2') format('truetype');
+  src: url('./Monomakh/Monomakh-Regular.woff2') format('woff2');
   font-display: swap;
 }
 
 @font-face {
   font-family: 'Pangolin';
-  src: url('./Pangolin/Pangolin-Regular.woff2') format('truetype');
+  src: url('./Pangolin/Pangolin-Regular.woff2') format('woff2');
   font-display: swap;
 }

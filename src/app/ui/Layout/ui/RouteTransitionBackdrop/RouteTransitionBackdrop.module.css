@@ -1,0 +1,200 @@
+:root {
+  --cloud-top: #aaa6cc;
+  --cloud-bottom: #d6a5c1;
+}
+
+:root[data-theme='gray'] {
+  --cloud-top: #aeb4c5;
+  --cloud-bottom: #9299ad;
+}
+
+:root[data-theme='bronze'] {
+  --cloud-top: #c7996c;
+  --cloud-bottom: #d9b38f;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.scene {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  opacity: 1;
+}
+
+.incomingScene {
+  z-index: 1;
+  animation: revealScene 320ms ease-out both;
+}
+
+.tarot {
+  background:
+    linear-gradient(
+      180deg,
+      transparent 36%,
+      color-mix(in srgb, var(--tarot-scene-haze-soft) 54%, transparent) 57%,
+      transparent 76%
+    ),
+    radial-gradient(
+      ellipse 92% 72% at 50% 40%,
+      color-mix(
+        in srgb,
+        var(--gradient-secondary) 24%,
+        var(--tarot-scene-mid)
+      ) 0%,
+      color-mix(in srgb, var(--tarot-scene-mid) 54%, transparent) 48%,
+      transparent 78%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(
+        in srgb,
+        var(--gradient-secondary) 68%,
+        var(--navigation-background)
+      ) 0%,
+      color-mix(
+        in srgb,
+        var(--gradient-secondary) 56%,
+        var(--navigation-background)
+      ) 52%,
+      color-mix(
+        in srgb,
+        var(--gradient-primary) 64%,
+        var(--navigation-background)
+      ) 100%
+    );
+}
+
+.astrology {
+  background:
+    radial-gradient(
+      ellipse 88% 72% at 50% 48%,
+      var(--astrology-sky-top, #28213d) 0%,
+      var(--astrology-sky-middle, #3b2d50) 48%,
+      color-mix(
+        in srgb,
+        var(--astrology-sky-bottom, #62506f) 54%,
+        transparent
+      ) 76%,
+      transparent 100%
+    );
+}
+
+.main-dawn {
+  background:
+    radial-gradient(
+      ellipse at 72% 28%,
+      rgb(255 224 172 / 42%),
+      transparent 42%
+    ),
+    linear-gradient(180deg, #91b4d1 0%, #d2b9c0 50%, #e5c2a2 76%, #dfd0ca 100%);
+}
+
+.main-day {
+  background:
+    radial-gradient(ellipse at 52% 20%, rgb(255 255 255 / 32%), transparent 46%),
+    linear-gradient(180deg, #8cc6e2 0%, #c2e0ec 48%, #e1e8ea 81%, #e6dce2 100%);
+}
+
+.main-dusk {
+  background:
+    radial-gradient(ellipse at 74% 29%, rgb(255 184 124 / 34%), transparent 42%),
+    linear-gradient(180deg, #5d6e94 0%, #957590 42%, #d3977c 70%, #dec0ae 100%);
+}
+
+.main-night {
+  background:
+    radial-gradient(ellipse at 38% 22%, rgb(97 100 162 / 20%), transparent 46%),
+    linear-gradient(180deg, #171d35 0%, #2d2b4d 44%, #51435f 74%, #74687b 100%);
+}
+
+.default {
+  background: linear-gradient(
+    0deg,
+    var(--gradient-primary),
+    var(--gradient-secondary) 70%
+  );
+}
+
+.cloud,
+.cloudBottom {
+  position: absolute;
+  z-index: 0;
+  width: 300px;
+  height: 200px;
+  background-color: var(--cloud-top);
+  border-radius: 100%;
+  opacity: 0.3;
+  box-shadow: 0 0 50px 50px var(--cloud-top);
+  animation:
+    shift 15s infinite linear,
+    rotate 20s infinite alternate;
+}
+
+.cloudBottom {
+  top: 60%;
+  background-color: var(--cloud-bottom);
+  opacity: 0;
+  box-shadow: 0 0 50px 50px var(--cloud-bottom);
+  animation: scale 10s infinite linear;
+}
+
+@keyframes revealScene {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes shift {
+  to {
+    background-position: 500px -500px;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+
+  50% {
+    transform: scale(1.5) rotate(180deg);
+  }
+
+  100% {
+    transform: scale(1) rotate(360deg);
+  }
+}
+
+@keyframes scale {
+  0% {
+    transform: scaleX(1) rotate(0deg);
+  }
+
+  50% {
+    transform: scaleX(2) rotate(30deg);
+  }
+
+  100% {
+    transform: scaleX(1) rotate(-20deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .incomingScene,
+  .cloud,
+  .cloudBottom {
+    animation: none;
+  }
+}

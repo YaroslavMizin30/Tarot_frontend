@@ -1,4 +1,10 @@
-import { useLocation, useNavigate } from 'react-router';
+import {
+  useLocation,
+  useNavigate,
+  useNavigation,
+} from 'react-router';
+
+import { preloadPrimaryRoute } from '@/app/router/routeLoaders';
 
 import useLocales from '@/shared/hooks/useLocales';
 
@@ -8,16 +14,26 @@ import AstrologyPage from '@/shared/assets/svg/common/astrology_page.svg';
 import ProfilePage from '@/shared/assets/svg/common/profile_page.svg';
 
 import { getPageAttachment } from '../../config/pages';
+import { preloadBackdropForPath } from '../RouteTransitionBackdrop';
 
 import styles from './Footer.module.css';
 
 const Footer = (props: { isLoading?: boolean }) => {
   const { isLoading } = props;
 
-  const { pathname } = useLocation();
+  const { pathname: currentPathname } = useLocation();
+  const { location: pendingLocation } = useNavigation();
   const navigate = useNavigate();
+  const pathname = pendingLocation?.pathname ?? currentPathname;
 
   const { i18n } = useLocales();
+
+  const preloadTarget = (pathname: string) => {
+    Promise.all([
+      preloadPrimaryRoute(pathname),
+      preloadBackdropForPath(pathname),
+    ]).catch(() => undefined);
+  };
 
   return (
     <footer
@@ -31,6 +47,9 @@ const Footer = (props: { isLoading?: boolean }) => {
           type={'button'}
           className={`${styles.section} ${getPageAttachment('today', pathname) ? styles.active : ''}`}
           onClick={() => navigate('/')}
+          onPointerDown={() => {
+            preloadTarget('/');
+          }}
         >
           <TodayPage className={styles.homeIcon} />
 
@@ -41,6 +60,9 @@ const Footer = (props: { isLoading?: boolean }) => {
           type={'button'}
           className={`${styles.section} ${getPageAttachment('tarot', pathname) ? styles.active : ''}`}
           onClick={() => navigate('/tarot')}
+          onPointerDown={() => {
+            preloadTarget('/tarot');
+          }}
         >
           <TarotPage />
 
@@ -51,6 +73,9 @@ const Footer = (props: { isLoading?: boolean }) => {
           type={'button'}
           className={`${styles.section} ${getPageAttachment('astrology', pathname) ? styles.active : ''}`}
           onClick={() => navigate('/astrology')}
+          onPointerDown={() => {
+            preloadTarget('/astrology');
+          }}
         >
           <AstrologyPage />
 
@@ -61,6 +86,9 @@ const Footer = (props: { isLoading?: boolean }) => {
           type={'button'}
           className={`${styles.section} ${getPageAttachment('profile', pathname) ? styles.active : ''}`}
           onClick={() => navigate('/settings')}
+          onPointerDown={() => {
+            preloadTarget('/settings');
+          }}
         >
           <ProfilePage />
 

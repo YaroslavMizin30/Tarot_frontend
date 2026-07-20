@@ -11,18 +11,12 @@ import { useUser } from '@/entities/User';
 import { queryKeys } from '@/shared/api/queryKeys';
 import RouletteIcon from '@/shared/assets/svg/common/roulette_page.svg';
 import { getDailyBonusStatus } from '@/entities/BonusGame';
-import DeferredComposition from '@/shared/ui/DeferredComposition';
-import { getDayPeriod } from '@/widgets/DaySky/lib/getDayPeriod';
 
 import styles from './Main.module.css';
 
 const DailyCardWidget = lazy(() => import('@/widgets/DailyCard'));
 const DailyGuidanceWidget = lazy(() => import('@/widgets/DailyGuidance'));
 const DailyReflection = lazy(() => import('@/widgets/DailyReflection'));
-const loadDaySky = () => import('@/widgets/DaySky');
-
-const SKY_FADE_IN_DURATION = 3600;
-const SKY_FADE_IN_CURVE = 'cubic-bezier(0.37, 0, 0.63, 1)';
 
 const MainSkeleton = ({ className = '' }: { className?: string }) => (
   <div
@@ -37,7 +31,6 @@ const MainSkeleton = ({ className = '' }: { className?: string }) => (
 
 export const MainPage = () => {
   const navigate = useNavigate();
-  const dayPeriod = getDayPeriod(new Date().getHours());
 
   const { i18n } = useLocales();
   const { user } = useUser();
@@ -57,15 +50,7 @@ export const MainPage = () => {
     : null;
 
   return (
-    <div className={`${styles.container} ${styles[dayPeriod]}`}>
-      <DeferredComposition
-        className={styles.skyLayer}
-        delay={0}
-        fadeInDuration={SKY_FADE_IN_DURATION}
-        fadeInTimingFunction={SKY_FADE_IN_CURVE}
-        loader={loadDaySky}
-      />
-
+    <div className={styles.container}>
       <div className={styles.content}>
         <Suspense
           fallback={<MainSkeleton className={styles.cardSkeleton} />}

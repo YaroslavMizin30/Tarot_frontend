@@ -10,6 +10,7 @@
   grid-template-columns: minmax(0, 1fr) 91px;
   align-items: center;
   gap: 18px;
+  height: 190px;
   min-height: 190px;
   overflow: hidden;
   border-radius: 18px;

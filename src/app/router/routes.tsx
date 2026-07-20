@@ -3,6 +3,12 @@ import { createBrowserRouter, type RouteObject } from 'react-router';
 import Layout from '@/app/ui/Layout';
 import MainPage from '@/pages/Main/';
 
+import {
+  loadAstrologyPage,
+  loadReadingPage,
+  loadSettingsPage,
+} from './routeLoaders';
+
 const routes: RouteObject[] = [
   {
     path: '/',
@@ -13,7 +19,7 @@ const routes: RouteObject[] = [
         path: '/tarot',
         lazy: {
           async Component() {
-            const { default: ReadingPage } = await import('@/pages/Reading');
+            const { default: ReadingPage } = await loadReadingPage();
 
             return ReadingPage;
           },
@@ -23,7 +29,7 @@ const routes: RouteObject[] = [
         path: '/reading',
         lazy: {
           async Component() {
-            const { default: ReadingPage } = await import('@/pages/Reading');
+            const { default: ReadingPage } = await loadReadingPage();
 
             return ReadingPage;
           },
@@ -43,7 +49,7 @@ const routes: RouteObject[] = [
         path: '/settings',
         lazy: {
           async Component() {
-            const { default: SettingsPage } = await import('@/pages/Settings');
+            const { default: SettingsPage } = await loadSettingsPage();
 
             return SettingsPage;
           },
@@ -93,8 +99,7 @@ const routes: RouteObject[] = [
         path: '/astrology',
         lazy: {
           async Component() {
-            const { default: AstrologyPage } =
-              await import('@/pages/Astrology');
+            const { default: AstrologyPage } = await loadAstrologyPage();
 
             return AstrologyPage;
           },

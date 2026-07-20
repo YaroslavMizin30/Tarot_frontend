@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Outlet, useNavigation, useLocation } from 'react-router';
+import { Outlet, useLocation, useNavigation } from 'react-router';
+
+import { preloadMainPage } from '@/app/router/routeLoaders';
 
 import Spinner from '@/shared/ui/Spinner';
 import Error from '@/shared/ui/Error';
@@ -13,9 +15,10 @@ import useLocales from '@/shared/hooks/useLocales';
 import TRANSLATIONS_EN from '@/shared/locales/en/common';
 import TRANSLATIONS_RU from '@/shared/locales/ru/common';
 import DeferredComposition from '@/shared/ui/DeferredComposition';
-import { getDayPeriod } from '@/widgets/DaySky/lib/getDayPeriod';
 
-import { getPageAttachment } from '../../config/pages';
+import RouteTransitionBackdrop, {
+  preloadBackdropForPath,
+} from '../RouteTransitionBackdrop';
 
 import styles from './Layout.module.css';
 
@@ -35,17 +38,11 @@ const THEME_CONFIG = {
 };
 
 const loadStarsComposition = () => import('../StarsComposition');
-const loadTorchComposition = () =>
-  import('../TorchComposition/TorchComposition');
 const AUTH_BACKGROUND_EXIT_DELAY = 460;
-const TAROT_BACKGROUND_FADE_IN_DURATION = 3600;
-const VOLUMETRIC_BACKGROUND_FADE_CURVE =
-  'cubic-bezier(0.37, 0, 0.63, 1)';
 
 export const Layout = () => {
-  const { state } = useNavigation();
+  const { location: pendingLocation, state } = useNavigation();
   const { pathname } = useLocation();
-  const dayPeriod = getDayPeriod(new Date().getHours());
 
   const { addTranslations, i18n, locale } = useLocales();
 
@@ -70,14 +67,9 @@ export const Layout = () => {
   const [isAuthBackgroundMounted, setIsAuthBackgroundMounted] =
     useState(true);
   const canRenderOutlet =
-    !isAuthenticating && (Boolean(user) || pathname === '/reg');
-  const hasTarotBackground =
-    !isAuthShell &&
-    pathname !== '/' &&
-    getPageAttachment('tarot', pathname);
-  const hasAstrologyBackground =
-    !isAuthShell && getPageAttachment('astrology', pathname);
-  const hasMainBackground = !isAuthShell && pathname === '/';
+    !isAuthenticating &&
+    (Boolean(user) || pathname === '/reg') &&
+    (isAuthShell || !isAuthBackgroundMounted);
   const shouldMountAuthLayerContent =
     isAuthLoadingVisible || isAuthBackgroundMounted;
 
@@ -124,6 +116,23 @@ export const Layout = () => {
   }, [isAuthLoadingVisible]);
 
   useEffect(() => {
+    if (!shouldShowAuthLoading) {
+      return;
+    }
+
+    const preloadTimeout = window.setTimeout(() => {
+      Promise.all([
+        preloadMainPage(),
+        preloadBackdropForPath('/'),
+      ]).catch(() => undefined);
+    }, 120);
+
+    return () => {
+      window.clearTimeout(preloadTimeout);
+    };
+  }, [shouldShowAuthLoading]);
+
+  useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
   }, [addTranslations, locale]);
 
@@ -146,48 +155,16 @@ export const Layout = () => {
         aria-busy={isLoading && !isAuthShell}
         className={`${styles.main} ${isAuthShell ? styles.authShell : ''} custom-scrollbar`}
       >
-        <div
-          className={`${styles.background} ${
-            hasTarotBackground ? styles.tarotBackgroundBase : ''
-          } ${
-            hasAstrologyBackground ? styles.astrologyBackgroundBase : ''
-          } ${
-            hasMainBackground ? styles[`mainBackground-${dayPeriod}`] : ''
-          }`}
-        >
-          {!isAuthShell &&
-            pathname !== '/' &&
-            !hasTarotBackground &&
-            !hasAstrologyBackground && (
-            <>
-              <div className={styles.cloud}></div>
-              <div className={styles.couldBottom}></div>
-            </>
-          )}
-
-          {isAuthShell && !isAuthLoadingVisible && (
-            <DeferredComposition
-              delay={0}
-              loader={loadStarsComposition}
-            />
-          )}
-          {hasAstrologyBackground && (
-            <DeferredComposition
-              isExiting={isLoading}
-              loader={loadStarsComposition}
-            />
-          )}
-          {hasTarotBackground && (
-            <DeferredComposition
-              delay={0}
-              fadeInDuration={TAROT_BACKGROUND_FADE_IN_DURATION}
-              fadeInTimingFunction={VOLUMETRIC_BACKGROUND_FADE_CURVE}
-              isExiting={isLoading}
-              loader={loadTorchComposition}
-            />
-          )}
-
-        </div>
+        <RouteTransitionBackdrop
+          canMountHeavyCompositions={!isAuthBackgroundMounted}
+          currentPathname={pathname}
+          isAuthLoadingVisible={isAuthLoadingVisible}
+          isAuthShell={isAuthShell}
+          isNavigating={isLoading}
+          pendingPathname={
+            isAuthShell ? undefined : pendingLocation?.pathname
+          }
+        />
 
         {authError ? (
           <div className={`${styles.container} ${styles.authContainer}`}>
