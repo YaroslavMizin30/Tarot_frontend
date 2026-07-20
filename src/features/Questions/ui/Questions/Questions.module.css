@@ -7,12 +7,12 @@
   justify-content: space-between;
   width: 100%;
   min-height: 100%;
-  padding: 5px 18px 24px;
+  padding: 5px 0 24px;
   box-sizing: border-box;
 }
 
 .content {
-  width: min(100%, 420px);
+  width: 100%;
 }
 
 .container > button + button, .container > h3 + button, .container > div + div, .container > h3 + div {
