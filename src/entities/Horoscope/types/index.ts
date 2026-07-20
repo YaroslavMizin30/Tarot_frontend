@@ -1,6 +1,7 @@
 import type { Sign } from '@/shared/ui/Zodiac';
 
 export interface Horoscope {
+  appUserId: string;
   userId: number;
   content: string;
   id: string;

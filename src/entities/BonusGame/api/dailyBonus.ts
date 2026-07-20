@@ -1,4 +1,4 @@
-import { ensureSupabase } from '@/shared/api/supabase';
+import { backend } from '@/shared/api/backend';
 
 import type { CardName } from '@/entities/TarotCard';
 
@@ -50,12 +50,7 @@ export interface RiskBonusUnavailable {
 const invoke = async <T>(
   action: 'status' | 'play' | 'play-risk',
 ): Promise<T> => {
-  await ensureSupabase();
-  const { data, error } = await window.supabase.functions.invoke(
-    'daily-bonus',
-    { body: { action } },
-  );
-  if (error) throw error;
+  const data = await backend.invoke<unknown>('daily-bonus', { action });
   if (!data || typeof data !== 'object' || !('status' in data)) {
     throw new Error('Invalid daily bonus response');
   }

@@ -1,4 +1,5 @@
 import { snakeize } from '@/shared/api/http/http';
+import { backend } from '@/shared/api/backend';
 import camelize from 'camelize';
 
 import type { NatalChart } from '@/entities/Horoscope';
@@ -19,12 +20,12 @@ export interface CreateChartParams {
 export const createChart = async (
   params: CreateChartParams,
 ): Promise<NatalChart> => {
-  const { data: chart, error } = await window.supabase.functions.invoke('chart', {
-    body: snakeize({ ...params, requestId: crypto.randomUUID() }),
-  });
+  const chart = await backend.invoke<unknown>('chart',
+    snakeize({ ...params, requestId: crypto.randomUUID() }),
+  );
 
-  if (error || !chart) {
-    throw error ?? new Error('NATAL_CHART_FAILED');
+  if (!chart) {
+    throw new Error('NATAL_CHART_FAILED');
   }
 
   return camelize(chart) as NatalChart;

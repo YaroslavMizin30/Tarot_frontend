@@ -3,11 +3,11 @@ import { getDataFromDB } from '@/shared/api/supabase';
 import type { Rating } from '../types';
 
 export const getRating = async (
-  userId: number,
+  appUserId: string,
 ): Promise<Rating | null> => {
   const data = await getDataFromDB<Rating>('app_ratings', {
-    key: 'userId',
-    value: String(userId),
+    key: 'appUserId',
+    value: appUserId,
   });
 
   if (!data || data.length === 0) {

@@ -1,4 +1,5 @@
 import http from '../../http/http';
+import { backend } from '../../backend';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
@@ -25,6 +26,12 @@ export const getDataFromDB = async <T>(
   } = {},
 ): Promise<T[] | null> => {
   try {
+    if (!options.params) {
+      return await backend.select<T>(table, {
+        filters: [{ column: equal.key, value: equal.value }],
+      });
+    }
+
     const headers = await getAuthHeaders();
     const data = await http<T[]>(
       `${supabaseUrl}/rest/v1/${table}`,

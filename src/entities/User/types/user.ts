@@ -28,6 +28,8 @@ export interface TarotProfile {
 }
 
 export interface User {
+  appUserId: string;
+  /** Transitional internal profile key; it is not a host-platform ID. */
   id: number;
   sign: Sign;
   userName: string;

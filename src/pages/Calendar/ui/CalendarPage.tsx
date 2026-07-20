@@ -106,6 +106,7 @@ export const CalendarPage = () => {
 
     try {
       await createPlan({
+        appUserId: user.appUserId,
         userId: user.id,
         planDate: effectiveSelectedDate,
         text,

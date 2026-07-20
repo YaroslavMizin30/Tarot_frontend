@@ -2,16 +2,16 @@ import type {
   SendMessageParams,
   SendMessageResponse,
 } from './sendMessage.types';
+import { backend } from '@/shared/api/backend';
 
 export const sendMessage = async (params: SendMessageParams) => {
-  const { data: response, error } =
-    await window.supabase.functions.invoke<SendMessageResponse>(
-      'telegram-message',
-      { body: { text: params.text } },
-    );
+  const response = await backend.invoke<SendMessageResponse>(
+    'telegram-message',
+    { text: params.text },
+  );
 
-  if (error || !response) {
-    throw error ?? new Error('TELEGRAM_SEND_FAILED');
+  if (!response) {
+    throw new Error('TELEGRAM_SEND_FAILED');
   }
   return response;
 };

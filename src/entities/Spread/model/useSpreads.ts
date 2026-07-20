@@ -16,8 +16,8 @@ export const useSpreads = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: queryKeys.spreads.byUserId(user?.id ?? 'no-user'),
-    queryFn: () => getSpreads(String(user!.id)),
+    queryKey: queryKeys.spreads.byUserId(user?.appUserId ?? 'no-user'),
+    queryFn: () => getSpreads(user!.appUserId),
     enabled: !!user,
   });
 

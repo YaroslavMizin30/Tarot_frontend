@@ -76,8 +76,8 @@ export const useHoroscopes = (options?: UseHoroscopesOptions) => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: queryKeys.horoscopes.byUserId(user?.id ?? 'no-user'),
-    queryFn: () => getHoroscopes(String(user!.id)),
+    queryKey: queryKeys.horoscopes.byUserId(user?.appUserId ?? 'no-user'),
+    queryFn: () => getHoroscopes(user!.appUserId),
     enabled: !!user,
   });
 
@@ -214,6 +214,7 @@ export const useHoroscopes = (options?: UseHoroscopesOptions) => {
       if (message) {
         await addHoroscopeApi({
           id: v4(),
+          appUserId: user!.appUserId,
           content: message,
           type,
           sender: user!.userName,
@@ -227,6 +228,7 @@ export const useHoroscopes = (options?: UseHoroscopesOptions) => {
 
       await addHoroscopeApi({
         id: v4(),
+        appUserId: user!.appUserId,
         content,
         type,
         sender: 'Tarotopia',
@@ -239,7 +241,9 @@ export const useHoroscopes = (options?: UseHoroscopesOptions) => {
 
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: queryKeys.horoscopes.byUserId(String(user?.id)),
+        queryKey: queryKeys.horoscopes.byUserId(
+          user?.appUserId ?? 'no-user',
+        ),
       });
 
       setUserMessage('');

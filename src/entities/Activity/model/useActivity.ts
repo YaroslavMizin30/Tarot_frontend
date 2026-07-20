@@ -17,8 +17,8 @@ export const useActivity = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: queryKeys.activity.byUserId(user?.id ?? 'no-user'),
-    queryFn: () => getActivity(user!.id),
+    queryKey: queryKeys.activity.byUserId(user?.appUserId ?? 'no-user'),
+    queryFn: () => getActivity(user!.appUserId),
     enabled: !!user,
   });
 
@@ -28,11 +28,11 @@ export const useActivity = () => {
         throw new Error('User not found');
       }
 
-      return updateActivityApi(user.id, activity);
+      return updateActivityApi(user.appUserId, user.id, activity);
     },
     onMutate: async (nextActivity) => {
       const activityQueryKey = queryKeys.activity.byUserId(
-        user?.id ?? 'no-user',
+        user?.appUserId ?? 'no-user',
       );
 
       await queryClient.cancelQueries({ queryKey: activityQueryKey });

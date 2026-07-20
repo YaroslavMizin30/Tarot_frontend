@@ -17,8 +17,8 @@ export const useRating = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: queryKeys.rating.byUserId(user?.id ?? 'no-user'),
-    queryFn: () => getRating(user!.id),
+    queryKey: queryKeys.rating.byUserId(user?.appUserId ?? 'no-user'),
+    queryFn: () => getRating(user!.appUserId),
     enabled: !!user,
   });
 
@@ -31,8 +31,8 @@ export const useRating = () => {
       const hasRated = !!rating;
 
       const result = hasRated
-        ? await updateRating(user.id, payload)
-        : await addRating(user.id, payload);
+        ? await updateRating(user.appUserId, payload)
+        : await addRating(user.appUserId, user.id, payload);
 
       return !!result;
     },

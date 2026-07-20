@@ -1,14 +1,16 @@
+import { backend } from '@/shared/api/backend';
+
 export type ConfirmedPaymentStatus = 'paid' | 'pending' | 'cancelled';
 
 export const getPaymentStatus = async (
   paymentId: string,
 ): Promise<ConfirmedPaymentStatus> => {
-  const { data, error } = await window.supabase.functions.invoke<{
+  const data = await backend.invoke<{
     status: ConfirmedPaymentStatus;
-  }>('payment-status', { body: { paymentId } });
+  }>('payment-status', { paymentId });
 
-  if (error || !data?.status) {
-    throw error ?? new Error('PAYMENT_STATUS_UNAVAILABLE');
+  if (!data?.status) {
+    throw new Error('PAYMENT_STATUS_UNAVAILABLE');
   }
 
   return data.status;

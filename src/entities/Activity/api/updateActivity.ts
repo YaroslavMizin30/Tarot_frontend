@@ -5,18 +5,19 @@ import { getActivity } from './getActivity';
 import { updateRaw, insertRaw } from '@/shared/api/supabase';
 
 export const updateActivity = async (
-  userId: number,
+  appUserId: string,
+  profileId: number,
   activity: Partial<Activity>,
 ) => {
-  const userActivity = await getActivity(userId);
+  const userActivity = await getActivity(appUserId);
 
   if (userActivity) {
     const updatedActivity = await updateRaw<Activity>(
       'activity',
       { ...activity },
       {
-        key: 'userId',
-        value: userId,
+        key: 'appUserId',
+        value: appUserId,
       },
     );
 
@@ -26,7 +27,8 @@ export const updateActivity = async (
   } else {
     const insertedActivity = await insertRaw<Activity>('activity', {
       ...activity,
-      userId,
+      userId: profileId,
+      appUserId,
     });
 
     if (!insertedActivity?.length) {

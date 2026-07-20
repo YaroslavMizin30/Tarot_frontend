@@ -13,10 +13,10 @@ export const useSpreadHistory = () => {
   const { user } = useUser();
 
   const query = useInfiniteQuery({
-    queryKey: queryKeys.spreads.history(user?.id ?? 'no-user'),
+    queryKey: queryKeys.spreads.history(user?.appUserId ?? 'no-user'),
     queryFn: ({ pageParam }) =>
       getSpreadsPage(
-        String(user!.id),
+        user!.appUserId,
         pageParam,
         SPREAD_HISTORY_PAGE_SIZE,
       ),

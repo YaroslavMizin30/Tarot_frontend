@@ -3,13 +3,10 @@ import type {
   TransitHistoryItem,
 } from '../types/transitReport';
 import type { PersonalTransitSummary } from '../types/transit';
+import { backend } from '@/shared/api/backend';
 
 const invoke = async <T>(body: Record<string, unknown>): Promise<T> => {
-  const { data, error } = await window.supabase.functions.invoke<T>('personal-transits', {
-    body,
-  });
-
-  if (error) throw error;
+  const data = await backend.invoke<T>('personal-transits', body);
   if (data && typeof data === 'object' && 'error' in data) {
     throw new Error(String((data as { error: unknown }).error));
   }

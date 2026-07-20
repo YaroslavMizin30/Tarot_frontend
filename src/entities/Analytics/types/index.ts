@@ -1,4 +1,6 @@
 export interface AnalyticsPayload {
+  appUserId?: string;
+  /** @deprecated Internal profile key; use appUserId for ownership. */
   telegramUserId: number;
   username?: string;
   registered: boolean;

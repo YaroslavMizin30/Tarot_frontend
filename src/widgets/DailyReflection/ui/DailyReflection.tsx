@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
-import { ensureSupabase } from '@/shared/api/supabase';
+import { backend } from '@/shared/api/backend';
 import { queryKeys } from '@/shared/api/queryKeys';
 import useLocales from '@/shared/hooks/useLocales';
 import { useUser } from '@/entities/User';
@@ -12,15 +12,11 @@ type ReflectionResponse = {
   question?: { text_ru?: string; text_en?: string } | null;
 };
 
-const getDailyReflection = async () => {
-  await ensureSupabase();
-  const { data, error } = await window.supabase.functions.invoke<ReflectionResponse>(
+const getDailyReflection = () =>
+  backend.invoke<ReflectionResponse>(
     'daily-reflection',
-    { body: { action: 'get' } },
+    { action: 'get' },
   );
-  if (error) throw error;
-  return data;
-};
 
 interface DailyReflectionProps {
   onReady?: () => void;
@@ -31,7 +27,10 @@ export const DailyReflection = ({ onReady }: DailyReflectionProps) => {
   const { locale, i18n } = useLocales();
   const date = new Date().toLocaleDateString('en-CA');
   const { data, isLoading } = useQuery({
-    queryKey: queryKeys.dailyReflection.byUserDate(user?.id ?? 'no-user', date),
+    queryKey: queryKeys.dailyReflection.byUserDate(
+      user?.appUserId ?? 'no-user',
+      date,
+    ),
     queryFn: getDailyReflection,
     enabled: Boolean(user),
     staleTime: 60 * 60 * 1000,

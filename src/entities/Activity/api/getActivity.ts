@@ -2,10 +2,12 @@ import type { Activity } from '../types';
 
 import { getDataFromDB } from '@/shared/api/supabase';
 
-export const getActivity = async (userId: number): Promise<Activity | null> => {
+export const getActivity = async (
+  appUserId: string,
+): Promise<Activity | null> => {
   const data = await getDataFromDB<Activity>('activity', {
-    key: 'userId',
-    value: String(userId),
+    key: 'appUserId',
+    value: appUserId,
   }, { throwOnError: true });
 
   if (!data || data.length === 0) {

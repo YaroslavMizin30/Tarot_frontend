@@ -2,10 +2,10 @@ import { getDataFromDB } from '@/shared/api/supabase';
 
 import { type AnalyticsPayload } from '../types';
 
-export const getAnalytics = async (userId: number) => {
+export const getAnalytics = async (appUserId: string) => {
   const data = await getDataFromDB<AnalyticsPayload>('analytics', {
-    key: 'telegramUserId',
-    value: String(userId),
+    key: 'appUserId',
+    value: appUserId,
   });
 
   if (!data) {

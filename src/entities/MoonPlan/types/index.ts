@@ -2,6 +2,7 @@ export type MoonPlanStatus = 'pending' | 'processing' | 'sent' | 'failed';
 
 export interface MoonPlan {
   id: string;
+  appUserId: string;
   userId: number;
   planDate: string;
   text: string;
@@ -15,6 +16,7 @@ export interface MoonPlan {
 }
 
 export interface CreateMoonPlanPayload {
+  appUserId: string;
   userId: number;
   planDate: string;
   text: string;

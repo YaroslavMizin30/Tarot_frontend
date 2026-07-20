@@ -11,8 +11,9 @@ export interface AuthenticatedIdentity extends ExternalIdentity {
 }
 
 /**
- * Compatibility shape while the users table is still keyed by Telegram ID.
- * Remove telegramId after user_identities becomes the source of truth.
+ * Telegram adapter compatibility shape. Product data is owned by appUserId;
+ * telegramId is used only by the host adapter and can be removed after all
+ * Telegram-specific UI flows move behind HostPlatform.
  */
 export interface AuthenticatedTelegramIdentity
   extends AuthenticatedIdentity {

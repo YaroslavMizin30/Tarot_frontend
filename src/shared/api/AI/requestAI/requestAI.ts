@@ -1,15 +1,17 @@
+import { backend } from '@/shared/api/backend';
+
 export interface Prompt {
   role: 'user' | 'developer' | 'assistant';
   content: string;
 }
 
 export const requestAi = async (prompts: Prompt[]) => {
-  const { data, error } = await window.supabase.functions.invoke('ai-request', {
-    body: { prompt: prompts },
+  const data = await backend.invoke<string>('ai-request', {
+    prompt: prompts,
   });
 
-  if (error || typeof data !== 'string' || !data.trim()) {
-    throw error ?? new Error('AI_INVALID_RESPONSE');
+  if (typeof data !== 'string' || !data.trim()) {
+    throw new Error('AI_INVALID_RESPONSE');
   }
 
   return data.replace(/[*|#]|---/g, '');

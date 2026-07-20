@@ -3,12 +3,12 @@ import { updateRaw } from '@/shared/api/supabase';
 import type { Rating, RatingPayload } from '../types';
 
 export const updateRating = async (
-  userId: number,
+  appUserId: string,
   payload: RatingPayload,
 ): Promise<Rating> => {
   const data = await updateRaw<Rating>('app_ratings', { ...payload }, {
-    key: 'userId',
-    value: userId,
+    key: 'appUserId',
+    value: appUserId,
   });
 
   if (!data) {
