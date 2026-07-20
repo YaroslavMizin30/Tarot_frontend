@@ -32,7 +32,6 @@
 
 .incomingScene {
   z-index: 1;
-  animation: revealScene 320ms ease-out both;
 }
 
 .tarot {
@@ -147,16 +146,6 @@
   animation: scale 10s infinite linear;
 }
 
-@keyframes revealScene {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
 @keyframes shift {
   to {
     background-position: 500px -500px;
@@ -192,7 +181,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .incomingScene,
   .cloud,
   .cloudBottom {
     animation: none;
