@@ -162,7 +162,7 @@ export const Layout = () => {
 
       <main
         aria-busy={isLoading && !isAuthShell}
-        className={`${styles.main} ${isAuthShell ? styles.authShell : ''} custom-scrollbar`}
+        className={`${styles.main} ${isAuthShell ? styles.authShell : ''}`}
       >
         <RouteTransitionBackdrop
           canMountHeavyCompositions={!isAuthBackgroundMounted}
@@ -175,7 +175,9 @@ export const Layout = () => {
         />
 
         {authError ? (
-          <div className={`${styles.container} ${styles.authContainer}`}>
+          <div
+            className={`${styles.container} ${styles.authContainer} custom-scrollbar`}
+          >
             <div className={styles.authStatus}>
               <Error
                 error={i18n(
@@ -189,7 +191,7 @@ export const Layout = () => {
           </div>
         ) : canRenderOutlet ? (
           <div
-            className={`${styles.container} ${
+            className={`${styles.container} custom-scrollbar ${
               isAuthShell ? styles.authContainer : ''
             }`}
           >

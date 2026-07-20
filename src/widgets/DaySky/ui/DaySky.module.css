@@ -295,7 +295,7 @@
 .time {
   position: absolute;
   z-index: 7;
-  top: 15px;
+  top: calc(var(--app-header-height, 48px) + 15px);
   left: 50%;
   color: rgb(45 43 61 / 66%);
   font-family: 'Monomakh', serif !important;
@@ -341,7 +341,7 @@
 
 @media (max-width: 380px) {
   .time {
-    top: 14px;
+    top: calc(var(--app-header-height, 48px) + 12px);
   }
 
   .orbTrack {
