@@ -167,3 +167,15 @@
   line-height: 1.25;
   text-align: center;
 }
+
+@supports not (color: color-mix(in srgb, #000, #fff)) {
+  .section,
+  .rule {
+    border-color: var(--border-primary);
+    background: var(--surface-panel);
+  }
+
+  .card {
+    outline-color: var(--border-secondary);
+  }
+}

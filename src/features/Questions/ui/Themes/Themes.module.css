@@ -317,6 +317,7 @@
   padding: 8px 18px;
   align-items: center;
   background: color-mix(in srgb, var(--gradient-secondary) 84%, transparent);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
 
@@ -370,5 +371,36 @@
   .question {
     min-height: 132px;
     padding: 10px;
+  }
+}
+
+@supports not (color: color-mix(in srgb, #000, #fff)) {
+  .question {
+    background:
+      radial-gradient(
+        ellipse at 14% 0%,
+        var(--control-gloss-highlight) 0%,
+        transparent 56%
+      ),
+      linear-gradient(
+        142deg,
+        var(--control-gloss-sheen) 0%,
+        transparent 45%,
+        var(--control-gloss-pressed) 100%
+      ),
+      var(--surface-control);
+  }
+
+  .cardFan {
+    color: var(--text-on-control);
+  }
+
+  .showAll {
+    text-shadow: 0 1px 8px var(--tarot-scene-center);
+  }
+
+  .overlayHeader {
+    background: var(--gradient-secondary);
+    -webkit-backdrop-filter: blur(12px);
   }
 }

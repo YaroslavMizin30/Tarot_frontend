@@ -163,3 +163,9 @@
   text-align: center;
   color: #b52d2d;
 }
+
+@supports not (color: color-mix(in srgb, #000, #fff)) {
+  .selectedInfo {
+    background: var(--surface-panel);
+  }
+}

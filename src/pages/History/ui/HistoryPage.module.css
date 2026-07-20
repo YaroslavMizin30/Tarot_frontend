@@ -208,6 +208,16 @@
   color: var(--text-secondary);
 }
 
+@supports not (color: color-mix(in srgb, #000, #fff)) {
+  .group + .group {
+    border-top-color: var(--border-primary);
+  }
+
+  .spread {
+    background: var(--surface-panel);
+  }
+}
+
 @media (max-width: 360px) {
   .spread {
     grid-template-columns: minmax(0, 1fr) 72px 8px;

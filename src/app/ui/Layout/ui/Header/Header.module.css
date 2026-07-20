@@ -141,6 +141,7 @@
   border: 1px solid color-mix(in srgb, var(--border-primary) 72%, transparent);
   border-radius: 12px;
   box-shadow: 0 9px 24px var(--control-gloss-shadow);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
 
@@ -165,4 +166,33 @@
 
 .loading {
   background: #323232;
+}
+
+@supports not (color: color-mix(in srgb, #000, #fff)) {
+  .header {
+    background: linear-gradient(
+      180deg,
+      var(--navigation-background) 0%,
+      transparent 100%
+    );
+  }
+
+  .header::after {
+    background: linear-gradient(
+      180deg,
+      var(--navigation-background),
+      transparent
+    );
+    opacity: 0.82;
+  }
+
+  .iconButton:hover,
+  .leftSection:hover {
+    background: transparent;
+  }
+
+  .themes {
+    background: var(--background-primary);
+    border-color: var(--border-primary);
+  }
 }

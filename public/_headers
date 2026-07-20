@@ -1,0 +1,50 @@
+/
+  Cache-Control: no-store, max-age=0, must-revalidate
+
+/index.html
+  Cache-Control: no-store, max-age=0, must-revalidate
+
+/tarot
+  Cache-Control: no-store, max-age=0, must-revalidate
+
+/reading
+  Cache-Control: no-store, max-age=0, must-revalidate
+
+/about
+  Cache-Control: no-store, max-age=0, must-revalidate
+
+/settings
+  Cache-Control: no-store, max-age=0, must-revalidate
+
+/about-app
+  Cache-Control: no-store, max-age=0, must-revalidate
+
+/history
+  Cache-Control: no-store, max-age=0, must-revalidate
+
+/history/*
+  Cache-Control: no-store, max-age=0, must-revalidate
+
+/reg
+  Cache-Control: no-store, max-age=0, must-revalidate
+
+/astrology
+  Cache-Control: no-store, max-age=0, must-revalidate
+
+/natal-chart
+  Cache-Control: no-store, max-age=0, must-revalidate
+
+/transits
+  Cache-Control: no-store, max-age=0, must-revalidate
+
+/horoscopes
+  Cache-Control: no-store, max-age=0, must-revalidate
+
+/billing
+  Cache-Control: no-store, max-age=0, must-revalidate
+
+/calendar
+  Cache-Control: no-store, max-age=0, must-revalidate
+
+/roulette
+  Cache-Control: no-store, max-age=0, must-revalidate

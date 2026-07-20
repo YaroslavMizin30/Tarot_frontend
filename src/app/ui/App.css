@@ -196,6 +196,21 @@ body {
   background: color-mix(in srgb, var(--surface-control) 76%, transparent);
 }
 
+@supports not (color: color-mix(in srgb, #000, #fff)) {
+  .custom-scrollbar {
+    scrollbar-color: var(--border-primary) transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb,
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--border-primary);
+  }
+}
+
 #root * {
   font-family: 'Pangolin', sans-serif;
   -webkit-tap-highlight-color: transparent;

@@ -194,3 +194,30 @@
   color: var(--navigation-text);
   opacity: 0.5;
 }
+
+@supports not (color: color-mix(in srgb, #000, #fff)) {
+  .header {
+    border-color: var(--border-primary);
+    background:
+      radial-gradient(
+        ellipse at 90% 0%,
+        var(--surface-control),
+        transparent 58%
+      ),
+      var(--surface-panel);
+  }
+
+  .focus {
+    border-left-color: var(--surface-control);
+    background: var(--surface-panel);
+  }
+
+  .signal {
+    border-color: var(--border-primary);
+    background: var(--surface-panel);
+  }
+
+  .signalSign {
+    filter: drop-shadow(0 0 5px var(--surface-panel));
+  }
+}

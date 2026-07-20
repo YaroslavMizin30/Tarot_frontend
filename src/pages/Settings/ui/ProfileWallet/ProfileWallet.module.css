@@ -156,3 +156,20 @@
     min-height: 36px;
   }
 }
+
+@supports not (color: color-mix(in srgb, #000, #fff)) {
+  .container {
+    background:
+      radial-gradient(
+        ellipse at 8% 0%,
+        var(--panel-gloss-highlight),
+        transparent 54%
+      ),
+      var(--surface-panel);
+    border-color: var(--border-interactive);
+  }
+
+  .breakdown {
+    border-left-color: var(--border-interactive);
+  }
+}

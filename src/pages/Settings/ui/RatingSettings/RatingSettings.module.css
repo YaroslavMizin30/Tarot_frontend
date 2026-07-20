@@ -114,3 +114,10 @@
   width: 100%;
   min-height: 200px;
 }
+
+@supports not (color: color-mix(in srgb, #000, #fff)) {
+  .section {
+    background: var(--surface-panel);
+    border-color: var(--border-interactive);
+  }
+}

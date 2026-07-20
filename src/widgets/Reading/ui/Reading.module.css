@@ -125,3 +125,41 @@
   min-height: 0;
   flex: 1;
 }
+
+@supports not (color: color-mix(in srgb, #000, #fff)) {
+  .progress {
+    border-color: var(--border-primary);
+    background: var(--control-gloss-pressed);
+  }
+
+  .progress::before {
+    background: var(--border-secondary);
+    opacity: 0.42;
+  }
+
+  .step {
+    text-shadow: none;
+  }
+
+  .step::after {
+    background: var(--surface-panel);
+    border-color: var(--border-interactive);
+  }
+
+  .complete::before,
+  .current:not(:first-child)::before,
+  .current:last-child::before {
+    background: var(--surface-control);
+  }
+
+  .complete::after,
+  .current::after {
+    background:
+      radial-gradient(
+        circle,
+        var(--surface-control) 0 3px,
+        transparent 3.5px
+      ),
+      var(--surface-panel);
+  }
+}

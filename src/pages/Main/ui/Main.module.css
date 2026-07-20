@@ -365,3 +365,72 @@
     animation: none;
   }
 }
+
+@supports not (color: color-mix(in srgb, #000, #fff)) {
+  .skeleton {
+    border-color: var(--border-primary);
+    background: var(--surface-panel);
+  }
+
+  .skeleton::after {
+    background: linear-gradient(
+      104deg,
+      transparent 22%,
+      var(--panel-gloss-highlight) 46%,
+      transparent 70%
+    );
+  }
+
+  .skeleton span {
+    background: var(--border-primary);
+  }
+
+  .cardSkeleton {
+    border-color: transparent;
+    background: transparent;
+  }
+
+  .cardSkeleton::before,
+  .guidanceSkeleton {
+    border-color: var(--border-primary);
+    background: var(--surface-panel);
+  }
+
+  .guidanceSkeleton::before {
+    background: radial-gradient(
+      circle at 38% 34%,
+      var(--surface-panel),
+      var(--surface-control)
+    );
+    box-shadow: 0 0 10px var(--surface-control);
+  }
+
+  .reflectionSkeleton {
+    border-color: transparent;
+    background: transparent;
+  }
+
+  .bonus,
+  .resume {
+    border-color: var(--border-primary);
+    background:
+      radial-gradient(
+        ellipse at 12% 0%,
+        var(--panel-gloss-highlight) 0%,
+        transparent 58%
+      ),
+      linear-gradient(142deg, transparent 42%, rgb(61 41 69 / 5%)),
+      var(--surface-panel);
+  }
+
+  .resume {
+    border-color: var(--border-interactive);
+    background:
+      radial-gradient(
+        ellipse at 12% 0%,
+        var(--panel-gloss-highlight),
+        transparent 58%
+      ),
+      var(--surface-panel);
+  }
+}

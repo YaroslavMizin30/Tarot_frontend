@@ -215,3 +215,9 @@
   gap: 16px;
   color: var(--text-primary);
 }
+
+@supports not (color: color-mix(in srgb, #000, #fff)) {
+  .activeCardInfo {
+    background: var(--surface-panel);
+  }
+}

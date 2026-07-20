@@ -54,3 +54,10 @@
     padding-block: 5px;
   }
 }
+
+@supports not (color: color-mix(in srgb, #000, #fff)) {
+  .container button {
+    background: var(--surface-panel);
+    border-color: var(--border-interactive);
+  }
+}

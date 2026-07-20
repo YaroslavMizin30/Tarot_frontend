@@ -123,6 +123,39 @@
   );
 }
 
+@supports not (color: color-mix(in srgb, #000, #fff)) {
+  .tarot {
+    background:
+      linear-gradient(
+        180deg,
+        transparent 36%,
+        var(--tarot-scene-haze-soft) 57%,
+        transparent 76%
+      ),
+      radial-gradient(
+        ellipse 92% 72% at 50% 40%,
+        var(--tarot-scene-mid) 0%,
+        transparent 78%
+      ),
+      linear-gradient(
+        180deg,
+        var(--gradient-secondary) 0%,
+        var(--navigation-background) 54%,
+        var(--gradient-primary) 100%
+      );
+  }
+
+  .astrology {
+    background: radial-gradient(
+      ellipse 88% 72% at 50% 48%,
+      var(--astrology-sky-top, #28213d) 0%,
+      var(--astrology-sky-middle, #3b2d50) 48%,
+      var(--astrology-sky-bottom, #62506f) 76%,
+      transparent 100%
+    );
+  }
+}
+
 .cloud,
 .cloudBottom {
   position: absolute;

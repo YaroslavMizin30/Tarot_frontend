@@ -258,3 +258,43 @@ svg.icon {
     padding-block: 8px;
   }
 }
+
+@supports not (color: color-mix(in srgb, #000, #fff)) {
+  .action {
+    background:
+      radial-gradient(
+        ellipse at 10% 0%,
+        var(--panel-gloss-highlight),
+        transparent 56%
+      ),
+      linear-gradient(142deg, transparent 42%, var(--action-tint)),
+      var(--surface-panel);
+    border-color: var(--action-tint);
+    box-shadow:
+      inset 1px 1px 0 var(--panel-gloss-highlight),
+      0 4px 14px var(--control-gloss-shadow);
+  }
+
+  .icon {
+    color: var(--action-tint);
+  }
+
+  .progress {
+    background: var(--action-tint);
+  }
+
+  .preferences {
+    border-color: var(--border-interactive);
+  }
+
+  .options button,
+  .soundToggle {
+    background: var(--surface-panel);
+    border-color: var(--border-interactive);
+  }
+
+  .switch {
+    background: var(--text-secondary);
+    opacity: 0.56;
+  }
+}

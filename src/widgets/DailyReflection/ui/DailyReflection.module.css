@@ -79,3 +79,18 @@
     animation: none;
   }
 }
+
+@supports not (color: color-mix(in srgb, #000, #fff)) {
+  .placeholder::after {
+    background: linear-gradient(
+      104deg,
+      transparent 22%,
+      var(--panel-gloss-highlight) 46%,
+      transparent 70%
+    );
+  }
+
+  .placeholder span {
+    background: var(--border-primary);
+  }
+}

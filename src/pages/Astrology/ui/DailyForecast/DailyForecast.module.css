@@ -54,6 +54,17 @@
   background: color-mix(in srgb, var(--surface-panel) 100%, transparent);
 }
 
+@supports not (color: color-mix(in srgb, #000, #fff)) {
+  .planets::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .planets::-webkit-scrollbar-thumb {
+    border-color: var(--border-primary);
+    background: var(--surface-panel);
+  }
+}
+
 .planetItem {
   display: flex;
   flex-direction: column;

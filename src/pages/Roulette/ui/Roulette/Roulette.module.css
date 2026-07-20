@@ -221,6 +221,7 @@
   box-shadow:
     0 5px 18px rgb(40 28 46 / 12%),
     0 0 14px color-mix(in srgb, var(--roulette-accent) 12%, transparent);
+  -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   z-index: -1;
 }
@@ -408,6 +409,33 @@
 
 .button + .button {
   margin-top: 10px;
+}
+
+@supports not (color: color-mix(in srgb, #000, #fff)) {
+  .switcher,
+  .effect-shadow,
+  .returnButton {
+    border-color: var(--border-primary);
+    background: var(--surface-panel);
+  }
+
+  .card {
+    outline-color: var(--roulette-accent);
+    box-shadow: 0 2px 7px rgb(31 23 35 / 22%);
+  }
+
+  .resultDescription {
+    text-shadow: 0 0 5px white;
+  }
+
+  .effect-shadow {
+    box-shadow: 0 5px 18px rgb(40 28 46 / 12%);
+  }
+
+  .effect-reading,
+  .effect-happy-card {
+    color: var(--text-primary);
+  }
 }
 
 @media (max-height: 700px) {

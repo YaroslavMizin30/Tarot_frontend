@@ -33,4 +33,10 @@ export default defineConfig({
   server: {
     allowedHosts: ['polysyllabic-browny-elly.ngrok-free.dev'],
   },
+  build: {
+    // Telegram Desktop on macOS Ventura can still use Safari 16.1-era WebKit.
+    // Keep lazy route chunks within that engine's JavaScript/CSS syntax range.
+    target: ['es2020', 'safari15'],
+    cssTarget: 'safari15',
+  },
 });

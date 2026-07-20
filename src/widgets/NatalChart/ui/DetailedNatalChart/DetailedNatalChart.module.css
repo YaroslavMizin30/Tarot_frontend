@@ -237,3 +237,14 @@
     width: 270px;
   }
 }
+
+@supports not (color: color-mix(in srgb, #000, #fff)) {
+  .transitSource,
+  .planet circle {
+    fill: var(--background-primary);
+  }
+
+  .planet circle {
+    stroke: var(--border-secondary);
+  }
+}

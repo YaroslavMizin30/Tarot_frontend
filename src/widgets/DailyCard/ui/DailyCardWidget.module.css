@@ -183,6 +183,7 @@
   min-height: 52px;
   padding: max(8px, env(safe-area-inset-top)) 18px 8px;
   background: color-mix(in srgb, var(--gradient-secondary) 82%, transparent);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
 
@@ -265,5 +266,33 @@
 @media (prefers-reduced-motion: reduce) {
   .summaryPlaceholder::after {
     animation: none;
+  }
+}
+
+@supports not (color: color-mix(in srgb, #000, #fff)) {
+  .summaryPlaceholder::after {
+    background: linear-gradient(
+      104deg,
+      transparent 20%,
+      var(--panel-gloss-highlight) 46%,
+      transparent 72%
+    );
+  }
+
+  .summaryPlaceholder span {
+    background: var(--border-primary);
+  }
+
+  .detailsButton {
+    border-color: var(--border-primary);
+    background: var(--surface-panel);
+  }
+
+  .detailsHeader {
+    background: var(--gradient-secondary);
+  }
+
+  .detailsSection + .detailsSection {
+    border-top-color: var(--border-primary);
   }
 }

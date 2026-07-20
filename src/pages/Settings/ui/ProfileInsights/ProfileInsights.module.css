@@ -174,3 +174,15 @@
     margin-top: 4px;
   }
 }
+
+@supports not (color: color-mix(in srgb, #000, #fff)) {
+  .container,
+  .metric {
+    background: var(--surface-panel);
+    border-color: var(--border-interactive);
+  }
+
+  .suitIcon {
+    stroke: var(--surface-control);
+  }
+}

@@ -193,3 +193,25 @@
     gap-block: 4px;
   }
 }
+
+@supports not (color: color-mix(in srgb, #000, #fff)) {
+  .container {
+    background:
+      radial-gradient(
+        circle at 12% 22%,
+        var(--surface-control),
+        transparent 42%
+      ),
+      linear-gradient(145deg, var(--surface-panel), var(--gradient-primary));
+    border-color: var(--border-interactive);
+  }
+
+  .container::after {
+    background: radial-gradient(
+      circle,
+      var(--surface-control),
+      transparent 68%
+    );
+    opacity: 0.12;
+  }
+}

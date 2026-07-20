@@ -191,3 +191,20 @@
 .chevron.down {
   transform: rotate(45deg);
 }
+
+@supports not (color: color-mix(in srgb, #000, #fff)) {
+  .heading small,
+  .text {
+    color: var(--text-secondary);
+  }
+
+  .section,
+  .section-opened,
+  .items {
+    border-color: var(--border-primary);
+  }
+
+  .selectedItem {
+    background: var(--background-primary);
+  }
+}

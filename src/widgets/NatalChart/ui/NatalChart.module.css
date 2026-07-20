@@ -24,6 +24,7 @@
     inset 0 1px 0 rgb(255 255 255 / 15%),
     inset -5px -7px 18px rgb(25 12 46 / 9%),
     0 14px 30px rgb(18 7 39 / 15%);
+  -webkit-backdrop-filter: blur(13px);
   backdrop-filter: blur(13px);
 }
 
@@ -1350,4 +1351,105 @@ button.foundationCard p {
 }
 
 @media (max-height: 745px) {
+}
+
+@supports not (color: color-mix(in srgb, #000, #fff)) {
+  .edit,
+  .accuracyNotice,
+  .review > div,
+  .modeSwitch,
+  .modeIntro,
+  .detailPanel {
+    border-color: var(--border-primary);
+  }
+
+  .formProgress span {
+    background: var(--text-secondary);
+    opacity: 0.42;
+  }
+
+  .formProgress .completedFormStep {
+    background: var(--text-primary);
+    opacity: 1;
+  }
+
+  .stepHeading span,
+  .stepHint,
+  .accuracyNotice,
+  .reviewAccuracy,
+  .review span,
+  .foundationDetailHeader small,
+  .foundationDetailTabs button,
+  .foundationDetailText,
+  .foundationHeading span,
+  .foundationCard,
+  .foundationCard small,
+  .foundationCard p,
+  .selectedPlanetInfo,
+  .indexDetail,
+  .indexContent,
+  .secondaryAction > span,
+  .chart .editChartButton {
+    color: var(--text-secondary);
+  }
+
+  .reviewAccuracy {
+    background: var(--surface-selected);
+  }
+
+  .stickyHeader::after {
+    background: linear-gradient(
+      to bottom,
+      var(--gradient-secondary),
+      transparent
+    );
+  }
+
+  .modeSwitch {
+    background: var(--background-primary);
+  }
+
+  .modeSwitch button,
+  button.foundationCard {
+    color: var(--text-on-control);
+    border-color: var(--control-gloss-border);
+    background:
+      radial-gradient(
+        ellipse at 14% 0%,
+        var(--control-gloss-highlight) 0%,
+        transparent 54%
+      ),
+      linear-gradient(
+        142deg,
+        var(--control-gloss-sheen) 0%,
+        transparent 48%,
+        var(--control-gloss-pressed) 100%
+      ),
+      var(--surface-control);
+    box-shadow:
+      inset 1px 1px 0 var(--control-gloss-highlight),
+      inset -2px -3px 7px var(--control-gloss-pressed),
+      0 2px 7px var(--control-gloss-shadow);
+  }
+
+  .modeSwitch .activeMode {
+    border-color: var(--text-on-control);
+    box-shadow:
+      inset 1px 1px 0 var(--control-gloss-highlight),
+      inset -3px -3px 9px var(--control-gloss-pressed),
+      0 4px 11px var(--control-gloss-shadow);
+  }
+
+  button.foundationCard b,
+  button.foundationCard small,
+  button.foundationCard p {
+    color: var(--text-on-control);
+  }
+
+  .chartLegend,
+  .aspectConnections,
+  .indexDetail,
+  .secondaryAction {
+    border-color: var(--border-primary);
+  }
 }

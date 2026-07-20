@@ -347,6 +347,55 @@
   padding-top: 8px;
 }
 
+@supports not (color: color-mix(in srgb, #000, #fff)) {
+  .zodiacMark::before {
+    background: var(--accent-primary);
+    opacity: 0.17;
+  }
+
+  .tabs,
+  .forecast {
+    border-color: var(--border-secondary);
+    background: var(--surface-panel);
+  }
+
+  .tabs .activeTab {
+    background: var(--surface-selected);
+  }
+
+  .freeBadge,
+  .fallbackNotice {
+    background: var(--background-secondary);
+  }
+
+  .focus,
+  .action,
+  .factors section {
+    background: var(--background-secondary);
+  }
+
+  .supportive {
+    background: rgb(128 157 122 / 18%);
+  }
+
+  .tension {
+    background: rgb(162 118 126 / 16%);
+  }
+
+  .action {
+    border-left-color: var(--accent-primary);
+  }
+
+  .basis {
+    border-top-color: var(--border-secondary);
+  }
+
+  .loader {
+    border-color: var(--border-secondary);
+    border-top-color: var(--accent-primary);
+  }
+}
+
 @media (max-width: 380px) {
   .container {
     padding-inline: 14px;

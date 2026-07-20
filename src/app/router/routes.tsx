@@ -9,6 +9,45 @@ import {
   loadSettingsPage,
 } from './routeLoaders';
 
+const ROUTE_RELOAD_PREFIX = 'tarotopia:route-reload:';
+
+async function loadRouteModule<T>(
+  routeKey: string,
+  loader: () => Promise<T>,
+): Promise<T> {
+  const reloadKey = `${ROUTE_RELOAD_PREFIX}${routeKey}`;
+
+  try {
+    const routeModule = await loader();
+
+    try {
+      window.sessionStorage.removeItem(reloadKey);
+    } catch {
+      // The route itself is valid even if WebView storage is unavailable.
+    }
+
+    return routeModule;
+  } catch (error) {
+    try {
+      if (!window.sessionStorage.getItem(reloadKey)) {
+        window.sessionStorage.setItem(reloadKey, '1');
+        window.location.reload();
+
+        return await new Promise<T>(() => {
+          // The document reload replaces this pending route transition.
+        });
+      }
+
+      window.sessionStorage.removeItem(reloadKey);
+    } catch {
+      // Storage can be unavailable in a restricted WebView. Keep the original
+      // route error instead of risking a reload loop.
+    }
+
+    throw error;
+  }
+}
+
 const routes: RouteObject[] = [
   {
     path: '/',
@@ -19,7 +58,10 @@ const routes: RouteObject[] = [
         path: '/tarot',
         lazy: {
           async Component() {
-            const { default: ReadingPage } = await loadReadingPage();
+            const { default: ReadingPage } = await loadRouteModule(
+              'tarot',
+              loadReadingPage,
+            );
 
             return ReadingPage;
           },
@@ -29,7 +71,10 @@ const routes: RouteObject[] = [
         path: '/reading',
         lazy: {
           async Component() {
-            const { default: ReadingPage } = await loadReadingPage();
+            const { default: ReadingPage } = await loadRouteModule(
+              'reading',
+              loadReadingPage,
+            );
 
             return ReadingPage;
           },
@@ -39,7 +84,10 @@ const routes: RouteObject[] = [
         path: '/about',
         lazy: {
           async Component() {
-            const { default: AboutPage } = await import('@/pages/About');
+            const { default: AboutPage } = await loadRouteModule(
+              'about',
+              () => import('@/pages/About'),
+            );
 
             return AboutPage;
           },
@@ -49,7 +97,10 @@ const routes: RouteObject[] = [
         path: '/settings',
         lazy: {
           async Component() {
-            const { default: SettingsPage } = await loadSettingsPage();
+            const { default: SettingsPage } = await loadRouteModule(
+              'settings',
+              loadSettingsPage,
+            );
 
             return SettingsPage;
           },
@@ -59,7 +110,10 @@ const routes: RouteObject[] = [
         path: '/about-app',
         lazy: {
           async Component() {
-            const { default: AboutAppPage } = await import('@/pages/AboutApp');
+            const { default: AboutAppPage } = await loadRouteModule(
+              'about-app',
+              () => import('@/pages/AboutApp'),
+            );
 
             return AboutAppPage;
           },
@@ -69,7 +123,10 @@ const routes: RouteObject[] = [
         path: '/history',
         lazy: {
           async Component() {
-            const { default: HistoryPage } = await import('@/pages/History');
+            const { default: HistoryPage } = await loadRouteModule(
+              'history',
+              () => import('@/pages/History'),
+            );
 
             return HistoryPage;
           },
@@ -79,7 +136,10 @@ const routes: RouteObject[] = [
         path: '/history/:id',
         lazy: {
           async Component() {
-            const { default: SpreadPage } = await import('@/pages/Spread');
+            const { default: SpreadPage } = await loadRouteModule(
+              'history-item',
+              () => import('@/pages/Spread'),
+            );
 
             return SpreadPage;
           },
@@ -89,7 +149,10 @@ const routes: RouteObject[] = [
         path: '/reg',
         lazy: {
           async Component() {
-            const { default: RegisterPage } = await import('@/pages/Registry');
+            const { default: RegisterPage } = await loadRouteModule(
+              'registration',
+              () => import('@/pages/Registry'),
+            );
 
             return RegisterPage;
           },
@@ -99,7 +162,10 @@ const routes: RouteObject[] = [
         path: '/astrology',
         lazy: {
           async Component() {
-            const { default: AstrologyPage } = await loadAstrologyPage();
+            const { default: AstrologyPage } = await loadRouteModule(
+              'astrology',
+              loadAstrologyPage,
+            );
 
             return AstrologyPage;
           },
@@ -110,7 +176,9 @@ const routes: RouteObject[] = [
         lazy: {
           async Component() {
             const { default: NatalChartPage } =
-              await import('@/pages/NatalChart');
+              await loadRouteModule('natal-chart', () =>
+                import('@/pages/NatalChart'),
+              );
 
             return NatalChartPage;
           },
@@ -121,7 +189,9 @@ const routes: RouteObject[] = [
         lazy: {
           async Component() {
             const { default: TransitsPage } =
-              await import('@/pages/Transits');
+              await loadRouteModule('transits', () =>
+                import('@/pages/Transits'),
+              );
 
             return TransitsPage;
           },
@@ -132,7 +202,9 @@ const routes: RouteObject[] = [
         lazy: {
           async Component() {
             const { default: HoroscopesPage } =
-              await import('@/pages/Horoscopes');
+              await loadRouteModule('horoscopes', () =>
+                import('@/pages/Horoscopes'),
+              );
 
             return HoroscopesPage;
           },
@@ -142,7 +214,10 @@ const routes: RouteObject[] = [
         path: '/billing',
         lazy: {
           async Component() {
-            const { default: BillingPage } = await import('@/pages/Billing');
+            const { default: BillingPage } = await loadRouteModule(
+              'billing',
+              () => import('@/pages/Billing'),
+            );
 
             return BillingPage;
           },
@@ -152,7 +227,10 @@ const routes: RouteObject[] = [
         path: '/calendar',
         lazy: {
           async Component() {
-            const { default: CalendarPage } = await import('@/pages/Calendar');
+            const { default: CalendarPage } = await loadRouteModule(
+              'calendar',
+              () => import('@/pages/Calendar'),
+            );
 
             return CalendarPage;
           },
@@ -162,7 +240,10 @@ const routes: RouteObject[] = [
         path: '/roulette',
         lazy: {
           async Component() {
-            const { default: RoulettePage } = await import('@/pages/Roulette');
+            const { default: RoulettePage } = await loadRouteModule(
+              'roulette',
+              () => import('@/pages/Roulette'),
+            );
 
             return RoulettePage;
           },

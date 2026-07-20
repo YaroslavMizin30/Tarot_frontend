@@ -242,6 +242,7 @@
   background: rgb(20 11 40 / 68%);
   opacity: 1;
   pointer-events: none;
+  -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
   box-shadow: 0 3px 12px rgb(5 2 15 / 26%), inset 0 1px 0 rgb(255 255 255 / 9%);
   transform: translateX(-50%);
@@ -283,6 +284,7 @@
   background: rgb(20 11 40 / 48%);
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 9%);
   cursor: pointer;
+  -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
 }
 

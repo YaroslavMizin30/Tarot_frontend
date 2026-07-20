@@ -301,6 +301,31 @@
   padding-top: 28px;
 }
 
+@supports not (color: color-mix(in srgb, #000, #fff)) {
+  .fact,
+  .events span,
+  .plans {
+    border-color: var(--border-secondary);
+    background: var(--surface-panel);
+  }
+
+  .nextEvent {
+    border-left-color: var(--surface-control);
+    background: var(--surface-panel);
+  }
+
+  .planList li,
+  .planForm textarea,
+  .planActions input {
+    background: var(--background-secondary);
+  }
+
+  .planForm textarea,
+  .planActions input {
+    border-color: var(--border-secondary);
+  }
+}
+
 @media (max-width: 360px) {
   .container {
     padding-right: 10px;
