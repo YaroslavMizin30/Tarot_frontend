@@ -62,18 +62,6 @@
   z-index: 1;
 }
 
-.routeContent {
-  opacity: 1;
-  transition: opacity 900ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.routeContentLeaving {
-  opacity: 0;
-  pointer-events: none;
-  transition-duration: 620ms;
-  transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
-}
-
 .routePage {
   display: flex;
   flex-direction: column;
@@ -83,6 +71,10 @@
   height: 100%;
   animation: revealRouteContent 600ms cubic-bezier(0.22, 1, 0.36, 1)
     both;
+}
+
+.routePageImmediate {
+  animation: none;
 }
 
 .authContainer {
@@ -186,11 +178,6 @@
   }
 
   .authLoadingLayer {
-    transition: none;
-  }
-
-  .routeContent,
-  .routeContentLeaving {
     transition: none;
   }
 

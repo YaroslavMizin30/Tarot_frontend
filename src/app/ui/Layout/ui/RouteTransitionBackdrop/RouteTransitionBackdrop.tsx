@@ -17,7 +17,6 @@ interface RouteTransitionBackdropProps {
   currentPathname: string;
   isAuthShell: boolean;
   isAuthLoadingVisible: boolean;
-  isNavigating: boolean;
   pendingPathname?: string;
 }
 
@@ -30,7 +29,6 @@ export const RouteTransitionBackdrop = ({
   currentPathname,
   isAuthShell,
   isAuthLoadingVisible,
-  isNavigating,
   pendingPathname,
 }: RouteTransitionBackdropProps) => {
   const dayPeriod = getDayPeriod(new Date().getHours());
@@ -82,10 +80,13 @@ export const RouteTransitionBackdrop = ({
 
       {canMountHeavyCompositions &&
         visibleScenes.map((scene) => {
-          const isExiting = Boolean(
-            isNavigating && pendingScene && scene === currentScene &&
+          const isPreviousScene = Boolean(
+            pendingScene &&
+              scene === currentScene &&
               scene !== pendingScene,
           );
+
+          if (isPreviousScene) return null;
 
           if (scene === 'main') {
             return (
@@ -94,7 +95,6 @@ export const RouteTransitionBackdrop = ({
                 delay={HEAVY_MOUNT_DELAY}
                 fadeInDuration={HEAVY_FADE_IN_DURATION}
                 fadeInTimingFunction={HEAVY_FADE_CURVE}
-                isExiting={isExiting}
                 key={scene}
                 loader={loadDaySky}
               />
@@ -108,7 +108,6 @@ export const RouteTransitionBackdrop = ({
                 delay={HEAVY_MOUNT_DELAY}
                 fadeInDuration={HEAVY_FADE_IN_DURATION}
                 fadeInTimingFunction={HEAVY_FADE_CURVE}
-                isExiting={isExiting}
                 key={scene}
                 loader={loadTorchComposition}
               />
@@ -118,7 +117,6 @@ export const RouteTransitionBackdrop = ({
           if (scene === 'astrology') {
             return (
               <DeferredComposition
-                isExiting={isExiting}
                 key={scene}
                 loader={loadStarsComposition}
               />

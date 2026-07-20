@@ -19,6 +19,7 @@ import DeferredComposition from '@/shared/ui/DeferredComposition';
 import RouteTransitionBackdrop, {
   preloadBackdropForPath,
 } from '../RouteTransitionBackdrop';
+import { getPageAttachment } from '../../config/pages';
 
 import styles from './Layout.module.css';
 
@@ -72,6 +73,8 @@ export const Layout = () => {
     (isAuthShell || !isAuthBackgroundMounted);
   const shouldMountAuthLayerContent =
     isAuthLoadingVisible || isAuthBackgroundMounted;
+  const shouldRevealRouteContent =
+    pathname !== '/' && !getPageAttachment('tarot', pathname);
 
   useEffect(() => {
     let firstFrame = 0;
@@ -160,7 +163,6 @@ export const Layout = () => {
           currentPathname={pathname}
           isAuthLoadingVisible={isAuthLoadingVisible}
           isAuthShell={isAuthShell}
-          isNavigating={isLoading}
           pendingPathname={
             isAuthShell ? undefined : pendingLocation?.pathname
           }
@@ -182,15 +184,20 @@ export const Layout = () => {
         ) : canRenderOutlet ? (
           <div
             className={`${styles.container} ${
-              isAuthShell ? styles.authContainer : styles.routeContent
-            } ${
-              isLoading && !isAuthShell ? styles.routeContentLeaving : ''
+              isAuthShell ? styles.authContainer : ''
             }`}
           >
             {isAuthShell ? (
               <Outlet context={{ user }} />
             ) : (
-              <div className={styles.routePage} key={pathname}>
+              <div
+                className={`${styles.routePage} ${
+                  shouldRevealRouteContent
+                    ? ''
+                    : styles.routePageImmediate
+                }`}
+                key={pathname}
+              >
                 <Outlet context={{ user }} />
               </div>
             )}

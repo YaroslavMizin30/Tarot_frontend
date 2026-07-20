@@ -17,7 +17,6 @@ interface DeferredCompositionProps {
   delay?: number;
   fadeInDuration?: number;
   fadeInTimingFunction?: string;
-  isExiting?: boolean;
   loader: () => Promise<CompositionModule>;
 }
 
@@ -27,7 +26,6 @@ export const DeferredComposition = ({
   delay = 480,
   fadeInDuration = 1300,
   fadeInTimingFunction,
-  isExiting = false,
   loader,
 }: DeferredCompositionProps) => {
   const [Composition, setComposition] =
@@ -81,8 +79,7 @@ export const DeferredComposition = ({
     if (
       event.currentTarget === event.target &&
       event.propertyName === 'opacity' &&
-      isVisible &&
-      !isExiting
+      isVisible
     ) {
       setIsMotionReady(true);
     }
@@ -92,19 +89,17 @@ export const DeferredComposition = ({
     <div
       aria-hidden={'true'}
       className={`${styles.layer} ${
-        isVisible && !isExiting ? styles.visible : ''
+        isVisible ? styles.visible : ''
       } ${
-        isVisible && !isExiting && !isMotionReady
-          ? styles.revealing
-          : ''
+        isVisible && !isMotionReady ? styles.revealing : ''
       } ${
-        deferMotionUntilVisible && (!isMotionReady || isExiting)
+        deferMotionUntilVisible && !isMotionReady
           ? styles.motionDeferred
           : ''
       } ${className}`}
       onTransitionEnd={handleTransitionEnd}
       style={
-        isVisible && !isExiting
+        isVisible
           ? {
             transitionDuration: `${fadeInDuration}ms`,
             transitionTimingFunction: fadeInTimingFunction,
