@@ -65,24 +65,28 @@
 }
 
 .composition::before {
-  top: 32%;
-  left: -22%;
-  width: 144%;
-  height: 29%;
+  top: 18%;
+  left: -28%;
+  width: 156%;
+  height: 58%;
   background:
     radial-gradient(
-      ellipse at 48% 50%,
-      var(--astrology-milky-core) 0 14%,
-      color-mix(in srgb, var(--astrology-nebula) 68%, transparent) 46%,
-      transparent 82%
+      ellipse 38% 31% at 22% 59%,
+      color-mix(in srgb, var(--astrology-nebula) 68%, transparent) 0%,
+      transparent 100%
     ),
-    linear-gradient(
-      90deg,
-      transparent,
-      color-mix(in srgb, var(--astrology-milky-core) 74%, transparent) 48%,
-      transparent
+    radial-gradient(
+      ellipse 44% 27% at 51% 47%,
+      var(--astrology-milky-core) 0%,
+      color-mix(in srgb, var(--astrology-nebula) 52%, transparent) 52%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse 36% 32% at 81% 42%,
+      color-mix(in srgb, var(--astrology-milky-core) 62%, transparent) 0%,
+      transparent 100%
     );
-  opacity: 0.78;
+  opacity: 0.7;
 }
 
 .composition::after {
@@ -102,20 +106,18 @@
     31px 37px,
     47px 53px,
     71px 61px;
-  opacity: 0.48;
-  -webkit-mask-image: linear-gradient(
-    180deg,
-    transparent,
-    #000 23%,
-    #000 72%,
-    transparent
+  opacity: 0.4;
+  -webkit-mask-image: radial-gradient(
+    ellipse 82% 48% at 50% 50%,
+    #000 0%,
+    rgb(0 0 0 / 72%) 48%,
+    transparent 100%
   );
-  mask-image: linear-gradient(
-    180deg,
-    transparent,
-    #000 23%,
-    #000 72%,
-    transparent
+  mask-image: radial-gradient(
+    ellipse 82% 48% at 50% 50%,
+    #000 0%,
+    rgb(0 0 0 / 72%) 48%,
+    transparent 100%
   );
 }
 
