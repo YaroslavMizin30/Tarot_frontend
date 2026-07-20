@@ -40,6 +40,7 @@ const THEME_CONFIG = {
 
 const loadStarsComposition = () => import('../StarsComposition');
 const AUTH_BACKGROUND_EXIT_DELAY = 460;
+const AUTH_TELEGRAM_CHROME_COLOR = '#0e0e16';
 
 export const Layout = () => {
   const { location: pendingLocation, state } = useNavigation();
@@ -151,8 +152,8 @@ export const Layout = () => {
       window.Telegram?.WebApp?.setHeaderColor(THEME_CONFIG[theme].header);
       window.Telegram?.WebApp?.setBottomBarColor(THEME_CONFIG[theme].footer);
     } else {
-      window.Telegram?.WebApp?.setHeaderColor('#323232');
-      window.Telegram?.WebApp?.setBottomBarColor('#323232');
+      window.Telegram?.WebApp?.setHeaderColor(AUTH_TELEGRAM_CHROME_COLOR);
+      window.Telegram?.WebApp?.setBottomBarColor(AUTH_TELEGRAM_CHROME_COLOR);
     }
   }, [theme]);
 
