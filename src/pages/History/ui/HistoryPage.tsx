@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 import {
   DAILY_CARD_SPREAD_MARKER,
   type Spread,
-  useSpreads,
+  useSpreadHistory,
 } from '@/entities/Spread';
 import { useActivity } from '@/entities/Activity';
 import TarotCard from '@/entities/TarotCard';
@@ -87,7 +87,13 @@ const getHistoryGroup = (spread: Spread, today: string): HistoryGroup => {
 };
 
 export const HistoryPage = () => {
-  const { spreads, isLoading: areSpreadsLoading } = useSpreads();
+  const {
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading: areSpreadsLoading,
+    spreads,
+  } = useSpreadHistory();
   const { activity, isLoading: isActivityLoading } = useActivity();
   const navigate = useNavigate();
   const { i18n, addTranslations, locale } = useLocales();
@@ -139,7 +145,7 @@ export const HistoryPage = () => {
 
       <h3 className={styles.title}>{i18n('Spreads history')}</h3>
 
-      {hasSpreads ? (
+      {hasSpreads || hasNextPage ? (
         <div className={`${styles.groups} custom-scrollbar`}>
           {(Object.entries(groupedSpreads) as [HistoryGroup, Spread[]][]).map(
             ([groupName, group]) => group.length > 0 && (
@@ -203,6 +209,24 @@ export const HistoryPage = () => {
               </section>
             ),
           )}
+
+          {hasNextPage ? (
+            <button
+              aria-busy={isFetchingNextPage}
+              className={styles.loadMore}
+              disabled={isFetchingNextPage}
+              onClick={() => {
+                fetchNextPage().catch(() => undefined);
+              }}
+              type={'button'}
+            >
+              {i18n(
+                isFetchingNextPage
+                  ? 'Loading more spreads'
+                  : 'Show more spreads',
+              )}
+            </button>
+          ) : null}
         </div>
       ) : (
         <div className={styles.emptyState}>

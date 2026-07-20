@@ -329,6 +329,55 @@ export const TransitsPage = () => {
     </section>
   ) : null;
 
+  const reportOffer = !activeReport && !isTodayRefunded && (quotedReport ? (
+    <section className={styles.purchasePanel}>
+      <div>
+        <span className={styles.sectionLabel}>{i18n('Detailed personal reading')}</span>
+        <h3>{i18n('Unlock the meaning behind today’s connections')}</h3>
+        <p>{i18n('The report connects the strongest transits into one practical reading and remains in your history')}</p>
+      </div>
+      <div className={styles.purchaseActions}>
+        {['charged', 'processing'].includes(quotedReport.status) ? (
+          isPollingPaused ? (
+            <Button
+              onClick={() => {
+                pollingState.current.checks = 0;
+                setActionError(null);
+                setIsPollingPaused(false);
+              }}
+            >
+              {i18n('Check reading status')}
+            </Button>
+          ) : <LoadingLabel>{i18n('Preparing reading')}</LoadingLabel>
+        ) : (
+          <>
+            <span>{quotedReport.quoted_cost} {i18n('pentacles')}</span>
+            <Button disabled={pendingAction !== null} onClick={handlePurchase}>
+              {pendingAction === 'purchase'
+                ? <LoadingLabel>{i18n('Preparing reading')}</LoadingLabel>
+                : i18n('Confirm and create reading')}
+            </Button>
+            <button type={'button'} onClick={() => setQuotedReport(null)}>
+              {i18n('Cancel')}
+            </button>
+          </>
+        )}
+      </div>
+    </section>
+  ) : summary?.highlights.length ? (
+    <section className={styles.unlock}>
+      <div>
+        <strong>{i18n('Want to understand the whole picture?')}</strong>
+        <p>{i18n('Open a personal interpretation based only on the calculated connections above')}</p>
+      </div>
+      <Button disabled={pendingAction !== null} onClick={handleQuote}>
+        {pendingAction === 'quote'
+          ? <LoadingLabel>{i18n('Checking price')}</LoadingLabel>
+          : i18n('Get personal reading')}
+      </Button>
+    </section>
+  ) : null);
+
   return (
     <div className={styles.page}>
       <header className={styles.header}>
@@ -389,63 +438,16 @@ export const TransitsPage = () => {
             <>
               {reading}
 
+              {reportOffer}
+
+              {actionError ? <p className={styles.error}>{i18n(actionError)}</p> : null}
+
               <PersonalTransits
                 summary={summary}
                 onSelectTransit={(transit) => navigate('/natal-chart', {
                   state: { selectedTransit: transit, returnTo: '/transits' },
                 })}
               />
-
-              {!activeReport && !isTodayRefunded && (quotedReport ? (
-                <section className={styles.purchasePanel}>
-                  <div>
-                    <span className={styles.sectionLabel}>{i18n('Detailed personal reading')}</span>
-                    <h3>{i18n('Unlock the meaning behind today’s connections')}</h3>
-                    <p>{i18n('The report connects the strongest transits into one practical reading and remains in your history')}</p>
-                  </div>
-                  <div className={styles.purchaseActions}>
-                    {['charged', 'processing'].includes(quotedReport.status) ? (
-                      isPollingPaused ? (
-                        <Button
-                          onClick={() => {
-                            pollingState.current.checks = 0;
-                            setActionError(null);
-                            setIsPollingPaused(false);
-                          }}
-                        >
-                          {i18n('Check reading status')}
-                        </Button>
-                      ) : <LoadingLabel>{i18n('Preparing reading')}</LoadingLabel>
-                    ) : (
-                      <>
-                        <span>{quotedReport.quoted_cost} {i18n('pentacles')}</span>
-                        <Button disabled={pendingAction !== null} onClick={handlePurchase}>
-                          {pendingAction === 'purchase'
-                            ? <LoadingLabel>{i18n('Preparing reading')}</LoadingLabel>
-                            : i18n('Confirm and create reading')}
-                        </Button>
-                        <button type={'button'} onClick={() => setQuotedReport(null)}>
-                          {i18n('Cancel')}
-                        </button>
-                      </>
-                    )}
-                  </div>
-                </section>
-              ) : summary?.highlights.length ? (
-                <section className={styles.unlock}>
-                  <div>
-                    <strong>{i18n('Want to understand the whole picture?')}</strong>
-                    <p>{i18n('Open a personal interpretation based only on the calculated connections above')}</p>
-                  </div>
-                  <Button disabled={pendingAction !== null} onClick={handleQuote}>
-                    {pendingAction === 'quote'
-                      ? <LoadingLabel>{i18n('Checking price')}</LoadingLabel>
-                      : i18n('Get personal reading')}
-                  </Button>
-                </section>
-              ) : null)}
-
-              {actionError ? <p className={styles.error}>{i18n(actionError)}</p> : null}
             </>
           )
         ) : isHistoryLoading ? <SectionSkeleton history /> : historyError ? (

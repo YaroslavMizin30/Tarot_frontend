@@ -33,6 +33,8 @@ const TRANSLATIONS_RU = {
   'Earlier': 'Ранее',
   'Daily card': 'Карта дня',
   'Rating': 'Оценка',
+  'Show more spreads': 'Показать ещё 5 раскладов',
+  'Loading more spreads': 'Загружаем расклады…',
 };
 
 export default TRANSLATIONS_RU;

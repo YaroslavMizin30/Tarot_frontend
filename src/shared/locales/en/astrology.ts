@@ -42,6 +42,8 @@ const TRANSLATIONS_EN: Record<string, string> = {
   'Your solar sign': 'Your solar sign',
   'This is a general sky overview':
     'This is a general overview; personal transits require a natal chart',
+  'Open personal transits for a forecast based on your natal chart':
+    'Open personal transits for a forecast based on your natal chart',
   'Thinking and communication': 'Thinking and communication',
   'Relationships and values': 'Relationships and values',
   'Action and initiative': 'Action and initiative',

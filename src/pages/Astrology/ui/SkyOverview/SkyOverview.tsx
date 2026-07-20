@@ -10,6 +10,7 @@ import styles from './SkyOverview.module.css';
 
 interface SkyOverviewProps {
   sign?: Sign;
+  hasNatalChart?: boolean;
   actions?: ReactNode;
 }
 
@@ -46,7 +47,11 @@ const BODY_DOMAINS: Record<string, string> = {
   Pluto: 'power and deep changes',
 };
 
-export const SkyOverview = ({ actions, sign }: SkyOverviewProps) => {
+export const SkyOverview = ({
+  actions,
+  hasNatalChart,
+  sign,
+}: SkyOverviewProps) => {
   const { astrology, bodies, error, isLoading, timestamp } =
     useDailyEphemeris();
   const { i18n, locale } = useLocales();
@@ -175,8 +180,16 @@ export const SkyOverview = ({ actions, sign }: SkyOverviewProps) => {
         ) : null}
         <span>
           {normalizedSign
-            ? `${i18n('Your solar sign')}: ${i18n(normalizedSign)}. ${i18n('This is a general sky overview')}`
-            : i18n('This is a general sky overview')}
+            ? `${i18n('Your solar sign')}: ${i18n(normalizedSign)}. ${i18n(
+              hasNatalChart
+                ? 'Open personal transits for a forecast based on your natal chart'
+                : 'This is a general sky overview',
+            )}`
+            : i18n(
+              hasNatalChart
+                ? 'Open personal transits for a forecast based on your natal chart'
+                : 'This is a general sky overview',
+            )}
         </span>
       </div>
 

@@ -38,6 +38,8 @@ export const queryKeys = {
   spreads: {
     all: ['spreads'] as const,
     byUserId: (userId: string | number) => ['spreads', String(userId)] as const,
+    history: (userId: string | number) =>
+      ['spreads', 'history', String(userId)] as const,
     pending: (userId: string | number) =>
       ['spreads', 'pending', String(userId)] as const,
   },

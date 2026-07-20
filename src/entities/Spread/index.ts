@@ -11,6 +11,7 @@ export {
 export { addSpread } from './api/addSpread';
 export { getSpreads } from './api/getSpreads';
 export { useSpreads } from './model/useSpreads';
+export { useSpreadHistory } from './model/useSpreadHistory';
 export { updateSpread } from './api/updateSpread';
 export {
   startSpreadDraft,

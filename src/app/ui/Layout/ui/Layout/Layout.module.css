@@ -68,6 +68,11 @@
   z-index: 1;
 }
 
+.mainPageContainer {
+  overflow-y: scroll;
+  scrollbar-gutter: stable both-edges;
+}
+
 .routePage {
   display: flex;
   flex-direction: column;

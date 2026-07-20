@@ -44,6 +44,7 @@ export const AstrologyPage = () => {
   return (
     <div className={styles.container}>
       <SkyOverview
+        hasNatalChart={Boolean(user?.natalChart)}
         sign={user?.sign}
         actions={(
           <nav className={styles.menu} aria-label={i18n('Astrology')}>

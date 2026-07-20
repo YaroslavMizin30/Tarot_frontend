@@ -194,6 +194,10 @@ export const Layout = () => {
           <div
             className={`${styles.container} custom-scrollbar ${
               isAuthShell ? styles.authContainer : ''
+            } ${
+              !isAuthShell && pathname === '/'
+                ? styles.mainPageContainer
+                : ''
             }`}
           >
             {isAuthShell ? (

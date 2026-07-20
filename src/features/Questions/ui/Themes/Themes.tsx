@@ -191,7 +191,7 @@ const Themes: FC<ThemeProps> = (props) => {
           type={'button'}
         >
           {i18n('Show all questions')}
-          <span aria-hidden={true}>→</span>
+          <span aria-hidden={true} className={styles.actionArrow}>→</span>
         </button>
       )}
 
@@ -202,7 +202,7 @@ const Themes: FC<ThemeProps> = (props) => {
           type={'button'}
         >
           <span>{i18n('Spreads history')}</span>
-          <span aria-hidden={true}>→</span>
+          <span aria-hidden={true} className={styles.actionArrow}>→</span>
         </button>
 
         <button
@@ -211,7 +211,7 @@ const Themes: FC<ThemeProps> = (props) => {
           type={'button'}
         >
           <span>{i18n('About Tarot')}</span>
-          <span aria-hidden={true}>→</span>
+          <span aria-hidden={true} className={styles.actionArrow}>→</span>
         </button>
       </nav>
 

@@ -42,6 +42,8 @@ const TRANSLATIONS_RU: Record<string, string> = {
   'Your solar sign': 'Ваш солнечный знак',
   'This is a general sky overview':
     'Пока это общий контекст; персональные транзиты появятся с натальной картой',
+  'Open personal transits for a forecast based on your natal chart':
+    'Откройте личные транзиты для прогноза на основе вашей натальной карты',
   'Thinking and communication': 'Мышление и общение',
   'Relationships and values': 'Отношения и ценности',
   'Action and initiative': 'Действия и инициатива',

@@ -33,6 +33,8 @@ const TRANSLATIONS_EN = {
   'Earlier': 'Earlier',
   'Daily card': 'Daily card',
   'Rating': 'Rating',
+  'Show more spreads': 'Show 5 more spreads',
+  'Loading more spreads': 'Loading spreads…',
 };
 
 export default TRANSLATIONS_EN;

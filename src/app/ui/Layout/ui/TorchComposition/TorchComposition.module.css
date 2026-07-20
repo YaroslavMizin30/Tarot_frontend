@@ -31,7 +31,7 @@
 
 .vignette {
   position: absolute;
-  inset: 2% -32% -8%;
+  inset: -10% -32% -8%;
   background: radial-gradient(
     ellipse at 50% 35%,
     var(--tarot-scene-center) 0%,
