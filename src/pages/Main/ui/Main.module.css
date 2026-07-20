@@ -60,8 +60,6 @@
   flex-direction: column;
   gap: 12px;
   width: min(100%, 420px);
-
-  animation: fadeIn 1s ease;
 }
 
 .skeleton {
@@ -286,16 +284,6 @@
   outline-offset: 2px;
 }
 
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
 @keyframes skeletonShimmer {
   to {
     transform: translateX(100%);
@@ -303,10 +291,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .actions {
-    animation: none;
-  }
-
   .skeleton::after {
     animation: none;
   }

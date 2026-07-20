@@ -22,7 +22,6 @@
   flex-direction: column;
   width: min(100%, 420px);
   color: var(--text-primary);
-  animation: fadeIn 0.6s ease;
 }
 
 .summary {
@@ -310,15 +309,5 @@
 
   .summaryHeader {
     padding-right: 104px;
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
   }
 }

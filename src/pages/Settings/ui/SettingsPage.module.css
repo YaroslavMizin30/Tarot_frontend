@@ -11,7 +11,6 @@
   overflow: hidden;
 
   color: var(--text-primary);
-  animation: fadeIn 2s ease;
 }
 
 .dashboard {
@@ -41,16 +40,6 @@
   align-items: center;
   justify-content: center;
   min-height: 104px;
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
 }
 
 @media (max-height: 720px) {

@@ -10,6 +10,7 @@ interface DeferredCompositionProps {
   className?: string;
   delay?: number;
   fadeInDuration?: number;
+  fadeInTimingFunction?: string;
   isExiting?: boolean;
   loader: () => Promise<CompositionModule>;
 }
@@ -18,6 +19,7 @@ export const DeferredComposition = ({
   className = '',
   delay = 480,
   fadeInDuration = 1300,
+  fadeInTimingFunction,
   isExiting = false,
   loader,
 }: DeferredCompositionProps) => {
@@ -69,7 +71,10 @@ export const DeferredComposition = ({
       className={`${styles.layer} ${isVisible && !isExiting ? styles.visible : ''} ${className}`}
       style={
         isVisible && !isExiting
-          ? { transitionDuration: `${fadeInDuration}ms` }
+          ? {
+            transitionDuration: `${fadeInDuration}ms`,
+            transitionTimingFunction: fadeInTimingFunction,
+          }
           : undefined
       }
     >

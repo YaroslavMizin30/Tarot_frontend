@@ -2,8 +2,6 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 15px;
-
-  animation: fadeIn 1s ease;
 }
 
 .button0 {
@@ -16,14 +14,4 @@
 
 .button2 {
   box-shadow: inset 0px 0px 25px -5px #e2bd78;
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
 }

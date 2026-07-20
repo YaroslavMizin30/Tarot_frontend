@@ -21,8 +21,8 @@ const DailyGuidanceWidget = lazy(() => import('@/widgets/DailyGuidance'));
 const DailyReflection = lazy(() => import('@/widgets/DailyReflection'));
 const loadDaySky = () => import('@/widgets/DaySky');
 
-const SKY_MOUNT_DELAY = 560;
-const SKY_FADE_IN_DURATION = 2400;
+const SKY_FADE_IN_DURATION = 3600;
+const SKY_FADE_IN_CURVE = 'cubic-bezier(0.37, 0, 0.63, 1)';
 
 const MainSkeleton = ({ className = '' }: { className?: string }) => (
   <div
@@ -60,8 +60,9 @@ export const MainPage = () => {
     <div className={`${styles.container} ${styles[dayPeriod]}`}>
       <DeferredComposition
         className={styles.skyLayer}
-        delay={SKY_MOUNT_DELAY}
+        delay={0}
         fadeInDuration={SKY_FADE_IN_DURATION}
+        fadeInTimingFunction={SKY_FADE_IN_CURVE}
         loader={loadDaySky}
       />
 
