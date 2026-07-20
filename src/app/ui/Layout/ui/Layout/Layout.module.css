@@ -16,8 +16,9 @@
   justify-content: center;
   width: 100%;
   height: 100%;
-  margin-top: 30px;
-  margin-bottom: 70px;
+  padding-top: 30px;
+  padding-bottom: 70px;
+  box-sizing: border-box;
 
   background: linear-gradient(
     0deg,
@@ -28,7 +29,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   transition:
-    margin 420ms ease,
+    padding 420ms ease,
     background-color 520ms ease,
     color 420ms ease;
 }
@@ -45,7 +46,7 @@
   --control-gloss-pressed: rgb(18 10 28 / 24%);
 
   min-height: 100%;
-  margin: 0;
+  padding: 0;
   justify-content: flex-start;
   color: #fff8ec;
   background:

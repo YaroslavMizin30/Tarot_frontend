@@ -18,10 +18,6 @@
   opacity: 0.58;
 }
 
-.content {
-  animation: reflectionAppear 0.9s ease-out both;
-}
-
 .placeholder {
   position: relative;
   overflow: hidden;
@@ -72,18 +68,6 @@
   -webkit-line-clamp: 3;
 }
 
-@keyframes reflectionAppear {
-  from {
-    opacity: 0;
-    transform: translateY(5px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @keyframes reflectionShimmer {
   to {
     transform: translateX(100%);
@@ -91,10 +75,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .content {
-    animation: none;
-  }
-
   .placeholder::after {
     animation: none;
   }

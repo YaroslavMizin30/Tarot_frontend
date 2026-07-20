@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import { ensureSupabase } from '@/shared/api/supabase';
@@ -21,7 +22,11 @@ const getDailyReflection = async () => {
   return data;
 };
 
-export const DailyReflection = () => {
+interface DailyReflectionProps {
+  onReady?: () => void;
+}
+
+export const DailyReflection = ({ onReady }: DailyReflectionProps) => {
   const { user } = useUser();
   const { locale, i18n } = useLocales();
   const date = new Date().toLocaleDateString('en-CA');
@@ -35,6 +40,12 @@ export const DailyReflection = () => {
   const question = locale === 'ru'
     ? data?.question?.text_ru
     : data?.question?.text_en;
+
+  useEffect(() => {
+    if (!isLoading) {
+      onReady?.();
+    }
+  }, [isLoading, onReady]);
 
   return (
     <section

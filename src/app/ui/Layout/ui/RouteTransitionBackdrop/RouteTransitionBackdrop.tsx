@@ -20,7 +20,7 @@ interface RouteTransitionBackdropProps {
   pendingPathname?: string;
 }
 
-const HEAVY_FADE_IN_DURATION = 3600;
+const HEAVY_FADE_IN_DURATION = 2000;
 const HEAVY_MOUNT_DELAY = 120;
 const HEAVY_FADE_CURVE = 'cubic-bezier(0.37, 0, 0.63, 1)';
 

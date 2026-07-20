@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
 import {
@@ -10,7 +11,13 @@ import Zodiac from '@/shared/ui/Zodiac';
 
 import styles from './DailyGuidanceWidget.module.css';
 
-export const DailyGuidanceWidget = () => {
+interface DailyGuidanceWidgetProps {
+  onReady?: () => void;
+}
+
+export const DailyGuidanceWidget = ({
+  onReady,
+}: DailyGuidanceWidgetProps) => {
   const navigate = useNavigate();
   const { locale, i18n } = useLocales();
   const {
@@ -24,6 +31,12 @@ export const DailyGuidanceWidget = () => {
 
   const phase = astrology?.moonPhase;
   const moonSign = bodies.Moon?.sign;
+
+  useEffect(() => {
+    if (!isLoading) {
+      onReady?.();
+    }
+  }, [isLoading, onReady]);
 
   if (error) {
     return null;

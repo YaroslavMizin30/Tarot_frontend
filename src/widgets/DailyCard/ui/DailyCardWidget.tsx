@@ -16,11 +16,13 @@ import styles from './DailyCardWidget.module.css';
 interface DailyCardContentProps {
   areTranslationsReady: boolean;
   dayKey: string;
+  onReady?: () => void;
 }
 
 const DailyCardContent = ({
   areTranslationsReady,
   dayKey,
+  onReady,
 }: DailyCardContentProps) => {
   const { i18n } = useLocales();
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
@@ -43,6 +45,12 @@ const DailyCardContent = ({
     isRevealed && interpretation.length === 0 && !interpretationError;
   const canShowDetails =
     isRevealed && interpretation.length > 0 && Boolean(cardInfo);
+
+  useEffect(() => {
+    if (!isBooting || hasDataError) {
+      onReady?.();
+    }
+  }, [hasDataError, isBooting, onReady]);
 
   if (isBooting && !hasDataError) {
     return (
@@ -204,7 +212,11 @@ const DailyCardContent = ({
   );
 };
 
-export const DailyCardWidget = () => {
+interface DailyCardWidgetProps {
+  onReady?: () => void;
+}
+
+export const DailyCardWidget = ({ onReady }: DailyCardWidgetProps) => {
   const { addTranslations, locale, translations } = useLocales();
   const [dayKey, setDayKey] = useState(getTodayString);
 
@@ -238,6 +250,7 @@ export const DailyCardWidget = () => {
       key={dayKey}
       areTranslationsReady={areTranslationsReady}
       dayKey={dayKey}
+      onReady={onReady}
     />
   );
 };

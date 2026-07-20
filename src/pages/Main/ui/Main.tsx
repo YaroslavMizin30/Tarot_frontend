@@ -1,6 +1,8 @@
 import {
   lazy,
   Suspense,
+  useCallback,
+  useState,
 } from 'react';
 import { useNavigate } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
@@ -18,6 +20,11 @@ const DailyCardWidget = lazy(() => import('@/widgets/DailyCard'));
 const DailyGuidanceWidget = lazy(() => import('@/widgets/DailyGuidance'));
 const DailyReflection = lazy(() => import('@/widgets/DailyReflection'));
 
+const CARD_READY = 1;
+const GUIDANCE_READY = 2;
+const REFLECTION_READY = 4;
+const ALL_WIDGETS_READY = CARD_READY | GUIDANCE_READY | REFLECTION_READY;
+
 const MainSkeleton = ({ className = '' }: { className?: string }) => (
   <div
     aria-hidden={'true'}
@@ -29,11 +36,28 @@ const MainSkeleton = ({ className = '' }: { className?: string }) => (
   </div>
 );
 
+const MainPageSkeleton = () => (
+  <div
+    aria-hidden={'true'}
+    className={`${styles.content} ${styles.loadingContent}`}
+  >
+    <MainSkeleton className={styles.cardSkeleton} />
+    <MainSkeleton className={styles.guidanceSkeleton} />
+    <MainSkeleton className={styles.reflectionSkeleton} />
+
+    <div className={styles.actions}>
+      <MainSkeleton className={styles.actionSkeleton} />
+      <MainSkeleton className={styles.resumeSkeleton} />
+    </div>
+  </div>
+);
+
 export const MainPage = () => {
   const navigate = useNavigate();
 
   const { i18n } = useLocales();
   const { user } = useUser();
+  const [readyWidgets, setReadyWidgets] = useState(0);
   const { data: pendingDraft, isLoading: isPendingDraftLoading } = useQuery({
     queryKey: queryKeys.spreads.pending(user?.id ?? 'no-user'),
     queryFn: getPendingSpreadDraft,
@@ -48,26 +72,38 @@ export const MainPage = () => {
   const resumableSpread = pendingDraft?.status === 'found'
     ? pendingDraft.spread
     : null;
+  const handleCardReady = useCallback(() => {
+    setReadyWidgets((value) => value | CARD_READY);
+  }, []);
+  const handleGuidanceReady = useCallback(() => {
+    setReadyWidgets((value) => value | GUIDANCE_READY);
+  }, []);
+  const handleReflectionReady = useCallback(() => {
+    setReadyWidgets((value) => value | REFLECTION_READY);
+  }, []);
+  const isContentReady =
+    readyWidgets === ALL_WIDGETS_READY &&
+    !isPendingDraftLoading &&
+    !isDailyBonusLoading;
 
   return (
-    <div className={styles.container}>
-      <div className={styles.content}>
-        <Suspense
-          fallback={<MainSkeleton className={styles.cardSkeleton} />}
-        >
-          <DailyCardWidget />
+    <div className={styles.container} aria-busy={!isContentReady}>
+      <div
+        aria-hidden={!isContentReady}
+        className={`${styles.content} ${
+          isContentReady ? '' : styles.contentPending
+        }`}
+      >
+        <Suspense fallback={null}>
+          <DailyCardWidget onReady={handleCardReady} />
         </Suspense>
 
-        <Suspense
-          fallback={<MainSkeleton className={styles.guidanceSkeleton} />}
-        >
-          <DailyGuidanceWidget />
+        <Suspense fallback={null}>
+          <DailyGuidanceWidget onReady={handleGuidanceReady} />
         </Suspense>
 
-        <Suspense
-          fallback={<MainSkeleton className={styles.reflectionSkeleton} />}
-        >
-          <DailyReflection />
+        <Suspense fallback={null}>
+          <DailyReflection onReady={handleReflectionReady} />
         </Suspense>
 
         <div className={styles.actions}>
@@ -125,6 +161,8 @@ export const MainPage = () => {
           </div>
         </div>
       </div>
+
+      {!isContentReady && <MainPageSkeleton />}
     </div>
   );
 };
