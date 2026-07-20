@@ -14,18 +14,7 @@
 }
 
 .skyLayer {
-  position: absolute;
   z-index: 0;
-  inset: 0;
-  overflow: hidden;
-  opacity: 0;
-  pointer-events: none;
-  contain: layout paint;
-  transition: opacity 820ms ease;
-}
-
-.skyLayerVisible {
-  opacity: 1;
 }
 
 .content {
@@ -293,10 +282,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .skyLayer {
-    transition: none;
-  }
-
   .actions {
     animation: none;
   }

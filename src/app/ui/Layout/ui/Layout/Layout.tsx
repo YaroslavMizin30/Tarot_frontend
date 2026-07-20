@@ -12,9 +12,7 @@ import { useAuth } from '@/app/auth/auth';
 import useLocales from '@/shared/hooks/useLocales';
 import TRANSLATIONS_EN from '@/shared/locales/en/common';
 import TRANSLATIONS_RU from '@/shared/locales/ru/common';
-
-import StarsComposition from '@/app/ui/Layout/ui/StarsComposition';
-import TorchComposition from '@/app/ui/Layout/ui/TorchComposition/TorchComposition';
+import DeferredComposition from '@/shared/ui/DeferredComposition';
 
 import { getPageAttachment } from '../../config/pages';
 
@@ -34,6 +32,11 @@ const THEME_CONFIG = {
     footer: '#f0dcc4',
   },
 };
+
+const loadStarsComposition = () => import('../StarsComposition');
+const loadTorchComposition = () =>
+  import('../TorchComposition/TorchComposition');
+const AUTH_BACKGROUND_EXIT_DELAY = 460;
 
 export const Layout = () => {
   const { state } = useNavigation();
@@ -59,8 +62,18 @@ export const Layout = () => {
     (!user && !authError && pathname !== '/reg') ||
     isRegistrationCompleting;
   const [isAuthLoadingVisible, setIsAuthLoadingVisible] = useState(true);
+  const [isAuthBackgroundMounted, setIsAuthBackgroundMounted] =
+    useState(true);
   const canRenderOutlet =
     !isAuthenticating && (Boolean(user) || pathname === '/reg');
+  const hasTarotBackground =
+    !isAuthShell &&
+    pathname !== '/' &&
+    getPageAttachment('tarot', pathname);
+  const hasAstrologyBackground =
+    !isAuthShell && getPageAttachment('astrology', pathname);
+  const shouldMountAuthLayerContent =
+    isAuthLoadingVisible || isAuthBackgroundMounted;
 
   useEffect(() => {
     let firstFrame = 0;
@@ -85,6 +98,26 @@ export const Layout = () => {
   }, [shouldShowAuthLoading]);
 
   useEffect(() => {
+    let animationFrame = 0;
+    let unmountTimeout = 0;
+
+    if (isAuthLoadingVisible) {
+      animationFrame = window.requestAnimationFrame(() => {
+        setIsAuthBackgroundMounted(true);
+      });
+    } else {
+      unmountTimeout = window.setTimeout(() => {
+        setIsAuthBackgroundMounted(false);
+      }, AUTH_BACKGROUND_EXIT_DELAY);
+    }
+
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+      window.clearTimeout(unmountTimeout);
+    };
+  }, [isAuthLoadingVisible]);
+
+  useEffect(() => {
     addTranslations({ en: TRANSLATIONS_EN, ru: TRANSLATIONS_RU });
   }, [addTranslations, locale]);
 
@@ -106,19 +139,34 @@ export const Layout = () => {
       <main
         className={`${styles.main} ${isAuthShell ? styles.authShell : ''} custom-scrollbar`}
       >
-        <div className={styles.background}>
-          {!isAuthShell && pathname !== '/' && (
+        <div
+          className={`${styles.background} ${
+            hasTarotBackground ? styles.tarotBackgroundBase : ''
+          } ${
+            hasAstrologyBackground ? styles.astrologyBackgroundBase : ''
+          }`}
+        >
+          {!isAuthShell &&
+            pathname !== '/' &&
+            !hasTarotBackground &&
+            !hasAstrologyBackground && (
             <>
               <div className={styles.cloud}></div>
               <div className={styles.couldBottom}></div>
             </>
           )}
 
-          {(isAuthShell || getPageAttachment('astrology', pathname)) && (
-            <StarsComposition />
+          {isAuthShell && !isAuthLoadingVisible && (
+            <DeferredComposition
+              delay={0}
+              loader={loadStarsComposition}
+            />
           )}
-          {getPageAttachment('tarot', pathname) && pathname !== '/' && (
-            <TorchComposition />
+          {hasAstrologyBackground && (
+            <DeferredComposition loader={loadStarsComposition} />
+          )}
+          {hasTarotBackground && (
+            <DeferredComposition loader={loadTorchComposition} />
           )}
 
         </div>
@@ -155,17 +203,27 @@ export const Layout = () => {
           isAuthLoadingVisible ? styles.authLoadingLayerVisible : ''
         }`}
       >
-        <StarsComposition />
-        <div aria-busy={isAuthLoadingVisible} className={styles.authStatus}>
-          <Spinner size={'l'} />
-          <span>
-            {i18n(
-              isRegistrationCompleting
-                ? 'Opening the app'
-                : 'Confirming sign-in',
-            )}
-          </span>
-        </div>
+        {shouldMountAuthLayerContent && (
+          <>
+            <DeferredComposition
+              delay={0}
+              loader={loadStarsComposition}
+            />
+            <div
+              aria-busy={isAuthLoadingVisible}
+              className={styles.authStatus}
+            >
+              <Spinner size={'l'} />
+              <span>
+                {i18n(
+                  isRegistrationCompleting
+                    ? 'Opening the app'
+                    : 'Confirming sign-in',
+                )}
+              </span>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

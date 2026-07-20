@@ -4,4 +4,5 @@ export interface TorchProps {
   style?: CSSProperties;
   className?: string;
   delay?: string;
+  isStatic?: boolean;
 }

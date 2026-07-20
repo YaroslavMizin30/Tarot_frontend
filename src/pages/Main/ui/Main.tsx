@@ -1,9 +1,6 @@
 import {
   lazy,
   Suspense,
-  type ComponentType,
-  useEffect,
-  useState,
 } from 'react';
 import { useNavigate } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
@@ -14,12 +11,14 @@ import { useUser } from '@/entities/User';
 import { queryKeys } from '@/shared/api/queryKeys';
 import RouletteIcon from '@/shared/assets/svg/common/roulette_page.svg';
 import { getDailyBonusStatus } from '@/entities/BonusGame';
+import DeferredComposition from '@/shared/ui/DeferredComposition';
 
 import styles from './Main.module.css';
 
 const DailyCardWidget = lazy(() => import('@/widgets/DailyCard'));
 const DailyGuidanceWidget = lazy(() => import('@/widgets/DailyGuidance'));
 const DailyReflection = lazy(() => import('@/widgets/DailyReflection'));
+const loadDaySky = () => import('@/widgets/DaySky');
 
 const SKY_MOUNT_DELAY = 560;
 
@@ -36,9 +35,6 @@ const MainSkeleton = ({ className = '' }: { className?: string }) => (
 
 export const MainPage = () => {
   const navigate = useNavigate();
-  const [SkyComponent, setSkyComponent] =
-    useState<ComponentType | null>(null);
-  const [isSkyVisible, setIsSkyVisible] = useState(false);
 
   const { i18n } = useLocales();
   const { user } = useUser();
@@ -57,54 +53,13 @@ export const MainPage = () => {
     ? pendingDraft.spread
     : null;
 
-  useEffect(() => {
-    let isCancelled = false;
-    const loadTimeout = window.setTimeout(() => {
-      import('@/widgets/DaySky')
-        .then(({ default: LoadedDaySky }) => {
-          if (!isCancelled) {
-            setSkyComponent(() => LoadedDaySky);
-          }
-        })
-        .catch(() => undefined);
-    }, SKY_MOUNT_DELAY);
-
-    return () => {
-      isCancelled = true;
-      window.clearTimeout(loadTimeout);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!SkyComponent) {
-      return;
-    }
-
-    let firstFrame = 0;
-    let secondFrame = 0;
-
-    firstFrame = window.requestAnimationFrame(() => {
-      secondFrame = window.requestAnimationFrame(() => {
-        setIsSkyVisible(true);
-      });
-    });
-
-    return () => {
-      window.cancelAnimationFrame(firstFrame);
-      window.cancelAnimationFrame(secondFrame);
-    };
-  }, [SkyComponent]);
-
   return (
     <div className={styles.container}>
-      <div
-        aria-hidden={'true'}
-        className={`${styles.skyLayer} ${
-          isSkyVisible ? styles.skyLayerVisible : ''
-        }`}
-      >
-        {SkyComponent && <SkyComponent />}
-      </div>
+      <DeferredComposition
+        className={styles.skyLayer}
+        delay={SKY_MOUNT_DELAY}
+        loader={loadDaySky}
+      />
 
       <div className={styles.content}>
         <Suspense

@@ -4,24 +4,7 @@
   height: 100%;
   pointer-events: none;
   isolation: isolate;
-  -webkit-mask-image: radial-gradient(
-    ellipse 72% 62% at 50% 52%,
-    #000 0%,
-    #000 42%,
-    rgb(0 0 0 / 82%) 55%,
-    rgb(0 0 0 / 42%) 74%,
-    transparent 100%
-  );
-  mask-image: radial-gradient(
-    ellipse 72% 62% at 50% 52%,
-    #000 0%,
-    #000 42%,
-    rgb(0 0 0 / 82%) 55%,
-    rgb(0 0 0 / 42%) 74%,
-    transparent 100%
-  );
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
+  contain: layout paint;
 }
 
 .composition::after {
@@ -42,6 +25,8 @@
       var(--tarot-scene-haze-soft) 68%,
       var(--tarot-scene-haze) 100%
     );
+  box-shadow: inset 0 0 44px 12px
+    color-mix(in srgb, var(--gradient-secondary) 54%, transparent);
 }
 
 .vignette {
@@ -134,8 +119,8 @@
 }
 
 .cardLeft { top: 18%; left: 31%; }
-.cardLeftBack { top: 5%; left: 40%; width: clamp(45px, 12vw, 68px); opacity: 0.4; filter: blur(0.7px); }
-.cardRightBack { top: 8%; right: 40%; width: clamp(46px, 12vw, 70px); opacity: 0.42; filter: blur(0.7px); }
+.cardLeftBack { top: 5%; left: 40%; width: clamp(45px, 12vw, 68px); opacity: 0.34; }
+.cardRightBack { top: 8%; right: 40%; width: clamp(46px, 12vw, 70px); opacity: 0.36; }
 .cardCenter { top: 27%; left: 50%; width: clamp(52px, 14vw, 78px); opacity: 0.52; transform: translateX(-50%) rotate(var(--card-rotation)); }
 .cardRight { top: 20%; right: 31%; }
 .cardNear { top: 45%; right: 43%; width: clamp(58px, 17vw, 92px); opacity: 0.5; }
@@ -166,10 +151,10 @@
   );
 }
 
-.candleFarLeft { bottom: 42%; left: 4%; width: 34px; height: 104px; opacity: 0.58; filter: blur(2.8px); }
+.candleFarLeft { bottom: 42%; left: 4%; width: 34px; height: 104px; opacity: 0.48; }
 .candleLeft { bottom: 16%; left: 16%; width: 48px; height: 145px; }
-.candleCenter { bottom: 40%; left: 50%; width: 30px; height: 91px; opacity: 0.68; filter: blur(0.8px); transform: translateX(-50%); }
-.candleFarRight { right: 5%; bottom: 42%; width: 31px; height: 100px; opacity: 0.58; filter: blur(2.8px); }
+.candleCenter { bottom: 40%; left: 50%; width: 30px; height: 91px; opacity: 0.6; transform: translateX(-50%); }
+.candleFarRight { right: 5%; bottom: 42%; width: 31px; height: 100px; opacity: 0.48; }
 .candleRight { right: 15%; bottom: 16%; width: 47px; height: 148px; }
 .candleNearRight { right: 4%; bottom: 10%; width: 58px; height: 168px; opacity: 0.76; }
 

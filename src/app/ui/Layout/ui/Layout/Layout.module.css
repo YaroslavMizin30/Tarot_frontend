@@ -79,6 +79,31 @@
   overflow: hidden;
 }
 
+.tarotBackgroundBase {
+  background:
+    radial-gradient(
+      ellipse 84% 68% at 50% 48%,
+      var(--tarot-scene-center) 0%,
+      color-mix(in srgb, var(--tarot-scene-mid) 72%, transparent) 48%,
+      transparent 78%
+    );
+}
+
+.astrologyBackgroundBase {
+  background:
+    radial-gradient(
+      ellipse 88% 72% at 50% 48%,
+      var(--astrology-sky-top, #28213d) 0%,
+      var(--astrology-sky-middle, #3b2d50) 48%,
+      color-mix(
+        in srgb,
+        var(--astrology-sky-bottom, #62506f) 54%,
+        transparent
+      ) 76%,
+      transparent 100%
+    );
+}
+
 .cloud,
 .couldBottom {
   position: absolute;
@@ -245,4 +270,5 @@
   .authLoadingLayer {
     transition: none;
   }
+
 }

@@ -5,10 +5,13 @@ import type { TorchProps } from './Torch.props';
 import styles from './Torch.module.css';
 
 const Torch: FC<TorchProps> = (props) => {
-  const { style = {}, className = '', delay } = props;
+  const { style = {}, className = '', delay, isStatic = false } = props;
 
   return (
-    <div className={`${styles.torch} ${className}`} style={style}>
+    <div
+      className={`${styles.torch} ${isStatic ? styles.static : ''} ${className}`}
+      style={style}
+    >
       <div className={styles.flame} style={{ animationDelay: delay }}>
         <div className={styles.red} style={{ animationDelay: delay }}></div>
         <div className={styles.yellow} style={{ animationDelay: delay }}></div>

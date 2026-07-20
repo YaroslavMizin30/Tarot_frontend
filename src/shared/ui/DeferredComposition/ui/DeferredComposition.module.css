@@ -1,0 +1,20 @@
+.layer {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  contain: layout paint;
+  transition: opacity 780ms ease;
+}
+
+.visible {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .layer {
+    transition: none;
+  }
+}

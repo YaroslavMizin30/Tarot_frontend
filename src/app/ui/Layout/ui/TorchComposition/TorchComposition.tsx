@@ -14,12 +14,12 @@ const CARDS = [
 ] as const;
 
 const CANDLES = [
-  { className: styles.candleFarLeft, delay: '-0.7s' },
-  { className: styles.candleLeft, delay: '-1.8s' },
-  { className: styles.candleCenter, delay: '-0.2s' },
-  { className: styles.candleFarRight, delay: '-1.2s' },
-  { className: styles.candleRight, delay: '-2.4s' },
-  { className: styles.candleNearRight, delay: '-0.9s' },
+  { className: styles.candleFarLeft, delay: '-0.7s', isStatic: true },
+  { className: styles.candleLeft, delay: '-1.8s', isStatic: false },
+  { className: styles.candleCenter, delay: '-0.2s', isStatic: true },
+  { className: styles.candleFarRight, delay: '-1.2s', isStatic: true },
+  { className: styles.candleRight, delay: '-2.4s', isStatic: false },
+  { className: styles.candleNearRight, delay: '-0.9s', isStatic: false },
 ] as const;
 
 const TorchComposition: FC = () => (
@@ -41,8 +41,13 @@ const TorchComposition: FC = () => (
     </div>
 
     <div className={styles.candles}>
-      {CANDLES.map(({ className, delay }) => (
-        <Torch className={className} delay={delay} key={className} />
+      {CANDLES.map(({ className, delay, isStatic }) => (
+        <Torch
+          className={className}
+          delay={delay}
+          isStatic={isStatic}
+          key={className}
+        />
       ))}
     </div>
   </div>

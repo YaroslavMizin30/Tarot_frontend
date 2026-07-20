@@ -35,6 +35,7 @@
   height: 100%;
   overflow: hidden;
   pointer-events: none;
+  contain: layout paint;
   background:
     radial-gradient(
       ellipse at 64% 34%,
@@ -53,24 +54,6 @@
       color-mix(in srgb, var(--astrology-sky-bottom) 26%, transparent) 66%,
       transparent 91%
     );
-  -webkit-mask-image: radial-gradient(
-    ellipse 108% 88% at 53% 48%,
-    #000 0%,
-    rgb(0 0 0 / 94%) 36%,
-    rgb(0 0 0 / 68%) 62%,
-    rgb(0 0 0 / 24%) 82%,
-    transparent 100%
-  );
-  mask-image: radial-gradient(
-    ellipse 108% 88% at 53% 48%,
-    #000 0%,
-    rgb(0 0 0 / 94%) 36%,
-    rgb(0 0 0 / 68%) 62%,
-    rgb(0 0 0 / 24%) 82%,
-    transparent 100%
-  );
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
 }
 
 .composition::before,
@@ -89,9 +72,9 @@
   background:
     radial-gradient(
       ellipse at 48% 50%,
-      var(--astrology-milky-core) 0 18%,
-      color-mix(in srgb, var(--astrology-nebula) 72%, transparent) 42%,
-      transparent 74%
+      var(--astrology-milky-core) 0 14%,
+      color-mix(in srgb, var(--astrology-nebula) 68%, transparent) 46%,
+      transparent 82%
     ),
     linear-gradient(
       90deg,
@@ -99,8 +82,7 @@
       color-mix(in srgb, var(--astrology-milky-core) 74%, transparent) 48%,
       transparent
     );
-  opacity: 0.86;
-  filter: blur(15px);
+  opacity: 0.78;
 }
 
 .composition::after {
@@ -170,13 +152,16 @@
 
 .cloud {
   position: absolute;
-  background-color: var(--astrology-nebula);
-  width: 46%;
-  height: 40%;
-  
-  opacity: 0.5;
+  width: 58%;
+  height: 52%;
+  background: radial-gradient(
+    ellipse,
+    var(--astrology-nebula) 0%,
+    color-mix(in srgb, var(--astrology-nebula) 62%, transparent) 42%,
+    transparent 74%
+  );
+  opacity: 0.62;
   border-radius: 100%;
-  filter: blur(58px);
   z-index: 1;
 }
 
