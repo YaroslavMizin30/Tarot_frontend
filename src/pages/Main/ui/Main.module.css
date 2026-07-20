@@ -4,13 +4,34 @@
   width: 100%;
   min-height: 100%;
   overflow: hidden;
+}
+
+.dawn {
   background:
     radial-gradient(
-      ellipse at 50% 20%,
-      color-mix(in srgb, var(--gradient-secondary) 62%, white) 0%,
-      transparent 58%
+      ellipse at 72% 28%,
+      rgb(255 224 172 / 42%),
+      transparent 42%
     ),
-    linear-gradient(180deg, var(--gradient-secondary), var(--gradient-primary));
+    linear-gradient(180deg, #91b4d1 0%, #d2b9c0 50%, #e5c2a2 76%, #dfd0ca 100%);
+}
+
+.day {
+  background:
+    radial-gradient(ellipse at 52% 20%, rgb(255 255 255 / 32%), transparent 46%),
+    linear-gradient(180deg, #8cc6e2 0%, #c2e0ec 48%, #e1e8ea 81%, #e6dce2 100%);
+}
+
+.dusk {
+  background:
+    radial-gradient(ellipse at 74% 29%, rgb(255 184 124 / 34%), transparent 42%),
+    linear-gradient(180deg, #5d6e94 0%, #957590 42%, #d3977c 70%, #dec0ae 100%);
+}
+
+.night {
+  background:
+    radial-gradient(ellipse at 38% 22%, rgb(97 100 162 / 20%), transparent 46%),
+    linear-gradient(180deg, #171d35 0%, #2d2b4d 44%, #51435f 74%, #74687b 100%);
 }
 
 .skyLayer {

@@ -84,8 +84,14 @@
     radial-gradient(
       ellipse 84% 68% at 50% 48%,
       var(--tarot-scene-center) 0%,
-      color-mix(in srgb, var(--tarot-scene-mid) 72%, transparent) 48%,
-      transparent 78%
+      color-mix(in srgb, var(--tarot-scene-mid) 78%, transparent) 48%,
+      transparent 80%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--navigation-background) 62%, #17131c) 0%,
+      color-mix(in srgb, var(--navigation-background) 48%, #2a1d2d) 52%,
+      color-mix(in srgb, var(--tarot-table-edge) 56%, #1b151e) 100%
     );
 }
 

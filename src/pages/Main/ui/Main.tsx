@@ -12,6 +12,7 @@ import { queryKeys } from '@/shared/api/queryKeys';
 import RouletteIcon from '@/shared/assets/svg/common/roulette_page.svg';
 import { getDailyBonusStatus } from '@/entities/BonusGame';
 import DeferredComposition from '@/shared/ui/DeferredComposition';
+import { getDayPeriod } from '@/widgets/DaySky/lib/getDayPeriod';
 
 import styles from './Main.module.css';
 
@@ -35,6 +36,7 @@ const MainSkeleton = ({ className = '' }: { className?: string }) => (
 
 export const MainPage = () => {
   const navigate = useNavigate();
+  const dayPeriod = getDayPeriod(new Date().getHours());
 
   const { i18n } = useLocales();
   const { user } = useUser();
@@ -54,7 +56,7 @@ export const MainPage = () => {
     : null;
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${styles[dayPeriod]}`}>
       <DeferredComposition
         className={styles.skyLayer}
         delay={SKY_MOUNT_DELAY}

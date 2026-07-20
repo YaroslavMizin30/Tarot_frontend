@@ -3,9 +3,8 @@ import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { Moon, useDailyEphemeris } from '@/entities/Horoscope';
 import useLocales from '@/shared/hooks/useLocales';
 
+import { getDayPeriod } from '../lib/getDayPeriod';
 import styles from './DaySky.module.css';
-
-type DayPeriod = 'dawn' | 'day' | 'dusk' | 'night';
 
 const BACK_CLOUDS = [
   'cloudFarLeft',
@@ -18,13 +17,6 @@ const FRONT_CLOUDS = [
   'cloudFrontCenter',
   'cloudFrontRight',
 ] as const;
-
-const getPeriod = (hour: number): DayPeriod => {
-  if (hour >= 5 && hour < 8) return 'dawn';
-  if (hour >= 8 && hour < 18) return 'day';
-  if (hour >= 18 && hour < 22) return 'dusk';
-  return 'night';
-};
 
 const clamp = (value: number) => Math.min(1, Math.max(0, value));
 
@@ -51,7 +43,7 @@ export const DaySky = () => {
   }, []);
 
   const hour = now.getHours() + now.getMinutes() / 60;
-  const period = getPeriod(now.getHours());
+  const period = getDayPeriod(now.getHours());
   const showsSun = hour >= 5 && hour < 20;
   const celestialHour = showsSun ? hour : hour < 5 ? hour + 24 : hour;
   const progress = clamp(showsSun
