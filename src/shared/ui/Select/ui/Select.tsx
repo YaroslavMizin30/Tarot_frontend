@@ -10,6 +10,7 @@ import { createPortal } from 'react-dom';
 import useLocales from '@/shared/hooks/useLocales';
 import TRANSLATIONS_EN from '@/shared/locales/en/select';
 import TRANSLATIONS_RU from '@/shared/locales/ru/select';
+import { getHostPlatform } from '@/shared/lib/hostPlatform';
 
 import type { SelectProps, SelectOption } from './Select.props';
 
@@ -84,13 +85,15 @@ export const Select = ({
   useLayoutEffect(() => {
     if (!isOpen || !selectRef.current) return;
 
+    const hostPlatform = getHostPlatform();
+
     const updateDropdownPlacement = () => {
       const bounds = selectRef.current?.getBoundingClientRect();
       if (!bounds) return;
 
       const viewportHeight = Math.min(
         window.innerHeight,
-        window.Telegram?.WebApp?.viewportStableHeight || window.innerHeight,
+        hostPlatform.getStableViewportHeight(),
       );
       const edgeGap = 12;
       const availableBelow = viewportHeight - bounds.bottom - edgeGap;
@@ -128,18 +131,13 @@ export const Select = ({
     updateDropdownPlacement();
     window.addEventListener('resize', updateDropdownPlacement);
     document.addEventListener('scroll', handleDocumentScroll, true);
-    window.Telegram?.WebApp?.onEvent(
-      'viewportChanged',
-      updateDropdownPlacement,
-    );
+    const unsubscribeViewport =
+      hostPlatform.subscribeViewportChanged(updateDropdownPlacement);
 
     return () => {
       window.removeEventListener('resize', updateDropdownPlacement);
       document.removeEventListener('scroll', handleDocumentScroll, true);
-      window.Telegram?.WebApp?.offEvent(
-        'viewportChanged',
-        updateDropdownPlacement,
-      );
+      unsubscribeViewport();
     };
   }, [hasSearch, isOpen, options.length, usePortal]);
 

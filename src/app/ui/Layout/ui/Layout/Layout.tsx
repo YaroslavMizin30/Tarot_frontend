@@ -15,6 +15,7 @@ import useLocales from '@/shared/hooks/useLocales';
 import TRANSLATIONS_EN from '@/shared/locales/en/common';
 import TRANSLATIONS_RU from '@/shared/locales/ru/common';
 import DeferredComposition from '@/shared/ui/DeferredComposition';
+import { getHostPlatform } from '@/shared/lib/hostPlatform';
 
 import RouteTransitionBackdrop, {
   preloadBackdropForPath,
@@ -147,13 +148,19 @@ export const Layout = () => {
   }, [addTranslations, locale]);
 
   useEffect(() => {
+    const hostPlatform = getHostPlatform();
+
     if (theme) {
       document.documentElement.setAttribute('data-theme', theme);
-      window.Telegram?.WebApp?.setHeaderColor(THEME_CONFIG[theme].header);
-      window.Telegram?.WebApp?.setBottomBarColor(THEME_CONFIG[theme].footer);
+      hostPlatform.setChromeColors({
+        header: THEME_CONFIG[theme].header,
+        bottomBar: THEME_CONFIG[theme].footer,
+      });
     } else {
-      window.Telegram?.WebApp?.setHeaderColor(AUTH_TELEGRAM_CHROME_COLOR);
-      window.Telegram?.WebApp?.setBottomBarColor(AUTH_TELEGRAM_CHROME_COLOR);
+      hostPlatform.setChromeColors({
+        header: AUTH_TELEGRAM_CHROME_COLOR,
+        bottomBar: AUTH_TELEGRAM_CHROME_COLOR,
+      });
     }
   }, [theme]);
 

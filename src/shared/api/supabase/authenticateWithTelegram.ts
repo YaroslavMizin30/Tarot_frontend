@@ -1,16 +1,25 @@
 import { ensureSupabase } from './ensureSupabase';
+import { getHostPlatform } from '@/shared/lib/hostPlatform';
+import type { AuthenticatedTelegramIdentity } from '@/shared/types/identity';
+
+export type { AuthenticatedTelegramIdentity } from '@/shared/types/identity';
 
 interface TelegramAuthResponse {
   tokenHash: string;
   telegramId: number;
 }
 
-export interface AuthenticatedTelegramIdentity {
-  authUserId: string;
-  telegramId: number;
-}
-
 let authenticationPromise: Promise<AuthenticatedTelegramIdentity> | null = null;
+
+const createAuthenticatedIdentity = (
+  authUserId: string,
+  telegramId: number,
+): AuthenticatedTelegramIdentity => ({
+  authUserId,
+  provider: 'telegram',
+  externalUserId: String(telegramId),
+  telegramId,
+});
 
 const telegramIdFromMetadata = (metadata: Record<string, unknown>) => {
   const telegramId = Number(metadata.telegram_id);
@@ -23,8 +32,11 @@ const telegramIdFromMetadata = (metadata: Record<string, unknown>) => {
 const getExpectedTelegramId = () => {
   if (import.meta.env.DEV) return null;
 
+  const hostUser = getHostPlatform().getUser();
   const telegramId = Number(
-    window.Telegram?.WebApp?.initDataUnsafe?.user?.id,
+    hostUser?.provider === 'telegram'
+      ? hostUser.externalUserId
+      : null,
   );
 
   if (!Number.isSafeInteger(telegramId) || telegramId <= 0) {
@@ -63,7 +75,7 @@ const getReusableSession = async (
     return null;
   }
 
-  return { authUserId: data.user.id, telegramId };
+  return createAuthenticatedIdentity(data.user.id, telegramId);
 };
 
 const authenticateInDevelopment = async (): Promise<AuthenticatedTelegramIdentity> => {
@@ -90,11 +102,11 @@ const authenticateInDevelopment = async (): Promise<AuthenticatedTelegramIdentit
     throw error ?? new Error('DEV_TELEGRAM_IDENTITY_REQUIRED');
   }
 
-  return { authUserId: data.user.id, telegramId };
+  return createAuthenticatedIdentity(data.user.id, telegramId);
 };
 
 const authenticateInTelegram = async (): Promise<AuthenticatedTelegramIdentity> => {
-  const initData = window.Telegram?.WebApp?.initData;
+  const initData = getHostPlatform().getAuthPayload();
   if (!initData) {
     throw new Error('TELEGRAM_INIT_DATA_REQUIRED');
   }
@@ -132,10 +144,10 @@ const authenticateInTelegram = async (): Promise<AuthenticatedTelegramIdentity> 
     throw verificationError ?? new Error('TELEGRAM_SESSION_MISMATCH');
   }
 
-  return {
-    authUserId: verification.user.id,
-    telegramId: verifiedTelegramId,
-  };
+  return createAuthenticatedIdentity(
+    verification.user.id,
+    verifiedTelegramId,
+  );
 };
 
 const authenticate = async (): Promise<AuthenticatedTelegramIdentity> => {

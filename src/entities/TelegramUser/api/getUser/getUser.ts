@@ -1,18 +1,14 @@
+import { getHostPlatform } from '@/shared/lib/hostPlatform';
+
 export const getTelegramUser = () => {
-  const { DEV } = import.meta.env;
+  const user = getHostPlatform().getUser();
+  if (!user || user.provider !== 'telegram') return null;
 
-  if (DEV) {
-    const id = Number(import.meta.env.VITE_ADMIN_ID);
-    return Number.isSafeInteger(id) && id > 0 ? { id } : null;
-  }
-
-  if (!window.Telegram) {
-    return null;
-  }
-
-  const initData = window.Telegram.WebApp.initDataUnsafe;
-
-  const user = initData.user;
-
-  return user;
+  return {
+    id: Number(user.externalUserId),
+    first_name: user.firstName,
+    last_name: user.lastName,
+    username: user.username,
+    language_code: user.languageCode,
+  };
 };

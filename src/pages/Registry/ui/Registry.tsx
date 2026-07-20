@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
-import getTelegramUser from '@/entities/TelegramUser';
 import Input from '@/shared/ui/Input';
 import Button from '@/shared/ui/Button';
 import Select from '@/shared/ui/Select';
@@ -9,6 +8,7 @@ import Modal from '@/shared/ui/Modal';
 import TextContainer from '@/shared/ui/TextContainer';
 
 import useLocales from '@/shared/hooks/useLocales';
+import { getHostPlatform } from '@/shared/lib/hostPlatform';
 import TRANSLATIONS_RU from '../../../shared/locales/ru/registry.ts';
 import TRANSLATIONS_EN from '../../../shared/locales/en/registry.ts';
 
@@ -28,19 +28,8 @@ interface FormData {
   day: string;
 }
 
-const getTelegramName = () => {
-  const telegramUser = getTelegramUser();
-
-  if (
-    telegramUser &&
-    'first_name' in telegramUser &&
-    typeof telegramUser.first_name === 'string'
-  ) {
-    return telegramUser.first_name.trim();
-  }
-
-  return '';
-};
+const getSuggestedName = () =>
+  getHostPlatform().getUser()?.firstName ?? '';
 
 export const Registry = () => {
   const { i18n, locale, addTranslations } = useLocales();
@@ -48,7 +37,7 @@ export const Registry = () => {
 
   const [step, setStep] = useState<RegistrationStep>('name');
   const [formData, setFormData] = useState<FormData>(() => ({
-    name: getTelegramName(),
+    name: getSuggestedName(),
     month: '',
     year: '',
     day: '',

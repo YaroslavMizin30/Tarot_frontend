@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
 import {
-  authenticateWithTelegram,
   completeUserOnboarding,
 } from '@/shared/api/supabase/index.ts';
+import { authenticateCurrentPlatform } from '@/shared/api/auth';
 import useLocales from '@/shared/hooks/useLocales';
 
 import { useUser } from '@/entities/User/index.ts';
@@ -37,7 +37,7 @@ export const useCreateUser = () => {
       setError(null);
       setIsLoading(true);
 
-      await authenticateWithTelegram();
+      await authenticateCurrentPlatform();
       await completeUserOnboarding({
         userName: name,
         birthDate: date,
