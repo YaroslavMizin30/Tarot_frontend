@@ -75,6 +75,12 @@ export const Layout = () => {
     isAuthLoadingVisible || isAuthBackgroundMounted;
   const shouldRevealRouteContent =
     pathname !== '/' && !getPageAttachment('tarot', pathname);
+  const isRouteContentHidden = Boolean(
+    !isAuthShell &&
+      isLoading &&
+      pendingLocation &&
+      pendingLocation.pathname !== pathname,
+  );
 
   useEffect(() => {
     let firstFrame = 0;
@@ -191,10 +197,13 @@ export const Layout = () => {
               <Outlet context={{ user }} />
             ) : (
               <div
+                aria-hidden={isRouteContentHidden}
                 className={`${styles.routePage} ${
                   shouldRevealRouteContent
                     ? ''
                     : styles.routePageImmediate
+                } ${
+                  isRouteContentHidden ? styles.routePageHidden : ''
                 }`}
                 key={pathname}
               >
