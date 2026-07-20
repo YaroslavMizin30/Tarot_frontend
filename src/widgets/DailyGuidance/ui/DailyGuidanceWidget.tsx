@@ -30,7 +30,16 @@ export const DailyGuidanceWidget = () => {
   }
 
   if (isLoading || !phase || !moonSign || !timestamp) {
-    return <div className={styles.placeholder} aria-hidden={'true'} />;
+    return (
+      <div className={styles.placeholder} aria-hidden={'true'}>
+        <span className={styles.placeholderCopy}>
+          <span />
+          <span />
+          <span />
+        </span>
+        <span className={styles.placeholderMoon} />
+      </div>
+    );
   }
 
   const guidance = getDailyGuidance({

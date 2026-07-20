@@ -24,8 +24,15 @@
 
 .placeholder {
   position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 60px;
+  align-items: center;
+  gap: 14px;
   overflow: hidden;
-  background: color-mix(in srgb, var(--surface-panel) 68%, transparent);
+  padding: 13px 14px;
+  border: 1px solid
+    color-mix(in srgb, var(--border-primary) 18%, transparent);
+  background: color-mix(in srgb, var(--surface-panel) 30%, transparent);
 }
 
 .placeholder::after {
@@ -35,10 +42,51 @@
   background: linear-gradient(
     100deg,
     transparent 25%,
-    rgb(255 255 255 / 32%) 45%,
+    color-mix(in srgb, var(--surface-panel) 34%, transparent) 45%,
     transparent 65%
   );
-  animation: shimmer 1.4s infinite linear;
+  animation: shimmer 2.1s infinite ease-in-out;
+}
+
+.placeholderCopy,
+.placeholderMoon {
+  position: relative;
+  z-index: 1;
+}
+
+.placeholderCopy span {
+  display: block;
+  width: 34%;
+  height: 7px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--text-primary) 10%, transparent);
+}
+
+.placeholderCopy span + span {
+  width: 58%;
+  height: 10px;
+  margin-top: 10px;
+}
+
+.placeholderCopy span:last-child {
+  width: 88%;
+  height: 8px;
+  margin-top: 9px;
+}
+
+.placeholderMoon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle at 38% 34%,
+      color-mix(in srgb, var(--surface-panel) 64%, transparent),
+      transparent 58%
+    ),
+    color-mix(in srgb, var(--surface-control) 18%, transparent);
+  box-shadow: 0 0 10px
+    color-mix(in srgb, var(--surface-control) 12%, transparent);
 }
 
 .copy {

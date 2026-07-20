@@ -33,11 +33,11 @@
   background: linear-gradient(
     104deg,
     transparent 20%,
-    rgb(255 255 255 / 28%) 46%,
+    color-mix(in srgb, var(--surface-panel) 32%, transparent) 46%,
     transparent 72%
   );
   transform: translateX(-100%);
-  animation: summaryShimmer 1.55s ease-in-out infinite;
+  animation: summaryShimmer 2.1s ease-in-out infinite;
 }
 
 .summaryPlaceholder span {

@@ -13,6 +13,7 @@ import useLocales from '@/shared/hooks/useLocales';
 import TRANSLATIONS_EN from '@/shared/locales/en/common';
 import TRANSLATIONS_RU from '@/shared/locales/ru/common';
 import DeferredComposition from '@/shared/ui/DeferredComposition';
+import { getDayPeriod } from '@/widgets/DaySky/lib/getDayPeriod';
 
 import { getPageAttachment } from '../../config/pages';
 
@@ -44,6 +45,7 @@ const VOLUMETRIC_BACKGROUND_FADE_CURVE =
 export const Layout = () => {
   const { state } = useNavigation();
   const { pathname } = useLocation();
+  const dayPeriod = getDayPeriod(new Date().getHours());
 
   const { addTranslations, i18n, locale } = useLocales();
 
@@ -75,6 +77,7 @@ export const Layout = () => {
     getPageAttachment('tarot', pathname);
   const hasAstrologyBackground =
     !isAuthShell && getPageAttachment('astrology', pathname);
+  const hasMainBackground = !isAuthShell && pathname === '/';
   const shouldMountAuthLayerContent =
     isAuthLoadingVisible || isAuthBackgroundMounted;
 
@@ -148,6 +151,8 @@ export const Layout = () => {
             hasTarotBackground ? styles.tarotBackgroundBase : ''
           } ${
             hasAstrologyBackground ? styles.astrologyBackgroundBase : ''
+          } ${
+            hasMainBackground ? styles[`mainBackground-${dayPeriod}`] : ''
           }`}
         >
           {!isAuthShell &&
@@ -183,10 +188,6 @@ export const Layout = () => {
           )}
 
         </div>
-
-        {isLoading && !isAuthShell && (
-          <div aria-hidden={'true'} className={styles.routeProgress} />
-        )}
 
         {authError ? (
           <div className={`${styles.container} ${styles.authContainer}`}>

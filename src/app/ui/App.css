@@ -9,7 +9,7 @@
 
 html,
 body {
-  background-color: var(--gradient-primary);
+  background-color: #171522;
   transition: background-color 520ms ease;
 }
 

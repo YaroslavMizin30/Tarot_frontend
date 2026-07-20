@@ -35,11 +35,11 @@
   background: linear-gradient(
     104deg,
     transparent 22%,
-    rgb(255 255 255 / 28%) 46%,
+    color-mix(in srgb, var(--surface-panel) 32%, transparent) 46%,
     transparent 70%
   );
   transform: translateX(-100%);
-  animation: reflectionShimmer 1.55s ease-in-out infinite;
+  animation: reflectionShimmer 2.1s ease-in-out infinite;
 }
 
 .placeholder span {
