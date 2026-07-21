@@ -44,6 +44,7 @@ export const SpreadPage = () => {
     value: number;
   } | null>(null);
   const [isRatingSaving, setIsRatingSaving] = useState(false);
+  const [ratingDebug, setRatingDebug] = useState<Record<string, unknown> | null>(null);
   const [activeCardIndex, setActiveCardIndex] = useState(0);
   const rate = ratingOverride && ratingOverride.spreadId === spread?.spreadId
     ? ratingOverride.value
@@ -55,9 +56,32 @@ export const SpreadPage = () => {
     const previousValue = rate;
     setRatingOverride({ spreadId: spread.spreadId, value });
     setIsRatingSaving(true);
+    setRatingDebug({
+      state: 'requesting',
+      spreadId: spread.spreadId,
+      requestedRating: value,
+      previousRating: previousValue ?? null,
+      clientTime: new Date().toISOString(),
+    });
 
     try {
-      const updatedSpread = await rateSpread(spread.spreadId, value);
+      const result = await rateSpread(spread.spreadId, value);
+      setRatingDebug({
+        state: result.spread ? 'response' : 'server-rejected',
+        spreadId: spread.spreadId,
+        response: result.debug,
+      });
+
+      if (!result.spread) {
+        setRatingOverride(
+          previousValue === undefined
+            ? null
+            : { spreadId: spread.spreadId, value: previousValue },
+        );
+        return;
+      }
+
+      const updatedSpread = result.spread;
       setRatingOverride({
         spreadId: spread.spreadId,
         value: updatedSpread.rating ?? value,
@@ -70,7 +94,12 @@ export const SpreadPage = () => {
         queryKey: queryKeys.spreads.all,
         refetchType: 'inactive',
       });
-    } catch {
+    } catch (error) {
+      setRatingDebug({
+        state: 'request-error',
+        spreadId: spread.spreadId,
+        error: error instanceof Error ? error.message : String(error),
+      });
       setRatingOverride(
         previousValue === undefined
           ? null
@@ -179,6 +208,17 @@ export const SpreadPage = () => {
               onChange={handleRatingInputChange}
               disabled={isRatingSaving}
             />
+            <pre className={styles.ratingDebug} aria-live={'polite'}>
+              {JSON.stringify(
+                ratingDebug ?? {
+                  state: 'idle',
+                  spreadId: spread.spreadId,
+                  loadedRating: spread.rating ?? null,
+                },
+                null,
+                2,
+              )}
+            </pre>
           </TextContainer>
         </div>
       </div>
