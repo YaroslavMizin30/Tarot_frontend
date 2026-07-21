@@ -2,7 +2,6 @@ import { useEffect, useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router';
 
 import { useMoonPlans } from '@/entities/MoonPlan';
-import { useUser } from '@/entities/User';
 import {
   getZodiacTranslationKey,
   Moon,
@@ -37,7 +36,6 @@ const SPECIAL_MOON_LABELS = [
 export const CalendarPage = () => {
   const { i18n, addTranslations, locale } = useLocales();
   const { items, itemIndex, isLoading, error } = useCalendar();
-  const { user } = useUser();
   const navigate = useNavigate();
 
   const [today] = useState(todayIsoString);
@@ -102,12 +100,10 @@ export const CalendarPage = () => {
     event.preventDefault();
 
     const text = planText.trim();
-    if (!user || !effectiveSelectedDate || !canCreatePlan || !text) return;
+    if (!effectiveSelectedDate || !canCreatePlan || !text) return;
 
     try {
       await createPlan({
-        appUserId: user.appUserId,
-        userId: user.id,
         planDate: effectiveSelectedDate,
         text,
         locale,

@@ -15,7 +15,7 @@ export const useMoonPlans = (planDate: string | null) => {
 
   const query = useQuery({
     queryKey,
-    queryFn: () => getMoonPlans(user!.appUserId, planDate!),
+    queryFn: () => getMoonPlans(planDate!),
     enabled: Boolean(user && planDate),
   });
 
