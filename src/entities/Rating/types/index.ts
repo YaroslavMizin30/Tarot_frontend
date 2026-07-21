@@ -1,6 +1,4 @@
 export interface Rating {
-  appUserId?: string;
-  userId: number;
   convenience: number;
   aesthetics: number;
   predictions: number;
@@ -9,4 +7,4 @@ export interface Rating {
   feedback?: string;
 }
 
-export type RatingPayload = Omit<Rating, 'userId' | 'appUserId'>;
+export type RatingPayload = Rating;

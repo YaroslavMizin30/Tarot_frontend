@@ -3,9 +3,10 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useUser } from '@/entities/User';
 import { queryKeys } from '@/shared/api/queryKeys';
 
-import { addRating } from '../api/addRating';
-import { getRating } from '../api/getRating';
-import { updateRating } from '../api/updateRating';
+import {
+  getRating,
+  submitRating as submitRatingApi,
+} from '../api/userFeedback';
 import type { RatingPayload } from '../types';
 
 export const useRating = () => {
@@ -18,26 +19,25 @@ export const useRating = () => {
     refetch,
   } = useQuery({
     queryKey: queryKeys.rating.byUserId(user?.appUserId ?? 'no-user'),
-    queryFn: () => getRating(user!.appUserId),
+    queryFn: getRating,
     enabled: !!user,
   });
 
   const submitMutation = useMutation({
-    mutationFn: async (payload: RatingPayload) => {
+    mutationFn: (payload: RatingPayload) => {
       if (!user) {
-        return false;
+        return Promise.reject(new Error('USER_NOT_AUTHENTICATED'));
       }
 
-      const hasRated = !!rating;
-
-      const result = hasRated
-        ? await updateRating(user.appUserId, payload)
-        : await addRating(user.appUserId, user.id, payload);
-
-      return !!result;
+      return submitRatingApi(payload);
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.rating.all });
+    onSuccess: (submittedRating) => {
+      if (!user) return;
+
+      queryClient.setQueryData(
+        queryKeys.rating.byUserId(user.appUserId),
+        submittedRating,
+      );
     },
   });
 
@@ -47,7 +47,14 @@ export const useRating = () => {
     isSubmitting: submitMutation.isPending,
     hasRated: !!rating,
     error: submitMutation.error?.message ?? null,
-    submitRating: submitMutation.mutateAsync,
+    submitRating: async (payload: RatingPayload) => {
+      try {
+        await submitMutation.mutateAsync(payload);
+        return true;
+      } catch {
+        return false;
+      }
+    },
     refetch,
   };
 };

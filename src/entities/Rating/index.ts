@@ -1,6 +1,4 @@
 export type { Rating, RatingPayload } from './types';
 
-export { getRating } from './api/getRating';
-export { addRating } from './api/addRating';
-export { updateRating } from './api/updateRating';
+export { getRating, submitRating } from './api/userFeedback';
 export { useRating } from './model/useRating';
