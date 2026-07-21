@@ -56,7 +56,7 @@ export const CalendarPage = () => {
 
   const effectiveSelectedDate = selectedItem?.date ?? null;
   const canCreatePlan = Boolean(
-    effectiveSelectedDate && effectiveSelectedDate > today,
+    effectiveSelectedDate && effectiveSelectedDate >= today,
   );
   const {
     plans,
