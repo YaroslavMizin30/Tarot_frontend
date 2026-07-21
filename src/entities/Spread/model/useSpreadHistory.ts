@@ -16,7 +16,6 @@ export const useSpreadHistory = () => {
     queryKey: queryKeys.spreads.history(user?.appUserId ?? 'no-user'),
     queryFn: ({ pageParam }) =>
       getSpreadsPage(
-        user!.appUserId,
         pageParam,
         SPREAD_HISTORY_PAGE_SIZE,
       ),

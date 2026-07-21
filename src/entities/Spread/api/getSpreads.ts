@@ -22,24 +22,23 @@ export const getSpreads = async (
 };
 
 export const getSpreadsPage = async (
-  appUserId: string,
   offset: number,
   limit = SPREAD_HISTORY_PAGE_SIZE,
 ): Promise<SpreadHistoryPage> => {
-  const rows = await backend.select<SpreadRow>('spreads', {
-    filters: [{ column: 'appUserId', value: appUserId }],
-    order: [
-      { column: 'updatedAt', ascending: false, nullsFirst: false },
-      { column: 'date', ascending: false },
-      { column: 'spreadId', ascending: false },
-    ],
-    range: { from: offset, to: offset + limit },
+  const response = await backend.invoke<{
+    page: {
+      hasMore: boolean;
+      nextOffset: number;
+    };
+    spreads: SpreadRow[];
+  }>('spread-history', {
+    offset,
+    limit,
   });
-  const pageRows = rows.slice(0, limit);
 
   return {
-    hasMore: rows.length > limit,
-    nextOffset: offset + pageRows.length,
-    spreads: pageRows.map(spreadFromRow),
+    hasMore: response.page.hasMore,
+    nextOffset: response.page.nextOffset,
+    spreads: response.spreads.map(spreadFromRow),
   };
 };
