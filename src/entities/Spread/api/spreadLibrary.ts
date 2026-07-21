@@ -7,24 +7,6 @@ interface SpreadResponse {
   spread: SpreadRow;
 }
 
-export interface SpreadRatingDebug {
-  requestId?: string;
-  phase?: string;
-  requestedRating?: number;
-  previousRating?: number | null;
-  persistedRating?: number | null;
-  found?: boolean;
-  canonicalOwnerMatches?: boolean;
-  legacyOwnerMatches?: boolean;
-  serverTime?: string;
-  error?: { code?: string; message?: string };
-}
-
-export interface SpreadRatingResult {
-  spread: Spread | null;
-  debug: SpreadRatingDebug | null;
-}
-
 export const getSpreadById = async (spreadId: string): Promise<Spread> => {
   const response = await backend.invoke<SpreadResponse>('spread-library', {
     action: 'get',
@@ -56,18 +38,12 @@ export const saveDailySpread = async (
 export const rateSpread = async (
   spreadId: string,
   rating: number,
-): Promise<SpreadRatingResult> => {
-  const response = await backend.invoke<{
-    spread: SpreadRow | null;
-    debug?: SpreadRatingDebug;
-  }>('spread-library', {
+): Promise<Spread> => {
+  const response = await backend.invoke<SpreadResponse>('spread-library', {
     action: 'rate',
     spreadId,
     rating,
   });
 
-  return {
-    spread: response.spread ? spreadFromRow(response.spread) : null,
-    debug: response.debug ?? null,
-  };
+  return spreadFromRow(response.spread);
 };

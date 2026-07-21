@@ -205,20 +205,6 @@
   margin-top: 10px;
 }
 
-.ratingDebug {
-  width: 100%;
-  margin: 10px 0 0;
-  padding: 10px;
-  overflow: auto;
-  border: 1px solid rgb(250 215 128 / 55%);
-  border-radius: 10px;
-  background: rgb(18 10 31 / 82%);
-  color: #fff1be;
-  font: 12px/1.35 monospace;
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-
 .emptyState {
   display: flex;
   height: 100%;
