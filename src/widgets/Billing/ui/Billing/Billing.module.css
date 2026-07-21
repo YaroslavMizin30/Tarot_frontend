@@ -8,3 +8,13 @@
 
   color: var(--text-primary);
 }
+
+.retry {
+  padding: 12px 18px;
+  border: 1px solid var(--border-secondary);
+  border-radius: 12px;
+  color: var(--text-primary);
+  background: var(--surface-panel);
+  font: inherit;
+  cursor: pointer;
+}

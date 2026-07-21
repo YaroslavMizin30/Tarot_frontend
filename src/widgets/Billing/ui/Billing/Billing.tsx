@@ -1,8 +1,13 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
-import { TARIFFS, type Tariff } from '@/entities/Billing';
+import {
+  toTariffs,
+  type Tariff,
+  usePaymentCatalog,
+} from '@/entities/Billing';
 import TextContainer from '@/shared/ui/TextContainer';
 import useLocales from '@/shared/hooks/useLocales';
+import Spinner from '@/shared/ui/Spinner';
 
 import TariffSelection from '../TariffSelection/TariffSelection';
 import PaymentSelection from '../PaymentSelection/PaymentSelection';
@@ -13,6 +18,8 @@ export const Billing = (props: { onPaymentSuccess?: () => void }) => {
   const { onPaymentSuccess } = props;
   const [tariff, setTariff] = useState<Tariff | null>(null);
   const { i18n } = useLocales();
+  const { products, isLoading, error, refetch } = usePaymentCatalog();
+  const tariffs = useMemo(() => toTariffs(products), [products]);
 
   const handleTariffSelect = (trf: Tariff) => {
     setTariff(trf);
@@ -29,8 +36,17 @@ export const Billing = (props: { onPaymentSuccess?: () => void }) => {
       );
     }
 
+    if (isLoading) return <Spinner size={'l'} />;
+    if (error) {
+      return (
+        <button className={styles.retry} type={'button'} onClick={() => refetch()}>
+          {i18n('billing_catalog_error')}
+        </button>
+      );
+    }
+
     return (
-      <TariffSelection onTariffSelect={handleTariffSelect} tariffs={TARIFFS} />
+      <TariffSelection onTariffSelect={handleTariffSelect} tariffs={tariffs} />
     );
   };
 

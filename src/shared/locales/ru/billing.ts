@@ -27,6 +27,7 @@ const TRANSLATIONS_RU: Record<string, string> = {
   'payment_pending': 'Платёж обрабатывается.',
   'payment_error': 'Не удалось начать оплату. Проверьте интернет.',
   'payment_unsupported': 'Этот способ оплаты недоступен.',
+  'billing_catalog_error': 'Не удалось загрузить варианты оплаты. Повторить',
 
   // Insufficient balance redirect
   'insufficient_balance_title': 'Недостаточно пентаклей',

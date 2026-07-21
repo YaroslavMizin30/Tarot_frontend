@@ -17,7 +17,7 @@ const TariffSelection: FC<TariffSelectionProps> = (props) => {
 
         return (
           <TariffButton
-            key={tariff.amount}
+            key={tariff.productCode}
             {...tariff}
             className={styles[`button${index}`]}
             onTariffSelect={handleTariffSelect}

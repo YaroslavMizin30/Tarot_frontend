@@ -13,7 +13,7 @@ import styles from './PaymentSelection.module.css';
 const PaymentSelection = (props: PaymentSelectionProps) => {
   const { tariff, onBackButtonClick, onPaymentSuccess } = props;
 
-  const { prices, amount } = tariff;
+  const { prices, amount, productCode } = tariff;
 
   const paymentMethods = composePaymentMethods(prices);
 
@@ -30,13 +30,13 @@ const PaymentSelection = (props: PaymentSelectionProps) => {
 
       <div className={styles.buttons}>
         {paymentMethods.map((method) => {
-          const { code } = method;
+          const { provider } = method;
 
           return (
             <PaymentButton
               onClick={() => onPaymentSuccess?.()}
-              key={code}
-              amount={amount}
+              key={provider}
+              productCode={productCode}
               {...method}
             />
           );

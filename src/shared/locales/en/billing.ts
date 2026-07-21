@@ -27,6 +27,7 @@ const TRANSLATIONS_EN: Record<string, string> = {
   'payment_pending': 'Payment is being processed.',
   'payment_error': 'Unable to start payment. Check your internet.',
   'payment_unsupported': 'This payment method is not supported.',
+  'billing_catalog_error': 'Unable to load payment options. Retry',
 
   // Insufficient balance redirect
   'insufficient_balance_title': 'Not enough pentacles',

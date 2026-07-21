@@ -10,6 +10,7 @@ import styles from './TariffButton.module.css';
 const TariffButton: FC<TariffButtonProps> = (props) => {
   const {
     prices,
+    productCode,
     amount,
     className = '',
     addition,
@@ -20,7 +21,7 @@ const TariffButton: FC<TariffButtonProps> = (props) => {
   const { i18n } = useLocales();
 
   const handleTariffSelect = () => {
-    onTariffSelect({ prices, amount, addition, ...rest });
+    onTariffSelect({ productCode, prices, amount, addition, ...rest });
   };
 
   return (

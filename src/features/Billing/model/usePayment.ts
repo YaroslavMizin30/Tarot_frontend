@@ -1,31 +1,23 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { createInvoiceLink, getPaymentStatus } from '@/shared/api/telegram';
-import type { PaymentMethodCode } from '@/shared/api/telegram';
+import {
+  createPayment,
+  getPayment,
+  type PaymentOrderStatus,
+  type PaymentProvider,
+} from '@/entities/Billing';
 
 import { useBalance } from './useBalance';
 
 export type PaymentStatus =
-  | 'paid'
-  | 'cancelled'
-  | 'failed'
-  | 'pending'
+  | PaymentOrderStatus
   | 'network_error'
   | 'unsupported'
   | null;
 
 export interface PaymentMethodConfig {
-  code: PaymentMethodCode;
-  /** Кол-во пентаклей к зачислению */
-  amount: number;
-  /**
-   * Сумма платежа в единицах валюты.
-   * Для XTR (Stars) — это кол-во звёзд.
-   * Для RUB (СБП) — это рубли. Конвертацию в копейки выполняет бэкенд.
-   */
-  price: number;
-  /** Код валюты (XTR для Stars, RUB для СБП) */
-  currency: 'XTR' | 'RUB' | string;
+  provider: PaymentProvider;
+  productCode: string;
 }
 
 interface UsePaymentParams {
@@ -34,24 +26,21 @@ interface UsePaymentParams {
   onError?: (status: Exclude<PaymentStatus, null>) => void;
 }
 
-/**
- * Параметры окна для window.open при оплате через СБП.
- * Ширина/высота подобраны так, чтобы пользователю было удобно
- * оплатить через мобильный банк (в том числе в Telegram Desktop).
- */
 const SBP_POPUP_FEATURES =
   'width=480,height=720,menubar=no,toolbar=no,location=no,status=no,scrollbars=yes,resizable=yes';
+const POLL_INTERVAL_MS = 2_500;
+const MAX_POLL_ATTEMPTS = 96;
 
-/**
- * Универсальный хук оплаты через Telegram.
- * Поддерживает любые методы, описанные в PaymentMethodCode
- * (сейчас: 'stars' через Telegram Stars, 'sbp' через СБП).
- *
- * При добавлении нового метода нужно:
- *   1) расширить enum в createInvoiceLink.types.ts;
- *   2) добавить ветку в Edge Function;
- *   3) при необходимости — отдельный флоу запуска.
- */
+const delay = (duration: number) =>
+  new Promise<void>((resolve) => {
+    window.setTimeout(resolve, duration);
+  });
+
+const isTerminalFailure = (
+  status: PaymentOrderStatus,
+): status is 'cancelled' | 'failed' | 'expired' =>
+  status === 'cancelled' || status === 'failed' || status === 'expired';
+
 export const usePayment = ({
   method,
   onSuccess,
@@ -59,24 +48,13 @@ export const usePayment = ({
 }: UsePaymentParams) => {
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState<PaymentStatus>(null);
-
-  const { code, amount } = method;
-
   const { refresh: refreshBalance } = useBalance();
 
-  // Ref для отслеживания попапа СБП, чтобы корректно чистить интервал
-  // при размонтировании компонента / новом запуске оплаты.
-  const sbpPopupRef = useRef<Window | null>(null);
-  const sbpPollRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const runRef = useRef(0);
+  const idempotencyKeyRef = useRef<string | null>(null);
 
-  // Чистим интервал опроса попапа при размонтировании
-  useEffect(() => {
-    return () => {
-      if (sbpPollRef.current !== null) {
-        clearInterval(sbpPollRef.current);
-        sbpPollRef.current = null;
-      }
-    };
+  useEffect(() => () => {
+    runRef.current += 1;
   }, []);
 
   const fail = (next: Exclude<PaymentStatus, null>) => {
@@ -85,132 +63,116 @@ export const usePayment = ({
     onError?.(next);
   };
 
-  /** После закрытия попапа подтверждает платёж сервер-сервер через ЮKassa. */
-  const watchSbpPopup = (popup: Window, paymentId: string) => {
-    if (sbpPollRef.current !== null) {
-      clearInterval(sbpPollRef.current);
+  const complete = async () => {
+    setStatus('paid');
+    setIsLoading(false);
+    idempotencyKeyRef.current = null;
+    await refreshBalance().catch(() => undefined);
+    onSuccess?.();
+  };
+
+  const pollPayment = async (paymentId: string, run: number) => {
+    for (let attempt = 0; attempt < MAX_POLL_ATTEMPTS; attempt += 1) {
+      if (runRef.current !== run) return;
+      try {
+        const payment = await getPayment(paymentId);
+        if (runRef.current !== run) return;
+        setStatus(payment.status);
+        if (payment.status === 'paid') {
+          await complete();
+          return;
+        }
+        if (isTerminalFailure(payment.status)) {
+          idempotencyKeyRef.current = null;
+          fail(payment.status);
+          return;
+        }
+      } catch {
+        // Transient provider and network failures are retried. The canonical
+        // order survives this browser session and remains recoverable.
+      }
+      await delay(POLL_INTERVAL_MS);
     }
 
-    sbpPollRef.current = setInterval(async () => {
-      if (popup.closed) {
-        if (sbpPollRef.current !== null) {
-          clearInterval(sbpPollRef.current);
-          sbpPollRef.current = null;
-        }
-
-        sbpPopupRef.current = null;
-
-        for (let attempt = 0; attempt < 12; attempt += 1) {
-          try {
-            const paymentStatus = await getPaymentStatus(paymentId);
-            if (paymentStatus === 'paid') {
-              setIsLoading(false);
-              setStatus('paid');
-              await refreshBalance().catch(() => undefined);
-              onSuccess?.();
-              return;
-            }
-            if (paymentStatus === 'cancelled') {
-              fail('cancelled');
-              return;
-            }
-          } catch {
-            // A transient provider error is retried within this short window.
-          }
-
-          await new Promise<void>((resolve) => {
-            setTimeout(resolve, 2_500);
-          });
-        }
-
-        fail('pending');
-      }
-    }, 500);
+    if (runRef.current === run) fail('pending');
   };
 
   const pay = async () => {
-    if (!window.Telegram?.WebApp) {
-      fail('network_error');
+    if (isLoading) return;
+
+    const webApp = window.Telegram?.WebApp;
+    if (method.provider === 'telegram_stars' && !webApp) {
+      fail('unsupported');
       return;
     }
 
-    // Если уже идёт оплата — игнорируем повторные клики
-    if (isLoading) {
+    // Open a blank SBP window during the original click. Navigating it after
+    // the async response avoids popup blockers in regular browsers.
+    const popup = method.provider === 'yookassa'
+      ? window.open('about:blank', 'sbp_payment', SBP_POPUP_FEATURES)
+      : null;
+    if (method.provider === 'yookassa' && !popup) {
+      fail('unsupported');
       return;
     }
 
     setIsLoading(true);
-    setStatus('pending');
+    setStatus('created');
+    const run = runRef.current + 1;
+    runRef.current = run;
+    idempotencyKeyRef.current ??= crypto.randomUUID();
 
     try {
-      const invoice = await createInvoiceLink({
-        code,
-        amount,
+      const result = await createPayment({
+        provider: method.provider,
+        productCode: method.productCode,
+        idempotencyKey: idempotencyKeyRef.current,
       });
 
-      if (!invoice) {
+      if (result.payment.status === 'paid') {
+        popup?.close();
+        await complete();
+        return;
+      }
+      if (isTerminalFailure(result.payment.status)) {
+        popup?.close();
+        idempotencyKeyRef.current = null;
+        fail(result.payment.status);
+        return;
+      }
+
+      if (!result.checkout) {
+        popup?.close();
         fail('network_error');
         return;
       }
 
-      if (code === 'stars') {
-        window.Telegram.WebApp.openInvoice(
-          invoice.invoiceLink,
-          async (nextStatus) => {
-            setStatus(nextStatus);
-            setIsLoading(false);
+      pollPayment(result.payment.id, run).catch(() => {
+        if (runRef.current === run) fail('network_error');
+      });
 
-            if (nextStatus === 'paid') {
-              // Начисление выполняет webhook Telegram на сервере.
-              await refreshBalance().catch(() => undefined);
-              onSuccess?.();
-            } else {
-              onError?.(nextStatus);
-            }
-          },
-        );
-
+      if (method.provider === 'telegram_stars') {
+        webApp?.openInvoice(result.checkout.url, (nextStatus) => {
+          if (nextStatus === 'cancelled' || nextStatus === 'failed') {
+            runRef.current += 1;
+            fail(nextStatus);
+          }
+          // `paid` is only a UI signal. The bot webhook settles the canonical
+          // order; polling above waits for that server-side confirmation.
+        });
         return;
       }
 
-      if (code === 'sbp') {
-        if (!invoice.paymentId) {
-          fail('network_error');
-          return;
-        }
-        // СБП-провайдер возвращает обычный URL, по которому пользователь
-        // проходит оплату во внешнем окне (мобильный банк / сайт банка).
-        // Открываем его в popup согласно требованию UX.
-        const popup = window.open(
-          invoice.invoiceLink,
-          'sbp_payment',
-          SBP_POPUP_FEATURES,
-        );
-
-        if (!popup) {
-          // Браузер заблокировал открытие попапа (например, нет жеста пользователя
-          // или включён строгий блокировщик). В Telegram WebApp такого почти не бывает,
-          // но на всякий случай сообщаем об ошибке.
-          fail('unsupported');
-          return;
-        }
-
-        sbpPopupRef.current = popup;
-
-        try {
-          popup.focus();
-        } catch {
-          // no-op: фокус не критичен для оплаты
-        }
-
-        watchSbpPopup(popup, invoice.paymentId);
-
-        return;
+      try {
+        popup?.location.replace(result.checkout.url);
+        popup?.focus();
+      } catch {
+        popup?.close();
+        runRef.current += 1;
+        fail('unsupported');
       }
-
-      // Неизвестный код метода (теоретически не должен случиться из-за типов)
-      fail('unsupported');
     } catch {
+      popup?.close();
       fail('network_error');
     }
   };

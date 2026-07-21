@@ -54,4 +54,10 @@ export const queryKeys = {
     byUserId: (userId: string | number) =>
       ['activity', String(userId)] as const,
   },
+  billing: {
+    all: ['billing'] as const,
+    catalog: ['billing', 'catalog'] as const,
+    payment: (paymentId: string) =>
+      ['billing', 'payment', paymentId] as const,
+  },
 };
