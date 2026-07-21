@@ -54,9 +54,4 @@ export const queryKeys = {
     byUserId: (userId: string | number) =>
       ['activity', String(userId)] as const,
   },
-  analytics: {
-    all: ['analytics'] as const,
-    byUserId: (userId: string | number) =>
-      ['analytics', String(userId)] as const,
-  },
 };

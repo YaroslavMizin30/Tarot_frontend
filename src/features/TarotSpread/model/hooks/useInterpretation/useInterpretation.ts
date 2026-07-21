@@ -177,9 +177,6 @@ export const useInterpretation = (options: UseInterpretationOptions = {}) => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.spreads.all,
       });
-      queryClient.invalidateQueries({
-        queryKey: queryKeys.analytics.all,
-      });
 
       options.onFinish?.(interpretationText);
     },
