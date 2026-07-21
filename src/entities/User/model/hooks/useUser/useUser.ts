@@ -3,12 +3,9 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { getUser } from '@/entities/User/api/getUser/getUser';
 import { updateUser as updateUserApi } from '@/entities/User/api/updateUser/updateUser';
-import {
-  ensureSupabase,
-} from '@/shared/api/supabase';
 import { authenticateCurrentPlatform } from '@/shared/api/auth';
 import { queryKeys } from '@/shared/api/queryKeys';
-import type { User } from '../../../types/user';
+import type { User, UserProfileChanges } from '../../../types/user';
 
 export const useUser = () => {
   const [error, setError] = useState<string | null>(null);
@@ -22,31 +19,18 @@ export const useUser = () => {
   } = useQuery({
     queryKey: queryKeys.user.current,
     queryFn: async () => {
-      const identity = await authenticateCurrentPlatform();
-
-      return getUser(identity.appUserId);
+      await authenticateCurrentPlatform();
+      return getUser();
     },
     retry: false,
   });
 
   const updateUserMutation = useMutation({
-    mutationFn: async ({
-      id,
-      data,
-    }: {
-      id: string;
-      data: Partial<User>;
-    }) => {
-      await ensureSupabase();
-      return updateUserApi(id, data);
-    },
-    onSuccess: (updatedUser, variables) => {
+    mutationFn: updateUserApi,
+    onSuccess: (updatedUser) => {
       queryClient.setQueryData<User | null>(
-        queryKeys.user.byId(variables.id),
-        (currentUser) =>
-          currentUser
-            ? { ...currentUser, ...variables.data }
-            : updatedUser,
+        queryKeys.user.current,
+        updatedUser,
       );
       queryClient.invalidateQueries({ queryKey: queryKeys.user.all });
     },
@@ -55,8 +39,8 @@ export const useUser = () => {
     },
   });
 
-  const updateUser = (id: string, data: Partial<User>) => {
-    return updateUserMutation.mutateAsync({ id, data });
+  const updateUser = (data: UserProfileChanges) => {
+    return updateUserMutation.mutateAsync(data);
   };
 
   return {

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 import AstrologyIcon from '@/shared/assets/svg/common/astrology_page.svg';
 import SettingsIcon from '@/shared/assets/svg/common/settings.svg';
 import TarotIcon from '@/shared/assets/svg/common/tarot_page.svg';
-import { useUser, type User } from '@/entities/User';
+import { useUser, type UserProfileChanges } from '@/entities/User';
 import { Personalization } from '@/features/Questions';
 import useLocales from '@/shared/hooks/useLocales';
 import Modal from '@/shared/ui/Modal';
@@ -31,12 +31,12 @@ export const ProfileActions = () => {
   const [isPreferencesOpen, setIsPreferencesOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
-  const updatePreference = async (data: Partial<User>) => {
+  const updatePreference = async (data: UserProfileChanges) => {
     if (!user || isSaving) return;
 
     setIsSaving(true);
     try {
-      await updateUser(String(user.id), data);
+      await updateUser(data);
     } finally {
       setIsSaving(false);
     }

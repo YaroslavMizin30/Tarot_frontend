@@ -128,7 +128,7 @@ export const Personalization = ({ renderTrigger }: PersonalizationProps = {}) =>
     setSaveError(false);
 
     try {
-      await updateUser(String(user.id), { tarotProfile: value });
+      await updateUser({ tarotProfile: value });
     } catch {
       setSaveError(true);
     } finally {

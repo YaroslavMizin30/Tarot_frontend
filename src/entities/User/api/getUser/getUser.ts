@@ -1,27 +1,14 @@
-import { getDataFromDB } from '@/shared/api/supabase';
+import { backend } from '@/shared/api/backend';
 
 import type { User } from '../../types/user';
 
-interface UserResponse extends Omit<User, 'natalChart'> {
-  natalChart: string;
-  bonus_balance?: number;
+interface UserResponse {
+  user: User | null;
 }
 
-export const getUser = async (id: string | number): Promise<User | null> => {
-  const data = await getDataFromDB<UserResponse>('users', {
-    key: 'app_user_id',
-    value: String(id),
-  }, { throwOnError: true });
-
-  if (!data || data.length === 0) {
-    return null;
-  }
-
-  const user = data[0];
-
-  return {
-    ...user,
-    natalChart: user.natalChart ? JSON.parse(user.natalChart) : null,
-    bonusBalance: Number(user.bonus_balance ?? user.bonusBalance ?? 0),
-  };
+export const getUser = async (): Promise<User | null> => {
+  const response = await backend.invoke<UserResponse>('user-profile', {
+    action: 'get',
+  });
+  return response.user;
 };

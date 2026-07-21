@@ -39,7 +39,7 @@ const Header = (props: { isLoading?: boolean }) => {
       return;
     }
 
-    await updateUser(`${user.id}`, { audio: !user?.audio });
+    await updateUser({ audio: !user?.audio });
   };
 
   return (
@@ -83,7 +83,7 @@ const Header = (props: { isLoading?: boolean }) => {
                   if (!user) return;
 
                   setIsThemeSwitcherVisible(false);
-                  await updateUser(String(user.id), { theme: theme.value });
+                  await updateUser({ theme: theme.value });
                 };
 
                 return (

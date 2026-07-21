@@ -4,7 +4,6 @@ import { useMutation } from '@tanstack/react-query';
 import { useUser } from '@/entities/User';
 import { useBalance } from '@/features/Billing';
 
-import { getZodiacSign } from '../../../../pages/Registry/lib/getZodiacSign';
 import { createChart, type CreateChartParams } from '../../api/createChart';
 
 /** Стоимость создания/изменения натальной карты в пентаклях. */
@@ -13,7 +12,7 @@ const NATAL_CHART_COST = 10;
 export const useUpdateNatalChart = () => {
   const [error, setError] = useState<string | null | unknown>(null);
 
-  const { updateUser, refetchUser, user } = useUser();
+  const { updateUser, refetchUser } = useUser();
   const { requireBalance } = useBalance();
 
   const updateMutation = useMutation({
@@ -37,8 +36,6 @@ export const useUpdateNatalChart = () => {
         throw new Error('INSUFFICIENT_BALANCE');
       }
 
-      const zodiac = getZodiacSign(Number(day), Number(month));
-
       await createChart({
         day,
         year,
@@ -53,8 +50,7 @@ export const useUpdateNatalChart = () => {
 
       setError(null);
 
-      await updateUser(String(user!.id), {
-        sign: zodiac !== 'Unknown' ? zodiac : undefined,
+      await updateUser({
         birthDate: `${day}.${month}.${year}`,
         birthTime: timeKnown ? `${hour}:${minute}` : '',
         birthPlace: country ? `${country}, ${city}` : city,

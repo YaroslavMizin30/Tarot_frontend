@@ -47,3 +47,14 @@ export interface User {
   bonusBalance?: number;
   tarotProfile?: TarotProfile;
 }
+
+export type UserProfileChanges = Partial<Pick<
+  User,
+  | 'userName'
+  | 'birthDate'
+  | 'birthTime'
+  | 'birthPlace'
+  | 'theme'
+  | 'audio'
+  | 'tarotProfile'
+>>;

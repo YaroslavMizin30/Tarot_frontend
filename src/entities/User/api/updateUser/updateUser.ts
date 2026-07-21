@@ -1,20 +1,16 @@
-import { updateRaw } from '@/shared/api/supabase';
+import { backend } from '@/shared/api/backend';
 
-import { type User } from '../../types/user';
+import { type User, type UserProfileChanges } from '../../types/user';
 
-export const updateUser = async (userId: string, userData: Partial<User>) => {
-  const updated = await updateRaw<User>(
-    'users',
-    userData,
-    {
-      key: 'id',
-      value: userId,
-    },
-  );
+interface UserResponse {
+  user: User;
+}
 
-  if (!updated?.[0]) {
-    throw new Error('User update did not return a row');
-  }
+export const updateUser = async (changes: UserProfileChanges) => {
+  const response = await backend.invoke<UserResponse>('user-profile', {
+    action: 'update',
+    changes,
+  });
 
-  return updated[0];
+  return response.user;
 };
