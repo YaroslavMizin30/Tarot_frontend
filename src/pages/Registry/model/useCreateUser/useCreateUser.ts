@@ -1,12 +1,9 @@
 import { useState } from 'react';
 
-import {
-  completeUserOnboarding,
-} from '@/shared/api/supabase/index.ts';
 import { authenticateCurrentPlatform } from '@/shared/api/auth';
 import useLocales from '@/shared/hooks/useLocales';
 
-import { useUser } from '@/entities/User/index.ts';
+import { completeOnboarding, useUser } from '@/entities/User/index.ts';
 import { createChart } from '@/widgets/NatalChart/api/createChart';
 
 import type { CreateUserOptions } from './useCreateUser.types.ts';
@@ -38,7 +35,7 @@ export const useCreateUser = () => {
       setIsLoading(true);
 
       await authenticateCurrentPlatform();
-      await completeUserOnboarding({
+      await completeOnboarding({
         userName: name,
         birthDate: date,
         birthPlace: place,

@@ -2,7 +2,7 @@ import camelize from 'camelize';
 
 import type { EphemerisResponse } from '../types';
 
-import { getDataFromDB } from '@/shared/api/supabase';
+import { backend } from '@/shared/api/backend';
 
 interface EphemerisRow {
   date: string | null;
@@ -31,17 +31,13 @@ export const parseEphemerisData = (
 
 export const getEphemeris = async (): Promise<EphemerisResponse | null> => {
   const today = new Date().toISOString().slice(0, 10);
-  const rows = await getDataFromDB<EphemerisRow>(
-    'calendar',
-    { key: 'type', value: 'ephemeris' },
+  const { entry } = await backend.invoke<{ entry: EphemerisRow | null }>(
+    'astrology-content',
     {
-      params: {
-        date: `lte.${today}`,
-        order: 'date.desc',
-        limit: '1',
-      },
+      action: 'ephemerisLatest',
+      onOrBefore: today,
     },
   );
 
-  return rows?.[0] ? parseEphemerisData(rows[0].data) : null;
+  return entry ? parseEphemerisData(entry.data) : null;
 };

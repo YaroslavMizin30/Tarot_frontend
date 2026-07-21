@@ -1,5 +1,4 @@
 export type {
-  Horoscope,
   MoonPhaseName,
   PlanetId,
   ZodiacSign,
@@ -31,12 +30,6 @@ export type {
   TransitReadingContent,
 } from './types/transitReport';
 
-export { getHoroscopes } from './api/getHoroscopes';
-export { addHoroscope } from './api/addHoroscope';
-export {
-  useHoroscopes,
-  isHoroscopeInCurrentPeriod,
-} from './model/useHoroscopes';
 export { useCalendar } from './model/useCalendar';
 export { useDailyEphemeris } from './model/useDailyEphemeris';
 export { useEphemerisByRange } from './model/useEphemerisByRange';
@@ -57,7 +50,6 @@ export {
   isPlanetTransitTarget,
 } from './lib/personalTransits';
 export { Moon } from './ui/Moon/Moon';
-export { PRICES } from './config/price';
 export {
   getPersonalTransitHistory,
   getPersonalTransitPreview,

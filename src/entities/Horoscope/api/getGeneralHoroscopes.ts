@@ -2,18 +2,19 @@ import type {
   GeneralHoroscope,
   GeneralHoroscopeLocale,
 } from '../types';
+import { backend } from '@/shared/api/backend';
 
 export const getGeneralHoroscopes = async (
   sign: string,
   locale: GeneralHoroscopeLocale,
 ): Promise<GeneralHoroscope[]> => {
-  const { data, error } = await window.supabase
-    .from('general_horoscopes')
-    .select('*')
-    .eq('sign', sign)
-    .eq('locale', locale)
-    .order('period_start', { ascending: false });
+  const { forecasts } = await backend.invoke<{
+    forecasts: GeneralHoroscope[];
+  }>('astrology-content', {
+    action: 'generalHoroscopes',
+    sign,
+    locale,
+  });
 
-  if (error) throw error;
-  return (data ?? []) as GeneralHoroscope[];
+  return forecasts;
 };

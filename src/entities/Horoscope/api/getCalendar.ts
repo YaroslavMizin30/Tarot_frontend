@@ -6,7 +6,7 @@ import type {
 } from '../types';
 import { toIsoDate } from '../lib/date';
 
-import { getDataFromDB } from '@/shared/api/supabase';
+import { backend } from '@/shared/api/backend';
 
 interface CalendarRow {
   date: string;
@@ -52,13 +52,27 @@ const normalizeCalendarRow = (
  * One database row represents one calendar day.
  */
 export const getCalendar = async (): Promise<MoonCalendarEntry[]> => {
-  const rows = await getDataFromDB<CalendarRow>('calendar', {
-    key: 'type',
-    value: 'moon',
-  });
+  const now = new Date();
+  const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
+  const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+  const dateKey = (date: Date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+  const response = await backend.invoke<{ entries: CalendarRow[] }>(
+    'astrology-content',
+    {
+      action: 'moonCalendar',
+      from: dateKey(firstDay),
+      to: dateKey(lastDay),
+    },
+  );
+  const rows = response.entries;
 
-  if (rows === null) {
-    throw new Error('Failed to load the moon calendar');
+  if (!Array.isArray(rows)) {
+    throw new Error('The moon calendar response has an invalid format');
   }
 
   const entries = rows

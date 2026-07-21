@@ -1,6 +1,6 @@
 import type { EphemerisByRangeResponse } from '../types';
 
-import { getDataFromDB } from '@/shared/api/supabase';
+import { backend } from '@/shared/api/backend';
 
 import { parseEphemerisData } from './getEphemeris';
 
@@ -28,21 +28,18 @@ export const getEphemerisRange = async (
   value: 'month' | 'week',
 ): Promise<EphemerisByRangeResponse | null> => {
   const { start, end } = getRange(value);
-  const rows = await getDataFromDB<EphemerisRow>(
-    'calendar',
-    { key: 'type', value: 'ephemeris' },
+  const { entries } = await backend.invoke<{ entries: EphemerisRow[] }>(
+    'astrology-content',
     {
-      params: {
-        date: `gte.${start}`,
-        and: `(date.lte.${end})`,
-        order: 'date.asc',
-      },
+      action: 'ephemerisRange',
+      from: start,
+      to: end,
     },
   );
 
-  if (rows === null) return null;
+  if (!Array.isArray(entries)) return null;
 
-  return rows
+  return entries
     .map(({ data }) => parseEphemerisData(data))
     .filter((item): item is EphemerisByRangeResponse[number] => item !== null);
 };

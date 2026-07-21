@@ -1,16 +1,5 @@
 import type { Sign } from '@/shared/ui/Zodiac';
 
-export interface Horoscope {
-  appUserId: string;
-  userId: number;
-  content: string;
-  id: string;
-  date: string;
-  type: 'daily' | 'weekly' | 'monthly';
-  isUserMessage?: boolean;
-  sender?: string;
-}
-
 export type GeneralHoroscopePeriod = 'daily' | 'weekly' | 'monthly';
 export type GeneralHoroscopeLocale = 'ru' | 'en';
 
