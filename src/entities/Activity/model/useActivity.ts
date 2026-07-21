@@ -4,7 +4,7 @@ import { getActivity } from '../api/getActivity';
 import { updateActivity as updateActivityApi } from '../api/updateActivity';
 import { useUser } from '@/entities/User';
 import { queryKeys } from '@/shared/api/queryKeys';
-import type { Activity } from '../types';
+import type { Activity, ActivityPatch } from '../types';
 
 export const useActivity = () => {
   const { user } = useUser();
@@ -18,17 +18,17 @@ export const useActivity = () => {
     refetch,
   } = useQuery({
     queryKey: queryKeys.activity.byUserId(user?.appUserId ?? 'no-user'),
-    queryFn: () => getActivity(user!.appUserId),
+    queryFn: getActivity,
     enabled: !!user,
   });
 
   const updateActivityMutation = useMutation({
-    mutationFn: (activity: Partial<Activity>) => {
+    mutationFn: (activity: ActivityPatch) => {
       if (!user) {
         throw new Error('User not found');
       }
 
-      return updateActivityApi(user.appUserId, user.id, activity);
+      return updateActivityApi(activity);
     },
     onMutate: async (nextActivity) => {
       const activityQueryKey = queryKeys.activity.byUserId(
@@ -41,12 +41,10 @@ export const useActivity = () => {
         activityQueryKey,
       );
 
-      if (previousActivity) {
-        queryClient.setQueryData<Activity>(activityQueryKey, {
-          ...previousActivity,
-          ...nextActivity,
-        });
-      }
+      queryClient.setQueryData<Activity>(activityQueryKey, {
+        ...previousActivity,
+        ...nextActivity,
+      });
 
       return { activityQueryKey, previousActivity };
     },
@@ -58,12 +56,16 @@ export const useActivity = () => {
         );
       }
     },
-    onSuccess: () => {
+    onSuccess: (savedActivity) => {
+      queryClient.setQueryData(
+        queryKeys.activity.byUserId(user?.appUserId ?? 'no-user'),
+        savedActivity,
+      );
       queryClient.invalidateQueries({ queryKey: queryKeys.activity.all });
     },
   });
 
-  const updateActivity = (activity: Partial<Activity>) => {
+  const updateActivity = (activity: ActivityPatch) => {
     return updateActivityMutation.mutateAsync(activity);
   };
 

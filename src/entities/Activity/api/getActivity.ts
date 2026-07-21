@@ -1,18 +1,15 @@
 import type { Activity } from '../types';
 
-import { getDataFromDB } from '@/shared/api/supabase';
+import { backend } from '@/shared/api/backend';
 
-export const getActivity = async (
-  appUserId: string,
-): Promise<Activity | null> => {
-  const data = await getDataFromDB<Activity>('activity', {
-    key: 'appUserId',
-    value: appUserId,
-  }, { throwOnError: true });
+interface ActivityResponse {
+  activity: Activity | null;
+}
 
-  if (!data || data.length === 0) {
-    return null;
-  }
+export const getActivity = async (): Promise<Activity | null> => {
+  const response = await backend.invoke<ActivityResponse>('user-activity', {
+    action: 'get',
+  });
 
-  return data[0];
+  return response.activity;
 };
