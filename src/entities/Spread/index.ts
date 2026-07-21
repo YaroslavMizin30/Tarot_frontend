@@ -8,11 +8,14 @@ export {
   type FinalizeSpreadResult,
 } from './types';
 
-export { addSpread } from './api/addSpread';
 export { getSpreads } from './api/getSpreads';
 export { useSpreads } from './model/useSpreads';
 export { useSpreadHistory } from './model/useSpreadHistory';
-export { updateSpread } from './api/updateSpread';
+export {
+  getSpreadById,
+  rateSpread,
+  saveDailySpread,
+} from './api/spreadLibrary';
 export {
   startSpreadDraft,
   resumeSpreadDraft,

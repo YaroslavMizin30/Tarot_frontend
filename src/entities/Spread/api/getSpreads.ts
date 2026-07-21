@@ -11,14 +11,27 @@ export interface SpreadHistoryPage {
   spreads: Spread[];
 }
 
-export const getSpreads = async (
-  appUserId: string,
-): Promise<Spread[] | null> => {
-  const data = await backend.select<SpreadRow>('spreads', {
-    filters: [{ column: 'appUserId', value: appUserId }],
-  });
+const getRecentPeriodStart = () => {
+  const date = new Date();
+  date.setHours(0, 0, 0, 0);
+  date.setDate(date.getDate() - 29);
 
-  return data.map(spreadFromRow);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
+export const getSpreads = async (): Promise<Spread[]> => {
+  const response = await backend.invoke<{ spreads: SpreadRow[] }>(
+    'spread-library',
+    {
+      action: 'recent',
+      sinceDate: getRecentPeriodStart(),
+    },
+  );
+
+  return response.spreads.map(spreadFromRow);
 };
 
 export const getSpreadsPage = async (

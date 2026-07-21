@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 import { useNavigate, useLocation, useParams } from 'react-router';
 
@@ -13,9 +14,10 @@ import Spinner from '@/shared/ui/Spinner';
 import {
   DAILY_CARD_SPREAD_MARKER,
   type Spread,
-  useSpreads,
-  updateSpread,
+  getSpreadById,
+  rateSpread,
 } from '@/entities/Spread';
+import { queryKeys } from '@/shared/api/queryKeys';
 import TarotCard from '@/entities/TarotCard';
 import { SpreadConfig } from '@/features/TarotSpread/config/spreads';
 
@@ -26,25 +28,34 @@ export const SpreadPage = () => {
   const { id } = useParams();
   const { i18n, addTranslations } = useLocales();
   const navigate = useNavigate();
-  const { spreads, isLoading } = useSpreads();
 
   const stateSpread = state as Spread | null;
-  const spread = stateSpread?.spreadId === id
-    ? stateSpread
-    : spreads?.find((item) => item.spreadId === id);
+  const hasStateSpread = stateSpread?.spreadId === id;
+  const { data: loadedSpread, isLoading } = useQuery({
+    queryKey: queryKeys.spreads.detail(id ?? 'missing'),
+    queryFn: () => getSpreadById(id!),
+    enabled: Boolean(id && !hasStateSpread),
+  });
+  const spread = hasStateSpread ? stateSpread : loadedSpread;
 
-  const [rate, setRate] = useState(stateSpread?.rating);
+  const [ratingOverride, setRatingOverride] = useState<{
+    spreadId: string;
+    value: number;
+  } | null>(null);
   const [activeCardIndex, setActiveCardIndex] = useState(0);
-
-  useEffect(() => {
-    setRate(spread?.rating);
-  }, [spread?.rating]);
+  const rate = ratingOverride && ratingOverride.spreadId === spread?.spreadId
+    ? ratingOverride.value
+    : spread?.rating;
 
   const handleRatingInputChange = async (value: number) => {
-    setRate(value);
-
     if (spread?.spreadId) {
-      await updateSpread(spread.spreadId, { rating: value });
+      setRatingOverride({ spreadId: spread.spreadId, value });
+      try {
+        await rateSpread(spread.spreadId, value);
+      } catch (error) {
+        setRatingOverride(null);
+        throw error;
+      }
     }
   };
 

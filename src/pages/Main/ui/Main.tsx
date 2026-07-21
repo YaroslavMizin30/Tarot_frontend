@@ -59,7 +59,7 @@ export const MainPage = () => {
   const { user } = useUser();
   const [readyWidgets, setReadyWidgets] = useState(0);
   const { data: pendingDraft, isLoading: isPendingDraftLoading } = useQuery({
-    queryKey: queryKeys.spreads.pending(user?.id ?? 'no-user'),
+    queryKey: queryKeys.spreads.pending(user?.appUserId ?? 'no-user'),
     queryFn: getPendingSpreadDraft,
     enabled: Boolean(user),
     staleTime: 0,

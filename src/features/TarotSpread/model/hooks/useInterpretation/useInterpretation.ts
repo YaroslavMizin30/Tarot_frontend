@@ -9,8 +9,10 @@ import { getTodayString } from '@/shared/utils/getTodayString';
 
 import type { Card } from '@/entities/TarotCard';
 import type { Spread, SpreadParams } from '@/entities/Spread';
-import { addSpread, updateSpread } from '@/entities/Spread';
-import { interpretSpreadDraft } from '@/entities/Spread';
+import {
+  interpretSpreadDraft,
+  saveDailySpread,
+} from '@/entities/Spread';
 import { useUser } from '@/entities/User';
 
 interface UseInterpretationOptions {
@@ -74,10 +76,10 @@ export const useInterpretation = (options: UseInterpretationOptions = {}) => {
         };
 
         try {
-          await addSpread(draftSpread);
+          await saveDailySpread(draftSpread, locale);
 
           queryClient.setQueryData<Spread[] | null>(
-            queryKeys.spreads.byUserId(user.id),
+            queryKeys.spreads.byUserId(user.appUserId),
             (currentSpreads) => {
               if (
                 currentSpreads?.some(
@@ -93,11 +95,11 @@ export const useInterpretation = (options: UseInterpretationOptions = {}) => {
           );
         } catch (draftError) {
           await queryClient.invalidateQueries({
-            queryKey: queryKeys.spreads.byUserId(user.id),
+            queryKey: queryKeys.spreads.byUserId(user.appUserId),
           });
 
           const currentSpreads = queryClient.getQueryData<Spread[] | null>(
-            queryKeys.spreads.byUserId(user.id),
+            queryKeys.spreads.byUserId(user.appUserId),
           );
 
           if (
@@ -138,18 +140,10 @@ export const useInterpretation = (options: UseInterpretationOptions = {}) => {
           userId: user.id,
         };
 
-        if (requestOptions?.spreadId || requestOptions?.persistBeforeRequest) {
-          await updateSpread(persistedSpreadId, {
-            cards,
-            date: getTodayString(),
-            interpretation: interpretationText,
-          });
-        } else {
-          await addSpread(completedSpread);
-        }
+        await saveDailySpread(completedSpread, locale);
 
         queryClient.setQueryData<Spread[] | null>(
-          queryKeys.spreads.byUserId(user.id),
+          queryKeys.spreads.byUserId(user.appUserId),
           (currentSpreads) => {
             const hasCurrentSpread = currentSpreads?.some(
               (currentSpread) =>
