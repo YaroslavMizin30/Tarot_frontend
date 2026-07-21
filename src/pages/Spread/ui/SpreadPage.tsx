@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { useNavigate, useLocation, useParams } from 'react-router';
 
@@ -28,6 +28,7 @@ export const SpreadPage = () => {
   const { id } = useParams();
   const { i18n, addTranslations } = useLocales();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const stateSpread = state as Spread | null;
   const hasStateSpread = stateSpread?.spreadId === id;
@@ -42,20 +43,41 @@ export const SpreadPage = () => {
     spreadId: string;
     value: number;
   } | null>(null);
+  const [isRatingSaving, setIsRatingSaving] = useState(false);
   const [activeCardIndex, setActiveCardIndex] = useState(0);
   const rate = ratingOverride && ratingOverride.spreadId === spread?.spreadId
     ? ratingOverride.value
     : spread?.rating;
 
   const handleRatingInputChange = async (value: number) => {
-    if (spread?.spreadId) {
-      setRatingOverride({ spreadId: spread.spreadId, value });
-      try {
-        await rateSpread(spread.spreadId, value);
-      } catch (error) {
-        setRatingOverride(null);
-        throw error;
-      }
+    if (!spread?.spreadId || isRatingSaving) return;
+
+    const previousValue = rate;
+    setRatingOverride({ spreadId: spread.spreadId, value });
+    setIsRatingSaving(true);
+
+    try {
+      const updatedSpread = await rateSpread(spread.spreadId, value);
+      setRatingOverride({
+        spreadId: spread.spreadId,
+        value: updatedSpread.rating ?? value,
+      });
+      queryClient.setQueryData(
+        queryKeys.spreads.detail(spread.spreadId),
+        updatedSpread,
+      );
+      await queryClient.invalidateQueries({
+        queryKey: queryKeys.spreads.all,
+        refetchType: 'inactive',
+      });
+    } catch {
+      setRatingOverride(
+        previousValue === undefined
+          ? null
+          : { spreadId: spread.spreadId, value: previousValue },
+      );
+    } finally {
+      setIsRatingSaving(false);
     }
   };
 
@@ -155,6 +177,7 @@ export const SpreadPage = () => {
               className={styles.rating}
               value={rate ?? 0}
               onChange={handleRatingInputChange}
+              disabled={isRatingSaving}
             />
           </TextContainer>
         </div>
