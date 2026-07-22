@@ -12,6 +12,7 @@ backend не блокирует вход.
 ```text
 VITE_PLATFORM_AUTH_CANARY_ENABLED=true
 VITE_PLATFORM_AUTH_API_URL=https://<gateway-domain>
+VITE_PROFILE_SHADOW_CANARY_ENABLED=true
 ```
 
 По умолчанию canary выключен. Флаг применяется только на этапе сборки. До
@@ -19,15 +20,20 @@ VITE_PLATFORM_AUTH_API_URL=https://<gateway-domain>
 production deployment; после smoke-теста флаг следует снова выключить.
 
 Canary отправляет исходный Telegram `initData` только в новый exchange endpoint.
-Полученные access/refresh tokens не сохраняются и не используются. Клиент
-сравнивает только канонический `appUserId` с результатом текущей Supabase
-авторизации. Несовпадение ID блокирует тестовый вход, поскольку означает
-ошибку backfill; остальные ошибки fail-open.
+Access token хранится только в памяти WebView и допускается лишь к
+явному allowlist shadow-маршрутов. Refresh token не сохраняется, а
+продуктовые запросы продолжают использовать Supabase.
+Клиент сравнивает `appUserId` и безопасное подмножество профиля с
+текущей реализацией. Несовпадение identity блокирует тестовый вход;
+остальные ошибки и profile mismatch остаются fail-open.
 
 Безопасный диагностический результат без proof и токенов сохраняется на время
 вкладки в `sessionStorage` под ключом
 `tarotopia:platform-auth-canary-status`. Сервер также пишет только код исхода,
 платформу, request ID и при успехе канонический app user ID.
+Profile shadow пишет отдельный результат в
+`tarotopia:profile-shadow-canary-status`: только статус, код и имена
+несовпавших полей, без их значений.
 
 ## Откат
 

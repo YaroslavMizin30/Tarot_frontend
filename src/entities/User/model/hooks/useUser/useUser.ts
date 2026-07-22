@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { getUser } from '@/entities/User/api/getUser/getUser';
+import { compareProfileCanary } from '@/entities/User/api/compareProfileCanary/compareProfileCanary';
 import { updateUser as updateUserApi } from '@/entities/User/api/updateUser/updateUser';
 import { authenticateCurrentPlatform } from '@/shared/api/auth';
 import { queryKeys } from '@/shared/api/queryKeys';
@@ -20,7 +21,9 @@ export const useUser = () => {
     queryKey: queryKeys.user.current,
     queryFn: async () => {
       await authenticateCurrentPlatform();
-      return getUser();
+      const currentUser = await getUser();
+      compareProfileCanary(currentUser).catch(() => undefined);
+      return currentUser;
     },
     retry: false,
   });
