@@ -11,7 +11,19 @@ type PlatformAuthCanaryResult =
   | { appUserId: string; status: 'succeeded' }
   | { code: string; status: 'failed' };
 
+type PlatformAuthCanaryRequestResult =
+  | { status: 'skipped' }
+  | { data: unknown; status: 'succeeded' }
+  | { code: string; status: 'failed' };
+
+type EphemeralPlatformSession = {
+  accessToken: string;
+  accessTokenExpiresAt: number;
+  appUserId: string;
+};
+
 let exchangePromise: Promise<PlatformAuthCanaryResult> | null = null;
+let ephemeralSession: EphemeralPlatformSession | null = null;
 
 const saveStatus = (result: Exclude<PlatformAuthCanaryResult, { status: 'skipped' }>) => {
   try {
@@ -52,6 +64,26 @@ const getErrorCode = async (response: Response) => {
   return `PLATFORM_AUTH_CANARY_HTTP_${response.status}`;
 };
 
+const requestWithTimeout = async (
+  input: Parameters<typeof fetch>[0],
+  init: Parameters<typeof fetch>[1],
+) => {
+  const abortController = new AbortController();
+  const timeout = window.setTimeout(
+    () => abortController.abort(),
+    REQUEST_TIMEOUT_MS,
+  );
+
+  try {
+    return await fetch(input, {
+      ...init,
+      signal: abortController.signal,
+    });
+  } finally {
+    window.clearTimeout(timeout);
+  }
+};
+
 const getApiUrl = () => {
   const configured = import.meta.env.VITE_PLATFORM_AUTH_API_URL?.trim();
 
@@ -88,26 +120,22 @@ const exchangePlatformProof = async (): Promise<PlatformAuthCanaryResult> => {
     return failed;
   }
 
-  const abortController = new AbortController();
-  const timeout = window.setTimeout(
-    () => abortController.abort(),
-    REQUEST_TIMEOUT_MS,
-  );
-
   try {
-    const response = await fetch(`${apiUrl}/v1/auth/platform/exchange`, {
-      body: JSON.stringify({
-        clientLabel: 'telegram-mini-app-canary',
-        platform: 'telegram',
-        proof,
-      }),
-      cache: 'no-store',
-      credentials: 'omit',
-      headers: { 'content-type': 'application/json' },
-      method: 'POST',
-      referrerPolicy: 'no-referrer',
-      signal: abortController.signal,
-    });
+    const response = await requestWithTimeout(
+      `${apiUrl}/v1/auth/platform/exchange`,
+      {
+        body: JSON.stringify({
+          clientLabel: 'telegram-mini-app-canary',
+          platform: 'telegram',
+          proof,
+        }),
+        cache: 'no-store',
+        credentials: 'omit',
+        headers: { 'content-type': 'application/json' },
+        method: 'POST',
+        referrerPolicy: 'no-referrer',
+      },
+    );
 
     if (!response.ok) {
       const failed = {
@@ -126,8 +154,31 @@ const exchangePlatformProof = async (): Promise<PlatformAuthCanaryResult> => {
     )
       ? candidate.appUserId
       : null;
+    const accessToken = (
+      typeof candidate === 'object' &&
+      candidate !== null &&
+      'accessToken' in candidate
+    )
+      ? candidate.accessToken
+      : null;
+    const accessTokenExpiresAt = (
+      typeof candidate === 'object' &&
+      candidate !== null &&
+      'accessTokenExpiresAt' in candidate
+    )
+      ? candidate.accessTokenExpiresAt
+      : null;
+    const expiresAt = typeof accessTokenExpiresAt === 'string'
+      ? Date.parse(accessTokenExpiresAt)
+      : Number.NaN;
 
-    if (typeof appUserId !== 'string' || !UUID_PATTERN.test(appUserId)) {
+    if (
+      typeof appUserId !== 'string' ||
+      !UUID_PATTERN.test(appUserId) ||
+      typeof accessToken !== 'string' ||
+      !accessToken ||
+      !Number.isFinite(expiresAt)
+    ) {
       const failed = {
         code: 'PLATFORM_AUTH_CANARY_RESPONSE_INVALID',
         status: 'failed' as const,
@@ -136,6 +187,11 @@ const exchangePlatformProof = async (): Promise<PlatformAuthCanaryResult> => {
       return failed;
     }
 
+    ephemeralSession = {
+      accessToken,
+      accessTokenExpiresAt: expiresAt,
+      appUserId,
+    };
     const succeeded = { appUserId, status: 'succeeded' as const };
     saveStatus(succeeded);
     return succeeded;
@@ -148,8 +204,6 @@ const exchangePlatformProof = async (): Promise<PlatformAuthCanaryResult> => {
     };
     saveStatus(failed);
     return failed;
-  } finally {
-    window.clearTimeout(timeout);
   }
 };
 
@@ -161,4 +215,61 @@ export const startPlatformAuthCanary = () => {
   if (!exchangePromise) exchangePromise = exchangePlatformProof();
 
   return exchangePromise;
+};
+
+/**
+ * Executes an allowlisted shadow read with the short-lived access token kept
+ * only in memory. Product requests and persisted authentication remain on the
+ * established backend until an explicit cutover.
+ */
+export const requestPlatformAuthCanary = async (
+  path: '/v1/profile',
+): Promise<PlatformAuthCanaryRequestResult> => {
+  const exchange = await startPlatformAuthCanary();
+
+  if (exchange.status !== 'succeeded') return exchange;
+
+  const apiUrl = getApiUrl();
+  const session = ephemeralSession;
+
+  if (
+    !apiUrl ||
+    !session ||
+    session.appUserId !== exchange.appUserId ||
+    session.accessTokenExpiresAt <= Date.now()
+  ) {
+    return {
+      code: 'PLATFORM_AUTH_CANARY_SESSION_UNAVAILABLE',
+      status: 'failed',
+    };
+  }
+
+  try {
+    const response = await requestWithTimeout(`${apiUrl}${path}`, {
+      cache: 'no-store',
+      credentials: 'omit',
+      headers: { authorization: `Bearer ${session.accessToken}` },
+      method: 'GET',
+      referrerPolicy: 'no-referrer',
+    });
+
+    if (!response.ok) {
+      return {
+        code: await getErrorCode(response),
+        status: 'failed',
+      };
+    }
+
+    return {
+      data: await response.json(),
+      status: 'succeeded',
+    };
+  } catch (error) {
+    return {
+      code: error instanceof DOMException && error.name === 'AbortError'
+        ? 'PLATFORM_AUTH_CANARY_TIMEOUT'
+        : 'PLATFORM_AUTH_CANARY_NETWORK_ERROR',
+      status: 'failed',
+    };
+  }
 };
