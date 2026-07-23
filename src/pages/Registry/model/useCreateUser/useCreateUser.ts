@@ -4,6 +4,7 @@ import { authenticateCurrentPlatform } from '@/shared/api/auth';
 import useLocales from '@/shared/hooks/useLocales';
 
 import { completeOnboarding, useUser } from '@/entities/User/index.ts';
+import { compareOnboardingCanary } from '@/entities/User/api/compareProfileCanary/compareProfileCanary';
 import { createChart } from '@/widgets/NatalChart/api/createChart';
 
 import type { CreateUserOptions } from './useCreateUser.types.ts';
@@ -35,12 +36,16 @@ export const useCreateUser = () => {
       setIsLoading(true);
 
       await authenticateCurrentPlatform();
-      await completeOnboarding({
+      const onboardingInput = {
         userName: name,
         birthDate: date,
         birthPlace: place,
         birthTime: time ?? '',
-      });
+      };
+      const completedUser = await completeOnboarding(onboardingInput);
+
+      compareOnboardingCanary(completedUser, onboardingInput)
+        .catch(() => undefined);
 
       if (withNatalChart) {
         await createChart({
