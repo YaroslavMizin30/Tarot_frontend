@@ -1,10 +1,11 @@
-import { getHostPlatform } from '@/shared/lib/hostPlatform';
+import {
+  createHostPlatformProofProvider,
+  createSessionTransport,
+  SessionTransportError,
+  type SessionTransport,
+} from '@/shared/api/session';
 
-const UUID_PATTERN =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-const ERROR_CODE_PATTERN = /^[A-Z0-9_]{1,80}$/;
 const STATUS_STORAGE_KEY = 'tarotopia:platform-auth-canary-status';
-const REQUEST_TIMEOUT_MS = 10_000;
 
 type PlatformAuthCanaryResult =
   | { status: 'skipped' }
@@ -16,14 +17,8 @@ type PlatformAuthCanaryRequestResult =
   | { data: unknown; status: 'succeeded' }
   | { code: string; status: 'failed' };
 
-type EphemeralPlatformSession = {
-  accessToken: string;
-  accessTokenExpiresAt: number;
-  appUserId: string;
-};
-
 let exchangePromise: Promise<PlatformAuthCanaryResult> | null = null;
-let ephemeralSession: EphemeralPlatformSession | null = null;
+let sessionTransport: SessionTransport | null = null;
 
 const saveStatus = (result: Exclude<PlatformAuthCanaryResult, { status: 'skipped' }>) => {
   try {
@@ -37,50 +32,6 @@ const saveStatus = (result: Exclude<PlatformAuthCanaryResult, { status: 'skipped
     );
   } catch {
     // Canary diagnostics must never block the established auth flow.
-  }
-};
-
-const getErrorCode = async (response: Response) => {
-  try {
-    const candidate: unknown = await response.json();
-    const code = (
-      typeof candidate === 'object' &&
-      candidate !== null &&
-      'error' in candidate &&
-      typeof candidate.error === 'object' &&
-      candidate.error !== null &&
-      'code' in candidate.error
-    )
-      ? candidate.error.code
-      : null;
-
-    if (typeof code === 'string' && ERROR_CODE_PATTERN.test(code)) {
-      return code;
-    }
-  } catch {
-    // An invalid error body is represented by the safe HTTP status below.
-  }
-
-  return `PLATFORM_AUTH_CANARY_HTTP_${response.status}`;
-};
-
-const requestWithTimeout = async (
-  input: Parameters<typeof fetch>[0],
-  init: Parameters<typeof fetch>[1],
-) => {
-  const abortController = new AbortController();
-  const timeout = window.setTimeout(
-    () => abortController.abort(),
-    REQUEST_TIMEOUT_MS,
-  );
-
-  try {
-    return await fetch(input, {
-      ...init,
-      signal: abortController.signal,
-    });
-  } finally {
-    window.clearTimeout(timeout);
   }
 };
 
@@ -102,104 +53,45 @@ const getApiUrl = () => {
   }
 };
 
+const getSessionTransport = () => {
+  if (sessionTransport) return sessionTransport;
+
+  const apiUrl = getApiUrl();
+  if (!apiUrl) {
+    throw new SessionTransportError('SESSION_API_URL_INVALID');
+  }
+
+  sessionTransport = createSessionTransport({
+    allowInsecureLocalhost: import.meta.env.DEV,
+    apiBaseUrl: apiUrl,
+    proofProvider: createHostPlatformProofProvider(
+      'telegram-mini-app-canary',
+    ),
+  });
+  return sessionTransport;
+};
+
+const getSafeErrorCode = (error: unknown) =>
+  error instanceof SessionTransportError
+    ? error.code
+    : 'PLATFORM_AUTH_CANARY_UNEXPECTED_ERROR';
+
 const exchangePlatformProof = async (): Promise<PlatformAuthCanaryResult> => {
   if (import.meta.env.VITE_PLATFORM_AUTH_CANARY_ENABLED !== 'true') {
     return { status: 'skipped' };
   }
 
-  const hostPlatform = getHostPlatform();
-  const apiUrl = getApiUrl();
-  const proof = hostPlatform.getAuthPayload();
-
-  if (hostPlatform.kind !== 'telegram' || !apiUrl || !proof) {
-    const failed = {
-      code: 'PLATFORM_AUTH_CANARY_CONFIG_INVALID',
-      status: 'failed' as const,
-    };
-    saveStatus(failed);
-    return failed;
-  }
-
   try {
-    const response = await requestWithTimeout(
-      `${apiUrl}/v1/auth/platform/exchange`,
-      {
-        body: JSON.stringify({
-          clientLabel: 'telegram-mini-app-canary',
-          platform: 'telegram',
-          proof,
-        }),
-        cache: 'no-store',
-        credentials: 'omit',
-        headers: { 'content-type': 'application/json' },
-        method: 'POST',
-        referrerPolicy: 'no-referrer',
-      },
-    );
-
-    if (!response.ok) {
-      const failed = {
-        code: await getErrorCode(response),
-        status: 'failed' as const,
-      };
-      saveStatus(failed);
-      return failed;
-    }
-
-    const candidate: unknown = await response.json();
-    const appUserId = (
-      typeof candidate === 'object' &&
-      candidate !== null &&
-      'appUserId' in candidate
-    )
-      ? candidate.appUserId
-      : null;
-    const accessToken = (
-      typeof candidate === 'object' &&
-      candidate !== null &&
-      'accessToken' in candidate
-    )
-      ? candidate.accessToken
-      : null;
-    const accessTokenExpiresAt = (
-      typeof candidate === 'object' &&
-      candidate !== null &&
-      'accessTokenExpiresAt' in candidate
-    )
-      ? candidate.accessTokenExpiresAt
-      : null;
-    const expiresAt = typeof accessTokenExpiresAt === 'string'
-      ? Date.parse(accessTokenExpiresAt)
-      : Number.NaN;
-
-    if (
-      typeof appUserId !== 'string' ||
-      !UUID_PATTERN.test(appUserId) ||
-      typeof accessToken !== 'string' ||
-      !accessToken ||
-      !Number.isFinite(expiresAt)
-    ) {
-      const failed = {
-        code: 'PLATFORM_AUTH_CANARY_RESPONSE_INVALID',
-        status: 'failed' as const,
-      };
-      saveStatus(failed);
-      return failed;
-    }
-
-    ephemeralSession = {
-      accessToken,
-      accessTokenExpiresAt: expiresAt,
-      appUserId,
+    const session = await getSessionTransport().establishSession();
+    const succeeded = {
+      appUserId: session.appUserId,
+      status: 'succeeded' as const,
     };
-    const succeeded = { appUserId, status: 'succeeded' as const };
     saveStatus(succeeded);
     return succeeded;
   } catch (error) {
     const failed = {
-      code: error instanceof DOMException && error.name === 'AbortError'
-        ? 'PLATFORM_AUTH_CANARY_TIMEOUT'
-        : 'PLATFORM_AUTH_CANARY_NETWORK_ERROR',
+      code: getSafeErrorCode(error),
       status: 'failed' as const,
     };
     saveStatus(failed);
@@ -208,8 +100,8 @@ const exchangePlatformProof = async (): Promise<PlatformAuthCanaryResult> => {
 };
 
 /**
- * Starts a shadow exchange once per page load. Returned access and refresh
- * tokens deliberately stay ephemeral: product requests still use Supabase.
+ * Starts a shadow exchange once per page load. The returned session remains
+ * only in the replaceable memory store: product requests still use Supabase.
  */
 export const startPlatformAuthCanary = () => {
   if (!exchangePromise) exchangePromise = exchangePlatformProof();
@@ -218,9 +110,9 @@ export const startPlatformAuthCanary = () => {
 };
 
 /**
- * Executes an allowlisted shadow read with the short-lived access token kept
- * only in memory. Product requests and persisted authentication remain on the
- * established backend until an explicit cutover.
+ * Executes an allowlisted shadow read with the session transport. Product
+ * requests and persisted authentication remain on the established backend
+ * until an explicit cutover.
  */
 export const requestPlatformAuthCanary = async (
   path: '/v1/profile',
@@ -229,46 +121,14 @@ export const requestPlatformAuthCanary = async (
 
   if (exchange.status !== 'succeeded') return exchange;
 
-  const apiUrl = getApiUrl();
-  const session = ephemeralSession;
-
-  if (
-    !apiUrl ||
-    !session ||
-    session.appUserId !== exchange.appUserId ||
-    session.accessTokenExpiresAt <= Date.now()
-  ) {
-    return {
-      code: 'PLATFORM_AUTH_CANARY_SESSION_UNAVAILABLE',
-      status: 'failed',
-    };
-  }
-
   try {
-    const response = await requestWithTimeout(`${apiUrl}${path}`, {
-      cache: 'no-store',
-      credentials: 'omit',
-      headers: { authorization: `Bearer ${session.accessToken}` },
-      method: 'GET',
-      referrerPolicy: 'no-referrer',
-    });
-
-    if (!response.ok) {
-      return {
-        code: await getErrorCode(response),
-        status: 'failed',
-      };
-    }
-
     return {
-      data: await response.json(),
+      data: await getSessionTransport().requestJson(path),
       status: 'succeeded',
     };
   } catch (error) {
     return {
-      code: error instanceof DOMException && error.name === 'AbortError'
-        ? 'PLATFORM_AUTH_CANARY_TIMEOUT'
-        : 'PLATFORM_AUTH_CANARY_NETWORK_ERROR',
+      code: getSafeErrorCode(error),
       status: 'failed',
     };
   }

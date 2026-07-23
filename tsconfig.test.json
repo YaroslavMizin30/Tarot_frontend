@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.test.tsbuildinfo",
+    "types": ["node", "vite/client"]
+  },
+  "include": [
+    "src",
+    "tests",
+    "declarations.d.ts",
+    "module.d.ts",
+    "vite-env.d.ts",
+    "public/telegram"
+  ]
+}
