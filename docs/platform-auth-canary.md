@@ -20,9 +20,27 @@ VITE_PROFILE_SHADOW_CANARY_ENABLED=true
 production deployment; после smoke-теста флаг следует снова выключить.
 
 Canary отправляет исходный Telegram `initData` только в новый exchange endpoint.
-Access token хранится только в памяти WebView и допускается лишь к
-явному allowlist shadow-маршрутов. Refresh token не сохраняется, а
-продуктовые запросы продолжают использовать Supabase.
+Access и refresh token хранятся только в памяти WebView и допускаются лишь к
+явному allowlist shadow-маршрутов. При перезагрузке страницы оба токена
+исчезают, а продуктовые запросы продолжают использовать Supabase.
+
+Canary использует общий provider-neutral session transport. Транспорт:
+
+- не знает о Supabase и получает proof через `PlatformProofProvider`;
+- поддерживает `telegram`, `vk` и `max` на уровне контракта, но текущий host
+  adapter реализован только для Telegram Mini App;
+- дедуплицирует одновременные exchange и refresh;
+- заранее обновляет истекающий access token;
+- после `401` выполняет один refresh и один повтор исходного запроса;
+- не повторяет platform exchange после временной ошибки refresh, чтобы
+  случайно не воспроизвести одноразовый proof;
+- разрешает bearer-запросы только к относительным путям `/v1/...` на
+  настроенном API origin.
+
+Хранилище сессии оформлено отдельным `SessionStore`. Сейчас применяется
+`createMemorySessionStore`; постоянное хранилище или platform SecureStorage
+можно добавить отдельным adapter без изменения HTTP-транспорта.
+
 Клиент сравнивает `appUserId` и безопасное подмножество профиля с
 текущей реализацией. Несовпадение identity блокирует тестовый вход;
 остальные ошибки и profile mismatch остаются fail-open.
@@ -43,3 +61,16 @@ Profile shadow пишет отдельный результат в
 
 Откат клиента полностью возвращает прежний auth flow: новый backend больше не
 вызывается, Supabase-сессия продолжает работать без миграции локальных данных.
+
+## Проверка
+
+Перед публикацией:
+
+```bash
+npm run check
+```
+
+Команда выполняет typecheck тестового контура, unit-тесты session transport и
+production build. Тестами закреплены конкурентные exchange/refresh, повтор
+после `401`, обработка протухшего refresh token, запрет утечки bearer token на
+чужой origin и локальная очистка logout.
