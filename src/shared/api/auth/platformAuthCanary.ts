@@ -17,6 +17,20 @@ type PlatformAuthCanaryRequestResult =
   | { data: unknown; status: 'succeeded' }
   | { code: string; status: 'failed' };
 
+interface CompleteOnboardingCanaryPayload {
+  birthDate: string;
+  birthPlace?: string;
+  birthTime?: string | null;
+  userName: string;
+}
+
+type PlatformAuthCanaryRequest =
+  | { kind: 'profile.read' }
+  | {
+    kind: 'profile.completeOnboarding';
+    payload: CompleteOnboardingCanaryPayload;
+  };
+
 let exchangePromise: Promise<PlatformAuthCanaryResult> | null = null;
 let sessionTransport: SessionTransport | null = null;
 
@@ -115,15 +129,23 @@ export const startPlatformAuthCanary = () => {
  * until an explicit cutover.
  */
 export const requestPlatformAuthCanary = async (
-  path: '/v1/profile',
+  request: PlatformAuthCanaryRequest,
 ): Promise<PlatformAuthCanaryRequestResult> => {
   const exchange = await startPlatformAuthCanary();
 
   if (exchange.status !== 'succeeded') return exchange;
 
   try {
+    const init = request.kind === 'profile.completeOnboarding'
+      ? {
+        body: JSON.stringify(request.payload),
+        headers: { 'content-type': 'application/json' },
+        method: 'PUT',
+      }
+      : undefined;
+
     return {
-      data: await getSessionTransport().requestJson(path),
+      data: await getSessionTransport().requestJson('/v1/profile', init),
       status: 'succeeded',
     };
   } catch (error) {
@@ -132,4 +154,10 @@ export const requestPlatformAuthCanary = async (
       status: 'failed',
     };
   }
+};
+
+export type {
+  CompleteOnboardingCanaryPayload,
+  PlatformAuthCanaryRequest,
+  PlatformAuthCanaryRequestResult,
 };

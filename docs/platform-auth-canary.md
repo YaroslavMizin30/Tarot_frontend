@@ -13,6 +13,7 @@ backend не блокирует вход.
 VITE_PLATFORM_AUTH_CANARY_ENABLED=true
 VITE_PLATFORM_AUTH_API_URL=https://<gateway-domain>
 VITE_PROFILE_SHADOW_CANARY_ENABLED=true
+VITE_ONBOARDING_SHADOW_CANARY_ENABLED=true
 ```
 
 По умолчанию canary выключен. Флаг применяется только на этапе сборки. До
@@ -53,11 +54,26 @@ Profile shadow пишет отдельный результат в
 `tarotopia:profile-shadow-canary-status`: только статус, код и имена
 несовпавших полей, без их значений.
 
+Отдельный onboarding shadow включается только вместе с platform auth canary и
+только после успешного authoritative onboarding в Supabase. Он:
+
+1. нормализует дату в `YYYY-MM-DD`, время в `HH:mm | null`;
+2. параллельно отправляет два одинаковых `PUT /v1/profile`;
+3. выполняет `GET /v1/profile`;
+4. проверяет create-once результат и сравнивает его с authoritative профилем.
+
+Canary выполняется в фоне и не блокирует регистрацию. Его безопасный результат
+сохраняется в `tarotopia:onboarding-shadow-canary-status`; персональные значения
+в diagnostics не записываются. `PUT /v1/profile` следует публиковать в Gateway
+только на время отдельного контролируемого теста.
+
 ## Откат
 
 1. Установить `VITE_PLATFORM_AUTH_CANARY_ENABLED=false` или удалить переменную.
-2. Собрать и опубликовать клиент заново.
-3. При необходимости вернуть health-only спецификацию API Gateway.
+2. Установить `VITE_ONBOARDING_SHADOW_CANARY_ENABLED=false` или удалить
+   переменную.
+3. Собрать и опубликовать клиент заново.
+4. Вернуть health-only спецификацию API Gateway.
 
 Откат клиента полностью возвращает прежний auth flow: новый backend больше не
 вызывается, Supabase-сессия продолжает работать без миграции локальных данных.
