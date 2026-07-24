@@ -8,7 +8,10 @@ import {
 let sessionTransport: SessionTransport | null = null;
 
 export const getPlatformApiUrl = () => {
-  const configured = import.meta.env.VITE_PLATFORM_AUTH_API_URL?.trim();
+  const configured = (
+    import.meta.env.VITE_PLATFORM_API_URL ??
+    import.meta.env.VITE_PLATFORM_AUTH_API_URL
+  )?.trim();
 
   if (!configured) return null;
 

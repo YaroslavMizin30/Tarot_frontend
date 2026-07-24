@@ -243,6 +243,23 @@ describe('session transport', () => {
     expect(fetcher).not.toHaveBeenCalled();
   });
 
+  it('allows encoded query parameters without allowing an external origin', async () => {
+    const fetcher = vi.fn<FetchLike>((input) => {
+      expect(requestUrl(input)).toBe(
+        'https://api.example.test/v1/spreads?since=2026-07-01',
+      );
+      return Promise.resolve(jsonResponse({ spreads: [] }));
+    });
+    const transport = createTransport(fetcher, createStoredSession());
+
+    await expect(
+      transport.requestJson('/v1/spreads?since=2026-07-01'),
+    ).resolves.toEqual({ spreads: [] });
+    await expect(
+      transport.request('/v1/profile#https://attacker.invalid'),
+    ).rejects.toMatchObject({ code: 'SESSION_REQUEST_PATH_INVALID' });
+  });
+
   it('clears the local session even when remote logout fails', async () => {
     const store = createMemorySessionStore(createStoredSession());
     const fetcher = vi.fn<FetchLike>(() =>

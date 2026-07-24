@@ -8,6 +8,16 @@ export type {
   PlatformBackendMode,
 } from './config';
 export {
+  getUniversalDomainMode,
+  parseUniversalDomainList,
+  resolveUniversalDomainMode,
+  UNIVERSAL_PRODUCT_DOMAINS,
+} from './domainConfig';
+export type {
+  UniversalDomainMode,
+  UniversalProductDomain,
+} from './domainConfig';
+export {
   getSafePlatformApiErrorCode,
   getPlatformApiUrl,
   getPlatformSessionTransport,
@@ -25,3 +35,4 @@ export type {
   CanonicalProfileResponse,
   CanonicalTheme,
 } from './profileContract';
+export { createPlatformDomainInvocation } from './universalApi';

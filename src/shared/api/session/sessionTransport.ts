@@ -12,7 +12,7 @@ import type {
 const UUID_PATTERN =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const ERROR_CODE_PATTERN = /^[A-Z0-9_]{1,80}$/;
-const API_PATH_PATTERN = /^\/v1\/[a-zA-Z0-9/_-]*$/;
+const API_PATH_PATTERN = /^\/v1\/[a-zA-Z0-9/%_.-]*$/;
 const DEFAULT_REQUEST_TIMEOUT_MS = 10_000;
 const DEFAULT_REFRESH_SKEW_MS = 30_000;
 
@@ -240,7 +240,20 @@ class DefaultSessionTransport implements SessionTransport {
   };
 
   private assertApiPath(path: string) {
-    if (!API_PATH_PATTERN.test(path) || path.startsWith('//')) {
+    let parsed: URL;
+    try {
+      parsed = new URL(path, 'https://session-transport.invalid');
+    } catch {
+      throw new SessionTransportError('SESSION_REQUEST_PATH_INVALID');
+    }
+
+    if (
+      !path.startsWith('/v1/') ||
+      path.startsWith('//') ||
+      parsed.origin !== 'https://session-transport.invalid' ||
+      parsed.hash !== '' ||
+      !API_PATH_PATTERN.test(parsed.pathname)
+    ) {
       throw new SessionTransportError('SESSION_REQUEST_PATH_INVALID');
     }
   }
