@@ -41,6 +41,29 @@ describe('universal platform API adapter', () => {
     expect(transport.requestJson).toHaveBeenCalledWith('/v1/activity');
   });
 
+  it('does not mark a bodyless activity mutation as JSON', async () => {
+    transport.requestJson.mockResolvedValue({
+      activity: {
+        dailyCardLastRevealedAt: '2026-07-24T10:00:00.000Z',
+      },
+    });
+
+    const invocation = createPlatformDomainInvocation(
+      'user-activity',
+      { action: 'revealDailyCard' },
+    );
+    await invocation?.request();
+
+    expect(transport.requestJson).toHaveBeenCalledWith(
+      '/v1/activity/daily-card-reveal',
+      {
+        body: undefined,
+        headers: undefined,
+        method: 'POST',
+      },
+    );
+  });
+
   it('routes moon-plan list queries through the shared session', async () => {
     transport.requestJson.mockResolvedValue({ plans: [] });
 
@@ -52,6 +75,27 @@ describe('universal platform API adapter', () => {
 
     expect(transport.requestJson).toHaveBeenCalledWith(
       '/v1/moon-plans?date=2026-07-25',
+    );
+  });
+
+  it('normalizes a localized daily spread date for the platform route', async () => {
+    transport.requestJson.mockResolvedValue({ spread: {} });
+
+    const invocation = createPlatformDomainInvocation(
+      'spread-library',
+      {
+        action: 'saveDaily',
+        card: { id: 'sun' },
+        dayKey: '24.07.2026',
+        locale: 'ru',
+        spreadId: 'daily-spread',
+      },
+    );
+    await invocation?.request();
+
+    expect(transport.requestJson).toHaveBeenCalledWith(
+      '/v1/spreads/daily/2026-07-24',
+      expect.objectContaining({ method: 'PUT' }),
     );
   });
 

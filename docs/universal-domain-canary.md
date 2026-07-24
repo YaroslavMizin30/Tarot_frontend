@@ -54,15 +54,30 @@ VITE_PLATFORM_API_SHADOW_DOMAINS=
 результатов: домен, операция, статус и признак совпадения. Пользовательские
 данные, payload, токены и ответы не сохраняются.
 
-## Рекомендуемый canary
+## Текущий совместный canary
 
-1. Выполнить backfill и проверить audit новой базы.
-2. Включить `shadow` только для read-heavy домена.
-3. Открыть соответствующий раздел Telegram Mini App.
-4. Проверить HTTP 2xx нового API и shadow-status.
-5. Перевести этот домен в `VITE_PLATFORM_API_DOMAINS`.
-6. Повторить smoke-тест.
-7. Добавлять следующие домены по одному или одной заранее проверенной группой.
+Identity и universal backfill уже проверены, а активных пользователей нет.
+Поэтому текущая контрольная точка тестирует все совместимые домены одной
+заранее определённой группой:
+
+```text
+VITE_PLATFORM_BACKEND_MODE=shadow
+VITE_PLATFORM_API_URL=https://d5d5m96bkbl8jja51m16.tmjd4m4j.apigw.yandexcloud.net
+VITE_PLATFORM_API_SHADOW_DOMAINS=feedback,activity,moon-plans,spreads,astrology
+VITE_PLATFORM_API_DOMAINS=
+```
+
+Порядок проверки:
+
+1. Применить explicit-allowlist спецификацию API Gateway.
+2. Опубликовать отдельную shadow-сборку клиента.
+3. Открыть все соответствующие разделы Telegram Mini App.
+4. Проверить HTTP `2xx` нового API и shadow-status.
+5. Перевести всю группу в `VITE_PLATFORM_API_DOMAINS`.
+6. Повторить smoke-тест чтения и нескольких обратимых write-операций.
+
+В будущей production-эксплуатации с активными пользователями следует вернуться
+к постепенному включению по одному домену или небольшими группами.
 
 ## Мгновенный откат
 
