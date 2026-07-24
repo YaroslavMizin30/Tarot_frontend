@@ -53,25 +53,30 @@ export const Layout = () => {
 
   const {
     isLoading: isAuthenticating,
+    authProfile,
     user,
     error: authError,
     retry: retryAuth,
   } = useAuth();
 
-  const { theme } = user ?? {};
+  const { theme } = authProfile ?? {};
   const isAuthShell =
-    isAuthenticating || Boolean(authError) || pathname === '/reg' || !user;
-  const isRegistrationCompleting = Boolean(user) && pathname === '/reg';
+    isAuthenticating ||
+    Boolean(authError) ||
+    pathname === '/reg' ||
+    !authProfile;
+  const isRegistrationCompleting =
+    Boolean(authProfile) && pathname === '/reg';
   const shouldShowAuthLoading =
     isAuthenticating ||
-    (!user && !authError && pathname !== '/reg') ||
+    (!authProfile && !authError && pathname !== '/reg') ||
     isRegistrationCompleting;
   const [isAuthLoadingVisible, setIsAuthLoadingVisible] = useState(true);
   const [isAuthBackgroundMounted, setIsAuthBackgroundMounted] =
     useState(true);
   const canRenderOutlet =
     !isAuthenticating &&
-    (Boolean(user) || pathname === '/reg') &&
+    (Boolean(authProfile) || pathname === '/reg') &&
     (isAuthShell || !isAuthBackgroundMounted);
   const shouldMountAuthLayerContent =
     isAuthLoadingVisible || isAuthBackgroundMounted;

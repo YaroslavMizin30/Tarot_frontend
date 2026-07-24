@@ -1,9 +1,8 @@
 import {
-  createHostPlatformProofProvider,
-  createSessionTransport,
-  SessionTransportError,
-  type SessionTransport,
-} from '@/shared/api/session';
+  getPlatformBackendConfig,
+  getPlatformSessionTransport,
+  getSafePlatformApiErrorCode,
+} from '@/shared/api/platformBackend';
 
 const STATUS_STORAGE_KEY = 'tarotopia:platform-auth-canary-status';
 
@@ -32,7 +31,6 @@ type PlatformAuthCanaryRequest =
   };
 
 let exchangePromise: Promise<PlatformAuthCanaryResult> | null = null;
-let sessionTransport: SessionTransport | null = null;
 
 const saveStatus = (result: Exclude<PlatformAuthCanaryResult, { status: 'skipped' }>) => {
   try {
@@ -49,54 +47,17 @@ const saveStatus = (result: Exclude<PlatformAuthCanaryResult, { status: 'skipped
   }
 };
 
-const getApiUrl = () => {
-  const configured = import.meta.env.VITE_PLATFORM_AUTH_API_URL?.trim();
-
-  if (!configured) return null;
-
-  try {
-    const url = new URL(configured);
-    const localDevelopment = import.meta.env.DEV &&
-      ['localhost', '127.0.0.1'].includes(url.hostname);
-
-    if (url.protocol !== 'https:' && !localDevelopment) return null;
-
-    return url.toString().replace(/\/+$/, '');
-  } catch {
-    return null;
-  }
-};
-
-const getSessionTransport = () => {
-  if (sessionTransport) return sessionTransport;
-
-  const apiUrl = getApiUrl();
-  if (!apiUrl) {
-    throw new SessionTransportError('SESSION_API_URL_INVALID');
-  }
-
-  sessionTransport = createSessionTransport({
-    allowInsecureLocalhost: import.meta.env.DEV,
-    apiBaseUrl: apiUrl,
-    proofProvider: createHostPlatformProofProvider(
-      'telegram-mini-app-canary',
-    ),
-  });
-  return sessionTransport;
-};
-
-const getSafeErrorCode = (error: unknown) =>
-  error instanceof SessionTransportError
-    ? error.code
-    : 'PLATFORM_AUTH_CANARY_UNEXPECTED_ERROR';
-
 const exchangePlatformProof = async (): Promise<PlatformAuthCanaryResult> => {
-  if (import.meta.env.VITE_PLATFORM_AUTH_CANARY_ENABLED !== 'true') {
+  const mode = getPlatformBackendConfig().mode;
+  if (
+    mode !== 'shadow' &&
+    import.meta.env.VITE_PLATFORM_AUTH_CANARY_ENABLED !== 'true'
+  ) {
     return { status: 'skipped' };
   }
 
   try {
-    const session = await getSessionTransport().establishSession();
+    const session = await getPlatformSessionTransport().establishSession();
     const succeeded = {
       appUserId: session.appUserId,
       status: 'succeeded' as const,
@@ -105,7 +66,7 @@ const exchangePlatformProof = async (): Promise<PlatformAuthCanaryResult> => {
     return succeeded;
   } catch (error) {
     const failed = {
-      code: getSafeErrorCode(error),
+      code: getSafePlatformApiErrorCode(error),
       status: 'failed' as const,
     };
     saveStatus(failed);
@@ -145,12 +106,15 @@ export const requestPlatformAuthCanary = async (
       : undefined;
 
     return {
-      data: await getSessionTransport().requestJson('/v1/profile', init),
+      data: await getPlatformSessionTransport().requestJson(
+        '/v1/profile',
+        init,
+      ),
       status: 'succeeded',
     };
   } catch (error) {
     return {
-      code: getSafeErrorCode(error),
+      code: getSafePlatformApiErrorCode(error),
       status: 'failed',
     };
   }

@@ -3,14 +3,16 @@ import {
   type CompleteOnboardingCanaryPayload,
   type PlatformAuthCanaryRequestResult,
 } from '@/shared/api/auth/platformAuthCanary';
+import {
+  parseCanonicalProfileResponse,
+  type CanonicalProfile,
+} from '@/shared/api/platformBackend';
 
 import type { User } from '../../types/user';
 
 const READ_STATUS_STORAGE_KEY = 'tarotopia:profile-shadow-canary-status';
 const ONBOARDING_STATUS_STORAGE_KEY =
   'tarotopia:onboarding-shadow-canary-status';
-const UUID_PATTERN =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 type JsonObject = Record<string, unknown>;
 
@@ -24,16 +26,6 @@ type ComparableProfile = Pick<
   | 'userName'
 > & {
   birthTime?: string | null;
-};
-
-type CanonicalProfile = {
-  appUserId: string;
-  audio: boolean;
-  birthDate: string;
-  birthPlace: string;
-  birthTime: string | null;
-  theme: User['theme'];
-  userName: string;
 };
 
 interface OnboardingCanaryInput {
@@ -65,48 +57,6 @@ const toIsoBirthDate = (value: string) => {
 const normalizeBirthTime = (value: unknown): string | null => {
   if (typeof value !== 'string' || !value.trim()) return null;
   return value.trim().slice(0, 5);
-};
-
-const parseCanonicalProfile = (
-  value: unknown,
-): CanonicalProfile | null => {
-  if (!isObject(value)) return null;
-
-  const profile = value.profile;
-  if (!isObject(profile)) return null;
-
-  const {
-    appUserId,
-    audio,
-    birthDate,
-    birthPlace,
-    birthTime,
-    theme,
-    userName,
-  } = profile;
-
-  if (
-    typeof appUserId !== 'string' ||
-    !UUID_PATTERN.test(appUserId) ||
-    typeof audio !== 'boolean' ||
-    typeof birthDate !== 'string' ||
-    typeof birthPlace !== 'string' ||
-    (typeof birthTime !== 'string' && birthTime !== null) ||
-    !['standard', 'gray', 'bronze'].includes(String(theme)) ||
-    typeof userName !== 'string'
-  ) {
-    return null;
-  }
-
-  return {
-    appUserId,
-    audio,
-    birthDate,
-    birthPlace,
-    birthTime: normalizeBirthTime(birthTime),
-    theme: theme as User['theme'],
-    userName,
-  };
 };
 
 const mismatchFields = (
@@ -156,9 +106,9 @@ const parseCompletedProfile = (
     };
   }
 
-  const profile = parseCanonicalProfile(result.data);
-  return profile
-    ? { profile, status: 'succeeded' }
+  const response = parseCanonicalProfileResponse(result.data);
+  return response && !response.onboardingRequired
+    ? { profile: response.profile, status: 'succeeded' }
     : {
       error: 'ONBOARDING_SHADOW_RESPONSE_INVALID',
       status: 'failed',
@@ -184,7 +134,8 @@ export const compareProfileCanary = async (current: User | null) => {
     return;
   }
 
-  if (!isObject(result.data)) {
+  const response = parseCanonicalProfileResponse(result.data);
+  if (!response) {
     saveStatus(READ_STATUS_STORAGE_KEY, {
       code: 'PROFILE_SHADOW_RESPONSE_INVALID',
       status: 'failed',
@@ -193,16 +144,14 @@ export const compareProfileCanary = async (current: User | null) => {
   }
 
   if (!current) {
-    const matches = result.data.profile === null &&
-      result.data.onboardingRequired === true;
+    const matches = response.onboardingRequired;
     saveStatus(READ_STATUS_STORAGE_KEY, matches
       ? { status: 'succeeded' }
       : { code: 'PROFILE_SHADOW_ONBOARDING_MISMATCH', status: 'failed' });
     return;
   }
 
-  const candidate = parseCanonicalProfile(result.data);
-  if (!candidate) {
+  if (response.onboardingRequired) {
     saveStatus(READ_STATUS_STORAGE_KEY, {
       code: 'PROFILE_SHADOW_RESPONSE_INVALID',
       status: 'failed',
@@ -210,7 +159,7 @@ export const compareProfileCanary = async (current: User | null) => {
     return;
   }
 
-  const mismatches = mismatchFields(current, candidate);
+  const mismatches = mismatchFields(current, response.profile);
   saveStatus(READ_STATUS_STORAGE_KEY, mismatches.length
     ? {
       code: 'PROFILE_SHADOW_DATA_MISMATCH',
