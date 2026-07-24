@@ -8,7 +8,11 @@ import { authenticateCurrentPlatform } from '@/shared/api/auth';
 import { queryKeys } from '@/shared/api/queryKeys';
 import type { User, UserProfileChanges } from '../../../types/user';
 
-export const useUser = () => {
+interface UseUserOptions {
+  enabled?: boolean;
+}
+
+export const useUser = ({ enabled = true }: UseUserOptions = {}) => {
   const [error, setError] = useState<string | null>(null);
   const queryClient = useQueryClient();
 
@@ -18,6 +22,7 @@ export const useUser = () => {
     refetch,
     error: queryError,
   } = useQuery({
+    enabled,
     queryKey: queryKeys.user.current,
     queryFn: async () => {
       await authenticateCurrentPlatform();
@@ -47,7 +52,7 @@ export const useUser = () => {
   };
 
   return {
-    isLoading,
+    isLoading: enabled && isLoading,
     user,
     updateUser,
     refetchUser: refetch,

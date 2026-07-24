@@ -1,4 +1,8 @@
 export const queryKeys = {
+  platformProfile: {
+    all: ['platform-profile'] as const,
+    current: ['platform-profile', 'current'] as const,
+  },
   user: {
     all: ['user'] as const,
     current: ['user', 'current'] as const,
