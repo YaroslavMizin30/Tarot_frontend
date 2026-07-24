@@ -24,16 +24,38 @@ const requiredInteger = (value: unknown, code: string) => {
   return value as number;
 };
 
+const normalizeDateKey = (value: unknown, code: string) => {
+  const input = requiredString(value, code);
+  const localized = /^(\d{2})\.(\d{2})\.(\d{4})$/.exec(input);
+  const normalized = localized
+    ? `${localized[3]}-${localized[2]}-${localized[1]}`
+    : input;
+  const parsed = new Date(`${normalized}T00:00:00.000Z`);
+
+  if (
+    !/^\d{4}-\d{2}-\d{2}$/.test(normalized) ||
+    Number.isNaN(parsed.getTime()) ||
+    parsed.toISOString().slice(0, 10) !== normalized
+  ) {
+    throw new Error(code);
+  }
+
+  return normalized;
+};
+
 const jsonRequest = (
   path: string,
   method: 'POST' | 'PUT' | 'PATCH',
   body?: unknown,
-) =>
-  getPlatformSessionTransport().requestJson<unknown>(path, {
-    body: body === undefined ? undefined : JSON.stringify(body),
-    headers: { 'content-type': 'application/json' },
+) => {
+  const hasBody = body !== undefined;
+
+  return getPlatformSessionTransport().requestJson<unknown>(path, {
+    body: hasBody ? JSON.stringify(body) : undefined,
+    headers: hasBody ? { 'content-type': 'application/json' } : undefined,
     method,
   });
+};
 
 const mapFeedback = (value: unknown) => {
   if (!value || typeof value !== 'object') return value;
@@ -256,7 +278,7 @@ const spreadsInvocation = (
   }
 
   if (payload.action === 'saveDaily' && spreadId) {
-    const dayKey = requiredString(
+    const dayKey = normalizeDateKey(
       payload.dayKey,
       'PLATFORM_SPREAD_DATE_INVALID',
     );
